@@ -1,0 +1,1 @@
+{"id":"2b6f2381-452c-4f9b-8852-2e71ac98e55b","firstName":"Anne","lastName":"Wilson","email":"anne@example.com","username":"anne@example.com","password":"bat","organisations":[{"id":"049fc44e-6876-4884-8a77-d363173ce8d2","name":"BAT School 1","permissions":["admin"],"notifications":[]}],"createdAt":"2022-01-01T00:00:00.000Z","updatedAt":"2022-03-08T20:09:43.167Z","active":true}
