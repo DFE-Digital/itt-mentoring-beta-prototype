@@ -5,3 +5,15 @@
 
 // Add extra styles here
 $app-assets-path: '/public/';
+
+// Import local component styles
+@import "app/views/_components/all.scss";
+
+// Styles that aren't in the GOV.UK Frontend or local components
+@import "core/header";
+@import "core/links";
+@import "core/lists";
+@import "core/markdown";
+
+// Utilities
+@import "utilities/overrides";
