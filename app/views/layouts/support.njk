@@ -1,0 +1,85 @@
+{% extends "govuk-prototype-kit/layouts/govuk-branded.njk" %}
+
+{% from "_components/footer/macro.njk" import appFooter %}
+{% from "_components/organisation-actions/macro.njk" import appOrganisationActions %}
+{% from "_components/primary-navigation/macro.njk" import appPrimaryNavigation %}
+
+{% block pageTitle %}
+  {{ title + " - " if title }}{{ caption + " - " if caption }}{{ serviceName }} - GOV.UK
+{% endblock %}
+
+{% block head %}
+  {% include "_includes/head.njk" %}
+{% endblock %}
+
+{% block header %}
+  {{ govukHeader({
+    homepageUrl: "/",
+    productName: serviceName,
+    containerClasses: "govuk-width-container",
+    navigationClasses: "govuk-header__navigation--end",
+    navigation: [
+      {
+        href: "/account",
+        text: "Your account",
+        active: headerNavId == "account"
+      },
+      {
+        href: "/sign-out",
+        text: "Sign out"
+      }
+    ]
+  }) }}
+
+  {{ govukPhaseBanner({
+    tag: {
+      text: "Prototype"
+    },
+    html: 'This is a new service – your <a class="govuk-link" href="/feedback">feedback</a> will help us to improve it.',
+    classes: "govuk-width-container"
+  }) }}
+
+  {{ appOrganisationActions({
+    text: organisation.name,
+    actions: {
+      items: [
+        {
+          text: "Change organisation",
+          href: "/support/organisations"
+        }
+      ]
+    },
+    classes: "govuk-width-container"
+  }) }}
+
+  {% if not hidePrimaryNavigation %}
+    {{ appPrimaryNavigation({
+      items: [
+        {
+          href: baseUrl + "/details",
+          text: "Organisation details",
+          active: primaryNavId == "settings"
+        },
+        {
+          href: baseUrl + "/users",
+          text: "Users",
+          active: primaryNavId == "users"
+        },
+        {
+          href: "#",
+          text: "Claims",
+          active: primaryNavId == "claims"
+        },
+        {
+          href: "#",
+          text: "Mentors",
+          active: primaryNavId == "mentors"
+        }
+      ]
+    }) }}
+  {% endif %}
+{% endblock %}
+
+{% block footer %}
+  {% include "_includes/footer.njk" %}
+{% endblock %}
