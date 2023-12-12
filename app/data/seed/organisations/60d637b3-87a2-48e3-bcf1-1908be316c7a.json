@@ -1,0 +1,19 @@
+{
+  "id": "60d637b3-87a2-48e3-bcf1-1908be316c7a",
+  "name": "BAT University",
+  "code": "B01",
+  "type": "hei",
+  "ukprn": 10001234,
+  "isAccreditedProvider": true,
+  "accreditedProviderId": 1234,
+  "address": {
+    "addressLine1": "123 Main Street",
+    "town": "Some Town",
+    "postcode": "AB1 2CD"
+  },
+  "contact": {
+    "website": "https://www.example.com",
+    "email": "contact@example.com",
+    "telephone": "02012345678"
+  }
+}
