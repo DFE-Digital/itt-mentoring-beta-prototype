@@ -51,13 +51,22 @@ const authenticationController = require('./controllers/authentication')
 const organisationController = require('./controllers/organisations')
 const userController = require('./controllers/users')
 
+const supportOrganisationController = require('./controllers/support/organisations')
+const supportUserController = require('./controllers/support/users')
+
 // Authentication middleware
 const checkIsAuthenticated = (req, res, next) => {
   if (req.session.passport) {
     // the signed in user
     res.locals.passport = req.session.passport
+
     // the base URL for navigation
-    res.locals.baseUrl = `/organisations/${req.params.organisationId}`
+    if (req.session.passport.user?.type === 'support') {
+      res.locals.baseUrl = `/support/organisations/${req.params.organisationId}`
+    } else {
+      res.locals.baseUrl = `/organisations/${req.params.organisationId}`
+    }
+
     next()
   } else {
     delete req.session.data
@@ -134,7 +143,11 @@ router.get('/organisations/:organisationId', checkIsAuthenticated, organisationC
 router.get('/organisations', checkIsAuthenticated, organisationController.list_organisations_get)
 
 router.get('/', checkIsAuthenticated, (req, res) => {
-  res.redirect('/organisations')
+  if (req.session.passport.user?.type === 'support') {
+    res.redirect('/support/organisations')
+  } else {
+    res.redirect('/organisations')
+  }
 })
 
 /// ------------------------------------------------------------------------ ///
@@ -159,3 +172,45 @@ router.post('/organisations/:organisationId/users/:userId/delete', checkIsAuthen
 router.get('/organisations/:organisationId/users/:userId', checkIsAuthenticated, userController.user_details)
 
 router.get('/organisations/:organisationId/users', checkIsAuthenticated, userController.user_list)
+
+
+/// ------------------------------------------------------------------------ ///
+/// ------------------------------------------------------------------------ ///
+/// SUPPORT ROUTES
+/// ------------------------------------------------------------------------ ///
+/// ------------------------------------------------------------------------ ///
+
+/// ------------------------------------------------------------------------ ///
+/// SUPPORT - USER ROUTES
+/// ------------------------------------------------------------------------ ///
+
+router.get('/support/organisations/:organisationId/users/new', checkIsAuthenticated, supportUserController.new_user_get)
+router.post('/support/organisations/:organisationId/users/new', checkIsAuthenticated, supportUserController.new_user_post)
+
+router.get('/support/organisations/:organisationId/users/new/check', checkIsAuthenticated, supportUserController.new_user_check_get)
+router.post('/support/organisations/:organisationId/users/new/check', checkIsAuthenticated, supportUserController.new_user_check_post)
+
+router.get('/support/organisations/:organisationId/users/:userId/edit', checkIsAuthenticated, supportUserController.edit_user_get)
+router.post('/support/organisations/:organisationId/users/:userId/edit', checkIsAuthenticated, supportUserController.edit_user_post)
+
+router.get('/support/organisations/:organisationId/users/:userId/edit/check', checkIsAuthenticated, supportUserController.edit_user_check_get)
+router.post('/support/organisations/:organisationId/users/:userId/edit/check', checkIsAuthenticated, supportUserController.edit_user_check_post)
+
+router.get('/support/organisations/:organisationId/users/:userId/delete', checkIsAuthenticated, supportUserController.delete_user_get)
+router.post('/support/organisations/:organisationId/users/:userId/delete', checkIsAuthenticated, supportUserController.delete_user_post)
+
+router.get('/support/organisations/:organisationId/users/:userId', checkIsAuthenticated, supportUserController.user_details)
+
+router.get('/support/organisations/:organisationId/users', checkIsAuthenticated, supportUserController.user_list)
+
+/// ------------------------------------------------------------------------ ///
+/// SUPPORT - ORGANISATION ROUTES
+/// ------------------------------------------------------------------------ ///
+
+router.get('/support/organisations/:organisationId/details', checkIsAuthenticated, supportOrganisationController.show_organisation_get)
+
+// router.get('/', checkIsAuthenticated, (req, res) => {
+//   res.redirect('/organisations')
+// })
+
+router.get('/support/organisations', checkIsAuthenticated, supportOrganisationController.list_organisations_get)
