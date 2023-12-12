@@ -2,7 +2,8 @@
 
 
 # Ignore generated data directories
-
+app/data/organisations/
+app/data/users/
 
 # Prototype ignores - per-user
 .tmp/
