@@ -21,7 +21,12 @@ exports.sign_in_get = (req, res) => {
 exports.auth_get = (req, res) => {
   delete req.session.data.username
   delete req.session.data.password
-  res.redirect('/organisations')
+
+  if (req.session.passport.user?.type === 'support') {
+    res.redirect('/support/organisations')
+  } else {
+    res.redirect('/organisations')
+  }
 }
 
 exports.sign_out_get = (req, res) => {
