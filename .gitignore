@@ -1,9 +1,11 @@
 # Ignore generated data files
-
+app/data/ofsted-ratings.json
 
 # Ignore generated data directories
 app/data/organisations/
 app/data/users/
+app/data/schools/
+app/data/providers/
 
 # Prototype ignores - per-user
 .tmp/

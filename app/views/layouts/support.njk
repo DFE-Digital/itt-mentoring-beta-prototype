@@ -39,18 +39,20 @@
     classes: "govuk-width-container"
   }) }}
 
-  {{ appOrganisationActions({
-    text: organisation.name,
-    actions: {
-      items: [
-        {
-          text: "Change organisation",
-          href: "/support/organisations"
-        }
-      ]
-    },
-    classes: "govuk-width-container"
-  }) }}
+  {% if not hideOrganisationSwitcher %}
+    {{ appOrganisationActions({
+      text: organisation.name,
+      actions: {
+        items: [
+          {
+            text: "Change organisation",
+            href: "/support/organisations"
+          }
+        ]
+      },
+      classes: "govuk-width-container"
+    }) }}
+  {% endif %}
 
   {% if not hidePrimaryNavigation %}
     {{ appPrimaryNavigation({
@@ -67,13 +69,18 @@
         },
         {
           href: "#",
-          text: "Claims",
-          active: primaryNavId == "claims"
+          text: "Mentors",
+          active: primaryNavId == "mentors"
         },
         {
           href: "#",
-          text: "Mentors",
-          active: primaryNavId == "mentors"
+          text: "Trainees",
+          active: primaryNavId == "trainees"
+        },
+        {
+          href: "#",
+          text: "Placements",
+          active: primaryNavId == "placements"
         }
       ]
     }) }}
