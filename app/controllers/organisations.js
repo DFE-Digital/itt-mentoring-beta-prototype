@@ -1,5 +1,8 @@
 const organisationModel = require('../models/organisations')
 
+const providerModel = require('../models/providers')
+const schoolModel = require('../models/schools')
+
 exports.list_organisations_get = (req, res) => {
   if (req.session.passport.user.organisations && req.session.passport.user.organisations.length > 1) {
     const organisations = req.session.passport.user.organisations
@@ -42,4 +45,38 @@ exports.show_organisation_get = (req, res) => {
       delete: `/organisations/${req.params.organisationId}/delete`
     }
   })
+}
+
+/// ------------------------------------------------------------------------ ///
+/// AUTOCOMPLETE DATA
+/// ------------------------------------------------------------------------ ///
+
+exports.provider_suggestions_json = (req, res) => {
+  req.headers['Access-Control-Allow-Origin'] = true
+
+  let providers
+  providers = providerModel.findMany(req.query)
+
+  providers.sort((a, b) => {
+    return a.name.localeCompare(b.name)
+  })
+
+  // TODO: slice data to only return max n records
+
+  res.json(providers)
+}
+
+exports.school_suggestions_json = (req, res) => {
+  req.headers['Access-Control-Allow-Origin'] = true
+
+  let schools
+  schools = schoolModel.findMany(req.query)
+
+  schools.sort((a, b) => {
+    return a.name.localeCompare(b.name)
+  })
+
+  // TODO: slice data to only return max n records
+
+  res.json(schools)
 }
