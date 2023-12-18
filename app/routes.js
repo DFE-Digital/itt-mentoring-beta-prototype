@@ -207,6 +207,18 @@ router.get('/support/organisations/:organisationId/users', checkIsAuthenticated,
 /// SUPPORT - ORGANISATION ROUTES
 /// ------------------------------------------------------------------------ ///
 
+router.get('/support/organisations/new', checkIsAuthenticated, supportOrganisationController.new_get)
+router.post('/support/organisations/new', checkIsAuthenticated, supportOrganisationController.new_post)
+
+router.get('/support/organisations/new/provider', checkIsAuthenticated, supportOrganisationController.new_provider_get)
+router.post('/support/organisations/new/provider', checkIsAuthenticated, supportOrganisationController.new_provider_post)
+
+router.get('/support/organisations/new/school', checkIsAuthenticated, supportOrganisationController.new_school_get)
+router.post('/support/organisations/new/school', checkIsAuthenticated, supportOrganisationController.new_school_post)
+
+router.get('/support/organisations/new/check', checkIsAuthenticated, supportOrganisationController.new_check_get)
+router.post('/support/organisations/new/check', checkIsAuthenticated, supportOrganisationController.new_check_post)
+
 router.get('/support/organisations/:organisationId/details', checkIsAuthenticated, supportOrganisationController.show_organisation_get)
 
 // router.get('/', checkIsAuthenticated, (req, res) => {
@@ -214,3 +226,12 @@ router.get('/support/organisations/:organisationId/details', checkIsAuthenticate
 // })
 
 router.get('/support/organisations', checkIsAuthenticated, supportOrganisationController.list_organisations_get)
+
+
+/// ------------------------------------------------------------------------ ///
+/// AUTOCOMPLETE ROUTES
+/// ------------------------------------------------------------------------ ///
+
+router.get('/provider-suggestions', organisationController.provider_suggestions_json)
+
+router.get('/school-suggestions', organisationController.school_suggestions_json)
