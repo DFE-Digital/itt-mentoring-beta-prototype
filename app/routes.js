@@ -48,6 +48,7 @@ router.use(passport.session())
 // Controller modules
 const accountController = require('./controllers/account')
 const authenticationController = require('./controllers/authentication')
+const contentController = require('./controllers/content')
 const organisationController = require('./controllers/organisations')
 const userController = require('./controllers/users')
 
@@ -227,6 +228,17 @@ router.get('/support/organisations/:organisationId/details', checkIsAuthenticate
 
 router.get('/support/organisations', checkIsAuthenticated, supportOrganisationController.list_organisations_get)
 
+/// ------------------------------------------------------------------------ ///
+/// GENERAL ROUTES
+/// ------------------------------------------------------------------------ ///
+
+router.get('/accessibility', contentController.accessibility)
+
+router.get('/cookies', contentController.cookies)
+
+router.get('/privacy', contentController.privacy)
+
+router.get('/terms', contentController.terms)
 
 /// ------------------------------------------------------------------------ ///
 /// AUTOCOMPLETE ROUTES
