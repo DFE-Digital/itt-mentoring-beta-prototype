@@ -17,3 +17,7 @@ $app-assets-path: '/public/';
 
 // Utilities
 @import "utilities/overrides";
+
+// Components that aren’t in GOV.UK Frontend
+@import "components/filter-layout";
+@import "components/search-results";
