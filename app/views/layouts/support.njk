@@ -3,6 +3,7 @@
 {% from "_components/footer/macro.njk" import appFooter %}
 {% from "_components/organisation-actions/macro.njk" import appOrganisationActions %}
 {% from "_components/primary-navigation/macro.njk" import appPrimaryNavigation %}
+{% from "_components/search/macro.njk" import appSearch %}
 
 {% block pageTitle %}
   {{ title + " - " if title }}{{ caption + " - " if caption }}{{ serviceName }} - GOV.UK
@@ -58,7 +59,7 @@
     {{ appPrimaryNavigation({
       items: [
         {
-          href: baseUrl + "/details",
+          href: baseUrl,
           text: "Organisation details",
           active: primaryNavId == "settings"
         },

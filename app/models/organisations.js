@@ -17,14 +17,20 @@ exports.findMany = (params) => {
     organisations.push(data)
   })
 
-  if (params.query?.length) {
-    const query = params.query.toLowerCase()
-    return organisations.filter(organisation =>
-      organisation.name.toLowerCase().includes(query)
-      || organisation.code?.toLowerCase().includes(query)
-      || organisation.ukprn?.toString().includes(query)
-      || organisation.urn?.toString().includes(query)
-      || organisation.address?.postcode?.toLowerCase().includes(query)
+  if (params.organisationTypes?.length) {
+    organisations = organisations.filter(
+      organisation => params.organisationTypes.includes(organisation.type)
+    )
+  }
+
+  if (params.keywords?.length || params.query?.length) {
+    const keywords = params.keywords?.toLowerCase() || params.query?.toLowerCase()
+    organisations = organisations.filter(organisation =>
+      organisation.name.toLowerCase().includes(keywords)
+      || organisation.code?.toLowerCase().includes(keywords)
+      || organisation.ukprn?.toString().includes(keywords)
+      || organisation.urn?.toString().includes(keywords)
+      || organisation.address?.postcode?.toLowerCase().includes(keywords)
      )
   }
 

@@ -2,7 +2,7 @@
   "id": "60d637b3-87a2-48e3-bcf1-1908be316c7a",
   "name": "BAT University",
   "code": "B01",
-  "type": "hei",
+  "type": "university",
   "ukprn": 10001234,
   "isAccreditedProvider": true,
   "accreditedProviderId": 1234,
