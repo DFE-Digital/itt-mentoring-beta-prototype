@@ -7,6 +7,7 @@ const { gfmHeadingId } = require('marked-gfm-heading-id')
 const numeral = require('numeral')
 
 const giasHelper = require('./helpers/gias')
+const utilsHelper = require('./helpers/utils')
 
 /* ------------------------------------------------------------------
   numeral filter for use in Nunjucks
@@ -95,6 +96,9 @@ addFilter('getErrorMessage', (array, fieldName) => {
 
   return error
 })
+
+
+addFilter('getOrganisationTypeLabel', utilsHelper.getOrganisationTypeLabel)
 
 /* ------------------------------------------------------------------
 GIAS utility functions
