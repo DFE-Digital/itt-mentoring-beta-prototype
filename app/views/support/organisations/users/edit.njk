@@ -1,13 +1,13 @@
 {% extends "layouts/support.njk" %}
 
-{% set primaryNavId = "users" %}
+{% set primaryNavId = "organisations" %}
 
 {% set title = "Personal details" %}
 
 {% if referrer == "change" %}
   {% set caption = currentUser.firstName + " " + currentUser.lastName %}
 {% else %}
-  {% set caption = "Add user" %}
+  {% set caption = "Add user - " + organisation.name %}
 {% endif %}
 
 {% block pageTitle %}

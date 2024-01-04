@@ -1,8 +1,9 @@
 {% extends "layouts/support.njk" %}
 
-{% set primaryNavId = "users" %}
+{% set primaryNavId = "organisations" %}
+{% set secondaryNavId = "users" %}
 
-{% set title = "Users" %}
+{% set title = organisation.name %}
 
 {% block beforeContent %}
 
@@ -14,8 +15,20 @@
 
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-
       {% include "_includes/page-heading.njk" %}
+    </div>
+  </div>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      {% include "../_sub-navigation.njk" %}
+    </div>
+  </div>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      <h2 class="govuk-heading-m">Users</h2>
 
       {{ govukButton({
         text: "Add user",
