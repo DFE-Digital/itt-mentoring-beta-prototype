@@ -16,7 +16,7 @@ exports.user_list = (req, res) => {
 
   delete req.session.data.user
 
-  res.render('../views/support/users/list', {
+  res.render('../views/support/organisations/users/list', {
     organisation,
     users,
     actions: {
@@ -37,7 +37,7 @@ exports.user_details = (req, res) => {
 
   const signedInUser = userModel.findOne({ userId: req.session.passport.user.id })
 
-  res.render('../views/support/users/details', {
+  res.render('../views/support/organisations/users/details', {
     organisation,
     user,
     signedInUser,
@@ -62,7 +62,7 @@ exports.new_user_get = (req, res) => {
     back = `/support/organisations/${req.params.organisationId}/users/new/check`
   }
 
-  res.render('../views/support/users/edit', {
+  res.render('../views/support/organisations/users/edit', {
     organisation,
     user: req.session.data.user,
     actions: {
@@ -120,7 +120,7 @@ exports.new_user_post = (req, res) => {
   }
 
   if (errors.length) {
-    res.render('../views/support/users/edit', {
+    res.render('../views/support/organisations/users/edit', {
       organisation,
       user: req.session.data.user,
       actions: {
@@ -138,7 +138,7 @@ exports.new_user_post = (req, res) => {
 exports.new_user_check_get = (req, res) => {
   const organisation = organisationModel.findOne({ organisationId: req.params.organisationId })
 
-  res.render('../views/support/users/check-your-answers', {
+  res.render('../views/support/organisations/users/check-your-answers', {
     organisation,
     user: req.session.data.user,
     actions: {
@@ -176,7 +176,7 @@ exports.edit_user_get = (req, res) => {
     user = currentUser
   }
 
-  res.render('../views/support/users/edit', {
+  res.render('../views/support/organisations/users/edit', {
     organisation,
     currentUser,
     user,
@@ -218,7 +218,7 @@ exports.edit_user_post = (req, res) => {
   }
 
   if (errors.length) {
-    res.render('../views/support/users/edit', {
+    res.render('../views/support/organisations/users/edit', {
       organisation,
       user: req.session.data.user,
       actions: {
@@ -244,7 +244,7 @@ exports.edit_user_check_get = (req, res) => {
   const organisation = organisationModel.findOne({ organisationId: req.params.organisationId })
   const currentUser = userModel.findOne({ organisationId: req.params.organisationId, userId: req.params.userId })
 
-  res.render('../views/support/users/check-your-answers', {
+  res.render('../views/support/organisations/users/check-your-answers', {
     organisation,
     currentUser,
     user: req.session.data.user,
@@ -279,7 +279,7 @@ exports.delete_user_get = (req, res) => {
   const organisation = organisationModel.findOne({ organisationId: req.params.organisationId })
   const user = userModel.findOne({ organisationId: req.params.organisationId, userId: req.params.userId })
 
-  res.render('../views/support/users/delete', {
+  res.render('../views/support/organisations/users/delete', {
     organisation,
     user,
     actions: {
