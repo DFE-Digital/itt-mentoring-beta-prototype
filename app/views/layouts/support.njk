@@ -4,6 +4,7 @@
 {% from "_components/organisation-actions/macro.njk" import appOrganisationActions %}
 {% from "_components/primary-navigation/macro.njk" import appPrimaryNavigation %}
 {% from "_components/search/macro.njk" import appSearch %}
+{% from "_components/sub-navigation/macro.njk" import appSubNavigation %}
 
 {% block pageTitle %}
   {{ title + " - " if title }}{{ caption + " - " if caption }}{{ serviceName }} - GOV.UK
@@ -37,51 +38,21 @@
       text: "Prototype"
     },
     html: 'This is a new service – your <a class="govuk-link" href="/feedback">feedback</a> will help us to improve it.',
-    classes: "govuk-width-container"
+    classes: "govuk-width-container " + ("govuk-phase-banner--no-border-bottom" if not hidePrimaryNavigation)
   }) }}
-
-  {% if not hideOrganisationSwitcher %}
-    {{ appOrganisationActions({
-      text: organisation.name,
-      actions: {
-        items: [
-          {
-            text: "Change organisation",
-            href: "/support/organisations"
-          }
-        ]
-      },
-      classes: "govuk-width-container"
-    }) }}
-  {% endif %}
 
   {% if not hidePrimaryNavigation %}
     {{ appPrimaryNavigation({
       items: [
         {
-          href: baseUrl,
-          text: "Organisation details",
-          active: primaryNavId == "settings"
+          href: "/support/organisations",
+          text: "Organisations",
+          active: primaryNavId == "organisations"
         },
         {
-          href: baseUrl + "/users",
+          href: "#",
           text: "Users",
           active: primaryNavId == "users"
-        },
-        {
-          href: "#",
-          text: "Mentors",
-          active: primaryNavId == "mentors"
-        },
-        {
-          href: "#",
-          text: "Trainees",
-          active: primaryNavId == "trainees"
-        },
-        {
-          href: "#",
-          text: "Placements",
-          active: primaryNavId == "placements"
         }
       ]
     }) }}
