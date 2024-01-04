@@ -15,16 +15,21 @@
       href: "#",
       text: "Mentors",
       active: secondaryNavId == "mentors"
-    },
+    } if organisation.type == "school",
     {
       href: "#",
-      text: "Trainees",
-      active: secondaryNavId == "trainees"
-    },
+      text: "Providers",
+      active: secondaryNavId == "providers"
+    } if organisation.type == "school",
     {
       href: "#",
-      text: "Placements",
-      active: secondaryNavId == "placements"
-    }
+      text: "Schools",
+      active: secondaryNavId == "schools"
+    } if organisation.type != "school",
+    {
+      href: "#",
+      text: "Claims",
+      active: secondaryNavId == "claims"
+    } if organisation.type == "school"
   ]
 }) }}
