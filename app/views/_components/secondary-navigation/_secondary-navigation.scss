@@ -1,8 +1,8 @@
-.app-sub-navigation {
+.app-secondary-navigation {
   margin-bottom: govuk-spacing(7);
 }
 
-.app-sub-navigation__list {
+.app-secondary-navigation__list {
   font-size: 0; // Removes white space when using inline-block on child element.
   list-style: none;
   margin: 0;
@@ -19,7 +19,7 @@
   }
 }
 
-.app-sub-navigation__item {
+.app-secondary-navigation__item {
   @include govuk-font(19);
   box-shadow: inset 0 -1px 0 $govuk-border-colour;
   display: block;
@@ -37,7 +37,7 @@
   }
 }
 
-.app-sub-navigation__link {
+.app-secondary-navigation__link {
   @include govuk-link-common;
   @include govuk-link-style-default;
   display: block;
@@ -74,7 +74,7 @@
 }
 
 
-.app-sub-navigation__link[aria-current="page"] {
+.app-secondary-navigation__link[aria-current="page"] {
   color: govuk-colour("black");
   position: relative;
   text-decoration: none;
