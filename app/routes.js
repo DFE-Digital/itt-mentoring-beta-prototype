@@ -53,7 +53,7 @@ const organisationController = require('./controllers/organisations')
 const userController = require('./controllers/users')
 
 const supportOrganisationController = require('./controllers/support/organisations')
-const supportUserController = require('./controllers/support/users')
+const supportOrganisationUserController = require('./controllers/support/organisation-users')
 
 // Authentication middleware
 const checkIsAuthenticated = (req, res, next) => {
@@ -185,24 +185,24 @@ router.get('/organisations/:organisationId/users', checkIsAuthenticated, userCon
 /// SUPPORT - USER ROUTES
 /// ------------------------------------------------------------------------ ///
 
-router.get('/support/organisations/:organisationId/users/new', checkIsAuthenticated, supportUserController.new_user_get)
-router.post('/support/organisations/:organisationId/users/new', checkIsAuthenticated, supportUserController.new_user_post)
+router.get('/support/organisations/:organisationId/users/new', checkIsAuthenticated, supportOrganisationUserController.new_user_get)
+router.post('/support/organisations/:organisationId/users/new', checkIsAuthenticated, supportOrganisationUserController.new_user_post)
 
-router.get('/support/organisations/:organisationId/users/new/check', checkIsAuthenticated, supportUserController.new_user_check_get)
-router.post('/support/organisations/:organisationId/users/new/check', checkIsAuthenticated, supportUserController.new_user_check_post)
+router.get('/support/organisations/:organisationId/users/new/check', checkIsAuthenticated, supportOrganisationUserController.new_user_check_get)
+router.post('/support/organisations/:organisationId/users/new/check', checkIsAuthenticated, supportOrganisationUserController.new_user_check_post)
 
-router.get('/support/organisations/:organisationId/users/:userId/edit', checkIsAuthenticated, supportUserController.edit_user_get)
-router.post('/support/organisations/:organisationId/users/:userId/edit', checkIsAuthenticated, supportUserController.edit_user_post)
+router.get('/support/organisations/:organisationId/users/:userId/edit', checkIsAuthenticated, supportOrganisationUserController.edit_user_get)
+router.post('/support/organisations/:organisationId/users/:userId/edit', checkIsAuthenticated, supportOrganisationUserController.edit_user_post)
 
-router.get('/support/organisations/:organisationId/users/:userId/edit/check', checkIsAuthenticated, supportUserController.edit_user_check_get)
-router.post('/support/organisations/:organisationId/users/:userId/edit/check', checkIsAuthenticated, supportUserController.edit_user_check_post)
+router.get('/support/organisations/:organisationId/users/:userId/edit/check', checkIsAuthenticated, supportOrganisationUserController.edit_user_check_get)
+router.post('/support/organisations/:organisationId/users/:userId/edit/check', checkIsAuthenticated, supportOrganisationUserController.edit_user_check_post)
 
-router.get('/support/organisations/:organisationId/users/:userId/delete', checkIsAuthenticated, supportUserController.delete_user_get)
-router.post('/support/organisations/:organisationId/users/:userId/delete', checkIsAuthenticated, supportUserController.delete_user_post)
+router.get('/support/organisations/:organisationId/users/:userId/delete', checkIsAuthenticated, supportOrganisationUserController.delete_user_get)
+router.post('/support/organisations/:organisationId/users/:userId/delete', checkIsAuthenticated, supportOrganisationUserController.delete_user_post)
 
-router.get('/support/organisations/:organisationId/users/:userId', checkIsAuthenticated, supportUserController.user_details)
+router.get('/support/organisations/:organisationId/users/:userId', checkIsAuthenticated, supportOrganisationUserController.user_details)
 
-router.get('/support/organisations/:organisationId/users', checkIsAuthenticated, supportUserController.user_list)
+router.get('/support/organisations/:organisationId/users', checkIsAuthenticated, supportOrganisationUserController.user_list)
 
 /// ------------------------------------------------------------------------ ///
 /// SUPPORT - ORGANISATION ROUTES

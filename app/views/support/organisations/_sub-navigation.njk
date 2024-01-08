@@ -1,0 +1,35 @@
+{{ appSubNavigation({
+  label: "Sub navigation",
+  items: [
+    {
+      href: baseUrl,
+      text: "Details",
+      active: secondaryNavId == "details"
+    },
+    {
+      href: baseUrl + "/users",
+      text: "Users",
+      active: secondaryNavId == "users"
+    },
+    {
+      href: "#",
+      text: "Mentors",
+      active: secondaryNavId == "mentors"
+    } if organisation.type == "school",
+    {
+      href: "#",
+      text: "Providers",
+      active: secondaryNavId == "providers"
+    } if organisation.type == "school",
+    {
+      href: "#",
+      text: "Schools",
+      active: secondaryNavId == "schools"
+    } if organisation.type != "school",
+    {
+      href: "#",
+      text: "Claims",
+      active: secondaryNavId == "claims"
+    } if organisation.type == "school"
+  ]
+}) }}

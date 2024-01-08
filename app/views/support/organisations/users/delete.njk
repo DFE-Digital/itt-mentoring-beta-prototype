@@ -1,9 +1,9 @@
 {% extends "layouts/support.njk" %}
 
-{% set primaryNavId = "users" %}
+{% set primaryNavId = "organisations" %}
 
 {% set title = "Are you sure you want to remove this user?" %}
-{% set caption = user.firstName + " " + user.lastName %}
+{% set caption = user.firstName + " " + user.lastName + " - " + organisation.name %}
 
 {% block pageTitle %}
   {{ "Error: " if errors.length }}{{ title + " - " if title }}{{ caption + " - " if caption }}{{ serviceName }} - GOV.UK
