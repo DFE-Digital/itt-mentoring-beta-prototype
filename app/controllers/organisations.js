@@ -10,9 +10,11 @@ exports.list_organisations_get = (req, res) => {
     res.render('../views/organisations/list', {
       organisations
     })
-  } else {
+  } else if (req.session.passport.user.organisations.length === 1) {
     const organisationId = req.session.passport.user.organisations[0].id
     res.redirect(`/organisations/${organisationId}`)
+  } else {
+    res.redirect('/support/organisations')
   }
 }
 
