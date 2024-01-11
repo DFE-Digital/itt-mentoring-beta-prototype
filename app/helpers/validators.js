@@ -7,6 +7,16 @@ exports.isValidEmail = (email) => {
   return valid
 }
 
+exports.isValidEducationEmail = (email) => {
+  const regex = /education\.gov\.uk/
+
+  let valid = true
+  if (!email || !regex.test(email)) {
+    valid = false
+  }
+  return valid
+}
+
 exports.isValidURL = (url) => {
   const regex = /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/igm
   let valid = true
