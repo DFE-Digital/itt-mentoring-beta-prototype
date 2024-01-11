@@ -54,6 +54,7 @@ const userController = require('./controllers/users')
 
 const supportOrganisationController = require('./controllers/support/organisations')
 const supportOrganisationUserController = require('./controllers/support/organisation-users')
+const supportUserController = require('./controllers/support/users')
 
 // Authentication middleware
 const checkIsAuthenticated = (req, res, next) => {
@@ -182,7 +183,7 @@ router.get('/organisations/:organisationId/users', checkIsAuthenticated, userCon
 /// ------------------------------------------------------------------------ ///
 
 /// ------------------------------------------------------------------------ ///
-/// SUPPORT - USER ROUTES
+/// SUPPORT - ORGANISATION USER ROUTES
 /// ------------------------------------------------------------------------ ///
 
 router.get('/support/organisations/:organisationId/users/new', checkIsAuthenticated, supportOrganisationUserController.new_user_get)
@@ -203,6 +204,29 @@ router.post('/support/organisations/:organisationId/users/:userId/delete', check
 router.get('/support/organisations/:organisationId/users/:userId', checkIsAuthenticated, supportOrganisationUserController.user_details)
 
 router.get('/support/organisations/:organisationId/users', checkIsAuthenticated, supportOrganisationUserController.user_list)
+
+/// ------------------------------------------------------------------------ ///
+/// SUPPORT - USER ROUTES
+/// ------------------------------------------------------------------------ ///
+
+router.get('/support/users/new', checkIsAuthenticated, supportUserController.new_user_get)
+router.post('/support/users/new', checkIsAuthenticated, supportUserController.new_user_post)
+
+router.get('/support/users/new/check', checkIsAuthenticated, supportUserController.new_user_check_get)
+router.post('/support/users/new/check', checkIsAuthenticated, supportUserController.new_user_check_post)
+
+router.get('/support/users/:userId/edit', checkIsAuthenticated, supportUserController.edit_user_get)
+router.post('/support/users/:userId/edit', checkIsAuthenticated, supportUserController.edit_user_post)
+
+router.get('/support/users/:userId/edit/check', checkIsAuthenticated, supportUserController.edit_user_check_get)
+router.post('/support/users/:userId/edit/check', checkIsAuthenticated, supportUserController.edit_user_check_post)
+
+router.get('/support/users/:userId/delete', checkIsAuthenticated, supportUserController.delete_user_get)
+router.post('/support/users/:userId/delete', checkIsAuthenticated, supportUserController.delete_user_post)
+
+router.get('/support/users/:userId', checkIsAuthenticated, supportUserController.user_details)
+
+router.get('/support/users', checkIsAuthenticated, supportUserController.user_list)
 
 /// ------------------------------------------------------------------------ ///
 /// SUPPORT - ORGANISATION ROUTES
