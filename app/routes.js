@@ -238,8 +238,14 @@ router.post('/support/organisations/new', checkIsAuthenticated, supportOrganisat
 router.get('/support/organisations/new/provider', checkIsAuthenticated, supportOrganisationController.new_provider_get)
 router.post('/support/organisations/new/provider', checkIsAuthenticated, supportOrganisationController.new_provider_post)
 
+router.get('/support/organisations/new/provider/choose', checkIsAuthenticated, supportOrganisationController.new_choose_provider_get)
+router.post('/support/organisations/new/provider/choose', checkIsAuthenticated, supportOrganisationController.new_choose_provider_post)
+
 router.get('/support/organisations/new/school', checkIsAuthenticated, supportOrganisationController.new_school_get)
 router.post('/support/organisations/new/school', checkIsAuthenticated, supportOrganisationController.new_school_post)
+
+router.get('/support/organisations/new/school/choose', checkIsAuthenticated, supportOrganisationController.new_choose_school_get)
+router.post('/support/organisations/new/school/choose', checkIsAuthenticated, supportOrganisationController.new_choose_school_post)
 
 router.get('/support/organisations/new/check', checkIsAuthenticated, supportOrganisationController.new_check_get)
 router.post('/support/organisations/new/check', checkIsAuthenticated, supportOrganisationController.new_check_post)
