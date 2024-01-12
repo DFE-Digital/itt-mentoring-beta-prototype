@@ -195,6 +195,7 @@ exports.new_post = (req, res) => {
 
 exports.new_provider_get = (req, res) => {
   delete req.session.data.school
+  delete req.session.data.provider
 
   let save = '/support/organisations/new/provider'
   let back = '/support/organisations/new'
@@ -204,7 +205,7 @@ exports.new_provider_get = (req, res) => {
     back = '/support/organisations/new/check'
   }
 
-  res.render('../views/support/organisations/new/find-provider', {
+  res.render('../views/support/organisations/new/provider/find', {
     actions: {
       save,
       back,
@@ -224,13 +225,154 @@ exports.new_provider_post = (req, res) => {
 
   const errors = []
 
-  const organisation = organisationModel.findMany({ keywords: req.session.data.provider.name })
-
   if (!req.session.data.provider.name.length) {
     const error = {}
     error.fieldName = 'provider'
     error.href = '#provider'
     error.text = 'Enter a provider name, UKPRN, URN or postcode'
+    errors.push(error)
+
+    res.render('../views/support/organisations/new/provider/find', {
+      actions: {
+        save,
+        back,
+        cancel: '/support/organisations'
+      },
+      errors
+    })
+  } else {
+    const providers = providerModel.findMany({
+      query: req.session.data.provider.name
+    })
+
+    if (providers.length > 1) {
+      res.redirect('/support/organisations/new/provider/choose')
+    } else {
+      const organisation = organisationModel.findMany({ keywords: req.session.data.provider.name })
+
+      if (organisation.length) {
+        const error = {}
+        error.fieldName = 'provider'
+        error.href = '#provider'
+        error.text = 'Provider already exists'
+        errors.push(error)
+      }
+
+      if (errors.length) {
+        res.render('../views/support/organisations/new/provider/find', {
+          actions: {
+            save,
+            back,
+            cancel: '/support/organisations'
+          },
+          errors
+        })
+      } else {
+        const organisation = providerModel.findOne({ query: req.session.data.provider.name })
+
+        req.session.data.organisation = organisation
+
+        res.redirect('/support/organisations/new/check')
+      }
+    }
+  }
+}
+
+exports.new_choose_provider_get = (req, res) => {
+  const providers = providerModel.findMany({
+    query: req.session.data.provider.name
+  })
+
+  // store total number of results
+  const providerCount = providers.length
+
+  // parse the provider results for use in macro
+  let providerItems = []
+  providers.forEach(provider => {
+    const item = {}
+    item.text = provider.name
+    item.value = provider.urn || provider.ukprn || provider.address.postcode
+    item.hint = {
+      text: `${provider.address.town}, ${provider.address.postcode}`
+    }
+    providerItems.push(item)
+  })
+
+  // sort items alphabetically
+  providerItems.sort((a,b) => {
+    return a.text.localeCompare(b.text)
+  })
+
+  // only get the first 15 items
+  providerItems = providerItems.slice(0,15)
+
+  let save = '/support/organisations/new/provider/choose'
+  let back = '/support/organisations/new/provider'
+
+  // if (req.query.referrer === 'check') {
+  //   save += '?referrer=check'
+  //   back = '/support/organisations/new/check'
+  // }
+
+  res.render('../views/support/organisations/new/provider/choose', {
+    providerItems,
+    providerCount,
+    searchTerm: req.session.data.provider.name,
+    actions: {
+      save,
+      back,
+      cancel: '/support/organisations'
+    }
+  })
+}
+
+exports.new_choose_provider_post = (req, res) => {
+  const providers = providerModel.findMany({
+    query: req.session.data.provider.name
+  })
+
+  // store total number of results
+  const providerCount = providers.length
+
+  // parse the provider results for use in macro
+  let providerItems = []
+  providers.forEach(provider => {
+    const item = {}
+    item.text = provider.name
+    item.value = provider.urn || provider.ukprn || provider.address.postcode
+    item.hint = {
+      text: `${provider.address.town}, ${provider.address.postcode}`
+    }
+    providerItems.push(item)
+  })
+
+  // sort items alphabetically
+  providerItems.sort((a,b) => {
+    return a.text.localeCompare(b.text)
+  })
+
+  // only get the first 15 items
+  providerItems = providerItems.slice(0,15)
+
+  let save = '/support/organisations/new/provider/choose'
+  let back = '/support/organisations/new/provider'
+
+  // if (req.query.referrer === 'check') {
+  //   save += '?referrer=check'
+  //   back = '/support/organisations/new/check'
+  // }
+
+  const errors = []
+
+  const organisation = organisationModel.findMany({
+    keywords: req.session.data.provider.id
+  })
+
+  if (!req.session.data.provider.id) {
+    const error = {}
+    error.fieldName = 'provider'
+    error.href = '#provider'
+    error.text = 'Select a provider'
     errors.push(error)
   } else if (organisation.length) {
     const error = {}
@@ -241,7 +383,10 @@ exports.new_provider_post = (req, res) => {
   }
 
   if (errors.length) {
-    res.render('../views/support/organisations/new/find-provider', {
+    res.render('../views/support/organisations/new/provider/choose', {
+      providerItems,
+      providerCount,
+      searchTerm: req.session.data.provider.name,
       actions: {
         save,
         back,
@@ -250,7 +395,7 @@ exports.new_provider_post = (req, res) => {
       errors
     })
   } else {
-    const organisation = providerModel.findOne({ query: req.session.data.provider.name })
+    const organisation = providerModel.findOne({ query: req.session.data.provider.id })
 
     req.session.data.organisation = organisation
 
@@ -259,6 +404,7 @@ exports.new_provider_post = (req, res) => {
 }
 
 exports.new_school_get = (req, res) => {
+  delete req.session.data.school
   delete req.session.data.provider
 
   let save = '/support/organisations/new/school'
@@ -269,7 +415,7 @@ exports.new_school_get = (req, res) => {
     back = '/support/organisations/new/check'
   }
 
-  res.render('../views/support/organisations/new/find-school', {
+  res.render('../views/support/organisations/new/school/find', {
     actions: {
       save,
       back,
@@ -289,13 +435,155 @@ exports.new_school_post = (req, res) => {
 
   const errors = []
 
-  const organisation = organisationModel.findMany({ keywords: req.session.data.school.name })
-
   if (!req.session.data.school.name.length) {
     const error = {}
     error.fieldName = 'school'
     error.href = '#school'
     error.text = 'Enter a school name, URN or postcode'
+    errors.push(error)
+
+    res.render('../views/support/organisations/new/school/find', {
+      actions: {
+        save,
+        back,
+        cancel: '/support/organisations'
+      },
+      errors
+    })
+  } else {
+    const schools = schoolModel.findMany({
+      query: req.session.data.school.name
+    })
+
+    if (schools.length > 1) {
+      res.redirect('/support/organisations/new/school/choose')
+    } else {
+      const organisation = organisationModel.findMany({ keywords: req.session.data.school.name })
+
+      if (organisation.length) {
+        const error = {}
+        error.fieldName = 'school'
+        error.href = '#school'
+        error.text = 'School already exists'
+        errors.push(error)
+      }
+
+      if (errors.length) {
+        res.render('../views/support/organisations/new/school/find', {
+          actions: {
+            save,
+            back,
+            cancel: '/support/organisations'
+          },
+          errors
+        })
+      } else {
+        const organisation = schoolModel.findOne({ query: req.session.data.school.name })
+        organisation.type = 'school'
+
+        req.session.data.organisation = organisation
+
+        res.redirect('/support/organisations/new/check')
+      }
+    }
+  }
+}
+
+exports.new_choose_school_get = (req, res) => {
+  const schools = schoolModel.findMany({
+    query: req.session.data.school.name
+  })
+
+  // store total number of results
+  const schoolCount = schools.length
+
+  // parse the school results for use in macro
+  let schoolItems = []
+  schools.forEach(school => {
+    const item = {}
+    item.text = school.name
+    item.value = school.urn || school.address.postcode
+    item.hint = {
+      text: `${school.address.town}, ${school.address.postcode}`
+    }
+    schoolItems.push(item)
+  })
+
+  // sort items alphabetically
+  schoolItems.sort((a,b) => {
+    return a.text.localeCompare(b.text)
+  })
+
+  // only get the first 15 items
+  schoolItems = schoolItems.slice(0,15)
+
+  let save = '/support/organisations/new/school/choose'
+  let back = '/support/organisations/new/school'
+
+  // if (req.query.referrer === 'check') {
+  //   save += '?referrer=check'
+  //   back = '/support/organisations/new/check'
+  // }
+
+  res.render('../views/support/organisations/new/school/choose', {
+    schoolItems,
+    schoolCount,
+    searchTerm: req.session.data.school.name,
+    actions: {
+      save,
+      back,
+      cancel: '/support/organisations'
+    }
+  })
+}
+
+exports.new_choose_school_post = (req, res) => {
+  const schools = schoolModel.findMany({
+    query: req.session.data.school.name
+  })
+
+  // store total number of results
+  const schoolCount = schools.length
+
+  // parse the school results for use in macro
+  let schoolItems = []
+  schools.forEach(school => {
+    const item = {}
+    item.text = school.name
+    item.value = school.urn || school.address.postcode
+    item.hint = {
+      text: `${school.address.town}, ${school.address.postcode}`
+    }
+    schoolItems.push(item)
+  })
+
+  // sort items alphabetically
+  schoolItems.sort((a,b) => {
+    return a.text.localeCompare(b.text)
+  })
+
+  // only get the first 15 items
+  schoolItems = schoolItems.slice(0,15)
+
+  let save = '/support/organisations/new/school/choose'
+  let back = '/support/organisations/new/school'
+
+  // if (req.query.referrer === 'check') {
+  //   save += '?referrer=check'
+  //   back = '/support/organisations/new/check'
+  // }
+
+  const errors = []
+
+  const organisation = organisationModel.findMany({
+    keywords: req.session.data.school.id
+  })
+
+  if (!req.session.data.school.id) {
+    const error = {}
+    error.fieldName = 'school'
+    error.href = '#school'
+    error.text = 'Select a school'
     errors.push(error)
   } else if (organisation.length) {
     const error = {}
@@ -306,7 +594,10 @@ exports.new_school_post = (req, res) => {
   }
 
   if (errors.length) {
-    res.render('../views/support/organisations/new/find-school', {
+    res.render('../views/support/organisations/new/school/choose', {
+      schoolItems,
+      schoolCount,
+      searchTerm: req.session.data.school.name,
       actions: {
         save,
         back,
@@ -315,7 +606,7 @@ exports.new_school_post = (req, res) => {
       errors
     })
   } else {
-    const organisation = schoolModel.findOne({ query: req.session.data.school.name })
+    const organisation = schoolModel.findOne({ query: req.session.data.school.id })
     organisation.type = 'school'
 
     req.session.data.organisation = organisation
