@@ -269,7 +269,6 @@ exports.new_provider_post = (req, res) => {
         })
       } else {
         const organisation = providerModel.findOne({ query: req.session.data.provider.name })
-        organisation.type = 'provider'
 
         req.session.data.organisation = organisation
 
