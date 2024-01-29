@@ -81,7 +81,7 @@ exports.list_organisations_get = (req, res) => {
     keywords,
     organisationTypeFilterItems,
     actions: {
-      new: '/support/organisations/new',
+      new: '/support/organisations/new/school',
       view: '/support/organisations',
       filters: {
         apply: '/support/organisations',
@@ -408,7 +408,7 @@ exports.new_school_get = (req, res) => {
   delete req.session.data.provider
 
   let save = '/support/organisations/new/school'
-  let back = '/support/organisations/new'
+  let back = '/support/organisations' // /new
 
   if (req.query.referrer === 'check') {
     save += '?referrer=check'
@@ -426,7 +426,7 @@ exports.new_school_get = (req, res) => {
 
 exports.new_school_post = (req, res) => {
   let save = '/support/organisations/new/school'
-  let back = '/support/organisations/new'
+  let back = '/support/organisations' // /new
 
   if (req.query.referrer === 'check') {
     save += '?referrer=check'
