@@ -25,6 +25,7 @@
     </div>
   </div>
 
+  {# Remove the filter layout
   <div class="app-filter-layout">
     <div class="app-filter-layout__filter">
 
@@ -36,7 +37,12 @@
 
       <div class="app-action-bar">
         <div class="app-action-bar__filter"></div>
-      </div>
+      </div> #}
+
+  {# To put the filter code back, uncomment the above divs
+    and remove the below two grid divs #}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
 
       {% include "./_search-panel.njk" %}
 
@@ -54,12 +60,12 @@
                 </a>
               </h2>
 
-              <dl class="app-result-detail">
+              {# <dl class="app-result-detail">
                 <div class="app-result-detail__row">
                   <dt class="app-result-detail__key">Organisation type</dt>
                   <dd class="app-result-detail__value">{{ organisation.type | getOrganisationTypeLabel }}</dd>
                 </div>
-              </dl>
+              </dl> #}
 
             </li>
           {% endfor %}
@@ -77,7 +83,7 @@
   </div>
 {% endblock %}
 
-{% block pageScripts %}
+{# {% block pageScripts %}
 <script src="/public/javascripts/jquery-1.11.3.js"></script>
 <script type="module">
   import { FilterToggleButton } from '/public/javascripts/components/filter-toggle-button.js'
@@ -102,4 +108,4 @@
 
   filterToggleButton.init()
 </script>
-{% endblock %}
+{% endblock %} #}
