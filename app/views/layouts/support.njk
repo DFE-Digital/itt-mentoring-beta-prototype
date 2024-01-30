@@ -1,0 +1,69 @@
+{% extends "govuk-prototype-kit/layouts/govuk-branded.njk" %}
+
+{% from "_components/footer/macro.njk" import appFooter %}
+{% from "_components/organisation-actions/macro.njk" import appOrganisationActions %}
+{% from "_components/primary-navigation/macro.njk" import appPrimaryNavigation %}
+{% from "_components/search/macro.njk" import appSearch %}
+{% from "_components/secondary-navigation/macro.njk" import appSecondaryNavigation %}
+
+{% block pageTitle %}
+  {{ title + " - " if title }}{{ caption + " - " if caption }}{{ serviceName }} - GOV.UK
+{% endblock %}
+
+{% block head %}
+  {% include "_includes/head.njk" %}
+{% endblock %}
+
+{% block header %}
+  {{ govukHeader({
+    homepageUrl: "/",
+    productName: serviceName,
+    containerClasses: "govuk-width-container",
+    navigationClasses: "govuk-header__navigation--end",
+    navigation: [
+      {
+        href: "/account",
+        text: "Your account",
+        active: headerNavId == "account"
+      },
+      {
+        href: "/sign-out",
+        text: "Sign out"
+      }
+    ]
+  }) }}
+
+  {{ govukPhaseBanner({
+    tag: {
+      text: "Prototype"
+    },
+    html: 'This is a new service – your <a class="govuk-link" href="/feedback">feedback</a> will help us to improve it.',
+    classes: "govuk-width-container " + ("govuk-phase-banner--no-border-bottom" if not hidePrimaryNavigation)
+  }) }}
+
+  {% if not hidePrimaryNavigation %}
+    {{ appPrimaryNavigation({
+      items: [
+        {
+          href: "/support/organisations",
+          text: "Organisations",
+          active: primaryNavId == "organisations"
+        },
+        {
+          href: "/support/users",
+          text: "Users",
+          active: primaryNavId == "users"
+        },
+        {
+          href: "#",
+          text: "Claims",
+          active: primaryNavId == "claims"
+        }
+      ]
+    }) }}
+  {% endif %}
+{% endblock %}
+
+{% block footer %}
+  {% include "_includes/footer.njk" %}
+{% endblock %}

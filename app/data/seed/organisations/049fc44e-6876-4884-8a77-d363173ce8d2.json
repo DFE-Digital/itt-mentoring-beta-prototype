@@ -1,0 +1,19 @@
+{
+  "id": "049fc44e-6876-4884-8a77-d363173ce8d2",
+  "name": "BAT School 1",
+  "code": "B03",
+  "type": "school",
+  "urn": 123456,
+  "ukprn": 10123456,
+  "isAccreditedProvider": false,
+  "address": {
+    "addressLine1": "123 Main Street",
+    "town": "Some Town",
+    "postcode": "AB1 2CD"
+  },
+  "contact": {
+    "website": "https://www.example.com",
+    "email": "contact@example.com",
+    "telephone": "02012345678"
+  }
+}

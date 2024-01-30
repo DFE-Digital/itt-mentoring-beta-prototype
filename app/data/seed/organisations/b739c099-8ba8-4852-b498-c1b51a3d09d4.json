@@ -1,0 +1,20 @@
+{
+  "id": "b739c099-8ba8-4852-b498-c1b51a3d09d4",
+  "name": "BAT SCITT",
+  "code": "B02",
+  "type": "scitt",
+  "urn": 512346,
+  "ukprn": 10005123,
+  "isAccreditedProvider": true,
+  "accreditedProviderId": 5123,
+  "address": {
+    "addressLine1": "123 Main Street",
+    "town": "Some Town",
+    "postcode": "AB1 2CD"
+  },
+  "contact": {
+    "website": "https://www.example.com",
+    "email": "contact@example.com",
+    "telephone": "02012345678"
+  }
+}
