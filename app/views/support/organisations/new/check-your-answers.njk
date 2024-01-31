@@ -61,7 +61,7 @@
               actions: {
                 items: [
                   {
-                    href: actions.change + "/" + data.type + "?referrer=check",
+                    href: actions.change + "/" + organisation.type + "?referrer=check",
                     text: "Change",
                     visuallyHiddenText: "name"
                   }
@@ -85,25 +85,7 @@
                   }
                 ]
               } if 1==0
-            } if data.type != "school",
-            {
-              key: {
-                text: "Accredited provider ID"
-              },
-              value: {
-                text: organisation.accreditedProviderId if organisation.accreditedProviderId else "Not entered",
-                classes: "govuk-hint" if not organisation.accreditedProviderId
-              },
-              actions: {
-                items: [
-                  {
-                    href: actions.change + "?referrer=check",
-                    text: "Change",
-                    visuallyHiddenText: "accredited provider ID"
-                  }
-                ]
-              } if 1==0
-            } if data.type != "school",
+            } if organisation.type != "school",
             {
               key: {
                 text: "Unique reference number (URN)"
@@ -121,11 +103,29 @@
                   }
                 ]
               } if 1==0
-            } if data.type == "school"
+            },
+            {
+              key: {
+                text: "Accredited provider ID"
+              },
+              value: {
+                text: organisation.accreditedProviderId if organisation.accreditedProviderId else "Not entered",
+                classes: "govuk-hint" if not organisation.accreditedProviderId
+              },
+              actions: {
+                items: [
+                  {
+                    href: actions.change + "?referrer=check",
+                    text: "Change",
+                    visuallyHiddenText: "accredited provider ID"
+                  }
+                ]
+              } if 1==0
+            } if organisation.type != "school"
           ]
         }) }}
 
-        {% if data.type == "school" %}
+        {% if organisation.type == "school" %}
 
           <h2 class="govuk-heading-m govuk-!-margin-top-7">
             Additional details
