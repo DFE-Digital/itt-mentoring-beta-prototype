@@ -84,6 +84,8 @@ exports.new_user_post = (req, res) => {
     errors.push(error)
   }
 
+  const user = userModel.findOne({ email: req.session.data.user.email })
+
   const isValidEmail = !!(
     validationHelper.isValidEmail(req.session.data.user.email)
     && validationHelper.isValidEducationEmail(req.session.data.user.email)
@@ -100,6 +102,12 @@ exports.new_user_post = (req, res) => {
     error.fieldName = 'email'
     error.href = '#email'
     error.text = 'Enter a Department for Education email address in the correct format, like name@education.gov.uk'
+    errors.push(error)
+  } else if (user) {
+    const error = {}
+    error.fieldName = 'email'
+    error.href = '#email'
+    error.text = 'Email address already in use'
     errors.push(error)
   }
 
@@ -146,7 +154,7 @@ exports.new_user_check_post = (req, res) => {
 /// ------------------------------------------------------------------------ ///
 
 exports.edit_user_get = (req, res) => {
-  const currentUser = userModel.findOne({ organisationId: req.params.organisationId, userId: req.params.userId })
+  const currentUser = userModel.findOne({ userId: req.params.userId })
 
   if (req.session.data.user) {
     user = req.session.data.user
@@ -166,6 +174,8 @@ exports.edit_user_get = (req, res) => {
 }
 
 exports.edit_user_post = (req, res) => {
+  const currentUser = userModel.findOne({ userId: req.params.userId })
+
   const errors = []
 
   if (!req.session.data.user.firstName.length) {
@@ -184,6 +194,8 @@ exports.edit_user_post = (req, res) => {
     errors.push(error)
   }
 
+  const user = userModel.findOne({ email: req.session.data.user.email })
+
   const isValidEmail = !!(
     validationHelper.isValidEmail(req.session.data.user.email)
     && validationHelper.isValidEducationEmail(req.session.data.user.email)
@@ -201,10 +213,17 @@ exports.edit_user_post = (req, res) => {
     error.href = '#email'
     error.text = 'Enter a Department for Education email address in the correct format, like name@education.gov.uk'
     errors.push(error)
+  } else if (user) {
+    const error = {}
+    error.fieldName = 'email'
+    error.href = '#email'
+    error.text = 'Email address already in use'
+    errors.push(error)
   }
 
   if (errors.length) {
     res.render('../views/support/users/edit', {
+      currentUser,
       user: req.session.data.user,
       actions: {
         save: `/support/users/${req.params.userId}/edit`,
@@ -219,7 +238,7 @@ exports.edit_user_post = (req, res) => {
 }
 
 exports.edit_user_check_get = (req, res) => {
-  const currentUser = userModel.findOne({ organisationId: req.params.organisationId, userId: req.params.userId })
+  const currentUser = userModel.findOne({ userId: req.params.userId })
 
   res.render('../views/support/users/check-your-answers', {
     currentUser,
