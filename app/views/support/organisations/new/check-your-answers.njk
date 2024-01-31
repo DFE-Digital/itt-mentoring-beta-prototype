@@ -85,24 +85,6 @@
                   }
                 ]
               } if 1==0
-            } if organisation.type != "school",
-            {
-              key: {
-                text: "Unique reference number (URN)"
-              },
-              value: {
-                text: organisation.urn if organisation.urn else "Not entered",
-                classes: "govuk-hint" if not organisation.urn
-              },
-              actions: {
-                items: [
-                  {
-                    href: actions.change + "?referrer=check",
-                    text: "Change",
-                    visuallyHiddenText: "unique reference number (URN)"
-                  }
-                ]
-              } if 1==0
             },
             {
               key: {
@@ -121,7 +103,25 @@
                   }
                 ]
               } if 1==0
-            } if organisation.type != "school"
+            } if organisation.type != "school",
+            {
+              key: {
+                text: "Unique reference number (URN)"
+              },
+              value: {
+                text: organisation.urn if organisation.urn else "Not entered",
+                classes: "govuk-hint" if not organisation.urn
+              },
+              actions: {
+                items: [
+                  {
+                    href: actions.change + "?referrer=check",
+                    text: "Change",
+                    visuallyHiddenText: "unique reference number (URN)"
+                  }
+                ]
+              } if 1==0
+            } if organisation.type == "school"
           ]
         }) }}
 
