@@ -190,6 +190,7 @@ exports.edit_user_get = (req, res) => {
 
 exports.edit_user_post = (req, res) => {
   const organisation = organisationModel.findOne({ organisationId: req.params.organisationId })
+  const currentUser = userModel.findOne({ organisationId: req.params.organisationId, userId: req.params.userId })
 
   const errors = []
 
@@ -209,17 +210,35 @@ exports.edit_user_post = (req, res) => {
     errors.push(error)
   }
 
-  if (!validationHelper.isValidEmail(req.session.data.user.email)) {
+  const user = userModel.findOne({
+    organisationId: req.params.organisationId,
+    email: req.session.data.user.email
+  })
+
+  if (!req.session.data.user.email.length) {
     const error = {}
     error.fieldName = 'email'
     error.href = '#email'
     error.text = 'Enter an email address'
+    errors.push(error)
+  } else if (!validationHelper.isValidEmail(req.session.data.user.email)) {
+    const error = {}
+    error.fieldName = 'email'
+    error.href = '#email'
+    error.text = 'Enter an email address in the correct format, like name@example.com'
+    errors.push(error)
+  } else if (user) {
+    const error = {}
+    error.fieldName = 'email'
+    error.href = '#email'
+    error.text = 'Email address already in use'
     errors.push(error)
   }
 
   if (errors.length) {
     res.render('../views/support/organisations/users/edit', {
       organisation,
+      currentUser,
       user: req.session.data.user,
       actions: {
         save: `/support/organisations/${req.params.organisationId}/users/${req.params.userId}/edit`,
