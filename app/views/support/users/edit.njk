@@ -4,7 +4,7 @@
 
 {% set title = "Personal details" %}
 
-{% if referrer == "change" %}
+{% if referrer == "change" or currentUser %}
   {% set caption = currentUser.firstName + " " + currentUser.lastName %}
 {% else %}
   {% set caption = "Add user" %}
