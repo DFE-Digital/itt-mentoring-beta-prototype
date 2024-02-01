@@ -254,7 +254,7 @@ exports.new_provider_post = (req, res) => {
         const error = {}
         error.fieldName = 'provider'
         error.href = '#provider'
-        error.text = 'Provider already exists'
+        error.text = 'Provider has already been added'
         errors.push(error)
       }
 
@@ -378,7 +378,7 @@ exports.new_choose_provider_post = (req, res) => {
     const error = {}
     error.fieldName = 'provider'
     error.href = '#provider'
-    error.text = 'Provider already exists'
+    error.text = 'Provider has already been added'
     errors.push(error)
   }
 
@@ -464,7 +464,7 @@ exports.new_school_post = (req, res) => {
         const error = {}
         error.fieldName = 'school'
         error.href = '#school'
-        error.text = 'School already exists'
+        error.text = 'School has already been added'
         errors.push(error)
       }
 
@@ -589,7 +589,7 @@ exports.new_choose_school_post = (req, res) => {
     const error = {}
     error.fieldName = 'school'
     error.href = '#school'
-    error.text = 'School already exists'
+    error.text = 'School has already been added'
     errors.push(error)
   }
 

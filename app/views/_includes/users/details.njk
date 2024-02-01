@@ -1,0 +1,55 @@
+{{ govukSummaryList({
+  rows: [
+    {
+      key: {
+        text: "First name"
+      },
+      value: {
+        text: user.firstName
+      },
+      actions: {
+        items: [
+          {
+            href: actions.change,
+            text: "Change",
+            visuallyHiddenText: "first name"
+          }
+        ]
+      } if 1==0
+    },
+    {
+      key: {
+        text: "Last name"
+      },
+      value: {
+        text: user.lastName
+      },
+      actions: {
+        items: [
+          {
+            href: actions.change,
+            text: "Change",
+            visuallyHiddenText: "last name"
+          }
+        ]
+      } if 1==0
+    },
+    {
+      key: {
+        text: "Email address"
+      },
+      value: {
+        text: user.email
+      },
+      actions: {
+        items: [
+          {
+            href: actions.change,
+            text: "Change",
+            visuallyHiddenText: "email address"
+          }
+        ]
+      } if 1==0
+    }
+  ]
+}) }}

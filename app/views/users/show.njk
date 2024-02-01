@@ -2,10 +2,13 @@
 
 {% set primaryNavId = "users" %}
 
-{% set title = "Users" %}
+{% set title = user.firstName + " " + user.lastName %}
 
 {% block beforeContent %}
-
+{{ govukBackLink({
+  text: "Back",
+  href: actions.back
+}) }}
 {% endblock %}
 
 {% block content %}
@@ -17,15 +20,12 @@
 
       {% include "_includes/page-heading.njk" %}
 
-      {{ govukButton({
-        text: "Add user",
-        href: actions.new
-      }) }}
+      {% include "_includes/users/details.njk" %}
 
-      {% if users.length %}
-        {% include "_includes/users/list.njk" %}
-      {% else %}
-        <p class="govuk-body">There are no users for {{ organisation.name if organisation.name else "your organisation" }}.</p>
+      {% if not (user.id == signedInUser.id) %}
+        <p class="govuk-body">
+          <a class="govuk-link app-link--destructive" href="{{ actions.delete }}">Remove user</a>
+        </p>
       {% endif %}
 
     </div>

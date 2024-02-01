@@ -4,8 +4,8 @@
 
 {% set title = "Check your answers" %}
 
-{% if referrer == "change" %}
-  {% set caption = currentUser.firstName + " " + currentUser.lastName %}
+{% if referrer == "change" or currentUser %}
+  {% set caption = currentUser.firstName + " " + currentUser.lastName + " - " + organisation.name %}
 {% else %}
   {% set caption = "Add user - " + organisation.name %}
 {% endif %}
