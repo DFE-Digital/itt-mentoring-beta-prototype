@@ -33,7 +33,7 @@ exports.user_details = (req, res) => {
 
   const signedInUser = userModel.findOne({ userId: req.session.passport.user.id })
 
-  res.render('../views/support/users/details', {
+  res.render('../views/support/users/show', {
     user,
     signedInUser,
     actions: {
