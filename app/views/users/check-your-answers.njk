@@ -32,61 +32,7 @@
 
       <form action="{{ actions.save }}" method="post" accept-charset="utf-8" novalidate>
 
-        {{ govukSummaryList({
-          rows: [
-            {
-              key: {
-                text: "First name"
-              },
-              value: {
-                text: user.firstName
-              },
-              actions: {
-                items: [
-                  {
-                    href: actions.change,
-                    text: "Change",
-                    visuallyHiddenText: "first name"
-                  }
-                ]
-              }
-            },
-            {
-              key: {
-                text: "Last name"
-              },
-              value: {
-                text: user.lastName
-              },
-              actions: {
-                items: [
-                  {
-                    href: actions.change,
-                    text: "Change",
-                    visuallyHiddenText: "last name"
-                  }
-                ]
-              }
-            },
-            {
-              key: {
-                text: "Email address"
-              },
-              value: {
-                text: user.email
-              },
-              actions: {
-                items: [
-                  {
-                    href: actions.change,
-                    text: "Change",
-                    visuallyHiddenText: "email address"
-                  }
-                ]
-              }
-            }
-          ]
-        }) }}
+        {% include "_includes/users/check-your-answers.njk" %}
 
         {% if referrer == "change" %}
           {% if not (user.email == currentUser.email) %}
