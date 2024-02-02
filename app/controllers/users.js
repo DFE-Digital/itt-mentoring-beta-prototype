@@ -130,7 +130,10 @@ exports.new_user_post = (req, res) => {
 }
 
 exports.new_user_check_get = (req, res) => {
+  const organisation = organisationModel.findOne({ organisationId: req.params.organisationId })
+
   res.render('../views/users/check-your-answers', {
+    organisation,
     user: req.session.data.user,
     actions: {
       save: `/organisations/${req.params.organisationId}/users/new/check`,
@@ -260,9 +263,11 @@ exports.edit_user_check_post = (req, res) => {
 /// ------------------------------------------------------------------------ ///
 
 exports.delete_user_get = (req, res) => {
+  const organisation = organisationModel.findOne({ organisationId: req.params.organisationId })
   const user = userModel.findOne({ organisationId: req.params.organisationId, userId: req.params.userId })
 
   res.render('../views/users/delete', {
+    organisation,
     user,
     actions: {
       save: `/organisations/${req.params.organisationId}/users/${req.params.userId}/delete`,
