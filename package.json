@@ -2,7 +2,7 @@
   "name": "itt-mentoring-beta-prototype",
   "description": "A prototype service for schools to claim funding for their general mentor training",
   "engines": {
-    "node": "18.12.1"
+    "node": "20.11.0"
   },
   "scripts": {
     "generate-data": "node ./scripts/generate-data.js",
