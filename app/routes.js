@@ -175,6 +175,22 @@ router.get('/organisations/:organisationId/users/:userId', checkIsAuthenticated,
 
 router.get('/organisations/:organisationId/users', checkIsAuthenticated, userController.user_list)
 
+/// ------------------------------------------------------------------------ ///
+/// MENTOR ROUTES
+/// ------------------------------------------------------------------------ ///
+
+router.get('/organisations/:organisationId/mentors/new', checkIsAuthenticated, mentorController.new_mentor_get)
+router.post('/organisations/:organisationId/mentors/new', checkIsAuthenticated, mentorController.new_mentor_post)
+
+router.get('/organisations/:organisationId/mentors/new/check', checkIsAuthenticated, mentorController.new_mentor_check_get)
+router.post('/organisations/:organisationId/mentors/new/check', checkIsAuthenticated, mentorController.new_mentor_check_post)
+
+router.get('/organisations/:organisationId/mentors/:mentorId/delete', checkIsAuthenticated, mentorController.delete_mentor_get)
+router.post('/organisations/:organisationId/mentors/:mentorId/delete', checkIsAuthenticated, mentorController.delete_mentor_post)
+
+router.get('/organisations/:organisationId/mentors/:mentorId', checkIsAuthenticated, mentorController.mentor_details)
+
+router.get('/organisations/:organisationId/mentors', checkIsAuthenticated, mentorController.mentor_list)
 
 /// ------------------------------------------------------------------------ ///
 /// ------------------------------------------------------------------------ ///
@@ -204,6 +220,23 @@ router.post('/support/organisations/:organisationId/users/:userId/delete', check
 router.get('/support/organisations/:organisationId/users/:userId', checkIsAuthenticated, supportOrganisationUserController.user_details)
 
 router.get('/support/organisations/:organisationId/users', checkIsAuthenticated, supportOrganisationUserController.user_list)
+
+/// ------------------------------------------------------------------------ ///
+/// SUPPORT - ORGANISATION MENTOR ROUTES
+/// ------------------------------------------------------------------------ ///
+
+router.get('/support/organisations/:organisationId/mentors/new', checkIsAuthenticated, supportOrganisationMentorController.new_mentor_get)
+router.post('/support/organisations/:organisationId/mentors/new', checkIsAuthenticated, supportOrganisationMentorController.new_mentor_post)
+
+router.get('/support/organisations/:organisationId/mentors/new/check', checkIsAuthenticated, supportOrganisationMentorController.new_mentor_check_get)
+router.post('/support/organisations/:organisationId/mentors/new/check', checkIsAuthenticated, supportOrganisationMentorController.new_mentor_check_post)
+
+router.get('/support/organisations/:organisationId/mentors/:mentorId/delete', checkIsAuthenticated, supportOrganisationMentorController.delete_mentor_get)
+router.post('/support/organisations/:organisationId/mentors/:mentorId/delete', checkIsAuthenticated, supportOrganisationMentorController.delete_mentor_post)
+
+router.get('/support/organisations/:organisationId/mentors/:mentorId', checkIsAuthenticated, supportOrganisationMentorController.mentor_details)
+
+router.get('/support/organisations/:organisationId/mentors', checkIsAuthenticated, supportOrganisationMentorController.mentor_list)
 
 /// ------------------------------------------------------------------------ ///
 /// SUPPORT - USER ROUTES
