@@ -27,7 +27,7 @@ exports.organisation = (req, res) => {
   // put the selected organisation into the passport object
   // for use around the service
   req.session.passport.organisation = organisation
-  res.redirect(`/organisations/${req.params.organisationId}/details`)
+  res.redirect(`/organisations/${req.params.organisationId}/mentors`)
 }
 
 /// ------------------------------------------------------------------------ ///
