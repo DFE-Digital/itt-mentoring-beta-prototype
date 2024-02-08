@@ -49,10 +49,12 @@ router.use(passport.session())
 const accountController = require('./controllers/account')
 const authenticationController = require('./controllers/authentication')
 const contentController = require('./controllers/content')
+const mentorController = require('./controllers/mentors')
 const organisationController = require('./controllers/organisations')
 const userController = require('./controllers/users')
 
 const supportOrganisationController = require('./controllers/support/organisations')
+const supportOrganisationMentorController = require('./controllers/support/organisation-mentors')
 const supportOrganisationUserController = require('./controllers/support/organisation-users')
 const supportUserController = require('./controllers/support/users')
 
