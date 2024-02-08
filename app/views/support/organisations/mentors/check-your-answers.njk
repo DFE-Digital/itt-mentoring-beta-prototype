@@ -1,0 +1,61 @@
+{% extends "layouts/support.njk" %}
+
+{% set primaryNavId = "organisations" %}
+{% set secondaryNavId = "mentors" %}
+
+{% if mentor.id %}
+  {% set title = "Check your answers" %}
+{% else %}
+  {% set title = "No results found for ‘" + data.mentor.trn + "’" %}
+{% endif %}
+
+{% if referrer == "change" or currentMentor %}
+  {% set caption = currentMentor.firstName + " " + currentMentor.lastName %}
+{% else %}
+  {% set caption = "Add mentor" %}
+{% endif %}
+
+{% block pageTitle %}
+  {{ "Error: " if errors.length }}{{ title + " - " if title }}{{ caption + " - " if caption }}{{ serviceName }} - GOV.UK
+{% endblock %}
+
+{% block beforeContent %}
+{{ govukBackLink({
+  text: "Back",
+  href: actions.back
+}) }}
+{% endblock %}
+
+{% block content %}
+
+  {% include "_includes/error-summary.njk" %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      {% include "_includes/page-heading.njk" %}
+
+      {% if mentor.id %}
+        <form action="{{ actions.save }}" method="post" accept-charset="utf-8" novalidate>
+
+          {% include "_includes/mentors/check-your-answers.njk" %}
+
+          {{ govukButton({
+            text: "Update mentor" if referrer == "change" else "Add mentor"
+          }) }}
+
+        </form>
+
+        <p class="govuk-body">
+          <a class="govuk-link" href="{{ actions.cancel }}">Cancel</a>
+        </p>
+      {% else %}
+        <p class="govuk-body">
+          <a class="govuk-link" href="{{ actions.change }}">Change your search</a>
+        </p>
+      {% endif %}
+
+    </div>
+  </div>
+
+{% endblock %}
