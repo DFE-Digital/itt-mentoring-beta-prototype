@@ -1,0 +1,55 @@
+{{ govukSummaryList({
+  rows: [
+    {
+      key: {
+        text: "First name"
+      },
+      value: {
+        text: mentor.firstName
+      },
+      actions: {
+        items: [
+          {
+            href: actions.change,
+            text: "Change",
+            visuallyHiddenText: "first name"
+          }
+        ]
+      } if 1==0
+    },
+    {
+      key: {
+        text: "Last name"
+      },
+      value: {
+        text: mentor.lastName
+      },
+      actions: {
+        items: [
+          {
+            href: actions.change,
+            text: "Change",
+            visuallyHiddenText: "last name"
+          }
+        ]
+      } if 1==0
+    },
+    {
+      key: {
+        text: "Teacher reference number (TRN)"
+      },
+      value: {
+        text: mentor.trn
+      },
+      actions: {
+        items: [
+          {
+            href: actions.change,
+            text: "Change",
+            visuallyHiddenText: "teacher reference number (TRN)"
+          }
+        ]
+      } if 1==0
+    }
+  ]
+}) }}

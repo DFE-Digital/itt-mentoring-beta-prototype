@@ -1,0 +1,47 @@
+{% extends "layouts/support.njk" %}
+
+{% set primaryNavId = "organisations" %}
+{% set secondaryNavId = "mentors" %}
+
+{% set title = organisation.name %}
+
+{% block beforeContent %}
+
+{% endblock %}
+
+{% block content %}
+
+  {% include "_includes/notification-banner.njk" %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      {% include "_includes/page-heading.njk" %}
+    </div>
+  </div>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      {% include "../_secondary-navigation.njk" %}
+    </div>
+  </div>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      <h2 class="govuk-heading-m">Mentors</h2>
+
+      {{ govukButton({
+        text: "Add mentor",
+        href: actions.new
+      }) }}
+
+      {% if mentors.length %}
+        {% include "_includes/mentors/list.njk" %}
+      {% else %}
+        <p class="govuk-body">There are no mentors for {{ organisation.name if organisation.name else "your organisation" }}.</p>
+      {% endif %}
+
+    </div>
+  </div>
+
+{% endblock %}

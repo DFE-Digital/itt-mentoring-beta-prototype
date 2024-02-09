@@ -1,0 +1,60 @@
+{% extends "layouts/support.njk" %}
+
+{% set primaryNavId = "organisations" %}
+{% set secondaryNavId = "mentors" %}
+
+{% set title = "Enter a teacher reference number (TRN)" %}
+{% set caption = "Add mentor" %}
+
+{% block beforeContent %}
+{{ govukBackLink({
+  text: "Back",
+  href: actions.back
+}) }}
+{% endblock %}
+
+{% block content %}
+
+  {% include "_includes/notification-banner.njk" %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      {% set headingHtml %}
+        {% include "_includes/page-heading-legend.njk" %}
+      {% endset %}
+
+      <form action="{{ actions.save }}" method="post" accept-charset="utf-8" novalidate>
+
+        {{ govukInput({
+          id: "mentor",
+          name: "mentor[trn]",
+          label: {
+            html: headingHtml,
+            isPageHeading: true,
+            classes: "govuk-label--l"
+          },
+          value: data.mentor.trn,
+          classes: "govuk-input--width-20",
+          errorMessage: errors | getErrorMessage("mentor")
+        }) }}
+
+        {{ govukDetails({
+          summaryText: "Help with the teacher reference number (TRN)",
+          html: 'If you don’t have a TRN, read the <a href="https://www.gov.uk/guidance/teacher-reference-number-trn">Teacher reference number (TRN) guidance</a> to find a lost TRN, or apply for one.'
+        }) }}
+
+        {{ govukButton({
+          text: "Continue"
+        }) }}
+
+      </form>
+
+      <p class="govuk-body">
+        <a class="govuk-link" href="{{ actions.cancel }}">Cancel</a>
+      </p>
+
+    </div>
+  </div>
+
+{% endblock %}

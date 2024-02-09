@@ -3,10 +3,12 @@ app/data/ofsted-ratings.json
 app/data/organisation-types.json
 
 # Ignore generated data directories
+app/data/mentors/
 app/data/organisations/
-app/data/users/
-app/data/schools/
 app/data/providers/
+app/data/schools/
+app/data/teachers/
+app/data/users/
 
 # Prototype ignores - per-user
 .tmp/
