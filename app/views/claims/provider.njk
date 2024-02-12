@@ -1,0 +1,64 @@
+{% extends "layouts/main.njk" %}
+
+{% set primaryNavId = "claims" %}
+
+{% set title = "Provider" %}
+{% set caption = "Add claim" %}
+
+{% block beforeContent %}
+{{ govukBackLink({
+  text: "Back",
+  href: actions.back
+}) }}
+{% endblock %}
+
+{% block content %}
+
+  {% include "_includes/notification-banner.njk" %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      {% set headingHtml %}
+        {% include "_includes/page-heading-legend.njk" %}
+      {% endset %}
+{{claim|dump|safe}}
+      <form action="{{ actions.save }}" method="post" accept-charset="utf-8" novalidate>
+
+        {{ govukRadios({
+          name: "claim[provider]",
+          fieldset: {
+            legend: {
+              html: headingHtml,
+              isPageHeading: true,
+              classes: "govuk-fieldset__legend--l"
+            }
+          },
+          value: claim.provider,
+          items: [
+            {
+              value: "10019464",
+              text: "Best Practice Network"
+            },
+            {
+              value: "10090839",
+              text: "NIoT: National Institute of Teaching, founded by the School-Led Development Trust"
+            }
+          ],
+          errorMessage: errors | getErrorMessage("provider")
+        }) }}
+
+        {{ govukButton({
+          text: "Continue"
+        }) }}
+
+      </form>
+
+      <p class="govuk-body">
+        <a class="govuk-link" href="{{ actions.cancel }}">Cancel</a>
+      </p>
+
+    </div>
+  </div>
+
+{% endblock %}

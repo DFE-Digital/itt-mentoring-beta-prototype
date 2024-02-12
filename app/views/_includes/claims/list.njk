@@ -1,0 +1,22 @@
+<table class="govuk-table app-table--vertical-align-middle">
+  <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+      <th class="govuk-table__header govuk-!-width-one-third">Claim ID</th>
+      <th class="govuk-table__header">Something else</th>
+    </tr>
+  </thead>
+  <tbody class="govuk-table__body">
+    {% for claim in claims %}
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell app-table--courses__course-name">
+          <a class="govuk-link" href="{{ actions.view }}/{{ claim.id }}">
+            {{ claim.id }}
+          </a>
+        </td>
+        <td class="govuk-table__cell">
+          Something
+        </td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>

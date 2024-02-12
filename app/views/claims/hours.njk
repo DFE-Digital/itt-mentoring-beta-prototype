@@ -1,0 +1,86 @@
+{% extends "layouts/main.njk" %}
+
+{% set primaryNavId = "claims" %}
+
+{% set title = "Hours" %}
+{% set caption = "Add claim" %}
+
+{% block beforeContent %}
+{{ govukBackLink({
+  text: "Back",
+  href: actions.back
+}) }}
+{% endblock %}
+
+{% block content %}
+
+  {% include "_includes/notification-banner.njk" %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      {% set headingHtml %}
+        {% include "_includes/page-heading-legend.njk" %}
+      {% endset %}
+
+      <form action="{{ actions.save }}" method="post" accept-charset="utf-8" novalidate>
+
+        {{ govukRadios({
+          name: "claim[hours]",
+          fieldset: {
+            legend: {
+              html: headingHtml,
+              isPageHeading: true,
+              classes: "govuk-fieldset__legend--l"
+            }
+          },
+          value: claim.hours,
+          items: [
+            {
+              value: "20",
+              text: "20 hours"
+            },
+            {
+              value: "6",
+              text: "6 hours"
+            },
+            {
+              divider: "or"
+            },
+            {
+              value: "other",
+              text: "Other amount",
+              conditional: {
+                html: govukInput({
+                  id: "otherAmount",
+                  name: "otherAmount",
+                  label: {
+                    text: "Label text",
+                    isPageHeading: false,
+                    classes: "govuk-label--m"
+                  },
+                  hint: {
+                    text: "Hint text"
+                  },
+                  classes: "govuk-input--width-2"
+                })
+              }
+            }
+          ]
+        }) }}
+
+
+        {{ govukButton({
+          text: "Continue"
+        }) }}
+
+      </form>
+
+      <p class="govuk-body">
+        <a class="govuk-link" href="{{ actions.cancel }}">Cancel</a>
+      </p>
+
+    </div>
+  </div>
+
+{% endblock %}
