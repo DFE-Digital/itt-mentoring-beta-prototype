@@ -3,12 +3,7 @@
 {% set primaryNavId = "claims" %}
 
 {% set title = "Check your answers" %}
-
-{# {% if referrer == "change" or currentMentor %}
-  {% set caption = currentMentor.firstName + " " + currentMentor.lastName %}
-{% else %} #}
-  {% set caption = "Add claim" %}
-{# {% endif %} #}
+{% set caption = "Add claim" %}
 
 {% block pageTitle %}
   {{ "Error: " if errors.length }}{{ title + " - " if title }}{{ caption + " - " if caption }}{{ serviceName }} - GOV.UK
@@ -33,6 +28,95 @@
       <form action="{{ actions.save }}" method="post" accept-charset="utf-8" novalidate>
 
         {# {% include "_includes/claims/check-your-answers.njk" %} #}
+
+        {# {{claim|dump|safe}} #}
+
+        {% set mentorListHtml %}
+          <ul class="govuk-list govuk-list--bullet">
+            {% for mentor in mentorChoices %}
+              <li>
+                {{ mentor | getMentorName }}
+              </li>
+            {% endfor %}
+          </ul>
+        {% endset %}
+
+        {{ govukSummaryList({
+          rows: [
+            {
+              key: {
+                text: "Provider"
+              },
+              value: {
+                text: claim.provider | getProviderName
+              },
+              actions: {
+                items: [
+                  {
+                    href: "Item URL",
+                    text: "Change",
+                    visuallyHiddenText: "Item label"
+                  }
+                ]
+              }
+            },
+            {
+              key: {
+                text: "Mentors"
+              },
+              value: {
+                html: mentorListHtml
+              },
+              actions: {
+                items: [
+                  {
+                    href: "Item URL",
+                    text: "Change",
+                    visuallyHiddenText: "Item label"
+                  }
+                ]
+              }
+            }
+          ]
+        }) }}
+
+        {% for mentor in claim.mentors %}
+          {{ govukSummaryList({
+            card: {
+              title: {
+                text: mentor.trn | getMentorName
+              },
+              actions: {
+                items: [
+                  {
+                    href: "#",
+                    text: "Remove",
+                    visuallyHiddenText: "mentor"
+                  }
+                ]
+              }
+            },
+            rows: [
+              {
+                key: {
+                  text: "Hours of training"
+                },
+                value: {
+                  text: mentor.hours
+                },
+                actions: {
+                  items: [
+                    {
+                      href: "#",
+                      text: "Change",
+                      visuallyHiddenText: "age"
+                    }
+                  ]
+                }
+              }
+            ]
+          }) }}
+        {% endfor %}
 
         {{ govukButton({
           text: "Update claim" if referrer == "change" else "Add claim"
