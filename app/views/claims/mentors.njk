@@ -26,7 +26,7 @@
       <form action="{{ actions.save }}" method="post" accept-charset="utf-8" novalidate>
 
         {{ govukCheckboxes({
-          name: "claim[mentors]",
+          name: "mentorChoices[]",
           fieldset: {
             legend: {
               html: headingHtml,
@@ -37,21 +37,9 @@
           hint: {
             text: "Select all that apply"
           },
-          values: claim.mentors,
-          items: [
-            {
-              value: "One",
-              text: "Lea"
-            },
-            {
-              value: "Two",
-              text: "Simon"
-            },
-            {
-              value: "Three",
-              text: "Zoe"
-            }
-          ]
+          values: mentorChoices,
+          items: mentorOptions,
+          errorMessage: errors | getErrorMessage("mentorChoices")
         }) }}
 
         {{ govukButton({
