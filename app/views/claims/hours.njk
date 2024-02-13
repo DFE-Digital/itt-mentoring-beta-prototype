@@ -2,7 +2,7 @@
 
 {% set primaryNavId = "claims" %}
 
-{% set title = "Hours" %}
+{% set title = "Hours for " + (mentorTrn | getMentorName()) %}
 {% set caption = "Add claim" %}
 
 {% block beforeContent %}
@@ -24,9 +24,10 @@
       {% endset %}
 
       <form action="{{ actions.save }}" method="post" accept-charset="utf-8" novalidate>
-
+        <input type="hidden" name="mentor[trn]" value="{{ mentorTrn }}">
+{{position+1}} of {{data.claim.mentorChoices.length}}
         {{ govukRadios({
-          name: "claim[hours]",
+          name: "mentor[hours]",
           fieldset: {
             legend: {
               html: headingHtml,
@@ -65,7 +66,7 @@
                   classes: "govuk-input--width-2"
                 })
               }
-            }
+            } if 1==0
           ],
           errorMessage: errors | getErrorMessage("hours")
         }) }}
