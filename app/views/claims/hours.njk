@@ -25,7 +25,7 @@
 
       <form action="{{ actions.save }}" method="post" accept-charset="utf-8" novalidate>
         <input type="hidden" name="mentor[trn]" value="{{ mentorTrn }}">
-{{position+1}} of {{data.claim.mentorChoices.length}}
+
         {{ govukRadios({
           name: "mentor[hours]",
           fieldset: {
