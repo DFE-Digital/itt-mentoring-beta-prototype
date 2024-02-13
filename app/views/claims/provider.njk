@@ -22,7 +22,7 @@
       {% set headingHtml %}
         {% include "_includes/page-heading-legend.njk" %}
       {% endset %}
-{{claim|dump|safe}}
+
       <form action="{{ actions.save }}" method="post" accept-charset="utf-8" novalidate>
 
         {{ govukRadios({
