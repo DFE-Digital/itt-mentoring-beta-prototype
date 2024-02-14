@@ -25,6 +25,7 @@
 
       <form action="{{ actions.save }}" method="post" accept-charset="utf-8" novalidate>
         <input type="hidden" name="mentor[trn]" value="{{ mentorTrn }}">
+        <input type="hidden" name="mentor[name]" value="{{ mentorTrn | getMentorName }}">
 
         {{ govukRadios({
           name: "mentor[hours]",
@@ -35,7 +36,7 @@
               classes: "govuk-fieldset__legend--l"
             }
           },
-          value: claim.hours,
+          value: mentor.hours,
           items: [
             {
               value: "20",
@@ -54,19 +55,20 @@
               conditional: {
                 html: govukInput({
                   id: "otherAmount",
-                  name: "otherAmount",
+                  name: "mentor[otherHours]",
                   label: {
-                    text: "Label text",
+                    text: "Number of hours",
                     isPageHeading: false,
-                    classes: "govuk-label--m"
+                    classes: "govuk-label--s"
                   },
                   hint: {
-                    text: "Hint text"
+                    text: "Enter whole numbers up to a maximum of 20 hours"
                   },
+                  value: mentor.otherHours,
                   classes: "govuk-input--width-2"
                 })
               }
-            } if 1==0
+            }
           ],
           errorMessage: errors | getErrorMessage("hours")
         }) }}
