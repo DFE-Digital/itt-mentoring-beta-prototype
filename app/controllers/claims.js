@@ -36,7 +36,7 @@ exports.new_claim_get = (req, res) => {
   let save = `/organisations/${req.params.organisationId}/claims/new`
   if (req.query.referrer === 'check') {
     back = `/organisations/${req.params.organisationId}/claims/new/check`
-    save += '?referrer=check'
+    save += `?referrer=${req.query.referrer}`
   }
 
   res.render('../views/claims/provider', {
@@ -54,7 +54,7 @@ exports.new_claim_post = (req, res) => {
   let save = `/organisations/${req.params.organisationId}/claims/new`
   if (req.query.referrer === 'check') {
     back = `/organisations/${req.params.organisationId}/claims/new/check`
-    save += '?referrer=check'
+    save += `?referrer=${req.query.referrer}`
   }
 
   const errors = []
@@ -105,13 +105,13 @@ exports.new_claim_mentors_post = (req, res) => {
 
   const errors = []
 
-  // if (!req.session.data.claim.mentorChoices.length) {
-  //   const error = {}
-  //   error.fieldName = 'mentorChoices'
-  //   error.href = '#mentorChoices'
-  //   error.text = 'Select a mentor'
-  //   errors.push(error)
-  // }
+  if (!req.session.data.mentorChoices.length) {
+    const error = {}
+    error.fieldName = 'mentorChoices'
+    error.href = '#mentorChoices'
+    error.text = 'Select a mentor'
+    errors.push(error)
+  }
 
   if (errors.length) {
     res.render('../views/claims/mentors', {
@@ -136,68 +136,118 @@ exports.new_claim_mentors_post = (req, res) => {
 }
 
 exports.new_claim_hours_get = (req, res) => {
+  let back = `/organisations/${req.params.organisationId}/claims/new/mentors`
+  let save = `/organisations/${req.params.organisationId}/claims/new/hours`
+  if (req.query.referrer === 'check') {
+    back = `/organisations/${req.params.organisationId}/claims/new/check`
+    save += `?referrer=${req.query.referrer}&position=${req.query.position}`
+  }
+
   const position = req.session.data.position
   const mentorTrn = req.session.data.mentorChoices[position]
+
+  let mentor = req.session.data.mentor
+  if (req.query.referrer === 'check') {
+    mentor = req.session.data.claim.mentors[position]
+  }
 
   res.render('../views/claims/hours', {
     mentorTrn,
     position,
-    mentor: req.session.data.mentor,
+    mentor,
     actions: {
-      save: `/organisations/${req.params.organisationId}/claims/new/hours`,
-      back: `/organisations/${req.params.organisationId}/claims/new/mentors`,
+      save,
+      back,
       cancel: `/organisations/${req.params.organisationId}/claims`
     }
   })
 }
 
 exports.new_claim_hours_post = (req, res) => {
+  let back = `/organisations/${req.params.organisationId}/claims/new/mentors`
+  let save = `/organisations/${req.params.organisationId}/claims/new/hours`
+  if (req.query.referrer === 'check') {
+    back = `/organisations/${req.params.organisationId}/claims/new/check`
+    save += `?referrer=${req.query.referrer}&position=${req.query.position}`
+  }
+
   const position = req.session.data.position
   const mentorTrn = req.session.data.mentorChoices[position]
 
+  let mentor = req.session.data.mentor
+  if (req.query.referrer === 'check') {
+    mentor = req.session.data.claim.mentors[position]
+  }
+
   const errors = []
 
-  // if (!req.session.data.claim.mentors[position].hours) {
-  //   const error = {}
-  //   error.fieldName = 'hours'
-  //   error.href = '#hours'
-  //   error.text = 'Select the number of hours'
-  //   errors.push(error)
-  // }
+  if (!req.session.data.mentor.hours) {
+    const error = {}
+    error.fieldName = 'hours'
+    error.href = '#hours'
+    error.text = 'Select the number of hours'
+    errors.push(error)
+  } else if (req.session.data.mentor.hours === 'other') {
+    if (!req.session.data.mentor.otherHours.length) {
+      const error = {}
+      error.fieldName = 'otherHours'
+      error.href = '#otherHours'
+      error.text = 'Enter the number of hours'
+      errors.push(error)
+    } else if (isNaN(req.session.data.mentor.otherHours) || req.session.data.mentor.otherHours > 20) {
+      const error = {}
+      error.fieldName = 'otherHours'
+      error.href = '#otherHours'
+      error.text = 'Enter the number of hours between 0 and 20'
+      errors.push(error)
+    }
+    // else if (!Number.isInteger(req.session.data.mentor.otherHours)) {
+    //   const error = {}
+    //   error.fieldName = 'otherHours'
+    //   error.href = '#otherHours'
+    //   error.text = 'Enter whole numbers up to a maximum of 20 hours'
+    //   errors.push(error)
+    // }
+  }
 
   if (errors.length) {
     res.render('../views/claims/hours', {
       mentorTrn,
       position,
-      mentor: req.session.data.mentor,
+      mentor,
       actions: {
-        save: `/organisations/${req.params.organisationId}/claims/new/hours`,
-        back: `/organisations/${req.params.organisationId}/claims/new/mentors`,
+        save,
+        back,
         cancel: `/organisations/${req.params.organisationId}/claims`
       },
       errors
     })
   } else {
-    // put the submitted the mentor information into the mentors array in the claim
-    req.session.data.claim.mentors.push(req.session.data.mentor)
+    // if (req.query.referrer === 'check') {
 
-    // if we've iterated through all the mentors, go to the check page
-    if (req.session.data.position === (req.session.data.mentorChoices.length - 1)) {
-      // delete the position info as no longer needed
-      delete req.session.data.position
 
-      // delete the mentor object as no longer needed
-      delete req.session.data.mentor
 
-      res.redirect(`/organisations/${req.params.organisationId}/claims/new/check`)
-    } else {
-      // increment the position to track where we are in the flow
-      req.session.data.position += 1
+    // } else {
+      // put the submitted the mentor information into the mentors array in the claim
+      req.session.data.claim.mentors.push(req.session.data.mentor)
 
-      // redirct the user back to the hours page to add info for the next mentor
-      res.redirect(`/organisations/${req.params.organisationId}/claims/new/hours`)
-    }
+      // if we've iterated through all the mentors, go to the check page
+      if (req.session.data.position === (req.session.data.mentorChoices.length - 1)) {
+        // delete the position info as no longer needed
+        delete req.session.data.position
 
+        // delete the mentor object as no longer needed
+        delete req.session.data.mentor
+
+        res.redirect(`/organisations/${req.params.organisationId}/claims/new/check`)
+      } else {
+        // increment the position to track where we are in the flow
+        req.session.data.position += 1
+
+        // redirct the user back to the hours page to add info for the next mentor
+        res.redirect(`/organisations/${req.params.organisationId}/claims/new/hours`)
+      }
+    // }
   }
 }
 
@@ -205,7 +255,6 @@ exports.new_claim_check_get = (req, res) => {
 
   res.render('../views/claims/check-your-answers', {
     claim: req.session.data.claim,
-    mentorChoices: req.session.data.mentorChoices,
     actions: {
       save: `/organisations/${req.params.organisationId}/claims/new/check`,
       back: `/organisations/${req.params.organisationId}/claims/new/hours`,
