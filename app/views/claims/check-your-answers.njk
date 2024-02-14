@@ -32,7 +32,7 @@
         {# {{claim|dump|safe}} #}
 
         {% set mentorListHtml %}
-          <ul class="govuk-list govuk-list--bullet">
+          <ul class="govuk-list">
             {% for mentor in mentorChoices %}
               <li>
                 {{ mentor | getMentorName }}
@@ -53,9 +53,9 @@
               actions: {
                 items: [
                   {
-                    href: "Item URL",
+                    href: actions.change + "?referrer=check",
                     text: "Change",
-                    visuallyHiddenText: "Item label"
+                    visuallyHiddenText: "provider"
                   }
                 ]
               }
@@ -70,9 +70,9 @@
               actions: {
                 items: [
                   {
-                    href: "Item URL",
+                    href: actions.change + "/mentors?referrer=check",
                     text: "Change",
-                    visuallyHiddenText: "Item label"
+                    visuallyHiddenText: "mentors included in the claim"
                   }
                 ]
               }
@@ -80,43 +80,25 @@
           ]
         }) }}
 
-        {% for mentor in claim.mentors %}
-          {{ govukSummaryList({
-            card: {
-              title: {
-                text: mentor.trn | getMentorName
-              },
-              actions: {
-                items: [
-                  {
-                    href: "#",
-                    text: "Remove",
-                    visuallyHiddenText: "mentor"
-                  }
-                ]
-              }
-            },
-            rows: [
-              {
-                key: {
-                  text: "Hours of training"
-                },
-                value: {
-                  text: mentor.hours
-                },
-                actions: {
-                  items: [
-                    {
-                      href: "#",
-                      text: "Change",
-                      visuallyHiddenText: "age"
-                    }
-                  ]
-                }
-              }
-            ]
-          }) }}
-        {% endfor %}
+        <h2 class="govuk-heading-m">Hours of training</h2>
+
+        <dl class="govuk-summary-list">
+          {% for mentor in claim.mentors %}
+            <div class="govuk-summary-list__row">
+              <dt class="govuk-summary-list__key">
+                {{ mentor.trn | getMentorName }}
+              </dt>
+              <dd class="govuk-summary-list__value">
+                {{ mentor.hours + " hours" if mentor.hours else "Not entered" }}
+              </dd>
+              <dd class="govuk-summary-list__actions">
+                <a class="govuk-link" href="{{ actions.change }}/hours?referrer=check&position={{ loop.index0 }}">
+                  Change<span class="govuk-visually-hidden"> hours of training undertaken by {{ mentor.trn | getMentorName }}</span>
+                </a>
+              </dd>
+            </div>
+          {% endfor %}
+        </dl>
 
         {{ govukButton({
           text: "Update claim" if referrer == "change" else "Add claim"
