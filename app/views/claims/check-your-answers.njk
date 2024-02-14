@@ -27,15 +27,11 @@
 
       <form action="{{ actions.save }}" method="post" accept-charset="utf-8" novalidate>
 
-        {# {% include "_includes/claims/check-your-answers.njk" %} #}
-
-        {# {{claim|dump|safe}} #}
-
         {% set mentorListHtml %}
           <ul class="govuk-list">
-            {% for mentor in mentorChoices %}
+            {% for mentor in claim.mentors %}
               <li>
-                {{ mentor | getMentorName }}
+                {{ mentor.trn | getMentorName }}
               </li>
             {% endfor %}
           </ul>
@@ -89,7 +85,11 @@
                 {{ mentor.trn | getMentorName }}
               </dt>
               <dd class="govuk-summary-list__value">
-                {{ mentor.hours + " hours" if mentor.hours else "Not entered" }}
+                {% if mentor.hours == "other" %}
+                  {{ mentor.otherHours + " hours" if mentor.otherHours else "Not entered" }}
+                {% else %}
+                  {{ mentor.hours + " hours" if mentor.hours else "Not entered" }}
+                {% endif %}
               </dd>
               <dd class="govuk-summary-list__actions">
                 <a class="govuk-link" href="{{ actions.change }}/hours?referrer=check&position={{ loop.index0 }}">
