@@ -32,17 +32,31 @@ exports.claim_list = (req, res) => {
 /// ------------------------------------------------------------------------ ///
 
 exports.new_claim_get = (req, res) => {
+  let back = `/organisations/${req.params.organisationId}/claims`
+  let save = `/organisations/${req.params.organisationId}/claims/new`
+  if (req.query.referrer === 'check') {
+    back = `/organisations/${req.params.organisationId}/claims/new/check`
+    save += '?referrer=check'
+  }
+
   res.render('../views/claims/provider', {
     claim: req.session.data.claim,
     actions: {
-      save: `/organisations/${req.params.organisationId}/claims/new`,
-      back: `/organisations/${req.params.organisationId}/claims`,
+      save,
+      back,
       cancel: `/organisations/${req.params.organisationId}/claims`
     }
   })
 }
 
 exports.new_claim_post = (req, res) => {
+  let back = `/organisations/${req.params.organisationId}/claims`
+  let save = `/organisations/${req.params.organisationId}/claims/new`
+  if (req.query.referrer === 'check') {
+    back = `/organisations/${req.params.organisationId}/claims/new/check`
+    save += '?referrer=check'
+  }
+
   const errors = []
 
   if (!req.session.data.claim?.provider) {
@@ -57,14 +71,18 @@ exports.new_claim_post = (req, res) => {
     res.render('../views/claims/provider', {
       claim: req.session.data.claim,
       actions: {
-        save: `/organisations/${req.params.organisationId}/claims/new`,
-        back: `/organisations/${req.params.organisationId}/claims`,
+        save,
+        back,
         cancel: `/organisations/${req.params.organisationId}/claims`
       },
       errors
     })
   } else {
-    res.redirect(`/organisations/${req.params.organisationId}/claims/new/mentors`)
+    if (req.query.referrer === 'check') {
+      res.redirect(`/organisations/${req.params.organisationId}/claims/new/check`)
+    } else {
+      res.redirect(`/organisations/${req.params.organisationId}/claims/new/mentors`)
+    }
   }
 }
 
