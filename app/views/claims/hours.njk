@@ -14,7 +14,7 @@
 
 {% block content %}
 
-  {% include "_includes/notification-banner.njk" %}
+  {% include "_includes/error-summary.njk" %}
 
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
@@ -65,6 +65,7 @@
                     text: "Enter whole numbers up to a maximum of 20 hours"
                   },
                   value: mentor.otherHours,
+                  errorMessage: errors | getErrorMessage("otherHours"),
                   classes: "govuk-input--width-2"
                 })
               }
