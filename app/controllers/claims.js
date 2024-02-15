@@ -1,4 +1,5 @@
 const claimModel = require('../models/claims')
+const claimHelper = require('../helpers/claims')
 const mentorHelper = require('../helpers/mentors')
 
 /// ------------------------------------------------------------------------ ///
@@ -90,6 +91,7 @@ exports.new_claim_mentors_get = (req, res) => {
   const mentorOptions = mentorHelper.getMentorOptions({ organisationId: req.params.organisationId })
 
   res.render('../views/claims/mentors', {
+    claim: req.session.data.claim,
     mentorOptions,
     mentorChoices: req.session.data.mentorChoices,
     actions: {
@@ -115,6 +117,7 @@ exports.new_claim_mentors_post = (req, res) => {
 
   if (errors.length) {
     res.render('../views/claims/mentors', {
+      claim: req.session.data.claim,
       mentorOptions,
       mentorChoices: req.session.data.mentorChoices,
       actions: {
@@ -152,6 +155,7 @@ exports.new_claim_hours_get = (req, res) => {
   }
 
   res.render('../views/claims/hours', {
+    claim: req.session.data.claim,
     mentorTrn,
     position,
     mentor,
@@ -212,6 +216,7 @@ exports.new_claim_hours_post = (req, res) => {
 
   if (errors.length) {
     res.render('../views/claims/hours', {
+      claim: req.session.data.claim,
       mentorTrn,
       position,
       mentor,
@@ -231,13 +236,13 @@ exports.new_claim_hours_post = (req, res) => {
       // put the submitted the mentor information into the mentors array in the claim
       req.session.data.claim.mentors.push(req.session.data.mentor)
 
+      // delete the mentor object as no longer needed
+      delete req.session.data.mentor
+
       // if we've iterated through all the mentors, go to the check page
       if (req.session.data.position === (req.session.data.mentorChoices.length - 1)) {
         // delete the position info as no longer needed
         delete req.session.data.position
-
-        // delete the mentor object as no longer needed
-        delete req.session.data.mentor
 
         res.redirect(`/organisations/${req.params.organisationId}/claims/new/check`)
       } else {
@@ -252,12 +257,13 @@ exports.new_claim_hours_post = (req, res) => {
 }
 
 exports.new_claim_check_get = (req, res) => {
+  const position = req.session.data.claim.mentors.length - 1
 
   res.render('../views/claims/check-your-answers', {
     claim: req.session.data.claim,
     actions: {
       save: `/organisations/${req.params.organisationId}/claims/new/check`,
-      back: `/organisations/${req.params.organisationId}/claims/new/hours`,
+      back: `/organisations/${req.params.organisationId}/claims/new/hours?position=${position}`,
       change: `/organisations/${req.params.organisationId}/claims/new`,
       cancel: `/organisations/${req.params.organisationId}/claims`
     }
@@ -265,13 +271,29 @@ exports.new_claim_check_get = (req, res) => {
 }
 
 exports.new_claim_check_post = (req, res) => {
+  req.session.data.claim.reference = claimHelper.generateClaimID()
+
   claimModel.insertOne({
     organisationId: req.params.organisationId,
     claim: req.session.data.claim
   })
 
-  delete req.session.data.claim
+  // delete req.session.data.claim
 
   req.flash('success', 'Claim added')
-  res.redirect(`/organisations/${req.params.organisationId}/claims`)
+  res.redirect(`/organisations/${req.params.organisationId}/claims/${req.params.claimId}/confirmation`)
+}
+
+exports.new_claim_confirmation_get = (req, res) => {
+  const claim = claimModel.findOne({
+    organisationId: req.params.organisationId,
+    claimId: req.params.claimId
+  })
+
+  res.render('../views/claims/confirmation', {
+    claim,
+    actions: {
+      back: `/organisations/${req.params.organisationId}/claims`
+    }
+  })
 }
