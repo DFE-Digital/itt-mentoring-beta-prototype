@@ -42,6 +42,20 @@
           errorMessage: errors | getErrorMessage("mentorChoices")
         }) }}
 
+        {% set summaryHtml %}
+          <p class="govuk-body">
+            If the mentor is not listed, you can add a mentor and restart your claim for all the mentors.
+          </p>
+          <p class="govuk-body">
+            Or, you can submit the claim for the selected mentors, add the missing mentor, and create another claim for them.
+          </p>
+        {% endset %}
+
+        {{ govukDetails({
+          summaryText: "The mentor is not listed",
+          html: summaryHtml
+        }) }}
+
         {{ govukButton({
           text: "Continue"
         }) }}
