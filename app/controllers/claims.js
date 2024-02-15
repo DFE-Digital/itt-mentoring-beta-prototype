@@ -272,16 +272,20 @@ exports.new_claim_check_get = (req, res) => {
 
 exports.new_claim_check_post = (req, res) => {
   req.session.data.claim.reference = claimHelper.generateClaimID()
+  req.session.data.claim.status = 'submitted'
 
-  claimModel.insertOne({
+  const claim = claimModel.insertOne({
     organisationId: req.params.organisationId,
     claim: req.session.data.claim
   })
 
-  // delete req.session.data.claim
+  delete req.session.data.claim
 
-  req.flash('success', 'Claim added')
-  res.redirect(`/organisations/${req.params.organisationId}/claims/${req.params.claimId}/confirmation`)
+  // route based on button clicked - submit vs save
+
+  // req.flash('success', 'Claim added')
+
+  res.redirect(`/organisations/${req.params.organisationId}/claims/${claim.id}/confirmation`)
 }
 
 exports.new_claim_confirmation_get = (req, res) => {
