@@ -2,8 +2,8 @@
 
 {% set primaryNavId = "claims" %}
 
-{% set title = "Hours for " + (mentorTrn | getMentorName()) %}
-{% set caption = "Add claim" %}
+{% set title = "Hours of training for " + (mentorTrn | getMentorName) %}
+{% set caption = "Add claim - " + (claim.provider | getProviderName) %}
 
 {% block beforeContent %}
 {{ govukBackLink({
