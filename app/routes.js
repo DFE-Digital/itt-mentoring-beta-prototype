@@ -213,6 +213,9 @@ router.post('/organisations/:organisationId/claims/new/check', checkIsAuthentica
 
 router.get('/organisations/:organisationId/claims/:claimId/confirmation', checkIsAuthenticated, claimController.new_claim_confirmation_get)
 
+router.get('/organisations/:organisationId/claims/:claimId/delete', checkIsAuthenticated, claimController.delete_claim_get)
+router.post('/organisations/:organisationId/claims/:claimId/delete', checkIsAuthenticated, claimController.delete_claim_post)
+
 router.get('/organisations/:organisationId/claims/:claimId', checkIsAuthenticated, claimController.claim_details)
 
 router.get('/organisations/:organisationId/claims', checkIsAuthenticated, claimController.claim_list)

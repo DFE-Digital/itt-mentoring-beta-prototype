@@ -318,3 +318,35 @@ exports.new_claim_confirmation_get = (req, res) => {
     }
   })
 }
+
+/// ------------------------------------------------------------------------ ///
+/// DELETE CLAIM
+/// ------------------------------------------------------------------------ ///
+
+exports.delete_claim_get = (req, res) => {
+  // const organisation = organisationModel.findOne({ organisationId: req.params.organisationId })
+  const claim = claimModel.findOne({
+    organisationId: req.params.organisationId,
+    claimId: req.params.claimId
+  })
+
+  res.render('../views/claims/delete', {
+    // organisation,
+    claim,
+    actions: {
+      save: `/organisations/${req.params.organisationId}/claims/${req.params.claimId}/delete`,
+      back: `/organisations/${req.params.organisationId}/claims/${req.params.claimId}`,
+      cancel: `/organisations/${req.params.organisationId}/claims/${req.params.claimId}`
+    }
+  })
+}
+
+exports.delete_claim_post = (req, res) => {
+  claimModel.deleteOne({
+    organisationId: req.params.organisationId,
+    claimId: req.params.claimId
+  })
+
+  req.flash('success', 'Claim deleted')
+  res.redirect(`/organisations/${req.params.organisationId}/claims`)
+}
