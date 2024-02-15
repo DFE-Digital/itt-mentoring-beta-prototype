@@ -12,6 +12,9 @@ exports.getMentorOptions = (params) => {
     item.value = mentor.trn
     item.id = mentor.id
 
+    item.hint = {}
+    item.hint.text = mentor.trn
+
     items.push(item)
   })
 
