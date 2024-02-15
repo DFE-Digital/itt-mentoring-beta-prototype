@@ -27,6 +27,23 @@ exports.claim_list = (req, res) => {
 /// SHOW CLAIM
 /// ------------------------------------------------------------------------ ///
 
+exports.claim_details = (req, res) => {
+  const claim = claimModel.findOne({
+    organisationId: req.params.organisationId,
+    claimId: req.params.claimId
+  })
+
+  res.render('../views/claims/show', {
+    claim,
+    actions: {
+      change: '#',
+      delete: `/organisations/${req.params.organisationId}/claims/${req.params.claimsId}/delete`,
+      back: `/organisations/${req.params.organisationId}/claims`,
+      cancel: `/organisations/${req.params.organisationId}/claims`,
+      submit: '#'
+    }
+  })
+}
 
 /// ------------------------------------------------------------------------ ///
 /// NEW CLAIM
