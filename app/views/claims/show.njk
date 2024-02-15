@@ -83,6 +83,16 @@
               value: {
                 text: (claim.updatedAt if claim.updatedAt else claim.createdAt) | datetime('dd MMMM yyyy')
               }
+            },
+            {
+              key: {
+                text: "Status"
+              },
+              value: {
+                html: govukTag({
+                  text: claim.status | capitalize
+                })
+              }
             }
           ]
         }) }}
