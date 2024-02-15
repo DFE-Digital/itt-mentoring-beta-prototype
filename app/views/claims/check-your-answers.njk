@@ -18,8 +18,6 @@
 
 {% block content %}
 
-  {% include "_includes/error-summary.njk" %}
-
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
 
@@ -58,7 +56,7 @@
             },
             {
               key: {
-                text: "Mentors"
+                text: "Mentor" + ("s" if claim.mentors.length > 1)
               },
               value: {
                 html: mentorListHtml
@@ -99,6 +97,15 @@
             </div>
           {% endfor %}
         </dl>
+
+        <p class="govuk-body">
+          By submitting this claim, you confirm that the details provided are correct to the best of your knowledge.
+        </p>
+
+        {{ govukWarningText({
+          text: "You will not be able to change any of the claim details once you have submitted it.",
+          iconFallbackText: "Warning"
+        }) }}
 
         {{ govukButton({
           text: "Submit claim"
