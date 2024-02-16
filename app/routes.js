@@ -48,6 +48,7 @@ router.use(passport.session())
 // Controller modules
 const accountController = require('./controllers/account')
 const authenticationController = require('./controllers/authentication')
+const claimController = require('./controllers/claims')
 const contentController = require('./controllers/content')
 const mentorController = require('./controllers/mentors')
 const organisationController = require('./controllers/organisations')
@@ -193,6 +194,31 @@ router.post('/organisations/:organisationId/mentors/:mentorId/delete', checkIsAu
 router.get('/organisations/:organisationId/mentors/:mentorId', checkIsAuthenticated, mentorController.mentor_details)
 
 router.get('/organisations/:organisationId/mentors', checkIsAuthenticated, mentorController.mentor_list)
+
+/// ------------------------------------------------------------------------ ///
+/// CLAIM ROUTES
+/// ------------------------------------------------------------------------ ///
+
+router.get('/organisations/:organisationId/claims/new', checkIsAuthenticated, claimController.new_claim_get)
+router.post('/organisations/:organisationId/claims/new', checkIsAuthenticated, claimController.new_claim_post)
+
+router.get('/organisations/:organisationId/claims/new/mentors', checkIsAuthenticated, claimController.new_claim_mentors_get)
+router.post('/organisations/:organisationId/claims/new/mentors', checkIsAuthenticated, claimController.new_claim_mentors_post)
+
+router.get('/organisations/:organisationId/claims/new/hours', checkIsAuthenticated, claimController.new_claim_hours_get)
+router.post('/organisations/:organisationId/claims/new/hours', checkIsAuthenticated, claimController.new_claim_hours_post)
+
+router.get('/organisations/:organisationId/claims/new/check', checkIsAuthenticated, claimController.new_claim_check_get)
+router.post('/organisations/:organisationId/claims/new/check', checkIsAuthenticated, claimController.new_claim_check_post)
+
+router.get('/organisations/:organisationId/claims/:claimId/confirmation', checkIsAuthenticated, claimController.new_claim_confirmation_get)
+
+router.get('/organisations/:organisationId/claims/:claimId/delete', checkIsAuthenticated, claimController.delete_claim_get)
+router.post('/organisations/:organisationId/claims/:claimId/delete', checkIsAuthenticated, claimController.delete_claim_post)
+
+router.get('/organisations/:organisationId/claims/:claimId', checkIsAuthenticated, claimController.claim_details)
+
+router.get('/organisations/:organisationId/claims', checkIsAuthenticated, claimController.claim_list)
 
 /// ------------------------------------------------------------------------ ///
 /// ------------------------------------------------------------------------ ///

@@ -1,0 +1,42 @@
+<table class="govuk-table app-table--vertical-align-middle">
+  <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+      <th class="govuk-table__header">Claim reference</th>
+      <th class="govuk-table__header govuk-!-width-one-quarter">Provider</th>
+      <th class="govuk-table__header govuk-!-width-one-quarter">Mentors</th>
+      <th class="govuk-table__header">Date submitted</th>
+      <th class="govuk-table__header">Status</th>
+    </tr>
+  </thead>
+  <tbody class="govuk-table__body">
+    {% for claim in claims %}
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell">
+          <a class="govuk-link" href="{{ actions.view }}/{{ claim.id }}">
+            {{ claim.reference | upper }}
+          </a>
+        </td>
+        <td class="govuk-table__cell">
+          {{ claim.provider | getProviderName }}
+        </td>
+        <td class="govuk-table__cell">
+          <ul class="govuk-list">
+            {% for mentor in claim.mentors %}
+              <li>
+                {{ mentor.trn | getMentorName }}
+              </li>
+            {% endfor %}
+          </ul>
+        </td>
+        <td class="govuk-table__cell">
+          {{ claim.createdAt | datetime('dd/MM/yyyy') }}
+        </td>
+        <td class="govuk-table__cell">
+          {{ govukTag({
+            text: claim.status | capitalize
+          }) }}
+        </td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>

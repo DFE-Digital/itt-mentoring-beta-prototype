@@ -3,6 +3,7 @@ app/data/ofsted-ratings.json
 app/data/organisation-types.json
 
 # Ignore generated data directories
+app/data/claims/
 app/data/mentors/
 app/data/organisations/
 app/data/providers/

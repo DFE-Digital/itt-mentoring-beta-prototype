@@ -28,7 +28,7 @@ exports.organisation = (req, res) => {
   // for use around the service
   req.session.passport.organisation = organisation
   if (organisation.type === 'school') {
-    res.redirect(`/organisations/${req.params.organisationId}/mentors`)
+    res.redirect(`/organisations/${req.params.organisationId}/claims`)
   } else {
     res.redirect(`/organisations/${req.params.organisationId}/details`)
   }

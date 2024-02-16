@@ -30,7 +30,14 @@ exports.findMany = (params) => {
 }
 
 exports.findOne = (params) => {
-  const mentors = this.findMany({ organisationId: params.organisationId })
+  let mentors = []
+
+  if (params.organisationId) {
+    mentors = this.findMany({ organisationId: params.organisationId })
+  } else {
+    mentors = this.findMany({})
+  }
+
   let mentor = {}
 
   if (params.mentorId) {
