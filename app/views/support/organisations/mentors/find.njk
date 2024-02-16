@@ -4,7 +4,7 @@
 {% set secondaryNavId = "mentors" %}
 
 {% set title = "Enter a teacher reference number (TRN)" %}
-{% set caption = "Add mentor" %}
+{% set caption = "Add mentor - " + organisation.name %}
 
 {% block beforeContent %}
 {{ govukBackLink({
@@ -15,7 +15,7 @@
 
 {% block content %}
 
-  {% include "_includes/notification-banner.njk" %}
+  {% include "_includes/error-summary.njk" %}
 
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">

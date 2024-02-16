@@ -47,12 +47,15 @@ exports.mentor_details = (req, res) => {
 /// ------------------------------------------------------------------------ ///
 
 exports.new_mentor_get = (req, res) => {
+  const organisation = organisationModel.findOne({ organisationId: req.params.organisationId })
+
   let back = `/support/organisations/${req.params.organisationId}/mentors`
   if (req.query.referrer === 'check') {
     back = `/support/organisations/${req.params.organisationId}/mentors/new/check`
   }
 
   res.render('../views/support/organisations/mentors/find', {
+    organisation,
     mentor: req.session.data.mentor,
     actions: {
       save: `/support/organisations/${req.params.organisationId}/mentors/new`,
@@ -63,7 +66,14 @@ exports.new_mentor_get = (req, res) => {
 }
 
 exports.new_mentor_post = (req, res) => {
+  const organisation = organisationModel.findOne({ organisationId: req.params.organisationId })
+
   const errors = []
+
+  const mentor = mentorModel.findOne({
+    organisationId: req.params.organisationId,
+    trn: req.session.data.mentor.trn
+  })
 
   if (!req.session.data.mentor.trn.length) {
     const error = {}
@@ -77,14 +87,7 @@ exports.new_mentor_post = (req, res) => {
     error.href = '#mentor'
     error.text = 'Enter a valid teacher reference number (TRN)'
     errors.push(error)
-  }
-
-  const mentor = mentorModel.findOne({
-    organisationId: req.params.organisationId,
-    trn: req.session.data.mentor.trn
-  })
-
-  if (mentor) {
+  } else if (mentor) {
     const error = {}
     error.fieldName = 'mentor'
     error.href = '#mentor'
@@ -94,6 +97,7 @@ exports.new_mentor_post = (req, res) => {
 
   if (errors.length) {
     res.render('../views/support/organisations/mentors/find', {
+      organisation,
       mentor: req.session.data.mentor,
       actions: {
         save: `/support/organisations/${req.params.organisationId}/mentors/new`,

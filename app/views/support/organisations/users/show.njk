@@ -3,7 +3,7 @@
 {% set primaryNavId = "organisations" %}
 
 {% set title = user.firstName + " " + user.lastName %}
-{% set caption = organisation.name %}
+{% set caption = "Users - " + organisation.name %}
 
 {% block beforeContent %}
 {{ govukBackLink({
