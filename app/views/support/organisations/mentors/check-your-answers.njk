@@ -9,11 +9,7 @@
   {% set title = "No results found for ‘" + data.mentor.trn + "’" %}
 {% endif %}
 
-{% if referrer == "change" or currentMentor %}
-  {% set caption = currentMentor.firstName + " " + currentMentor.lastName %}
-{% else %}
-  {% set caption = "Add mentor" %}
-{% endif %}
+{% set caption = "Add mentor - " + organisation.name %}
 
 {% block pageTitle %}
   {{ "Error: " if errors.length }}{{ title + " - " if title }}{{ caption + " - " if caption }}{{ serviceName }} - GOV.UK
@@ -41,7 +37,7 @@
           {% include "_includes/mentors/check-your-answers.njk" %}
 
           {{ govukButton({
-            text: "Update mentor" if referrer == "change" else "Add mentor"
+            text: "Add mentor"
           }) }}
 
         </form>
@@ -50,6 +46,10 @@
           <a class="govuk-link" href="{{ actions.cancel }}">Cancel</a>
         </p>
       {% else %}
+        <p class="govuk-body">
+          Check that you typed in the teacher reference number (TRN) correctly.
+        </p>
+
         <p class="govuk-body">
           <a class="govuk-link" href="{{ actions.change }}">Change your search</a>
         </p>
