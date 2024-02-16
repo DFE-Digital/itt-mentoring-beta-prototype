@@ -4,7 +4,7 @@
 {% set secondaryNavId = "mentors" %}
 
 {% set title = "Are you sure you want to remove this mentor?" %}
-{% set caption = mentor.firstName + " " + mentor.lastName %}
+{% set caption = mentor.firstName + " " + mentor.lastName + " - " + organisation.name %}
 
 {% block pageTitle %}
   {{ "Error: " if errors.length }}{{ title + " - " if title }}{{ caption + " - " if caption }}{{ serviceName }} - GOV.UK
