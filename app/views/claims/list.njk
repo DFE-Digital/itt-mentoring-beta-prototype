@@ -17,10 +17,26 @@
 
       {% include "_includes/page-heading.njk" %}
 
-      {{ govukButton({
-        text: "Add claim",
-        href: actions.new
-      }) }}
+      {% if not mentors.length %}
+        {% set mentorHtml %}
+          <p class="govuk-body">
+            You need to <a href="{{ actions.mentors }}" class="govuk-link">add a mentor</a> before creating a claim.
+          </p>
+        {% endset %}
+
+        {{ govukInsetText({
+          html: mentorHtml
+        }) }}
+      {% else %}
+        {{ govukInsetText({
+          text: "You can only claim for the academic year September 2023 to July 2024."
+        }) }}
+
+        {{ govukButton({
+          text: "Add claim",
+          href: actions.new
+        }) }}
+      {% endif %}
 
       {% if claims.length %}
         {% include "_includes/claims/list.njk" %}

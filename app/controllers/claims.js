@@ -1,4 +1,5 @@
 const claimModel = require('../models/claims')
+const mentorModel = require('../models/mentors')
 const organisationModel = require('../models/organisations')
 const claimHelper = require('../helpers/claims')
 const mentorHelper = require('../helpers/mentors')
@@ -10,6 +11,7 @@ const mentorHelper = require('../helpers/mentors')
 exports.claim_list = (req, res) => {
   const organisation = organisationModel.findOne({ organisationId: req.params.organisationId })
   const claims = claimModel.findMany({ organisationId: req.params.organisationId })
+  const mentors = mentorModel.findMany({ organisationId: req.params.organisationId })
 
   delete req.session.data.claim
   delete req.session.data.mentor
@@ -19,9 +21,11 @@ exports.claim_list = (req, res) => {
   res.render('../views/claims/list', {
     organisation,
     claims,
+    mentors,
     actions: {
       new: `/organisations/${req.params.organisationId}/claims/new`,
-      view: `/organisations/${req.params.organisationId}/claims`
+      view: `/organisations/${req.params.organisationId}/claims`,
+      mentors: `/organisations/${req.params.organisationId}/mentors`
     }
   })
 }
