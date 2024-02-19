@@ -44,11 +44,11 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
 
-      {% include "./_search-panel.njk" %}
-
-      {# {% include "./_sort-options.njk" %} #}
-
       {% if organisations.length %}
+
+        {% include "./_search-panel.njk" %}
+
+        {# {% include "./_sort-options.njk" %} #}
 
         <ul class="app-search-results">
           {% for organisation in organisations %}
