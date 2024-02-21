@@ -222,11 +222,15 @@ exports.new_claim_hours_post = (req, res) => {
       error.href = '#otherHours'
       error.text = 'Enter the number of hours'
       errors.push(error)
-    } else if (isNaN(req.session.data.mentor.otherHours) || req.session.data.mentor.otherHours > 20) {
+    } else if (
+      isNaN(req.session.data.mentor.otherHours)
+      || req.session.data.mentor.otherHours < 1
+      || req.session.data.mentor.otherHours > 20
+    ) {
       const error = {}
       error.fieldName = 'otherHours'
       error.href = '#otherHours'
-      error.text = 'Enter the number of hours between 0 and 20'
+      error.text = 'Enter the number of hours between 1 and 20'
       errors.push(error)
     }
     // else if (!Number.isInteger(req.session.data.mentor.otherHours)) {
