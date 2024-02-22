@@ -24,6 +24,7 @@
 
       {% if mentors.length %}
         {% include "_includes/mentors/list.njk" %}
+        {% include "_includes/pagination.njk" %}
       {% else %}
         <p class="govuk-body">There are no mentors for {{ organisation.name if organisation.name else "your organisation" }}.</p>
       {% endif %}

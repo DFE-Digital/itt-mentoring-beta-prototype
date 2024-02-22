@@ -24,6 +24,7 @@
 
       {% if users.length %}
         {% include "_includes/users/list.njk" %}
+        {% include "_includes/pagination.njk" %}
       {% else %}
         <p class="govuk-body">There are no users for {{ organisation.name if organisation.name else "your organisation" }}.</p>
       {% endif %}
