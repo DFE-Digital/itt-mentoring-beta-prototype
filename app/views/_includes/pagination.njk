@@ -1,8 +1,8 @@
-<p class="govuk-!-margin-bottom-0">Showing {{pagination.firstResultNumber}} to {{pagination.lastResultNumber}} of {{pagination.totalCount}} results</p>
+<p class="govuk-body">Showing {{pagination.firstResultNumber}} to {{pagination.lastResultNumber}} of {{pagination.totalCount}} results</p>
 
 {% if pagination.pageCount > 1 %}
   {{ govukPagination({
-    classes: "govuk-!-margin-top-4 govuk-!-margin-bottom-2",
+    classes: "govuk-!-margin-top-4",
     previous: {
       href: pagination.previousPage.href
     },
