@@ -1,5 +1,7 @@
 const userModel = require('../../models/users')
 const organisationModel = require('../../models/organisations')
+
+const Pagination = require('../../helpers/pagination')
 const validationHelper = require('../../helpers/validators')
 
 /// ------------------------------------------------------------------------ ///
@@ -8,17 +10,23 @@ const validationHelper = require('../../helpers/validators')
 
 exports.user_list = (req, res) => {
   const organisation = organisationModel.findOne({ organisationId: req.params.organisationId })
-  const users = userModel.findMany({ organisationId: req.params.organisationId })
+  let users = userModel.findMany({ organisationId: req.params.organisationId })
 
   users.sort((a, b) => {
     return a.firstName.localeCompare(b.firstName) || a.lastName.localeCompare(b.lastName)
   })
+
+  // TODO: get pageSize from settings
+  let pageSize = 25
+  let pagination = new Pagination(users, req.query.page, pageSize)
+  users = pagination.getData()
 
   delete req.session.data.user
 
   res.render('../views/support/organisations/users/list', {
     organisation,
     users,
+    pagination,
     actions: {
       new: `/support/organisations/${req.params.organisationId}/users/new`,
       view: `/support/organisations/${req.params.organisationId}/users`,
