@@ -1,6 +1,8 @@
 const mentorModel = require('../models/mentors')
 const organisationModel = require('../models/organisations')
 const teacherModel = require('../models/teachers')
+
+const Pagination = require('../helpers/pagination')
 const validationHelper = require('../helpers/validators')
 
 /// ------------------------------------------------------------------------ ///
@@ -9,17 +11,23 @@ const validationHelper = require('../helpers/validators')
 
 exports.mentor_list = (req, res) => {
   const organisation = organisationModel.findOne({ organisationId: req.params.organisationId })
-  const mentors = mentorModel.findMany({ organisationId: req.params.organisationId })
+  let mentors = mentorModel.findMany({ organisationId: req.params.organisationId })
 
   mentors.sort((a, b) => {
     return a.firstName.localeCompare(b.firstName) || a.lastName.localeCompare(b.lastName)
   })
+
+  // TODO: get pageSize from settings
+  let pageSize = 25
+  let pagination = new Pagination(mentors, req.query.page, pageSize)
+  mentors = pagination.getData()
 
   delete req.session.data.mentor
 
   res.render('../views/mentors/list', {
     organisation,
     mentors,
+    pagination,
     actions: {
       new: `/organisations/${req.params.organisationId}/mentors/new`,
       view: `/organisations/${req.params.organisationId}/mentors`,
