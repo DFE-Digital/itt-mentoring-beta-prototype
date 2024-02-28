@@ -55,6 +55,7 @@ const organisationController = require('./controllers/organisations')
 const userController = require('./controllers/users')
 
 const supportOrganisationController = require('./controllers/support/organisations')
+const supportOrganisationClaimController = require('./controllers/support/organisation-claims')
 const supportOrganisationMentorController = require('./controllers/support/organisation-mentors')
 const supportOrganisationUserController = require('./controllers/support/organisation-users')
 const supportUserController = require('./controllers/support/users')
@@ -265,6 +266,31 @@ router.post('/support/organisations/:organisationId/mentors/:mentorId/delete', c
 router.get('/support/organisations/:organisationId/mentors/:mentorId', checkIsAuthenticated, supportOrganisationMentorController.mentor_details)
 
 router.get('/support/organisations/:organisationId/mentors', checkIsAuthenticated, supportOrganisationMentorController.mentor_list)
+
+/// ------------------------------------------------------------------------ ///
+/// SUPPORT - ORGANISATION CLAIM ROUTES
+/// ------------------------------------------------------------------------ ///
+
+router.get('/support/organisations/:organisationId/claims/new', checkIsAuthenticated, supportOrganisationClaimController.new_claim_get)
+router.post('/support/organisations/:organisationId/claims/new', checkIsAuthenticated, supportOrganisationClaimController.new_claim_post)
+
+router.get('/support/organisations/:organisationId/claims/new/mentors', checkIsAuthenticated, supportOrganisationClaimController.new_claim_mentors_get)
+router.post('/support/organisations/:organisationId/claims/new/mentors', checkIsAuthenticated, supportOrganisationClaimController.new_claim_mentors_post)
+
+router.get('/support/organisations/:organisationId/claims/new/hours', checkIsAuthenticated, supportOrganisationClaimController.new_claim_hours_get)
+router.post('/support/organisations/:organisationId/claims/new/hours', checkIsAuthenticated, supportOrganisationClaimController.new_claim_hours_post)
+
+router.get('/support/organisations/:organisationId/claims/new/check', checkIsAuthenticated, supportOrganisationClaimController.new_claim_check_get)
+router.post('/support/organisations/:organisationId/claims/new/check', checkIsAuthenticated, supportOrganisationClaimController.new_claim_check_post)
+
+router.get('/support/organisations/:organisationId/claims/:claimId/confirmation', checkIsAuthenticated, supportOrganisationClaimController.new_claim_confirmation_get)
+
+router.get('/support/organisations/:organisationId/claims/:claimId/delete', checkIsAuthenticated, supportOrganisationClaimController.delete_claim_get)
+router.post('/support/organisations/:organisationId/claims/:claimId/delete', checkIsAuthenticated, supportOrganisationClaimController.delete_claim_post)
+
+router.get('/support/organisations/:organisationId/claims/:claimId', checkIsAuthenticated, supportOrganisationClaimController.claim_details)
+
+router.get('/support/organisations/:organisationId/claims', checkIsAuthenticated, supportOrganisationClaimController.claim_list)
 
 /// ------------------------------------------------------------------------ ///
 /// SUPPORT - USER ROUTES
