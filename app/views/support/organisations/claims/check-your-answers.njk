@@ -1,0 +1,125 @@
+{% extends "layouts/support.njk" %}
+
+{% set primaryNavId = "organisations" %}
+{% set secondaryNavId = "claims" %}
+
+{% set title = "Check your answers" %}
+{% set caption = "Add claim - " + organisation.name %}
+
+{% block pageTitle %}
+  {{ "Error: " if errors.length }}{{ title + " - " if title }}{{ caption + " - " if caption }}{{ serviceName }} - GOV.UK
+{% endblock %}
+
+{% block beforeContent %}
+{{ govukBackLink({
+  text: "Back",
+  href: actions.back
+}) }}
+{% endblock %}
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      {% include "_includes/page-heading.njk" %}
+
+      <form action="{{ actions.save }}" method="post" accept-charset="utf-8" novalidate>
+
+        {% set mentorListHtml %}
+          <ul class="govuk-list">
+            {% for mentor in claim.mentors %}
+              <li>
+                {{ mentor.trn | getMentorName }}
+              </li>
+            {% endfor %}
+          </ul>
+        {% endset %}
+
+        {{ govukSummaryList({
+          rows: [
+            {
+              key: {
+                text: "Provider"
+              },
+              value: {
+                text: claim.provider | getProviderName
+              },
+              actions: {
+                items: [
+                  {
+                    href: actions.change + "?referrer=check",
+                    text: "Change",
+                    visuallyHiddenText: "provider"
+                  }
+                ]
+              }
+            },
+            {
+              key: {
+                text: "Mentor" + ("s" if claim.mentors.length > 1)
+              },
+              value: {
+                html: mentorListHtml
+              },
+              actions: {
+                items: [
+                  {
+                    href: "#",
+                    text: "Change",
+                    visuallyHiddenText: "mentors included in the claim"
+                  }
+                ]
+              }
+            }
+          ]
+        }) }}
+
+        <h2 class="govuk-heading-m">Hours of training</h2>
+
+        <dl class="govuk-summary-list">
+          {% for mentor in claim.mentors %}
+            <div class="govuk-summary-list__row">
+              <dt class="govuk-summary-list__key">
+                {{ mentor.trn | getMentorName }}
+              </dt>
+              <dd class="govuk-summary-list__value">
+                {% if mentor.hours == "other" %}
+                  {{ mentor.otherHours + " hours" if mentor.otherHours else "Not entered" }}
+                {% else %}
+                  {{ mentor.hours + " hours" if mentor.hours else "Not entered" }}
+                {% endif %}
+              </dd>
+              <dd class="govuk-summary-list__actions">
+                <a class="govuk-link" href="#">
+                  {# {{ actions.change }}/hours?referrer=check&position={{ loop.index0 }} #}
+                  Change<span class="govuk-visually-hidden"> hours of training undertaken by {{ mentor.trn | getMentorName }}</span>
+                </a>
+              </dd>
+            </div>
+          {% endfor %}
+        </dl>
+
+        <p class="govuk-body">
+          By submitting this claim, you confirm that the details provided are correct to the best of your knowledge.
+        </p>
+
+        {{ govukWarningText({
+          text: "You will not be able to change any of the claim details once you have submitted it.",
+          iconFallbackText: "Warning"
+        }) }}
+
+        {{ govukButton({
+          text: "Submit claim"
+        }) }}
+
+      </form>
+
+      <p class="govuk-body">
+        <a class="govuk-link" href="{{ actions.cancel }}">Cancel</a>
+      </p>
+
+    </div>
+  </div>
+
+{% endblock %}

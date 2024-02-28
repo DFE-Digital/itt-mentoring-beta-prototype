@@ -1,0 +1,47 @@
+{% extends "layouts/support.njk" %}
+
+{% set primaryNavId = "organisations" %}
+{% set secondaryNavId = "claims" %}
+
+{% set title = "Check your answers" %}
+{% set caption = "Add claim - " + organisation.name %}
+
+{% block pageTitle %}
+  {{ "Error: " if errors.length }}{{ title + " - " if title }}{{ caption + " - " if caption }}{{ serviceName }} - GOV.UK
+{% endblock %}
+
+{% block beforeContent %}
+{# {{ govukBackLink({
+  text: "Back to claims",
+  href: actions.back
+}) }} #}
+{% endblock %}
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      {{ govukPanel({
+        titleText: "Claim submitted",
+        html: "Your reference number<br><strong>" + claim.reference | upper + "</strong>"
+      }) }}
+
+      {# <p class="govuk-body">We have sent you a confirmation email.</p> #}
+
+      <h2 class="govuk-heading-m">What happens next</h2>
+
+      <p class="govuk-body">
+        We will check your claim before processing payment. If we need to contact you for further information, we will use the email you used to access this service.
+      </p>
+
+      <p class="govuk-body">
+        <a href="{{ actions.back }}" class="govuk-link">View claims</a>
+      </p>
+
+      {# <p class="govuk-body">
+        <a href="#" class="govuk-link">What did you think of this service?</a> (takes 30 seconds)
+      </p> #}
+    </div>
+  </div>
+
+{% endblock %}
