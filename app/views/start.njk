@@ -1,0 +1,70 @@
+{% extends "layouts/start.njk" %}
+
+{% set title = serviceName %}
+
+{% block beforeContent %}
+  {{ govukBreadcrumbs({
+    items: [{
+      text: "Home",
+      href: "#"
+    }, {
+      text: "Education, training and skills",
+      href: "#"
+    }, {
+      text: "Teaching and leadership",
+      href: "#"
+    }, {
+      text: "Teacher training and professional development",
+      href: "#"
+    }, {
+      text: "Initial Teacher Training (ITT)",
+      href: "#"
+    }]
+  }) }}
+{% endblock %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      <h1 class="govuk-heading-xl">{{ title }}</h1>
+
+      <p class="govuk-body">
+        Lorem ipsum
+      </p>
+
+      {{ govukButton({
+        classes: "govuk-!-margin-bottom-8",
+        text: "Start now",
+        href: "/sign-in",
+        isStartButton: true
+      }) }}
+
+      <h2 class="govuk-heading-l govuk-!-font-size-27 govuk-!-margin-bottom-4">Before you start</h2>
+
+      <p class="govuk-body">
+        Lorem ipsum
+      </p>
+
+      <p class="govuk-body">
+        Lorem ipsum
+      </p>
+
+      <p class="govuk-body">
+        Lorem ipsum
+      </p>
+
+      {# {{ appRelated({
+        classes: "govuk-!-margin-top-8",
+        title: "Explore the topic",
+        items: [{
+          text: "Apprenticeships, 14 to 19 education and training for work",
+          href: "https://www.gov.uk/browse/education/find-course"
+        }, {
+          text: "Universities and higher education",
+          href: "https://www.gov.uk/browse/education/universities-higher-education"
+        }]
+      }) }} #}
+    </div>
+  </div>
+{% endblock %}
