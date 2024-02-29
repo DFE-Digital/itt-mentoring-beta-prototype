@@ -285,9 +285,11 @@ exports.new_claim_hours_post = (req, res) => {
 }
 
 exports.new_claim_check_get = (req, res) => {
+  const organisation = organisationModel.findOne({ organisationId: req.params.organisationId })
   const position = req.session.data.claim.mentors.length - 1
 
   res.render('../views/claims/check-your-answers', {
+    organisation,
     claim: req.session.data.claim,
     actions: {
       save: `/organisations/${req.params.organisationId}/claims/new/check`,
