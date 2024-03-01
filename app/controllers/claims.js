@@ -35,12 +35,14 @@ exports.claim_list = (req, res) => {
 /// ------------------------------------------------------------------------ ///
 
 exports.claim_details = (req, res) => {
+  const organisation = organisationModel.findOne({ organisationId: req.params.organisationId })
   const claim = claimModel.findOne({
     organisationId: req.params.organisationId,
     claimId: req.params.claimId
   })
 
   res.render('../views/claims/show', {
+    organisation,
     claim,
     actions: {
       change: '#',
