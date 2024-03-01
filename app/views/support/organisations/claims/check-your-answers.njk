@@ -100,17 +100,8 @@
           {% endfor %}
         </dl>
 
-        <p class="govuk-body">
-          By submitting this claim, you confirm that the details provided are correct to the best of your knowledge.
-        </p>
-
-        {{ govukWarningText({
-          text: "You will not be able to change any of the claim details once you have submitted it.",
-          iconFallbackText: "Warning"
-        }) }}
-
         {{ govukButton({
-          text: "Submit claim"
+          text: "Add claim"
         }) }}
 
       </form>

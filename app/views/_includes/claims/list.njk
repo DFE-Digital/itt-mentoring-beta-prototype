@@ -29,7 +29,11 @@
           </ul>
         </td>
         <td class="govuk-table__cell">
-          {{ claim.createdAt | datetime('dd/MM/yyyy') }}
+          {% if claim.submittedAt %}
+            {{ claim.submittedAt | datetime('dd/MM/yyyy') }}
+          {% else %}
+            -
+          {% endif %}
         </td>
         <td class="govuk-table__cell">
           {{ govukTag({
