@@ -53,6 +53,7 @@
 
       {% if claims.length %}
         {% include "_includes/claims/list.njk" %}
+        {% include "_includes/pagination.njk" %}
       {% else %}
         <p class="govuk-body">There are no claims for {{ organisation.name if organisation.name else "your organisation" }}.</p>
       {% endif %}

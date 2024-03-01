@@ -1,6 +1,8 @@
 const claimModel = require('../../models/claims')
 const mentorModel = require('../../models/mentors')
 const organisationModel = require('../../models/organisations')
+
+const Pagination = require('../../helpers/pagination')
 const claimHelper = require('../../helpers/claims')
 const mentorHelper = require('../../helpers/mentors')
 
@@ -10,7 +12,7 @@ const mentorHelper = require('../../helpers/mentors')
 
 exports.claim_list = (req, res) => {
   const organisation = organisationModel.findOne({ organisationId: req.params.organisationId })
-  const claims = claimModel.findMany({ organisationId: req.params.organisationId })
+  let claims = claimModel.findMany({ organisationId: req.params.organisationId })
   const mentors = mentorModel.findMany({ organisationId: req.params.organisationId })
 
   delete req.session.data.claim
@@ -18,10 +20,16 @@ exports.claim_list = (req, res) => {
   delete req.session.data.mentorChoices
   delete req.session.data.position
 
+  // TODO: get pageSize from settings
+  let pageSize = 25
+  let pagination = new Pagination(claims, req.query.page, pageSize)
+  claims = pagination.getData()
+
   res.render('../views/support/organisations/claims/list', {
     organisation,
     claims,
     mentors,
+    pagination,
     actions: {
       new: `/support/organisations/${req.params.organisationId}/claims/new`,
       view: `/support/organisations/${req.params.organisationId}/claims`,
