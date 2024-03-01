@@ -319,37 +319,20 @@ exports.new_claim_check_get = (req, res) => {
 }
 
 exports.new_claim_check_post = (req, res) => {
+  // TODO move into claimModel.insertOne function?
   req.session.data.claim.reference = claimHelper.generateClaimID()
-  req.session.data.claim.status = 'submitted'
 
-  const claim = claimModel.insertOne({
+  req.session.data.claim.status = 'draft'
+
+  claimModel.insertOne({
     organisationId: req.params.organisationId,
     claim: req.session.data.claim
   })
 
   delete req.session.data.claim
 
-  // route based on button clicked - submit vs save
-
-  // req.flash('success', 'Claim added')
-
-  res.redirect(`/support/organisations/${req.params.organisationId}/claims/${claim.id}/confirmation`)
-}
-
-exports.new_claim_confirmation_get = (req, res) => {
-  const organisation = organisationModel.findOne({ organisationId: req.params.organisationId })
-  const claim = claimModel.findOne({
-    organisationId: req.params.organisationId,
-    claimId: req.params.claimId
-  })
-
-  res.render('../views/support/organisations/claims/confirmation', {
-    organisation,
-    claim,
-    actions: {
-      back: `/support/organisations/${req.params.organisationId}/claims`
-    }
-  })
+  req.flash('success', 'Claim added')
+  res.redirect(`/support/organisations/${req.params.organisationId}/claims`)
 }
 
 /// ------------------------------------------------------------------------ ///
