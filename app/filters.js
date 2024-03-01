@@ -6,6 +6,7 @@ const marked = require('marked')
 const { gfmHeadingId } = require('marked-gfm-heading-id')
 const numeral = require('numeral')
 
+const claimHelper = require('./helpers/claims')
 const giasHelper = require('./helpers/gias')
 const mentorHelper = require('./helpers/mentors')
 const providerHelper = require('./helpers/providers')
@@ -140,3 +141,8 @@ addFilter('getMentorName', mentorHelper.getMentorName)
 Provider utility functions
 ------------------------------------------------------------------ */
 addFilter('getProviderName', providerHelper.getProviderName)
+
+/* ------------------------------------------------------------------
+Claim utility functions
+------------------------------------------------------------------ */
+addFilter('getClaimStatusClasses', claimHelper.getClaimStatusClasses)
