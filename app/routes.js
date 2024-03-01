@@ -283,8 +283,6 @@ router.post('/support/organisations/:organisationId/claims/new/hours', checkIsAu
 router.get('/support/organisations/:organisationId/claims/new/check', checkIsAuthenticated, supportOrganisationClaimController.new_claim_check_get)
 router.post('/support/organisations/:organisationId/claims/new/check', checkIsAuthenticated, supportOrganisationClaimController.new_claim_check_post)
 
-router.get('/support/organisations/:organisationId/claims/:claimId/confirmation', checkIsAuthenticated, supportOrganisationClaimController.new_claim_confirmation_get)
-
 router.get('/support/organisations/:organisationId/claims/:claimId/delete', checkIsAuthenticated, supportOrganisationClaimController.delete_claim_get)
 router.post('/support/organisations/:organisationId/claims/:claimId/delete', checkIsAuthenticated, supportOrganisationClaimController.delete_claim_post)
 
