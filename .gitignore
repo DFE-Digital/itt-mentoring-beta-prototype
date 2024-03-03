@@ -10,6 +10,8 @@ app/data/providers/
 app/data/schools/
 app/data/teachers/
 app/data/users/
+app/data/ofsted/
+app/data/ons/
 
 # Prototype ignores - per-user
 .tmp/
