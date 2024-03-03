@@ -9,6 +9,7 @@ const numeral = require('numeral')
 const giasHelper = require('./helpers/gias')
 const mentorHelper = require('./helpers/mentors')
 const ofstedHelper = require('./helpers/ofsted')
+const onsHelper = require('./helpers/ons')
 const providerHelper = require('./helpers/providers')
 const utilsHelper = require('./helpers/utils')
 
@@ -134,6 +135,13 @@ addFilter('getSENDProvisionLabel', giasHelper.getSENDProvisionLabel)
 Ofsted utility functions
 ------------------------------------------------------------------ */
 addFilter('getOfstedRatingLabel', ofstedHelper.getOfstedRatingLabel)
+
+/* ------------------------------------------------------------------
+ONS utility functions
+------------------------------------------------------------------ */
+addFilter('getLocalAuthorityDistrictLabel', onsHelper.getLocalAuthorityDistrictLabel)
+
+addFilter('getParliamentaryConstituencyLabel', onsHelper.getParliamentaryConstituencyLabel)
 
 /* ------------------------------------------------------------------
 Mentor utility functions
