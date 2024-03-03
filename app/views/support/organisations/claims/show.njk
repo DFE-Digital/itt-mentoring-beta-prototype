@@ -77,7 +77,8 @@
                 text: "Date submitted"
               },
               value: {
-                text: (claim.updatedAt if claim.updatedAt else claim.createdAt) | datetime('dd MMMM yyyy')
+                text: claim.submittedAt | datetime('dd MMMM yyyy') if claim.submittedAt else "Not submitted yet",
+                classes: "govuk-hint" if not claim.submittedAt
               }
             },
             {
@@ -86,7 +87,8 @@
               },
               value: {
                 html: govukTag({
-                  text: claim.status | capitalize
+                  text: claim.status | capitalize,
+                  classes: claim.status | getClaimStatusClasses
                 })
               }
             }
