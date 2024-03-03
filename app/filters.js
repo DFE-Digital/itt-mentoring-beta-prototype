@@ -8,6 +8,7 @@ const numeral = require('numeral')
 
 const giasHelper = require('./helpers/gias')
 const mentorHelper = require('./helpers/mentors')
+const ofstedHelper = require('./helpers/ofsted')
 const providerHelper = require('./helpers/providers')
 const utilsHelper = require('./helpers/utils')
 
@@ -127,9 +128,12 @@ addFilter('getSpecialClassesLabel', giasHelper.getSpecialClassesLabel)
 
 addFilter('getUrbanRuralLabel', giasHelper.getUrbanRuralLabel)
 
-addFilter('getOfstedRatingLabel', giasHelper.getOfstedRatingLabel)
-
 addFilter('getSENDProvisionLabel', giasHelper.getSENDProvisionLabel)
+
+/* ------------------------------------------------------------------
+Ofsted utility functions
+------------------------------------------------------------------ */
+addFilter('getOfstedRatingLabel', ofstedHelper.getOfstedRatingLabel)
 
 /* ------------------------------------------------------------------
 Mentor utility functions
