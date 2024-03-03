@@ -26,12 +26,6 @@
 
       <form action="{{ actions.save }}" method="post" accept-charset="utf-8" novalidate>
 
-        {% if claim.status == "draft" %}
-          {{ govukButton({
-            text: "Submit claim"
-          }) }}
-        {% endif %}
-
         {% set mentorListHtml %}
           <ul class="govuk-list">
             {% for mentor in claim.mentors %}
