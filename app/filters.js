@@ -6,6 +6,7 @@ const marked = require('marked')
 const { gfmHeadingId } = require('marked-gfm-heading-id')
 const numeral = require('numeral')
 
+const fundingHelper = require('./helpers/funding')
 const giasHelper = require('./helpers/gias')
 const mentorHelper = require('./helpers/mentors')
 const ofstedHelper = require('./helpers/ofsted')
@@ -154,3 +155,10 @@ addFilter('getMentorName', mentorHelper.getMentorName)
 Provider utility functions
 ------------------------------------------------------------------ */
 addFilter('getProviderName', providerHelper.getProviderName)
+
+/* ------------------------------------------------------------------
+Funding utility functions
+------------------------------------------------------------------ */
+addFilter('getFundingRate', fundingHelper.getFundingRate)
+
+addFilter('getFundingRegionLabel', fundingHelper.getFundingRegionLabel)
