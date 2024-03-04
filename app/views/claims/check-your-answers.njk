@@ -107,6 +107,21 @@
           {% endfor %}
         </dl>
 
+        <h2 class="govuk-heading-m">Grant funding</h2>
+
+        {{ govukSummaryList({
+          rows: [
+            {
+              key: {
+                text: "Total funding"
+              },
+              value: {
+                text: "£" + claim.totalAmount | numeral('0,00.00')
+              }
+            }
+          ]
+        }) }}
+
         <p class="govuk-body">
           By submitting this claim, you confirm that the details provided are correct to the best of your knowledge.
         </p>
