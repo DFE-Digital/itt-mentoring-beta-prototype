@@ -4,14 +4,15 @@ app/data/organisation-types.json
 
 # Ignore generated data directories
 app/data/claims/
+app/data/funding/
 app/data/mentors/
+app/data/ofsted/
+app/data/ons/
 app/data/organisations/
 app/data/providers/
 app/data/schools/
 app/data/teachers/
 app/data/users/
-app/data/ofsted/
-app/data/ons/
 
 # Prototype ignores - per-user
 .tmp/
