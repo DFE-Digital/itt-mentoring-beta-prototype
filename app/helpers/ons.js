@@ -69,3 +69,39 @@ exports.getParliamentaryConstituencyLabel = (code) => {
 
   return label
 }
+
+exports.getRegionOptions = () => { // selectedItem
+  const items = []
+
+  let options = require('../data/ons/regions')
+
+  options.forEach((option, i) => {
+    const item = {}
+
+    item.text = option.name
+    item.value = option.code
+    item.id = option.id
+    // item.checked = (selectedItem && selectedItem.includes(option.code)) ? 'checked' : ''
+
+    items.push(item)
+  })
+
+  items.sort((a, b) => {
+    return a.text.localeCompare(b.text)
+  })
+
+  return items
+}
+
+exports.getRegionLabel = (code) => {
+  const options = require('../data/ons/regions')
+  const option = options.find(option => option.code === code)
+
+  let label = code
+
+  if (option) {
+    label = option.name
+  }
+
+  return label
+}
