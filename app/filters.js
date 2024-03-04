@@ -143,6 +143,8 @@ addFilter('getLocalAuthorityDistrictLabel', onsHelper.getLocalAuthorityDistrictL
 
 addFilter('getParliamentaryConstituencyLabel', onsHelper.getParliamentaryConstituencyLabel)
 
+addFilter('getRegionLabel', onsHelper.getRegionLabel)
+
 /* ------------------------------------------------------------------
 Mentor utility functions
 ------------------------------------------------------------------ */
