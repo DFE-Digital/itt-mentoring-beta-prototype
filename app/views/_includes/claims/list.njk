@@ -4,6 +4,7 @@
       <th class="govuk-table__header">Claim reference</th>
       <th class="govuk-table__header govuk-!-width-one-quarter">Provider</th>
       <th class="govuk-table__header govuk-!-width-one-quarter">Mentors</th>
+      <th class="govuk-table__header govuk-table__header--numeric">Claim amount</th>
       <th class="govuk-table__header">Date submitted</th>
       <th class="govuk-table__header">Status</th>
     </tr>
@@ -27,6 +28,9 @@
               </li>
             {% endfor %}
           </ul>
+        </td>
+        <td class="govuk-table__cell govuk-table__cell--numeric">
+          &pound;{{ claim.totalAmount | numeral('0,0.00') }}
         </td>
         <td class="govuk-table__cell">
           {{ claim.createdAt | datetime('dd/MM/yyyy') }}
