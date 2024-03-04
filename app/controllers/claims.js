@@ -48,7 +48,7 @@ exports.claim_details = (req, res) => {
     claim,
     actions: {
       change: '#',
-      delete: `/organisations/${req.params.organisationId}/claims/${req.params.claimsId}/delete`,
+      delete: `/organisations/${req.params.organisationId}/claims/${req.params.claimId}/delete`,
       back: `/organisations/${req.params.organisationId}/claims`,
       cancel: `/organisations/${req.params.organisationId}/claims`,
       submit: '#'
