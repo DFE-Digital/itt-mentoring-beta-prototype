@@ -20,6 +20,10 @@ exports.claim_list = (req, res) => {
   delete req.session.data.mentorChoices
   delete req.session.data.position
 
+  claims.sort((a, b) => {
+    return new Date(b.createdAt) - new Date(a.createdAt)
+  })
+
   res.render('../views/claims/list', {
     organisation,
     claims,
