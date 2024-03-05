@@ -161,4 +161,4 @@ Funding utility functions
 ------------------------------------------------------------------ */
 addFilter('getFundingRate', fundingHelper.getFundingRate)
 
-addFilter('getFundingRegionLabel', fundingHelper.getFundingRegionLabel)
+addFilter('getFundingAreaLabel', fundingHelper.getFundingAreaLabel)

@@ -12,7 +12,7 @@ exports.getFundingRate = (localAuthorityCode) => {
   return rate
 }
 
-exports.getFundingRegionLabel = (localAuthorityCode) => {
+exports.getFundingAreaLabel = (localAuthorityCode) => {
   let label
 
   const data = require('../data/funding/funding-rates')
@@ -20,7 +20,7 @@ exports.getFundingRegionLabel = (localAuthorityCode) => {
   const funding = data.find(item => item.localAuthorityCode === localAuthorityCode)
 
   if (funding) {
-    label = funding.fundingRegion
+    label = funding.fundingArea
   }
 
   return label
