@@ -29,42 +29,59 @@
 
       <h1 class="govuk-heading-xl">{{ title }}</h1>
 
+    </div>
+  </div>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
       <p class="govuk-body">
-        Lorem ipsum
+        You can claim funding for mentors who supported trainee teachers from September 2023 to July 2024.
       </p>
 
+      <p class="govuk-body">
+        Training that took place in April 2024 for the school year starting September 2024 can only be claimed for from May 2025.
+      </p>
+
+      <h2 class="govuk-heading-l govuk-!-font-size-27">Before you start</h2>
+
+      <p class="govuk-body">
+        You’ll be asked for:
+      </p>
+
+      <ul class="govuk-list govuk-list--bullet">
+        <li>
+          initial teacher training provider details
+        </li>
+        <li>
+          your mentors’ teacher reference numbers (TRN)
+        </li>
+        <li>
+          hours of training each mentor completed
+        </li>
+      </ul>
+
       {{ govukButton({
-        classes: "govuk-!-margin-bottom-8",
+        classes: "govuk-!-margin-bottom-8 govuk-!-margin-top-4",
         text: "Start now",
         href: "/sign-in",
         isStartButton: true
       }) }}
 
-      <h2 class="govuk-heading-l govuk-!-font-size-27 govuk-!-margin-bottom-4">Before you start</h2>
+    </div>
+    <div class="govuk-grid-column-one-third">
 
-      <p class="govuk-body">
-        Lorem ipsum
-      </p>
-
-      <p class="govuk-body">
-        Lorem ipsum
-      </p>
-
-      <p class="govuk-body">
-        Lorem ipsum
-      </p>
-
-      {# {{ appRelated({
-        classes: "govuk-!-margin-top-8",
-        title: "Explore the topic",
+      {{ appRelated({
+        title: "Related content",
         items: [{
-          text: "Apprenticeships, 14 to 19 education and training for work",
-          href: "https://www.gov.uk/browse/education/find-course"
+          text: "Guidance for providers on initial teacher training (ITT)",
+          href: "https://www.gov.uk/government/collections/initial-teacher-training"
         }, {
-          text: "Universities and higher education",
-          href: "https://www.gov.uk/browse/education/universities-higher-education"
+          text: "Find out what a teacher reference number (TRN) is and how to find or request a TRN",
+          href: "https://www.gov.uk/guidance/teacher-reference-number-trn"
         }]
-      }) }} #}
+      }) }}
+
     </div>
   </div>
 {% endblock %}
