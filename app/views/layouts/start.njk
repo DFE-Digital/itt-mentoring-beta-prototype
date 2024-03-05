@@ -1,6 +1,7 @@
 {% extends "govuk-prototype-kit/layouts/govuk-branded.njk" %}
 
 {% from "_components/footer/macro.njk" import appFooter %}
+{% from "_components/related/macro.njk" import appRelated %}
 
 {% block pageTitle %}
   {{ title + " - " if title }}{{ caption + " - " if caption }}{{ serviceName }} - GOV.UK
