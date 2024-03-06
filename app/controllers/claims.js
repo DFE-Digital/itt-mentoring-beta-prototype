@@ -21,7 +21,9 @@ exports.claim_list = (req, res) => {
   delete req.session.data.position
 
   claims.sort((a, b) => {
-    return new Date(b.createdAt) - new Date(a.createdAt)
+    return new Date(b.submittedAt) - new Date(a.submittedAt)
+      || new Date(b.updatedAt) - new Date(a.updatedAt)
+      || new Date(b.createdAt) - new Date(a.createdAt)
   })
 
   res.render('../views/claims/list', {
