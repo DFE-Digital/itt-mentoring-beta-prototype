@@ -1,0 +1,25 @@
+<h2 class="govuk-heading-m">Hours of training</h2>
+
+<dl class="govuk-summary-list">
+  {% for mentor in claim.mentors %}
+    <div class="govuk-summary-list__row">
+      <dt class="govuk-summary-list__key">
+        {{ mentor.trn | getMentorName }}
+      </dt>
+      <dd class="govuk-summary-list__value">
+        {% if mentor.hours == "other" %}
+          {{ mentor.otherHours + " hours" if mentor.otherHours else "Not entered" }}
+        {% else %}
+          {{ mentor.hours + " hours" if mentor.hours else "Not entered" }}
+        {% endif %}
+      </dd>
+      {% if claim.status == "draft" %}
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link" href="{{ actions.change }}/hours?referrer=check&position={{ loop.index0 }}">
+            Change<span class="govuk-visually-hidden"> hours of training undertaken by {{ mentor.trn | getMentorName }}</span>
+          </a>
+        </dd>
+      {% endif %}
+    </div>
+  {% endfor %}
+</dl>

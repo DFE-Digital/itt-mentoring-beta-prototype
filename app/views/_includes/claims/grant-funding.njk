@@ -1,0 +1,14 @@
+<h2 class="govuk-heading-m">Grant funding</h2>
+
+{{ govukSummaryList({
+  rows: [
+    {
+      key: {
+        text: "Claim amount"
+      },
+      value: {
+        text: "£" + claim.totalAmount | numeral('0,0.00')
+      }
+    }
+  ]
+}) }}

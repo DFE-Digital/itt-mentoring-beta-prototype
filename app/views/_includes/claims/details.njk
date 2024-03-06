@@ -1,0 +1,75 @@
+{% set mentorListHtml %}
+  <ul class="govuk-list">
+    {% for mentor in claim.mentors %}
+      <li>
+        {{ mentor.trn | getMentorName }}
+      </li>
+    {% endfor %}
+  </ul>
+{% endset %}
+
+{{ govukSummaryList({
+  rows: [
+    {
+      key: {
+        text: "School"
+      },
+      value: {
+        text: organisation.name
+      }
+    },
+    {
+      key: {
+        text: "Accredited provider"
+      },
+      value: {
+        text: claim.provider | getProviderName
+      },
+      actions: {
+        items: [
+          {
+            href: actions.change + "?referrer=check",
+            text: "Change",
+            visuallyHiddenText: "accredited provider"
+          }
+        ]
+      } if claim.status == "draft"
+    },
+    {
+      key: {
+        text: "Mentors"
+      },
+      value: {
+        html: mentorListHtml
+      },
+      actions: {
+        items: [
+          {
+            href: actions.change + "/mentors?referrer=check",
+            text: "Change",
+            visuallyHiddenText: "mentors included in the claim"
+          }
+        ]
+      } if claim.status == "draft"
+    },
+    {
+      key: {
+        text: "Date submitted"
+      },
+      value: {
+        text: (claim.updatedAt if claim.updatedAt else claim.createdAt) | datetime('dd MMMM yyyy')
+      }
+    },
+    {
+      key: {
+        text: "Status"
+      },
+      value: {
+        html: govukTag({
+          text: claim.status | capitalize,
+            classes: claim.status | getClaimStatusClasses
+        })
+      }
+    }
+  ]
+}) }}

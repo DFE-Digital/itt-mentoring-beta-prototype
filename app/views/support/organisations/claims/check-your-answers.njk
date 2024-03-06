@@ -1,9 +1,10 @@
-{% extends "layouts/main.njk" %}
+{% extends "layouts/support.njk" %}
 
-{% set primaryNavId = "claims" %}
+{% set primaryNavId = "organisations" %}
+{% set secondaryNavId = "claims" %}
 
 {% set title = "Check your answers" %}
-{% set caption = "Add claim" %}
+{% set caption = "Add claim - " + organisation.name %}
 
 {% block pageTitle %}
   {{ "Error: " if errors.length }}{{ title + " - " if title }}{{ caption + " - " if caption }}{{ serviceName }} - GOV.UK
@@ -37,14 +38,6 @@
 
         {{ govukSummaryList({
           rows: [
-            {
-              key: {
-                text: "School"
-              },
-              value: {
-                text: organisation.name
-              }
-            },
             {
               key: {
                 text: "Accredited provider"
@@ -109,17 +102,8 @@
 
         {% include "_includes/claims/grant-funding.njk" %}
 
-        <p class="govuk-body">
-          By submitting this claim, you confirm that the details provided are correct to the best of your knowledge.
-        </p>
-
-        {{ govukWarningText({
-          text: "You will not be able to change any of the claim details once you have submitted it.",
-          iconFallbackText: "Warning"
-        }) }}
-
         {{ govukButton({
-          text: "Submit claim"
+          text: "Add claim"
         }) }}
 
       </form>

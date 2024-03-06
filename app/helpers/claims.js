@@ -11,3 +11,13 @@ exports.generateClaimID = () => {
 
   return claimID
 }
+
+exports.getClaimStatusClasses = (status) => {
+  let classes = 'govuk-tag--blue'
+
+  if (status && status === 'draft') {
+    classes = 'govuk-tag--grey'
+  }
+
+  return classes
+}

@@ -1,9 +1,10 @@
-{% extends "layouts/main.njk" %}
+{% extends "layouts/support.njk" %}
 
-{% set primaryNavId = "claims" %}
+{% set primaryNavId = "organisations" %}
+{% set secondaryNavId = "claims" %}
 
 {% set title = "Are you sure you want to remove this claim?" %}
-{% set caption = "Claim - " + claim.reference | upper %}
+{% set caption = "Claim - " + claim.reference | upper + " - " + organisation.name %}
 
 {% block pageTitle %}
   {{ "Error: " if errors.length }}{{ title + " - " if title }}{{ caption + " - " if caption }}{{ serviceName }} - GOV.UK

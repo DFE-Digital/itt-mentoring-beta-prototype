@@ -1,11 +1,11 @@
-const claimModel = require('../models/claims')
-const mentorModel = require('../models/mentors')
-const organisationModel = require('../models/organisations')
+const claimModel = require('../../models/claims')
+const mentorModel = require('../../models/mentors')
+const organisationModel = require('../../models/organisations')
 
-const Pagination = require('../helpers/pagination')
-const claimHelper = require('../helpers/claims')
-const fundingHelper = require('../helpers/funding')
-const mentorHelper = require('../helpers/mentors')
+const Pagination = require('../../helpers/pagination')
+const claimHelper = require('../../helpers/claims')
+const fundingHelper = require('../../helpers/funding')
+const mentorHelper = require('../../helpers/mentors')
 
 /// ------------------------------------------------------------------------ ///
 /// LIST CLAIM
@@ -32,15 +32,15 @@ exports.claim_list = (req, res) => {
   let pagination = new Pagination(claims, req.query.page, pageSize)
   claims = pagination.getData()
 
-  res.render('../views/claims/list', {
+  res.render('../views/support/organisations/claims/list', {
     organisation,
     claims,
     mentors,
     pagination,
     actions: {
-      new: `/organisations/${req.params.organisationId}/claims/new`,
-      view: `/organisations/${req.params.organisationId}/claims`,
-      mentors: `/organisations/${req.params.organisationId}/mentors`
+      new: `/support/organisations/${req.params.organisationId}/claims/new`,
+      view: `/support/organisations/${req.params.organisationId}/claims`,
+      mentors: `/support/organisations/${req.params.organisationId}/mentors`
     }
   })
 }
@@ -56,14 +56,14 @@ exports.claim_details = (req, res) => {
     claimId: req.params.claimId
   })
 
-  res.render('../views/claims/show', {
+  res.render('../views/support/organisations/claims/show', {
     organisation,
     claim,
     actions: {
       change: '#',
-      delete: `/organisations/${req.params.organisationId}/claims/${req.params.claimId}/delete`,
-      back: `/organisations/${req.params.organisationId}/claims`,
-      cancel: `/organisations/${req.params.organisationId}/claims`,
+      delete: `/support/organisations/${req.params.organisationId}/claims/${req.params.claimsId}/delete`,
+      back: `/support/organisations/${req.params.organisationId}/claims`,
+      cancel: `/support/organisations/${req.params.organisationId}/claims`,
       submit: '#'
     }
   })
@@ -74,28 +74,33 @@ exports.claim_details = (req, res) => {
 /// ------------------------------------------------------------------------ ///
 
 exports.new_claim_get = (req, res) => {
-  let back = `/organisations/${req.params.organisationId}/claims`
-  let save = `/organisations/${req.params.organisationId}/claims/new`
+  const organisation = organisationModel.findOne({ organisationId: req.params.organisationId })
+
+  let back = `/support/organisations/${req.params.organisationId}/claims`
+  let save = `/support/organisations/${req.params.organisationId}/claims/new`
   if (req.query.referrer === 'check') {
-    back = `/organisations/${req.params.organisationId}/claims/new/check`
+    back = `/support/organisations/${req.params.organisationId}/claims/new/check`
     save += `?referrer=${req.query.referrer}`
   }
 
-  res.render('../views/claims/provider', {
+  res.render('../views/support/organisations/claims/provider', {
+    organisation,
     claim: req.session.data.claim,
     actions: {
       save,
       back,
-      cancel: `/organisations/${req.params.organisationId}/claims`
+      cancel: `/support/organisations/${req.params.organisationId}/claims`
     }
   })
 }
 
 exports.new_claim_post = (req, res) => {
-  let back = `/organisations/${req.params.organisationId}/claims`
-  let save = `/organisations/${req.params.organisationId}/claims/new`
+  const organisation = organisationModel.findOne({ organisationId: req.params.organisationId })
+
+  let back = `/support/organisations/${req.params.organisationId}/claims`
+  let save = `/support/organisations/${req.params.organisationId}/claims/new`
   if (req.query.referrer === 'check') {
-    back = `/organisations/${req.params.organisationId}/claims/new/check`
+    back = `/support/organisations/${req.params.organisationId}/claims/new/check`
     save += `?referrer=${req.query.referrer}`
   }
 
@@ -110,40 +115,44 @@ exports.new_claim_post = (req, res) => {
   }
 
   if (errors.length) {
-    res.render('../views/claims/provider', {
+    res.render('../views/support/organisations/claims/provider', {
+      organisation,
       claim: req.session.data.claim,
       actions: {
         save,
         back,
-        cancel: `/organisations/${req.params.organisationId}/claims`
+        cancel: `/support/organisations/${req.params.organisationId}/claims`
       },
       errors
     })
   } else {
     if (req.query.referrer === 'check') {
-      res.redirect(`/organisations/${req.params.organisationId}/claims/new/check`)
+      res.redirect(`/support/organisations/${req.params.organisationId}/claims/new/check`)
     } else {
-      res.redirect(`/organisations/${req.params.organisationId}/claims/new/mentors`)
+      res.redirect(`/support/organisations/${req.params.organisationId}/claims/new/mentors`)
     }
   }
 }
 
 exports.new_claim_mentors_get = (req, res) => {
+  const organisation = organisationModel.findOne({ organisationId: req.params.organisationId })
   const mentorOptions = mentorHelper.getMentorOptions({ organisationId: req.params.organisationId })
 
-  res.render('../views/claims/mentors', {
+  res.render('../views/support/organisations/claims/mentors', {
+    organisation,
     claim: req.session.data.claim,
     mentorOptions,
     mentorChoices: req.session.data.mentorChoices,
     actions: {
-      save: `/organisations/${req.params.organisationId}/claims/new/mentors`,
-      back: `/organisations/${req.params.organisationId}/claims/new`,
-      cancel: `/organisations/${req.params.organisationId}/claims`
+      save: `/support/organisations/${req.params.organisationId}/claims/new/mentors`,
+      back: `/support/organisations/${req.params.organisationId}/claims/new`,
+      cancel: `/support/organisations/${req.params.organisationId}/claims`
     }
   })
 }
 
 exports.new_claim_mentors_post = (req, res) => {
+  const organisation = organisationModel.findOne({ organisationId: req.params.organisationId })
   const mentorOptions = mentorHelper.getMentorOptions({ organisationId: req.params.organisationId })
 
   const errors = []
@@ -157,14 +166,15 @@ exports.new_claim_mentors_post = (req, res) => {
   }
 
   if (errors.length) {
-    res.render('../views/claims/mentors', {
+    res.render('../views/support/organisations/claims/mentors', {
+      organisation,
       claim: req.session.data.claim,
       mentorOptions,
       mentorChoices: req.session.data.mentorChoices,
       actions: {
-        save: `/organisations/${req.params.organisationId}/claims/new/mentors`,
-        back: `/organisations/${req.params.organisationId}/claims/new`,
-        cancel: `/organisations/${req.params.organisationId}/claims`
+        save: `/support/organisations/${req.params.organisationId}/claims/new/mentors`,
+        back: `/support/organisations/${req.params.organisationId}/claims/new`,
+        cancel: `/support/organisations/${req.params.organisationId}/claims`
       },
       errors
     })
@@ -175,15 +185,17 @@ exports.new_claim_mentors_post = (req, res) => {
     // set the position counter so we can iterate through the mentors and keep track
     req.session.data.position = 0
 
-    res.redirect(`/organisations/${req.params.organisationId}/claims/new/hours`)
+    res.redirect(`/support/organisations/${req.params.organisationId}/claims/new/hours`)
   }
 }
 
 exports.new_claim_hours_get = (req, res) => {
-  let back = `/organisations/${req.params.organisationId}/claims/new/mentors`
-  let save = `/organisations/${req.params.organisationId}/claims/new/hours`
+  const organisation = organisationModel.findOne({ organisationId: req.params.organisationId })
+
+  let back = `/support/organisations/${req.params.organisationId}/claims/new/mentors`
+  let save = `/support/organisations/${req.params.organisationId}/claims/new/hours`
   if (req.query.referrer === 'check') {
-    back = `/organisations/${req.params.organisationId}/claims/new/check`
+    back = `/support/organisations/${req.params.organisationId}/claims/new/check`
     save += `?referrer=${req.query.referrer}&position=${req.query.position}`
   }
 
@@ -195,7 +207,8 @@ exports.new_claim_hours_get = (req, res) => {
     mentor = req.session.data.claim.mentors[position]
   }
 
-  res.render('../views/claims/hours', {
+  res.render('../views/support/organisations/claims/hours', {
+    organisation,
     claim: req.session.data.claim,
     mentorTrn,
     position,
@@ -203,16 +216,18 @@ exports.new_claim_hours_get = (req, res) => {
     actions: {
       save,
       back,
-      cancel: `/organisations/${req.params.organisationId}/claims`
+      cancel: `/support/organisations/${req.params.organisationId}/claims`
     }
   })
 }
 
 exports.new_claim_hours_post = (req, res) => {
-  let back = `/organisations/${req.params.organisationId}/claims/new/mentors`
-  let save = `/organisations/${req.params.organisationId}/claims/new/hours`
+  const organisation = organisationModel.findOne({ organisationId: req.params.organisationId })
+
+  let back = `/support/organisations/${req.params.organisationId}/claims/new/mentors`
+  let save = `/support/organisations/${req.params.organisationId}/claims/new/hours`
   if (req.query.referrer === 'check') {
-    back = `/organisations/${req.params.organisationId}/claims/new/check`
+    back = `/support/organisations/${req.params.organisationId}/claims/new/check`
     save += `?referrer=${req.query.referrer}&position=${req.query.position}`
   }
 
@@ -260,7 +275,8 @@ exports.new_claim_hours_post = (req, res) => {
   }
 
   if (errors.length) {
-    res.render('../views/claims/hours', {
+    res.render('../views/support/organisations/claims/hours', {
+      organisation,
       claim: req.session.data.claim,
       mentorTrn,
       position,
@@ -268,7 +284,7 @@ exports.new_claim_hours_post = (req, res) => {
       actions: {
         save,
         back,
-        cancel: `/organisations/${req.params.organisationId}/claims`
+        cancel: `/support/organisations/${req.params.organisationId}/claims`
       },
       errors
     })
@@ -289,13 +305,13 @@ exports.new_claim_hours_post = (req, res) => {
         // delete the position info as no longer needed
         delete req.session.data.position
 
-        res.redirect(`/organisations/${req.params.organisationId}/claims/new/check`)
+        res.redirect(`/support/organisations/${req.params.organisationId}/claims/new/check`)
       } else {
         // increment the position to track where we are in the flow
         req.session.data.position += 1
 
         // redirct the user back to the hours page to add info for the next mentor
-        res.redirect(`/organisations/${req.params.organisationId}/claims/new/hours`)
+        res.redirect(`/support/organisations/${req.params.organisationId}/claims/new/hours`)
       }
     // }
   }
@@ -336,48 +352,33 @@ exports.new_claim_check_get = (req, res) => {
 
   req.session.data.claim.totalAmount = totalAmount
 
-  res.render('../views/claims/check-your-answers', {
+  res.render('../views/support/organisations/claims/check-your-answers', {
     organisation,
     claim: req.session.data.claim,
     actions: {
-      save: `/organisations/${req.params.organisationId}/claims/new/check`,
-      back: `/organisations/${req.params.organisationId}/claims/new/hours?position=${position}`,
-      change: `/organisations/${req.params.organisationId}/claims/new`,
-      cancel: `/organisations/${req.params.organisationId}/claims`
+      save: `/support/organisations/${req.params.organisationId}/claims/new/check`,
+      back: `/support/organisations/${req.params.organisationId}/claims/new/hours?position=${position}`,
+      change: `/support/organisations/${req.params.organisationId}/claims/new`,
+      cancel: `/support/organisations/${req.params.organisationId}/claims`
     }
   })
 }
 
 exports.new_claim_check_post = (req, res) => {
+  // TODO move into claimModel.insertOne function?
   req.session.data.claim.reference = claimHelper.generateClaimID()
-  req.session.data.claim.status = 'submitted'
 
-  const claim = claimModel.insertOne({
+  req.session.data.claim.status = 'draft'
+
+  claimModel.insertOne({
     organisationId: req.params.organisationId,
     claim: req.session.data.claim
   })
 
   delete req.session.data.claim
 
-  // route based on button clicked - submit vs save
-
-  // req.flash('success', 'Claim added')
-
-  res.redirect(`/organisations/${req.params.organisationId}/claims/${claim.id}/confirmation`)
-}
-
-exports.new_claim_confirmation_get = (req, res) => {
-  const claim = claimModel.findOne({
-    organisationId: req.params.organisationId,
-    claimId: req.params.claimId
-  })
-
-  res.render('../views/claims/confirmation', {
-    claim,
-    actions: {
-      back: `/organisations/${req.params.organisationId}/claims`
-    }
-  })
+  req.flash('success', 'Claim added')
+  res.redirect(`/support/organisations/${req.params.organisationId}/claims`)
 }
 
 /// ------------------------------------------------------------------------ ///
@@ -385,19 +386,19 @@ exports.new_claim_confirmation_get = (req, res) => {
 /// ------------------------------------------------------------------------ ///
 
 exports.delete_claim_get = (req, res) => {
-  // const organisation = organisationModel.findOne({ organisationId: req.params.organisationId })
+  const organisation = organisationModel.findOne({ organisationId: req.params.organisationId })
   const claim = claimModel.findOne({
     organisationId: req.params.organisationId,
     claimId: req.params.claimId
   })
 
-  res.render('../views/claims/delete', {
-    // organisation,
+  res.render('../views/support/organisations/claims/delete', {
+    organisation,
     claim,
     actions: {
-      save: `/organisations/${req.params.organisationId}/claims/${req.params.claimId}/delete`,
-      back: `/organisations/${req.params.organisationId}/claims/${req.params.claimId}`,
-      cancel: `/organisations/${req.params.organisationId}/claims/${req.params.claimId}`
+      save: `/support/organisations/${req.params.organisationId}/claims/${req.params.claimId}/delete`,
+      back: `/support/organisations/${req.params.organisationId}/claims/${req.params.claimId}`,
+      cancel: `/support/organisations/${req.params.organisationId}/claims/${req.params.claimId}`
     }
   })
 }
@@ -409,5 +410,5 @@ exports.delete_claim_post = (req, res) => {
   })
 
   req.flash('success', 'Claim deleted')
-  res.redirect(`/organisations/${req.params.organisationId}/claims`)
+  res.redirect(`/support/organisations/${req.params.organisationId}/claims`)
 }

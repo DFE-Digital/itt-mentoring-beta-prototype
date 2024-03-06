@@ -62,6 +62,10 @@ exports.insertOne = (params) => {
 
     if (params.claim.status) {
       claim.status = params.claim.status
+
+      if (params.claim.status === 'submitted') {
+        claim.submittedAt = new Date()
+      }
     }
 
     claim.createdAt = new Date()
@@ -101,6 +105,10 @@ exports.updateOne = (params) => {
 
     if (params.claim.status) {
       claim.status = params.claim.status
+
+      if (!claim.submittedAt && params.claim.status === 'submitted') {
+        claim.submittedAt = new Date()
+      }
     }
 
     claim.updatedAt = new Date()

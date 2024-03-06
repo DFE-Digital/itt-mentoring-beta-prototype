@@ -1,8 +1,9 @@
-{% extends "layouts/main.njk" %}
+{% extends "layouts/support.njk" %}
 
-{% set primaryNavId = "claims" %}
+{% set primaryNavId = "organisations" %}
+{% set secondaryNavId = "claims" %}
 
-{% set title = "Claims" %}
+{% set title = organisation.name %}
 
 {% block beforeContent %}
 
@@ -13,9 +14,21 @@
   {% include "_includes/notification-banner.njk" %}
 
   <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      {% include "_includes/page-heading.njk" %}
+    </div>
+  </div>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      {% include "../_secondary-navigation.njk" %}
+    </div>
+  </div>
+
+  <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
 
-      {% include "_includes/page-heading.njk" %}
+      <h2 class="govuk-heading-m">Claims</h2>
 
       {% if not mentors.length %}
         {% set mentorHtml %}

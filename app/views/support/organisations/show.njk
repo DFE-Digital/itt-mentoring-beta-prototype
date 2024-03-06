@@ -32,7 +32,9 @@
 
       {% include "_includes/organisations/details.njk" %}
 
-      {% if organisation.type == "school" %}
+      {% include "_includes/organisations/grant-funding.njk" %}
+
+      {# {% if organisation.type == "school" %}
 
         {% include "_includes/organisations/additional-details.njk" %}
 
@@ -40,7 +42,7 @@
 
         {% include "_includes/organisations/ofsted-details.njk" %}
 
-      {% endif %}
+      {% endif %} #}
 
       {% include "_includes/organisations/contact-details.njk" %}
 
