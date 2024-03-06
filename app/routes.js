@@ -91,6 +91,14 @@ router.all('*', (req, res, next) => {
   next()
 })
 
+router.get('/', (req, res) => {
+  if (process.env.SHOW_START_PAGE === 'true') {
+    res.render('start')
+  } else {
+    res.redirect('/sign-in')
+  }
+})
+
 /// ------------------------------------------------------------------------ ///
 /// AUTHENTICATION ROUTES
 /// ------------------------------------------------------------------------ ///

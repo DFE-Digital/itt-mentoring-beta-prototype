@@ -1,0 +1,87 @@
+{% extends "layouts/start.njk" %}
+
+{% set title = serviceName %}
+
+{% block beforeContent %}
+  {{ govukBreadcrumbs({
+    items: [{
+      text: "Home",
+      href: "#"
+    }, {
+      text: "Education, training and skills",
+      href: "#"
+    }, {
+      text: "Teaching and leadership",
+      href: "#"
+    }, {
+      text: "Teacher training and professional development",
+      href: "#"
+    }, {
+      text: "Initial Teacher Training (ITT)",
+      href: "#"
+    }]
+  }) }}
+{% endblock %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      <h1 class="govuk-heading-xl">{{ title }}</h1>
+
+    </div>
+  </div>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      <p class="govuk-body">
+        You can claim funding for mentors who supported trainee teachers from September 2023 to July 2024.
+      </p>
+
+      <p class="govuk-body">
+        Training that took place in April 2024 for the school year starting September 2024 can only be claimed for from May 2025.
+      </p>
+
+      <h2 class="govuk-heading-l govuk-!-font-size-27">Before you start</h2>
+
+      <p class="govuk-body">
+        You’ll be asked for:
+      </p>
+
+      <ul class="govuk-list govuk-list--bullet">
+        <li>
+          initial teacher training (ITT) provider details
+        </li>
+        <li>
+          your mentors’ teacher reference numbers (TRN)
+        </li>
+        <li>
+          hours of training each mentor completed
+        </li>
+      </ul>
+
+      {{ govukButton({
+        classes: "govuk-!-margin-top-4",
+        text: "Start now",
+        href: "/sign-in",
+        isStartButton: true
+      }) }}
+
+    </div>
+    <div class="govuk-grid-column-one-third">
+
+      {{ appRelated({
+        title: "Related content",
+        items: [{
+          text: "Guidance for providers on initial teacher training (ITT)",
+          href: "https://www.gov.uk/government/collections/initial-teacher-training"
+        }, {
+          text: "Find out what a teacher reference number (TRN) is and how to find or request a TRN",
+          href: "https://www.gov.uk/guidance/teacher-reference-number-trn"
+        }]
+      }) }}
+
+    </div>
+  </div>
+{% endblock %}
