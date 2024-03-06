@@ -6,13 +6,12 @@
   },
   "scripts": {
     "generate-data": "node ./scripts/generate-data.js",
-
+    "postinstall": "npm run generate-data",
     "dev": "govuk-prototype-kit dev",
     "serve": "govuk-prototype-kit serve",
     "start": "govuk-prototype-kit start"
   },
   "dependencies": {
-
     "connect-flash": "^0.1.1",
     "del": "6.1.1",
     "govuk-frontend": "^5.2.0",
