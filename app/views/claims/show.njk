@@ -32,125 +32,15 @@
 
       </form>
 
-      {% set mentorListHtml %}
-        <ul class="govuk-list">
-          {% for mentor in claim.mentors %}
-            <li>
-              {{ mentor.trn | getMentorName }}
-            </li>
-          {% endfor %}
-        </ul>
-      {% endset %}
+      {% include "_includes/claims/details.njk" %}
 
-      {{ govukSummaryList({
-        rows: [
-          {
-            key: {
-              text: "School"
-            },
-            value: {
-              text: organisation.name
-            }
-          },
-          {
-            key: {
-              text: "Accredited provider"
-            },
-            value: {
-              text: claim.provider | getProviderName
-            },
-            actions: {
-              items: [
-                {
-                  href: actions.change + "?referrer=check",
-                  text: "Change",
-                  visuallyHiddenText: "accredited provider"
-                }
-              ]
-            } if claim.status == "draft"
-          },
-          {
-            key: {
-              text: "Mentors"
-            },
-            value: {
-              html: mentorListHtml
-            },
-            actions: {
-              items: [
-                {
-                  href: actions.change + "/mentors?referrer=check",
-                  text: "Change",
-                  visuallyHiddenText: "mentors included in the claim"
-                }
-              ]
-            } if claim.status == "draft"
-          },
-          {
-            key: {
-              text: "Date submitted"
-            },
-            value: {
-              text: (claim.updatedAt if claim.updatedAt else claim.createdAt) | datetime('dd MMMM yyyy')
-            }
-          },
-          {
-            key: {
-              text: "Status"
-            },
-            value: {
-              html: govukTag({
-                text: claim.status | capitalize
-              })
-            }
-          }
-        ]
-      }) }}
+      {% include "_includes/claims/hours-of-training.njk" %}
 
-      <h2 class="govuk-heading-m">Hours of training</h2>
-
-      <dl class="govuk-summary-list">
-        {% for mentor in claim.mentors %}
-          <div class="govuk-summary-list__row">
-            <dt class="govuk-summary-list__key">
-              {{ mentor.trn | getMentorName }}
-            </dt>
-            <dd class="govuk-summary-list__value">
-              {% if mentor.hours == "other" %}
-                {{ mentor.otherHours + " hours" if mentor.otherHours else "Not entered" }}
-              {% else %}
-                {{ mentor.hours + " hours" if mentor.hours else "Not entered" }}
-              {% endif %}
-            </dd>
-            {% if claim.status == "draft" %}
-              <dd class="govuk-summary-list__actions">
-                <a class="govuk-link" href="{{ actions.change }}/hours?referrer=check&position={{ loop.index0 }}">
-                  Change<span class="govuk-visually-hidden"> hours of training undertaken by {{ mentor.trn | getMentorName }}</span>
-                </a>
-              </dd>
-            {% endif %}
-          </div>
-        {% endfor %}
-      </dl>
-
-      <h2 class="govuk-heading-m">Grant funding</h2>
-
-      {{ govukSummaryList({
-        rows: [
-          {
-            key: {
-              text: "Claim amount"
-            },
-            value: {
-              text: "£" + claim.totalAmount | numeral('0,0.00')
-            }
-          }
-        ]
-      }) }}
+      {% include "_includes/claims/grant-funding.njk" %}
 
       {% if claim.status == "draft" %}
         <p class="govuk-body">
-          <a class="govuk-link app-link--destructive" href="{{ actions.delete }}">Delete claim</a>
+          <a class="govuk-link app-link--destructive" href="{{ actions.delete }}">Remove claim</a>
         </p>
       {% endif %}
 
