@@ -56,6 +56,10 @@ exports.insertOne = (params) => {
       claim.mentors = params.claim.mentors
     }
 
+    if (params.claim.totalAmount) {
+      claim.totalAmount = params.claim.totalAmount
+    }
+
     if (params.claim.status) {
       claim.status = params.claim.status
 
@@ -93,6 +97,10 @@ exports.updateOne = (params) => {
 
     if (params.claim.mentors) {
       claim.mentors = params.claim.mentors
+    }
+
+    if (params.claim.totalAmount) {
+      claim.totalAmount = params.claim.totalAmount
     }
 
     if (params.claim.status) {

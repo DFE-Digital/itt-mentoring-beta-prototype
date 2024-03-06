@@ -39,7 +39,15 @@
           rows: [
             {
               key: {
-                text: "Provider"
+                text: "School"
+              },
+              value: {
+                text: organisation.name
+              }
+            },
+            {
+              key: {
+                text: "Accredited provider"
               },
               value: {
                 text: claim.provider | getProviderName
@@ -49,7 +57,7 @@
                   {
                     href: actions.change + "?referrer=check",
                     text: "Change",
-                    visuallyHiddenText: "provider"
+                    visuallyHiddenText: "accredited provider"
                   }
                 ]
               }
@@ -98,6 +106,21 @@
             </div>
           {% endfor %}
         </dl>
+
+        <h2 class="govuk-heading-m">Grant funding</h2>
+
+        {{ govukSummaryList({
+          rows: [
+            {
+              key: {
+                text: "Claim amount"
+              },
+              value: {
+                text: "£" + claim.totalAmount | numeral('0,0.00')
+              }
+            }
+          ]
+        }) }}
 
         <p class="govuk-body">
           By submitting this claim, you confirm that the details provided are correct to the best of your knowledge.
