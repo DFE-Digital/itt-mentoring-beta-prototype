@@ -1,7 +1,9 @@
 const claimModel = require('../models/claims')
 const mentorModel = require('../models/mentors')
 const organisationModel = require('../models/organisations')
+
 const claimHelper = require('../helpers/claims')
+const fundingHelper = require('../helpers/funding')
 const mentorHelper = require('../helpers/mentors')
 
 /// ------------------------------------------------------------------------ ///
@@ -17,6 +19,10 @@ exports.claim_list = (req, res) => {
   delete req.session.data.mentor
   delete req.session.data.mentorChoices
   delete req.session.data.position
+
+  claims.sort((a, b) => {
+    return new Date(b.createdAt) - new Date(a.createdAt)
+  })
 
   res.render('../views/claims/list', {
     organisation,
@@ -46,7 +52,7 @@ exports.claim_details = (req, res) => {
     claim,
     actions: {
       change: '#',
-      delete: `/organisations/${req.params.organisationId}/claims/${req.params.claimsId}/delete`,
+      delete: `/organisations/${req.params.organisationId}/claims/${req.params.claimId}/delete`,
       back: `/organisations/${req.params.organisationId}/claims`,
       cancel: `/organisations/${req.params.organisationId}/claims`,
       submit: '#'
@@ -289,6 +295,37 @@ exports.new_claim_hours_post = (req, res) => {
 exports.new_claim_check_get = (req, res) => {
   const organisation = organisationModel.findOne({ organisationId: req.params.organisationId })
   const position = req.session.data.claim.mentors.length - 1
+
+  // console.log('Mentors',req.session.data.claim.mentors)
+
+  const mentorHours = req.session.data.claim.mentors.map(mentor => {
+    if (mentor.hours === 'other') {
+      return parseInt(mentor.otherHours)
+    } else {
+      return parseInt(mentor.hours)
+    }
+  })
+
+  // console.log('Mentor hours:', mentorHours)
+
+  const initialHours = 0
+
+  const totalHours = mentorHours.reduce(
+    (accumulator, currentValue) => accumulator + currentValue,
+    initialHours
+  )
+
+  // console.log('Total hours:', totalHours)
+
+  const fundingRate = fundingHelper.getFundingRate(organisation.location.districtAdministrativeCode)
+
+  // console.log('Funding rate:', fundingRate)
+
+  const totalAmount = fundingRate * totalHours
+
+  // console.log('Total amount:', totalAmount)
+
+  req.session.data.claim.totalAmount = totalAmount
 
   res.render('../views/claims/check-your-answers', {
     organisation,

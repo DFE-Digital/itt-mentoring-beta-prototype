@@ -6,8 +6,11 @@ const marked = require('marked')
 const { gfmHeadingId } = require('marked-gfm-heading-id')
 const numeral = require('numeral')
 
+const fundingHelper = require('./helpers/funding')
 const giasHelper = require('./helpers/gias')
 const mentorHelper = require('./helpers/mentors')
+const ofstedHelper = require('./helpers/ofsted')
+const onsHelper = require('./helpers/ons')
 const providerHelper = require('./helpers/providers')
 const utilsHelper = require('./helpers/utils')
 
@@ -127,9 +130,21 @@ addFilter('getSpecialClassesLabel', giasHelper.getSpecialClassesLabel)
 
 addFilter('getUrbanRuralLabel', giasHelper.getUrbanRuralLabel)
 
-addFilter('getOfstedRatingLabel', giasHelper.getOfstedRatingLabel)
-
 addFilter('getSENDProvisionLabel', giasHelper.getSENDProvisionLabel)
+
+/* ------------------------------------------------------------------
+Ofsted utility functions
+------------------------------------------------------------------ */
+addFilter('getOfstedRatingLabel', ofstedHelper.getOfstedRatingLabel)
+
+/* ------------------------------------------------------------------
+ONS utility functions
+------------------------------------------------------------------ */
+addFilter('getLocalAuthorityDistrictLabel', onsHelper.getLocalAuthorityDistrictLabel)
+
+addFilter('getParliamentaryConstituencyLabel', onsHelper.getParliamentaryConstituencyLabel)
+
+addFilter('getRegionLabel', onsHelper.getRegionLabel)
 
 /* ------------------------------------------------------------------
 Mentor utility functions
@@ -140,3 +155,10 @@ addFilter('getMentorName', mentorHelper.getMentorName)
 Provider utility functions
 ------------------------------------------------------------------ */
 addFilter('getProviderName', providerHelper.getProviderName)
+
+/* ------------------------------------------------------------------
+Funding utility functions
+------------------------------------------------------------------ */
+addFilter('getFundingRate', fundingHelper.getFundingRate)
+
+addFilter('getFundingAreaLabel', fundingHelper.getFundingAreaLabel)
