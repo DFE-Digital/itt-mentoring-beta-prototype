@@ -20,6 +20,11 @@ exports.claim_list = (req, res) => {
   delete req.session.data.mentorChoices
   delete req.session.data.position
 
+  claims.sort((a, b) => {
+    return new Date(b.submittedAt) - new Date(a.submittedAt)
+      || new Date(b.createdAt) - new Date(a.createdAt)
+  })
+
   // TODO: get pageSize from settings
   let pageSize = 25
   let pagination = new Pagination(claims, req.query.page, pageSize)
