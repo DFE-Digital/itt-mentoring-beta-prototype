@@ -2,7 +2,7 @@ const path = require('path')
 const fs = require('fs')
 const { v4: uuid } = require('uuid')
 
-const directoryPath = path.join(__dirname, '../data/claims/')
+const directoryPath = path.join(__dirname, '../data/dist/claims/')
 
 exports.findMany = (params) => {
   // to prevent errors, check if directoryPath exists and if not, create
