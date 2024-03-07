@@ -59,7 +59,7 @@ exports.getSelectedOrganisationTypeItems = (selectedItems, baseHref = '/support/
 }
 
 exports.getOrganisationTypeFilterItems = (selectedItems) => {
-  const options = require('../data/organisation-types')
+  const options = require('../data/dist/organisation-types')
 
   const items = []
 
@@ -78,7 +78,7 @@ exports.getOrganisationTypeFilterItems = (selectedItems) => {
 }
 
 exports.getOrganisationTypeLabel = (code) => {
-  const types = require('../data/organisation-types')
+  const types = require('../data/dist/organisation-types')
   let label = code
 
   if (code) {
