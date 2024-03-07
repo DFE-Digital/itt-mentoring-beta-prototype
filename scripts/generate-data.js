@@ -29,8 +29,10 @@ const copy = (source, destination) => {
       copy(sourceFile, destinationFile)
     } else {
       try {
-        console.log('Copying file: ' + destinationFile)
-        fs.writeFileSync(destinationFile, fs.readFileSync(sourceFile))
+        if (!destinationFile.includes('.gitkeep') && !destinationFile.includes('README.md')) {
+          console.log('Copying file: ' + destinationFile)
+          fs.writeFileSync(destinationFile, fs.readFileSync(sourceFile))
+        }
       } catch (e) {
         console.log('Could’t copy file: ' + destinationFile)
       }
