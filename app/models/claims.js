@@ -5,6 +5,11 @@ const { v4: uuid } = require('uuid')
 const directoryPath = path.join(__dirname, '../data/claims/')
 
 exports.findMany = (params) => {
+  // to prevent errors, check if directoryPath exists and if not, create
+  if (!fs.existsSync(directoryPath)) {
+    fs.mkdirSync(directoryPath)
+  }
+
   let claims = []
 
   let documents = fs.readdirSync(directoryPath, 'utf8')
