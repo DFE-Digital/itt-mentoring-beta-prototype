@@ -1,7 +1,7 @@
 exports.getOfstedRatingOptions = () => { // selectedItem
   const items = []
 
-  let options = require('../data/ofsted/ratings')
+  let options = require('../data/dist/ofsted/ratings')
 
   options.forEach((option, i) => {
     const item = {}
@@ -22,7 +22,7 @@ exports.getOfstedRatingOptions = () => { // selectedItem
 }
 
 exports.getOfstedRatingLabel = (code) => {
-  const options = require('../data/ofsted/ratings')
+  const options = require('../data/dist/ofsted/ratings')
   const option = options.find(option => option.code === code)
 
   let label = code

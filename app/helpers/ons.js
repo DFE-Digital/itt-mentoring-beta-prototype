@@ -1,7 +1,7 @@
 exports.getLocalAuthorityDistrictOptions = () => { // selectedItem
   const items = []
 
-  let options = require('../data/ons/local-authority-districts')
+  let options = require('../data/dist/ons/local-authority-districts')
 
   options.forEach((option, i) => {
     const item = {}
@@ -22,7 +22,7 @@ exports.getLocalAuthorityDistrictOptions = () => { // selectedItem
 }
 
 exports.getLocalAuthorityDistrictLabel = (code) => {
-  const options = require('../data/ons/local-authority-districts')
+  const options = require('../data/dist/ons/local-authority-districts')
   const option = options.find(option => option.code === code)
 
   let label = code
@@ -37,7 +37,7 @@ exports.getLocalAuthorityDistrictLabel = (code) => {
 exports.getParliamentaryConstituencyOptions = () => { // selectedItem
   const items = []
 
-  let options = require('../data/ons/parliamentary-constituencies')
+  let options = require('../data/dist/ons/parliamentary-constituencies')
 
   options.forEach((option, i) => {
     const item = {}
@@ -58,7 +58,7 @@ exports.getParliamentaryConstituencyOptions = () => { // selectedItem
 }
 
 exports.getParliamentaryConstituencyLabel = (code) => {
-  const options = require('../data/ons/parliamentary-constituencies')
+  const options = require('../data/dist/ons/parliamentary-constituencies')
   const option = options.find(option => option.code === code)
 
   let label = code
@@ -73,7 +73,7 @@ exports.getParliamentaryConstituencyLabel = (code) => {
 exports.getRegionOptions = () => { // selectedItem
   const items = []
 
-  let options = require('../data/ons/regions')
+  let options = require('../data/dist/ons/regions')
 
   options.forEach((option, i) => {
     const item = {}
@@ -94,7 +94,7 @@ exports.getRegionOptions = () => { // selectedItem
 }
 
 exports.getRegionLabel = (code) => {
-  const options = require('../data/ons/regions')
+  const options = require('../data/dist/ons/regions')
   const option = options.find(option => option.code === code)
 
   let label = code

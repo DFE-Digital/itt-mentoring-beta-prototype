@@ -1,5 +1,5 @@
 exports.findMany = (params) => {
-  let teachers = require('../data/teachers/teachers.json')
+  let teachers = require('../data/dist/teachers/teachers.json')
 
   if (params.query?.length) {
     const query = params.query.toUpperCase()
@@ -13,7 +13,7 @@ exports.findMany = (params) => {
 }
 
 exports.findOne = (params) => {
-  let teachers = require('../data/teachers/teachers.json')
+  let teachers = require('../data/dist/teachers/teachers.json')
 
   if (params.query?.length) {
     const query = params.query.toUpperCase()

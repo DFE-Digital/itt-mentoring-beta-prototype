@@ -1,5 +1,5 @@
 exports.findMany = (params) => {
-  let providers = require('../data/providers/providers.json')
+  let providers = require('../data/dist/providers/providers.json')
 
   if (params.query?.length) {
     const query = params.query.toLowerCase()
@@ -15,7 +15,7 @@ exports.findMany = (params) => {
 }
 
 exports.findOne = (params) => {
-  let providers = require('../data/providers/providers.json')
+  let providers = require('../data/dist/providers/providers.json')
 
   if (params.query?.length) {
     const query = params.query.toLowerCase()

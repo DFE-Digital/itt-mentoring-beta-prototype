@@ -14,7 +14,6 @@
   "dependencies": {
     "@govuk-prototype-kit/common-templates": "^2.0.1",
     "connect-flash": "^0.1.1",
-    "del": "6.1.1",
     "govuk-frontend": "^5.2.0",
     "govuk-prototype-kit": "13.16.1",
     "gray-matter": "^4.0.3",
@@ -24,6 +23,7 @@
     "numeral": "^2.0.6",
     "passport": "^0.7.0",
     "passport-local": "^1.0.0",
+    "rimraf": "^5.0.5",
     "uuid": "^9.0.1"
   }
 }
