@@ -1,5 +1,5 @@
 exports.findMany = (params) => {
-  let schools = require('../data/schools/schools.json')
+  let schools = require('../data/dist/schools/schools.json')
 
   if (params.query?.length) {
     const query = params.query.toLowerCase()
