@@ -1,8 +1,8 @@
-const userModel = require('../../models/users')
-const organisationModel = require('../../models/organisations')
+const userModel = require('../../../models/users')
+const organisationModel = require('../../../models/organisations')
 
-const Pagination = require('../../helpers/pagination')
-const validationHelper = require('../../helpers/validators')
+const Pagination = require('../../../helpers/pagination')
+const validationHelper = require('../../../helpers/validators')
 
 /// ------------------------------------------------------------------------ ///
 /// SHOW USER
