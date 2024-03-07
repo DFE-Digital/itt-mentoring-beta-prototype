@@ -1,11 +1,16 @@
-const del = require('del')
 const fs = require('fs')
 const path = require('path')
+const { rimrafSync } = require('rimraf')
 
 const sourceDirectory = path.join(__dirname, '../app/data/seed')
-const destinationDirectory = path.join(__dirname, '../app/data')
+const destinationDirectory = path.join(__dirname, '../app/data/dist')
 
 const copy = (source, destination) => {
+  if (!fs.existsSync(destinationDirectory)) {
+    console.log('Creating directory: ' + destinationDirectory)
+    fs.mkdirSync(destinationDirectory)
+  }
+
   const list = fs.readdirSync(source)
   let sourceFile, destinationFile
 
@@ -34,29 +39,8 @@ const copy = (source, destination) => {
 }
 
 const remove = (destination) => {
-  const list = fs.readdirSync(destination)
-  let destinationFile
-
-  list.forEach((file) => {
-    destinationFile = destination + '/' + file
-
-    const stat = fs.statSync(destinationFile)
-    if (stat && stat.isDirectory()) {
-      if (!destinationFile.includes('/app/data/seed')) {
-        console.log('Removing directory: ' + destinationFile)
-        del(destinationFile)
-      }
-    } else {
-      if (!destinationFile.includes('session-data-defaults.js') && !destinationFile.includes('settings.json') && !destinationFile.includes('README.md')) {
-        try {
-          console.log('Removing file: ' + destinationFile)
-          fs.unlinkSync(destinationFile)
-        } catch (e) {
-          console.log('Could’t remove file: ' + destinationFile)
-        }
-      }
-    }
-  })
+  console.log('Removing directory: ' + destination)
+  rimrafSync(destination)
 }
 
 remove(destinationDirectory)
