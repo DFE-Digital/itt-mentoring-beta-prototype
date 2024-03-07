@@ -1,9 +1,9 @@
-const mentorModel = require('../../models/mentors')
-const organisationModel = require('../../models/organisations')
-const teacherModel = require('../../models/teachers')
+const mentorModel = require('../../../models/mentors')
+const organisationModel = require('../../../models/organisations')
+const teacherModel = require('../../../models/teachers')
 
-const Pagination = require('../../helpers/pagination')
-const validationHelper = require('../../helpers/validators')
+const Pagination = require('../../../helpers/pagination')
+const validationHelper = require('../../../helpers/validators')
 
 /// ------------------------------------------------------------------------ ///
 /// LIST MENTOR

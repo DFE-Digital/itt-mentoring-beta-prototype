@@ -55,9 +55,9 @@ const organisationController = require('./controllers/organisations')
 const userController = require('./controllers/users')
 
 const supportOrganisationController = require('./controllers/support/organisations')
-const supportOrganisationClaimController = require('./controllers/support/organisation-claims')
-const supportOrganisationMentorController = require('./controllers/support/organisation-mentors')
-const supportOrganisationUserController = require('./controllers/support/organisation-users')
+const supportOrganisationClaimController = require('./controllers/support/organisations/claims')
+const supportOrganisationMentorController = require('./controllers/support/organisations/mentors')
+const supportOrganisationUserController = require('./controllers/support/organisations/users')
 const supportUserController = require('./controllers/support/users')
 
 // Authentication middleware
