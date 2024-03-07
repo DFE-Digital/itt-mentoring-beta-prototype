@@ -1,9 +1,14 @@
 const path = require('path')
 const fs = require('fs')
 
-const directoryPath = path.join(__dirname, '../data/organisations/')
+const directoryPath = path.join(__dirname, '../data/dist/organisations/')
 
 exports.findMany = (params) => {
+  // to prevent errors, check if directoryPath exists and if not, create
+  if (!fs.existsSync(directoryPath)) {
+    fs.mkdirSync(directoryPath)
+  }
+
   let organisations = []
 
   let documents = fs.readdirSync(directoryPath, 'utf8')

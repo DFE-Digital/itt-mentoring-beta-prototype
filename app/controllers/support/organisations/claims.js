@@ -1,11 +1,11 @@
-const claimModel = require('../../models/claims')
-const mentorModel = require('../../models/mentors')
-const organisationModel = require('../../models/organisations')
+const claimModel = require('../../../models/claims')
+const mentorModel = require('../../../models/mentors')
+const organisationModel = require('../../../models/organisations')
 
-const Pagination = require('../../helpers/pagination')
-const claimHelper = require('../../helpers/claims')
-const fundingHelper = require('../../helpers/funding')
-const mentorHelper = require('../../helpers/mentors')
+const Pagination = require('../../../helpers/pagination')
+const claimHelper = require('../../../helpers/claims')
+const fundingHelper = require('../../../helpers/funding')
+const mentorHelper = require('../../../helpers/mentors')
 
 /// ------------------------------------------------------------------------ ///
 /// LIST CLAIM

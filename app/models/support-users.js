@@ -2,7 +2,7 @@ const path = require('path')
 const fs = require('fs')
 const { v4: uuid } = require('uuid')
 
-const directoryPath = path.join(__dirname, '../data/users/')
+const directoryPath = path.join(__dirname, '../data/dist/users/')
 
 exports.findMany = (params) => {
   let users = []
