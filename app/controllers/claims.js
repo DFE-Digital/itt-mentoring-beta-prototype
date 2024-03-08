@@ -105,7 +105,7 @@ exports.new_claim_post = (req, res) => {
     const error = {}
     error.fieldName = 'provider'
     error.href = '#provider'
-    error.text = 'Select a provider'
+    error.text = 'Select an accredited provider'
     errors.push(error)
   }
 
