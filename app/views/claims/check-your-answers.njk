@@ -109,9 +109,27 @@
 
         {% include "_includes/claims/grant-funding.njk" %}
 
+        <h2 class="govuk-heading-m">Declaration</h2>
+
         <p class="govuk-body">
-          By submitting this claim, you confirm that the details provided are correct to the best of your knowledge.
+          By submitting this claim, I confirm that:
         </p>
+
+        <ul class="govuk-list govuk-list--bullet">
+          <li>
+            I am authorised to claim on behalf of the school
+          </li>
+          <li>
+            the information detailed above is accurate and the total I am claiming back has been used to support the cost of the mentor training
+          </li>
+          <li>
+            I will provide evidence to support this claim if requested by the Department for Education
+          </li>
+        </ul>
+
+        {# {{ govukInsetText({
+          text: "You will be able to change the details of this claim up to and including 19 July 2024."
+        }) }} #}
 
         {{ govukWarningText({
           text: "You will not be able to change any of the claim details once you have submitted it.",
