@@ -57,7 +57,7 @@
         text: "Date submitted"
       },
       value: {
-        text: (claim.updatedAt if claim.updatedAt else claim.createdAt) | datetime('dd MMMM yyyy')
+        text: claim.submittedAt | datetime('dd MMMM yyyy') if claim.submittedAt else "-"
       }
     },
     {
