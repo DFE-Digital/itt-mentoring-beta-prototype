@@ -75,7 +75,7 @@ You can find more information about how we handle personal data in our [personal
 
 ## Getting help and raising a concern
 
-If you would like to exercise any of your rights, you can email us at [ittmentor.funding@digital.education.gov.uk](mailto:ittmentor.funding@digital.education.gov.uk).
+If you would like to exercise any of your rights, you can email us at [ittmentor.funding@education.gov.uk](mailto:ittmentor.funding@education.gov.uk).
 
 You can also use our [contact form](https://form.education.gov.uk/) to get in touch with our Data Protection Officer.
 
