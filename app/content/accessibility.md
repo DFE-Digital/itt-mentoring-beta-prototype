@@ -28,7 +28,7 @@ The service was designed using the [GOV.UK design system](https://design-system.
 
 ## Reporting accessibility problems with Claim funding for mentors
 
-If you think we’re not meeting accessibility requirements, or you’d like to access any information in a different format (such as accessible PDF, large print, easy read, audio recording or braille), contact [becomingateacher@digital.education.gov.uk](mailto:becomingateacher@digital.education.gov.uk). Include ‘Accessibility issues’ in the subject line of your email.
+If you think we’re not meeting accessibility requirements, or you’d like to access any information in a different format (such as accessible PDF, large print, easy read, audio recording or braille), contact [ittmentor.funding@education.gov.uk](mailto:ittmentor.funding@education.gov.uk). Include ‘Accessibility issues’ in the subject line of your email.
 
 ## Enforcement procedure
 
