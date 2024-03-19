@@ -4,7 +4,7 @@ title: Terms and conditions
 
 ## Using our website
 
-Please read these Terms of Use (“General Terms”) carefully before using this Claim funding for mentors (the “Service”).
+Please read these Terms of Use (“General Terms”) carefully before using this Claim funding for mentor training (the “Service”).
 
 This Service is maintained for your personal use and viewing. Access and use by you of this Service constitutes your acceptance of these General Terms. This takes effect from the date on which you first use this website. If you do not agree to these terms, you must not use this website.
 
@@ -26,9 +26,9 @@ We reserve the right to restrict or deny you access to all or some part of the S
 
 The Department for Education withholds the right to withdraw without notice listings that breach these terms and to withdraw the access of users who breach them.
 
-## Hyperlinking to the Claim funding for mentors website
+## Hyperlinking to the Claim funding for mentor training website
 
-We do not object to you linking directly to pages on this site and you do not need to ask permission to do so. However, we do not permit our pages to be loaded into frames on your site. The ‘Claim funding for mentors’ pages must be displayed in the user’s entire browser window.
+We do not object to you linking directly to pages on this site and you do not need to ask permission to do so. However, we do not permit our pages to be loaded into frames on your site. The ‘Claim funding for mentor training’ pages must be displayed in the user’s entire browser window.
 
 You may not charge your website’s users to click on a link to any page on the Service.
 
@@ -79,7 +79,7 @@ These General Terms are governed by the laws of England and Wales. Any dispute a
 
 Access and use by you of this Service constitutes your acceptance of these Terms and Conditions. This takes effect from the date on which you first use this website. If you do not agree to these terms, you must not use this website.
 
-By using Claim funding for mentors you agree to abide by the following terms and conditions.
+By using Claim funding for mentor training you agree to abide by the following terms and conditions.
 
 ## Unacceptable Use
 

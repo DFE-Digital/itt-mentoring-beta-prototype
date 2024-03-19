@@ -1,10 +1,10 @@
 ---
-title: Claim funding for mentors privacy notice
+title: Claim funding for mentor training privacy notice
 ---
 
 ## Who we are
 
-This work is being carried out by Department for Education (DfE) Digital, which is a part of DfE. For the purpose of data protection legislation, the DfE is the data controller for the personal data processed as part of Claim funding for mentors.
+This work is being carried out by Department for Education (DfE) Digital, which is a part of DfE. For the purpose of data protection legislation, the DfE is the data controller for the personal data processed as part of Claim funding for mentor training.
 
 ## Why our use of your personal data is lawful
 
@@ -22,7 +22,7 @@ When we create an account for you, we will store:
 
 - your name
 - your email address
-- personal information, such as the name and email address of a contact person at your training provider or school, if you choose to share this in a course listing you post to Claim funding for mentors
+- personal information, such as the name and email address of a contact person at your training provider or school, if you choose to share this in a course listing you post to Claim funding for mentor training
 
 ## How we will use your information
 
@@ -39,8 +39,8 @@ Where we need to share your personal data with others, we ensure that this data 
 Our contracted suppliers use your data data in the following way
 
 - for user research that informs development of the service: if you share your name, email address and phone number our contracted suppliers will store these in its research library
-- for security purposes: our contracted suppliers collect part of the IP addresses of people visiting the Claim funding for mentors website (for example, if we were receiving continuous direct denial of service attacks from an IP address range then we could block it)
-- to enable users to use the service and receive updates: our contracted suppliers collect the names and emails of those publishing course listings on ‘Claim funding for mentors’
+- for security purposes: our contracted suppliers collect part of the IP addresses of people visiting the Claim funding for mentor training website (for example, if we were receiving continuous direct denial of service attacks from an IP address range then we could block it)
+- to enable users to use the service and receive updates: our contracted suppliers collect the names and emails of those publishing course listings on ‘Claim funding for mentor training’
 
 ### Customer service management systems
 
