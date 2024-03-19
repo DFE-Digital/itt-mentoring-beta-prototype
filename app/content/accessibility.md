@@ -1,5 +1,5 @@
 ---
-title: Accessibility statement for Claim funding for mentors
+title: Accessibility statement for Claim funding for mentor training
 ---
 
 This service is run by the Becoming a Teacher team at the Department for Education. We want as many people as possible to be able to use the service. For example, that means users should be able to:
@@ -16,7 +16,7 @@ We’ve also made the text on the service as simple as possible to understand.
 
 ## Technical information about this service’s accessibility
 
-The Becoming a Teacher team (DfE) is committed to making Claim funding for mentors accessible, in accordance with the Public Sector Bodies (Websites and Mobile Applications) (No. 2) Accessibility Regulations 2018.
+The Becoming a Teacher team (DfE) is committed to making Claim funding for mentor training accessible, in accordance with the Public Sector Bodies (Websites and Mobile Applications) (No. 2) Accessibility Regulations 2018.
 
 This website is partially compliant with the [Web Content Accessibility Guidelines (WCAG) version 2.1](https://www.w3.org/TR/WCAG21/) AA standard, due to the non-compliances listed below.
 
@@ -26,7 +26,7 @@ This website is partially compliant with the [Web Content Accessibility Guidelin
 
 The service was designed using the [GOV.UK design system](https://design-system.service.gov.uk/accessibility/), which conforms to the WCAG 2.1 AA standard. To ensure the service fully meets the WCAG 2.1 AA standard, we are currently arranging an accessibility audit. We will update this page following the audit, and publish details of any accessibility issues identified.
 
-## Reporting accessibility problems with Claim funding for mentors
+## Reporting accessibility problems with Claim funding for mentor training
 
 If you think we’re not meeting accessibility requirements, or you’d like to access any information in a different format (such as accessible PDF, large print, easy read, audio recording or braille), contact [ittmentor.funding@education.gov.uk](mailto:ittmentor.funding@education.gov.uk). Include ‘Accessibility issues’ in the subject line of your email.
 
