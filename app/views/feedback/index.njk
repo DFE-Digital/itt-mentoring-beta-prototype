@@ -26,7 +26,7 @@
             classes: "govuk-fieldset__legend--s"
           }
         },
-        errorMessage: errors | getErrorMessage('satisfaction'),
+        errorMessage: errors | getErrorMessage("satisfaction"),
         value: data.feedback.satisfaction,
         items: [
           {
@@ -63,7 +63,7 @@
         hint: {
           text: "Do not include any personal or sensitive information"
         },
-        errorMessage: errors | getErrorMessage('details'),
+        errorMessage: errors | getErrorMessage("details"),
         maxwords: wordCount,
         value: data.feedback.details
       }) }}
@@ -102,6 +102,7 @@
           hint: {
             text: "We’ll only use this to reply to your message"
           },
+          errorMessage: errors | getErrorMessage("email"),
           value: data.feedback.email,
           type: "email",
           autocomplete: "email",
