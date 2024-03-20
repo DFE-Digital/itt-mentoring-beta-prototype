@@ -354,6 +354,7 @@ exports.new_claim_check_post = (req, res) => {
 
   const claim = claimModel.insertOne({
     organisationId: req.params.organisationId,
+    userId: req.session.passport.user.id,
     claim: req.session.data.claim
   })
 
