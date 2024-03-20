@@ -35,6 +35,15 @@ exports.feedback_form_post = (req, res) => {
     errors.push(error)
   }
 
+  if (req.session.data.feedback?.email
+    && !validationHelper.isValidEmail(req.session.data.feedback.email)) {
+    const error = {}
+    error.fieldName = 'email'
+    error.href = '#feedback-email'
+    error.text = 'Enter an email address in the correct format, like name@example.com'
+    errors.push(error)
+  }
+
   if (errors.length) {
     res.render('../views/feedback/index', {
       wordCount,
@@ -50,5 +59,9 @@ exports.feedback_form_post = (req, res) => {
 
 exports.feedback_confirmation_get = (req, res) => {
   delete req.session.data.feedback
-  res.render('../views/feedback/confirmation')
+  res.render('../views/feedback/confirmation', {
+    actions: {
+      home: '/'
+    }
+  })
 }
