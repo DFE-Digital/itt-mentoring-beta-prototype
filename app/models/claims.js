@@ -69,8 +69,16 @@ exports.insertOne = (params) => {
       claim.status = params.claim.status
 
       if (params.claim.status === 'submitted') {
+        if (params.userId) {
+          claim.submittedBy = params.userId
+        }
+
         claim.submittedAt = new Date()
       }
+    }
+
+    if (params.userId) {
+      claim.createdBy = params.userId
     }
 
     claim.createdAt = new Date()
@@ -112,8 +120,16 @@ exports.updateOne = (params) => {
       claim.status = params.claim.status
 
       if (!claim.submittedAt && params.claim.status === 'submitted') {
+        if (params.userId) {
+          claim.submittedBy = params.userId
+        }
+
         claim.submittedAt = new Date()
       }
+    }
+
+    if (params.userId) {
+      claim.updatedBy = params.userId
     }
 
     claim.updatedAt = new Date()
