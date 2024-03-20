@@ -44,3 +44,14 @@ exports.terms = (req, res) => {
     content: markdown.content
   })
 }
+
+exports.grant = (req, res) => {
+  const markdown = contentModel.findOne({
+    fileName: 'grant-conditions'
+  })
+
+  res.render('../views/content/show', {
+    contentData: markdown.data,
+    content: markdown.content
+  })
+}

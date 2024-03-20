@@ -375,6 +375,8 @@ router.get('/privacy', contentController.privacy)
 
 router.get('/terms', contentController.terms)
 
+router.get('/grant-conditions', contentController.grant)
+
 /// ------------------------------------------------------------------------ ///
 /// AUTOCOMPLETE ROUTES
 /// ------------------------------------------------------------------------ ///
