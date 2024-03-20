@@ -15,6 +15,7 @@ const onsHelper = require('./helpers/ons')
 const providerHelper = require('./helpers/providers')
 const teacherHelper = require('./helpers/teachers')
 const utilsHelper = require('./helpers/utils')
+const userHelper = require('./helpers/users')
 
 /* ------------------------------------------------------------------
   numeral filter for use in Nunjucks
@@ -147,6 +148,11 @@ addFilter('getLocalAuthorityDistrictLabel', onsHelper.getLocalAuthorityDistrictL
 addFilter('getParliamentaryConstituencyLabel', onsHelper.getParliamentaryConstituencyLabel)
 
 addFilter('getRegionLabel', onsHelper.getRegionLabel)
+
+/* ------------------------------------------------------------------
+User utility functions
+------------------------------------------------------------------ */
+addFilter('getUserName', userHelper.getUserName)
 
 /* ------------------------------------------------------------------
 Mentor utility functions

@@ -35,7 +35,13 @@ exports.findMany = (params) => {
 }
 
 exports.findOne = (params) => {
-  const users = this.findMany({ organisationId: params.organisationId })
+  let users = []
+  if (params.organisationId) {
+    users = this.findMany({ organisationId: params.organisationId })
+  } else {
+    users = this.findMany({})
+  }
+
   let user = {}
 
   if (params.userId) {
