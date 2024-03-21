@@ -61,7 +61,7 @@ exports.feedback_confirmation_get = (req, res) => {
   delete req.session.data.feedback
   res.render('../views/feedback/confirmation', {
     actions: {
-      home: '/'
+      home: '/organisations'
     }
   })
 }
