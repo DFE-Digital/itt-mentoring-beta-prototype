@@ -1,0 +1,25 @@
+{% macro _selectedSubjects(params) %}
+  {% for subject in params.subjects %}
+    <b>{{ subject | getSubjectLabel }}</b>
+    {% if not loop.last %}
+      and
+    {% endif %}
+  {% endfor %}
+{% endmacro %}
+
+<p class="govuk-body govuk-!-margin-bottom-7">
+  {% if questions.subjectLevel == "primary" %}
+    <b>{{ questions.subjectLevel | capitalize }}</b>
+  {% else %}
+    {{ _selectedSubjects({ subjects: selectedSubjects }) }}
+  {% endif %}
+  school placements
+  {% if data.q == "england" %}
+    in <b>England</b>
+  {% elif data.q == "location" %}
+    in or near <b>{{ data.location }}</b>
+  {% elif data.q == "provider" %}
+    from <b>{{ data.school }}</b>
+  {% endif %}
+  <a href="{{ actions.change }}" class="govuk-link govuk-link--no-visited-state">Change<span class="govuk-visually-hidden"> subject or location</span></a>
+</p>
