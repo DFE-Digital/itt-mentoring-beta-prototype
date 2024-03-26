@@ -60,6 +60,7 @@ const supportOrganisationClaimController = require('./controllers/support/organi
 const supportOrganisationMentorController = require('./controllers/support/organisations/mentors')
 const supportOrganisationUserController = require('./controllers/support/organisations/users')
 const supportUserController = require('./controllers/support/users')
+const supportClaimController = require('./controllers/support/claims')
 
 // Authentication middleware
 const checkIsAuthenticated = (req, res, next) => {
@@ -298,6 +299,22 @@ router.post('/support/organisations/:organisationId/claims/:claimId/delete', che
 router.get('/support/organisations/:organisationId/claims/:claimId', checkIsAuthenticated, supportOrganisationClaimController.claim_details)
 
 router.get('/support/organisations/:organisationId/claims', checkIsAuthenticated, supportOrganisationClaimController.claim_list)
+
+/// ------------------------------------------------------------------------ ///
+/// SUPPORT - CLAIM ROUTES
+/// ------------------------------------------------------------------------ ///
+
+router.get('/support/claims/remove-status-filter/:status', checkIsAuthenticated, supportClaimController.removeStatusFilter)
+router.get('/support/claims/remove-school-filter/:status', checkIsAuthenticated, supportClaimController.removeSchoolFilter)
+router.get('/support/claims/remove-provider-filter/:status', checkIsAuthenticated, supportClaimController.removeProviderFilter)
+
+router.get('/support/claims/remove-all-filters', checkIsAuthenticated, supportClaimController.removeAllFilters)
+
+router.get('/support/claims/remove-keyword-search', checkIsAuthenticated, supportClaimController.removeKeywordSearch)
+
+router.get('/support/claims/:organisationId', checkIsAuthenticated, supportClaimController.show_claim_get)
+
+router.get('/support/claims', checkIsAuthenticated, supportClaimController.list_claims_get)
 
 /// ------------------------------------------------------------------------ ///
 /// SUPPORT - USER ROUTES
