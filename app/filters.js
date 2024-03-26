@@ -13,6 +13,7 @@ const mentorHelper = require('./helpers/mentors')
 const ofstedHelper = require('./helpers/ofsted')
 const onsHelper = require('./helpers/ons')
 const providerHelper = require('./helpers/providers')
+const schoolHelper = require('./helpers/schools')
 const teacherHelper = require('./helpers/teachers')
 const utilsHelper = require('./helpers/utils')
 const userHelper = require('./helpers/users')
@@ -163,6 +164,11 @@ addFilter('getMentorName', mentorHelper.getMentorName)
 Teacher utility functions
 ------------------------------------------------------------------ */
 addFilter('getTeacherName', teacherHelper.getTeacherName)
+
+/* ------------------------------------------------------------------
+Provider utility functions
+------------------------------------------------------------------ */
+addFilter('getSchoolName', schoolHelper.getSchoolName)
 
 /* ------------------------------------------------------------------
 Provider utility functions
