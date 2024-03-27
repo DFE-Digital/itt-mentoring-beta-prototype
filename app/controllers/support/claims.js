@@ -90,13 +90,32 @@ exports.list_claims_get = (req, res) => {
 
   // Get list of all claims
   let claims = claimModel.findMany({
-    keywords,
-    statuses
+    keywords
   })
 
-  claims = claims.filter(claim => {
-    return claim.status !== 'draft'
-  })
+  // TODO: Decorate claim with provider and school names, school address so we can search?
+
+  // claims = claims.filter(claim => {
+  //   return claim.status !== 'draft'
+  // })
+
+  if (statuses?.length) {
+    claims = claims.filter(claim => {
+      return statuses.includes(claim.status)
+    })
+  }
+
+  if (schools?.length) {
+    claims = claims.filter(claim => {
+      return schools.includes(claim.organisationId)
+    })
+  }
+
+  if (providers?.length) {
+    claims = claims.filter(claim => {
+      return providers.includes(claim.provider)
+    })
+  }
 
   // Sort claims alphabetically by name
   // claims.sort((a, b) => {
