@@ -2,6 +2,8 @@ const claimModel = require('../../models/claims')
 
 const Pagination = require('../../helpers/pagination')
 const filterHelper = require('../../helpers/filters')
+const providerHelper = require('../../helpers/providers')
+const schoolHelper = require('../../helpers/schools')
 
 /// ------------------------------------------------------------------------ ///
 /// LIST CLAIMS
@@ -60,7 +62,7 @@ exports.list_claims_get = (req, res) => {
         heading: { text: 'School' },
         items: schools.map((school) => {
           return {
-            text: filterHelper.getFilterBLabel(school),
+            text: schoolHelper.getSchoolName(school),
             href: `/support/claims/remove-school-filter/${school}`
           }
         })
@@ -69,10 +71,10 @@ exports.list_claims_get = (req, res) => {
 
     if (providers?.length) {
       selectedFilters.categories.push({
-        heading: { text: 'Provider' },
+        heading: { text: 'Accredited provider' },
         items: providers.map((provider) => {
           return {
-            text: filterHelper.getFilterCLabel(provider),
+            text: providerHelper.getProviderName(provider),
             href: `/support/claims/remove-provider-filter/${provider}`
           }
         })
@@ -82,13 +84,17 @@ exports.list_claims_get = (req, res) => {
 
   // get filter items
   const filterStatusItems = filterHelper.getFilterAItems(statuses)
-  const filterSchoolItems = filterHelper.getFilterBItems(schools)
-  const filterProviderItems = filterHelper.getFilterCItems(providers)
+  const filterSchoolItems = schoolHelper.getSchoolOptions(schools)
+  const filterProviderItems = providerHelper.getProviderOptions(providers)
 
   // Get list of all claims
   let claims = claimModel.findMany({
     keywords,
     statuses
+  })
+
+  claims = claims.filter(claim => {
+    return claim.status !== 'draft'
   })
 
   // Sort claims alphabetically by name
