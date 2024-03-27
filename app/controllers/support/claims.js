@@ -113,7 +113,7 @@ exports.list_claims_get = (req, res) => {
 
   if (providers?.length) {
     claims = claims.filter(claim => {
-      return providers.includes(claim.provider)
+      return providers.includes(claim.providerId)
     })
   }
 
