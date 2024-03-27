@@ -305,14 +305,14 @@ router.get('/support/organisations/:organisationId/claims', checkIsAuthenticated
 /// ------------------------------------------------------------------------ ///
 
 router.get('/support/claims/remove-status-filter/:status', checkIsAuthenticated, supportClaimController.removeStatusFilter)
-router.get('/support/claims/remove-school-filter/:status', checkIsAuthenticated, supportClaimController.removeSchoolFilter)
-router.get('/support/claims/remove-provider-filter/:status', checkIsAuthenticated, supportClaimController.removeProviderFilter)
+router.get('/support/claims/remove-school-filter/:school', checkIsAuthenticated, supportClaimController.removeSchoolFilter)
+router.get('/support/claims/remove-provider-filter/:provider', checkIsAuthenticated, supportClaimController.removeProviderFilter)
 
 router.get('/support/claims/remove-all-filters', checkIsAuthenticated, supportClaimController.removeAllFilters)
 
 router.get('/support/claims/remove-keyword-search', checkIsAuthenticated, supportClaimController.removeKeywordSearch)
 
-router.get('/support/claims/:organisationId', checkIsAuthenticated, supportClaimController.show_claim_get)
+router.get('/support/claims/:claimId', checkIsAuthenticated, supportClaimController.show_claim_get)
 
 router.get('/support/claims', checkIsAuthenticated, supportClaimController.list_claims_get)
 
