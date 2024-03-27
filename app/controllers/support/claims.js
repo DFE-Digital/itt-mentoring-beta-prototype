@@ -4,6 +4,7 @@ const Pagination = require('../../helpers/pagination')
 const filterHelper = require('../../helpers/filters')
 const providerHelper = require('../../helpers/providers')
 const schoolHelper = require('../../helpers/schools')
+const statusHelper = require('../../helpers/statuses')
 
 /// ------------------------------------------------------------------------ ///
 /// LIST CLAIMS
@@ -50,7 +51,7 @@ exports.list_claims_get = (req, res) => {
         heading: { text: 'Status' },
         items: statuses.map((status) => {
           return {
-            text: filterHelper.getFilterALabel(status),
+            text: statusHelper.getClaimStatusLabel(status),
             href: `/support/claims/remove-status-filter/${status}`
           }
         })
@@ -83,7 +84,7 @@ exports.list_claims_get = (req, res) => {
   }
 
   // get filter items
-  const filterStatusItems = filterHelper.getFilterAItems(statuses)
+  const filterStatusItems = statusHelper.getClaimStatusOptions(statuses)
   const filterSchoolItems = schoolHelper.getSchoolOptions(schools)
   const filterProviderItems = providerHelper.getProviderOptions(providers)
 
