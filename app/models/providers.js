@@ -24,6 +24,7 @@ exports.findOne = (params) => {
       || provider.ukprn?.toString().includes(query)
       || provider.urn?.toString().includes(query)
       || provider.address?.postcode?.toLowerCase().includes(query)
+      || provider.id === query
      )
   } else {
     return null
