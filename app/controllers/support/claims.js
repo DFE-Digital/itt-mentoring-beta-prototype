@@ -6,6 +6,8 @@ const providerHelper = require('../../helpers/providers')
 const schoolHelper = require('../../helpers/schools')
 const statusHelper = require('../../helpers/statuses')
 
+const claimDecorator = require('../../decorators/claims')
+
 /// ------------------------------------------------------------------------ ///
 /// LIST CLAIMS
 /// ------------------------------------------------------------------------ ///
@@ -89,9 +91,14 @@ exports.list_claims_get = (req, res) => {
   const filterProviderItems = providerHelper.getProviderOptions(providers)
 
   // Get list of all claims
-  let claims = claimModel.findMany({
-    keywords
-  })
+  let claims = claimModel.findMany({})
+
+  // add details of school to each placement
+  if (claims.length) {
+    claims = claims.map(claim => {
+      return claim = claimDecorator.decorate(claim)
+    })
+  }
 
   // TODO: Decorate claim with provider and school names, school address so we can search?
 
@@ -115,6 +122,16 @@ exports.list_claims_get = (req, res) => {
     claims = claims.filter(claim => {
       return providers.includes(claim.providerId)
     })
+  }
+
+  if (keywords?.length) {
+    // claims = claims.filter(claim => {
+    //   return claim.school.name.toLowerCase().includes(keywords.toLowerCase())
+    //     || claim.school.urn?.toString().includes(keywords)
+    //     || claim.school.address?.postcode?.toLowerCase().includes(keywords.toLowerCase())
+    // })
+
+    claims = claims.filter(claim => claim.reference.toLowerCase().includes(keywords.toLowerCase()))
   }
 
   // Sort claims alphabetically by name
