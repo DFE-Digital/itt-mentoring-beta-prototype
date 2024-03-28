@@ -4,7 +4,8 @@ exports.feedback_form_get = (req, res) => {
   res.render('../views/feedback/index', {
     wordCount: 200,
     actions: {
-      save: `/feedback`
+      save: `/feedback`,
+      home: '/organisations'
     }
   })
 }
@@ -48,7 +49,8 @@ exports.feedback_form_post = (req, res) => {
     res.render('../views/feedback/index', {
       wordCount,
       actions: {
-        save: `/feedback`
+        save: `/feedback`,
+        home: '/organisations'
       },
       errors
     })
