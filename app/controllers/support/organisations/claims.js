@@ -40,7 +40,8 @@ exports.claim_list = (req, res) => {
     actions: {
       new: `/support/organisations/${req.params.organisationId}/claims/new`,
       view: `/support/organisations/${req.params.organisationId}/claims`,
-      mentors: `/support/organisations/${req.params.organisationId}/mentors`
+      mentors: `/support/organisations/${req.params.organisationId}/mentors`,
+      back: `/support/organisations`
     }
   })
 }
