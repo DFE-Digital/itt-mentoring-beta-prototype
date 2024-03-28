@@ -53,8 +53,8 @@ exports.insertOne = (params) => {
       claim.reference = params.claim.reference.toUpperCase()
     }
 
-    if (params.claim.provider) {
-      claim.provider = params.claim.provider
+    if (params.claim.providerId) {
+      claim.providerId = params.claim.providerId
     }
 
     if (params.claim.mentors) {
@@ -104,8 +104,8 @@ exports.updateOne = (params) => {
       claimId: params.claimId,
     })
 
-    if (params.claim.provider) {
-      claim.provider = params.claim.provider
+    if (params.claim.providerId) {
+      claim.providerId = params.claim.providerId
     }
 
     if (params.claim.mentors) {

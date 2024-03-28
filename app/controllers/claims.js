@@ -101,7 +101,7 @@ exports.new_claim_post = (req, res) => {
 
   const errors = []
 
-  if (!req.session.data.claim?.provider) {
+  if (!req.session.data.claim?.providerId) {
     const error = {}
     error.fieldName = 'provider'
     error.href = '#provider'
