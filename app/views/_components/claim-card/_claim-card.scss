@@ -1,13 +1,13 @@
-.app-claim-cards {
-  .task_view_group_header {
-    margin-top: govuk-spacing(6);
-    margin-bottom: govuk-spacing(2);
-  }
+// .app-claim-cards {
+//   .task_view_group_header {
+//     margin-top: govuk-spacing(6);
+//     margin-bottom: govuk-spacing(2);
+//   }
 
-  .task_view_group_header:first-of-type {
-    margin-top: 0;
-  }
-}
+//   .task_view_group_header:first-of-type {
+//     margin-top: 0;
+//   }
+// }
 
 .app-claim-card {
   border-bottom: 1px solid govuk-colour("mid-grey");
@@ -17,19 +17,22 @@
     @include govuk-font($size: 16);
     // padding: 2px govuk-spacing(1);
     // white-space: nowrap;
-  }
-
-  .govuk-grid-column-one-third {
-    @include govuk-media-query($from: tablet) {
-      width: 40%;
+    @include govuk-media-query($until: desktop) {
+      margin-bottom: govuk-spacing(1)
     }
   }
 
-  .govuk-grid-column-two-thirds {
-    @include govuk-media-query($from: tablet) {
-      width: 60%;
-    }
-  }
+  // .govuk-grid-column-one-third {
+  //   @include govuk-media-query($from: tablet) {
+  //     width: 40%;
+  //   }
+  // }
+
+  // .govuk-grid-column-two-thirds {
+  //   @include govuk-media-query($from: tablet) {
+  //     width: 60%;
+  //   }
+  // }
 
   &__caption {
     @include govuk-font($size: 16, $weight: "regular");

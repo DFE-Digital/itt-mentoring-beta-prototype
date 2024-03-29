@@ -10,7 +10,7 @@ $app-assets-path: '/public/';
 @import "app/views/_components/all.scss";
 
 // Styles that aren't in the GOV.UK Frontend or local components
-@import "core/flex-grid";
+// @import "core/flex-grid";
 @import "core/header";
 @import "core/links";
 @import "core/lists";
