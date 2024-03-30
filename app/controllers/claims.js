@@ -305,36 +305,10 @@ exports.new_claim_check_get = (req, res) => {
   const organisation = organisationModel.findOne({ organisationId: req.params.organisationId })
   const position = req.session.data.claim.mentors.length - 1
 
-  // console.log('Mentors',req.session.data.claim.mentors)
-
-  const mentorHours = req.session.data.claim.mentors.map(mentor => {
-    if (mentor.hours === 'other') {
-      return parseInt(mentor.otherHours)
-    } else {
-      return parseInt(mentor.hours)
-    }
-  })
-
-  // console.log('Mentor hours:', mentorHours)
-
-  const initialHours = 0
-
-  const totalHours = mentorHours.reduce(
-    (accumulator, currentValue) => accumulator + currentValue,
-    initialHours
+  req.session.data.claim.totalAmount = claimHelper.calculateClaimTotal(
+    organisation,
+    req.session.data.claim.mentors
   )
-
-  // console.log('Total hours:', totalHours)
-
-  const fundingRate = fundingHelper.getFundingRate(organisation.location.districtAdministrativeCode)
-
-  // console.log('Funding rate:', fundingRate)
-
-  const totalAmount = fundingRate * totalHours
-
-  // console.log('Total amount:', totalAmount)
-
-  req.session.data.claim.totalAmount = totalAmount
 
   res.render('../views/claims/check-your-answers', {
     organisation,
