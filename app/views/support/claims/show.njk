@@ -2,7 +2,8 @@
 
 {% set primaryNavId = "claims" %}
 
-{% set title = "Claim - " + claim.reference | upper %}
+{% set title = claim.organisationId | getSchoolName %}
+{% set caption = "Claim - " + claim.reference | upper %}
 
 {% block pageTitle %}
   {{ "Error: " if errors.length }}{{ title + " - " if title }}{{ caption + " - " if caption }}{{ serviceName }} - GOV.UK
