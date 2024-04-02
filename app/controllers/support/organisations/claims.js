@@ -40,7 +40,8 @@ exports.claim_list = (req, res) => {
     actions: {
       new: `/support/organisations/${req.params.organisationId}/claims/new`,
       view: `/support/organisations/${req.params.organisationId}/claims`,
-      mentors: `/support/organisations/${req.params.organisationId}/mentors`
+      mentors: `/support/organisations/${req.params.organisationId}/mentors`,
+      back: `/support/organisations`
     }
   })
 }
@@ -106,7 +107,7 @@ exports.new_claim_post = (req, res) => {
 
   const errors = []
 
-  if (!req.session.data.claim?.provider) {
+  if (!req.session.data.claim?.providerId) {
     const error = {}
     error.fieldName = 'provider'
     error.href = '#provider'

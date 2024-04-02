@@ -1,0 +1,100 @@
+// .app-claim-cards {
+//   .task_view_group_header {
+//     margin-top: govuk-spacing(6);
+//     margin-bottom: govuk-spacing(2);
+//   }
+
+//   .task_view_group_header:first-of-type {
+//     margin-top: 0;
+//   }
+// }
+
+.app-claim-card {
+  border-bottom: 1px solid govuk-colour("mid-grey");
+  @include govuk-responsive-margin(2, "bottom");
+
+  .govuk-tag {
+    @include govuk-font($size: 16);
+    // padding: 2px govuk-spacing(1);
+    // white-space: nowrap;
+    @include govuk-media-query($until: desktop) {
+      margin-bottom: govuk-spacing(1)
+    }
+  }
+
+  // .govuk-grid-column-one-third {
+  //   @include govuk-media-query($from: tablet) {
+  //     width: 40%;
+  //   }
+  // }
+
+  // .govuk-grid-column-two-thirds {
+  //   @include govuk-media-query($from: tablet) {
+  //     width: 60%;
+  //   }
+  // }
+
+  &__caption {
+    @include govuk-font($size: 16, $weight: "regular");
+    color: govuk-colour("dark-grey");
+  }
+
+  &__header {
+    align-items: baseline;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+
+  &__header .govuk-heading-s {
+    margin-bottom: govuk-spacing(1);
+  }
+
+  &__list {
+    margin-top: 0;
+    margin-bottom: govuk-spacing(2);
+  }
+
+  &__list dd {
+    margin: 0;
+  }
+
+  &__list .govuk-tag {
+    margin-right: govuk-spacing(1);
+  }
+
+  &__list .govuk-hint {
+    margin-top: govuk-spacing(1);
+  }
+
+  &__list--secondary {
+    display: flex;
+
+    @include govuk-media-query($from: tablet) {
+      flex-direction: column;
+      text-align: right;
+    }
+  }
+
+  &__list--secondary *:last-child {
+    margin-left: auto;
+
+    @include govuk-media-query($from: tablet) {
+      margin-top: auto;
+    }
+  }
+}
+
+// .app-claim-cards__heading:first-of-type {
+//   margin-top: 0;
+// }
+
+// .app-claim-cards__heading {
+//   margin-top: 30px;
+//   margin-bottom: 10px;
+// }
+
+// .app-claim-cards__heading + .app-application-card {
+//   border-top: none;
+//   padding-top: 0px;
+// }

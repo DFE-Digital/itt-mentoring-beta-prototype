@@ -22,6 +22,7 @@ exports.findOne = (params) => {
       school.name.toLowerCase().includes(query)
       || school.urn?.toString().includes(query)
       || school.address?.postcode?.toLowerCase().includes(query)
+      || school.id === query
      )
   } else {
     return null

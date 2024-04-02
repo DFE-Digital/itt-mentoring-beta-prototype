@@ -15,7 +15,7 @@
         text: "School"
       },
       value: {
-        text: organisation.name
+        text: organisation.name if organisation.name else claim.organisationId | getSchoolName
       }
     },
     {
@@ -23,7 +23,7 @@
         text: "Accredited provider"
       },
       value: {
-        text: claim.provider | getProviderName
+        text: claim.providerId | getProviderName
       },
       actions: {
         items: [

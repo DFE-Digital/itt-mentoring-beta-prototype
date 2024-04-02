@@ -30,7 +30,7 @@ exports.user_list = (req, res) => {
     actions: {
       new: `/support/organisations/${req.params.organisationId}/users/new`,
       view: `/support/organisations/${req.params.organisationId}/users`,
-      back: `/support/organisations/${req.params.organisationId}`
+      back: `/support/organisations`
     }
   })
 }

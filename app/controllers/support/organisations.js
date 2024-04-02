@@ -123,7 +123,7 @@ exports.show_organisation_get = (req, res) => {
   res.render('../views/support/organisations/show', {
     organisation,
     actions: {
-      back: `/support/organisations/${req.params.organisationId}`,
+      back: `/support/organisations`,
       change: `/support/organisations/${req.params.organisationId}`,
       delete: `/support/organisations/${req.params.organisationId}/delete`
     }

@@ -41,18 +41,24 @@
           items: [
             {
               value: "20",
-              text: "20 hours"
+              text: "20 hours",
+              hint: {
+                text: "The full amount of hours for standard training"
+              }
             },
             {
               value: "6",
-              text: "6 hours"
-            },
+              text: "6 hours",
+              hint: {
+                text: "The amount of hours for top up training"
+              }
+            } if 1==0,
             {
               divider: "or"
             },
             {
               value: "other",
-              text: "Other amount",
+              text: "Another amount",
               conditional: {
                 html: govukInput({
                   id: "otherAmount",

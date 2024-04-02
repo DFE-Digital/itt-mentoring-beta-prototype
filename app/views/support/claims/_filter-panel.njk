@@ -1,0 +1,164 @@
+{% set filterOptionsHtml %}
+{{ govukCheckboxes({
+  idPrefix: "filter-status",
+  name: "filters[status]",
+  fieldset: {
+    legend: {
+      html: 'Status<span class="govuk-visually-hidden"> filter</span>',
+      classes: "govuk-fieldset__legend--s"
+    }
+  },
+  formGroup: {
+    classes: "app-filter__group"
+  },
+  items: filterStatusItems,
+  values: filters.status,
+  classes: "govuk-checkboxes--small"
+}) }}
+
+{{ appCheckboxFilter({
+  idPrefix: "filter-school",
+  name: "filters[school]",
+  fieldset: {
+    legend: {
+      html: 'School<span class="govuk-visually-hidden"> filter</span>',
+      classes: "govuk-fieldset__legend--s"
+    }
+  },
+  items: filterSchoolItems,
+  values: filters.school,
+  showSelectedTags: false,
+  classes: "govuk-!-margin-bottom-7"
+}) }}
+
+{{ appCheckboxFilter({
+  idPrefix: "filter-provider",
+  name: "filters[provider]",
+  fieldset: {
+    legend: {
+      html: 'Accredited provider<span class="govuk-visually-hidden"> filter</span>',
+      classes: "govuk-fieldset__legend--s"
+    }
+  },
+  items: filterProviderItems,
+  values: filters.provider,
+  showSelectedTags: false,
+  classes: "govuk-!-margin-bottom-7"
+}) }}
+
+{# <h2 class="govuk-heading-s">Submitted between</h2> #}
+
+{{ govukDateInput({
+  id: "date-start",
+  fieldset: {
+    legend: {
+      text: "Submitted after",
+      isPageHeading: false,
+      classes: "govuk-fieldset__legend--s"
+    }
+  },
+  hint: {
+    text: "For example, 31 3 2024"
+  },
+  items: [
+    {
+      name: "date",
+      label: "Day",
+      value: data.day,
+      classes: "govuk-input--width-2"
+    },
+    {
+      name: "date",
+      label: "Month",
+      value: data.month,
+      classes: "govuk-input--width-2"
+    },
+    {
+      name: "date",
+      label: "Year",
+      value: data.year,
+      classes: "govuk-input--width-4"
+    }
+  ]
+}) }}
+
+{{ govukDateInput({
+  id: "date-end",
+  fieldset: {
+    legend: {
+      text: "Submitted before",
+      isPageHeading: false,
+      classes: "govuk-fieldset__legend--s"
+    }
+  },
+  hint: {
+    text: "For example, 31 7 2024"
+  },
+  items: [
+    {
+      name: "date",
+      label: "Day",
+      value: data.day,
+      classes: "govuk-input--width-2"
+    },
+    {
+      name: "date",
+      label: "Month",
+      value: data.month,
+      classes: "govuk-input--width-2"
+    },
+    {
+      name: "date",
+      label: "Year",
+      value: data.year,
+      classes: "govuk-input--width-4"
+    }
+  ]
+}) }}
+
+{% endset %}
+
+<div class="app-filter">
+  <div class="app-filter__header">
+    <div class="app-filter__header-title">
+      <h2 class="govuk-heading-m">Filter</h2>
+    </div>
+    <div class="app-filter__header-action">
+
+    </div>
+  </div>
+  <div class="app-filter__content">
+    {% if selectedFilters %}
+      <div class="app-filter__selected">
+        <div class="app-filter__selected-heading">
+          <div class="app-filter__heading-title">
+            <h2 class="govuk-heading-m govuk-!-margin-bottom-1">Selected filters</h2>
+            <p class="govuk-body">
+              <a class="govuk-link govuk-link--no-visited-state" href="{{ actions.filters.remove }}">Clear filters</a>
+            </p>
+          </div>
+        </div>
+        {% for category in selectedFilters.categories %}
+          <h3 class="govuk-heading-s govuk-!-margin-bottom-0">{{ category.heading.text }}</h3>
+          <ul class="app-filter-tags">
+            {% for item in category.items %}
+              <li>
+                <a class="app-filter__tag" href="{{ item.href }}">
+                  <span class="govuk-visually-hidden">Remove this filter</span> {{ item.text }}
+                </a>
+              </li>
+            {% endfor %}
+          </ul>
+        {% endfor %}
+      </div>
+    {% endif %}
+    <div class="app-filter__options">
+      <form method="get" action="{{ actions.filters.apply }}" novalidate>
+        <button class="govuk-button" data-module="govuk-button">
+          Apply filters
+        </button>
+        {{ filterOptionsHtml | safe }}
+      </form>
+    </div>
+  </div>
+</div>
