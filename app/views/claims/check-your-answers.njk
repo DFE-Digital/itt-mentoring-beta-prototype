@@ -2,8 +2,15 @@
 
 {% set primaryNavId = "claims" %}
 
-{% set title = "Check your answers" %}
-{% set caption = "Add claim" %}
+{% if claim.status === "draft" %}
+    {% set caption = "Check draft claim" %}
+    {% set title = "Claim - " + claim.reference %}
+  {% else %}
+    {% set caption = "Add claim" %}
+    {% set title = "Check your answers" %}
+{% endif %}
+
+
 
 {% block pageTitle %}
   {{ "Error: " if errors.length }}{{ title + " - " if title }}{{ caption + " - " if caption }}{{ serviceName }} - GOV.UK
@@ -50,7 +57,7 @@
                 text: "Accredited provider"
               },
               value: {
-                text: claim.provider | getProviderName
+                text: claim.providerID | getProviderName
               },
               actions: {
                 items: [
@@ -142,9 +149,17 @@
 
       </form>
 
+
+  {% if claim.status === "draft" %}
+        <p class="govuk-body">
+          <a class="govuk-link app-link--destructive" href="{{ actions.delete }}">Remove claim</a>
+        </p>
+  {% else %}
       <p class="govuk-body">
         <a class="govuk-link" href="{{ actions.cancel }}">Cancel</a>
       </p>
+  {% endif %}
+
 
     </div>
   </div>
