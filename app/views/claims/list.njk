@@ -20,18 +20,25 @@
       {% if not mentors.length %}
         {% set mentorHtml %}
           <p class="govuk-body">
-            You need to <a href="{{ actions.mentors }}" class="govuk-link">add a mentor</a> before creating a claim.
+            Before you can start a claim you will need to <a href="{{ actions.mentors }}" class="govuk-link">add a mentor</a>.
           </p>
         {% endset %}
 
         {{ govukInsetText({
           html: mentorHtml
         }) }}
-      {% else %}
-        {{ govukInsetText({
-          text: "You can only claim for the academic year September 2023 to July 2024."
-        }) }}
 
+        {% endif %}
+
+      <p class="govuk-body">
+          Claims can only be made for the school year September 2023 to July 2024.
+        </p>
+
+      <p class="govuk-body">
+          The final date to submit a claim is 19 July 2024.
+        </p>
+
+      {% if mentors.length %}
         {{ govukButton({
           text: "Add claim",
           href: actions.new
@@ -41,7 +48,7 @@
       {% if claims.length %}
         {% include "_includes/claims/list.njk" %}
         {% include "_includes/pagination.njk" %}
-      {% else %}
+      {% elseif mentors.length %}
         <p class="govuk-body">There are no claims for {{ organisation.name if organisation.name else "your organisation" }}.</p>
       {% endif %}
 
