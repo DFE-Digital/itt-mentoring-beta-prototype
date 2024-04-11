@@ -22,15 +22,12 @@
 
       {% include "_includes/page-heading.njk" %}
 
-      <form action="{{ actions.save }}" method="post" accept-charset="utf-8" novalidate>
-
-        {% if claim.status == "draft" %}
-          {{ govukButton({
-            text: "Submit claim"
-          }) }}
-        {% endif %}
-
-      </form>
+      {% if claim.status == "draft" %}
+        {{ govukButton({
+          text: "Submit claim",
+          href: actions.submit
+        }) }}
+      {% endif %}
 
       {% include "_includes/claims/details.njk" %}
 
