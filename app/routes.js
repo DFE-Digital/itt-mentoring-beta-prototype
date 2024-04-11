@@ -234,8 +234,6 @@ router.get('/organisations/:organisationId/claims/:claimId', checkIsAuthenticate
 
 router.get('/organisations/:organisationId/claims', checkIsAuthenticated, claimController.claim_list)
 
-router.get('/organisations/:organisationId/claims/check/:claimId', checkIsAuthenticated, claimController.draft_claim_check_get)
-
 /// ------------------------------------------------------------------------ ///
 /// ------------------------------------------------------------------------ ///
 /// SUPPORT ROUTES

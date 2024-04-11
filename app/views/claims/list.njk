@@ -28,15 +28,17 @@
           html: mentorHtml
         }) }}
 
-        {% endif %}
+      {% else %}
 
-      <p class="govuk-body">
+        <p class="govuk-body">
           Claims can only be made for the school year September 2023 to July 2024.
         </p>
 
-      <p class="govuk-body">
+        <p class="govuk-body">
           The final date to submit a claim is 19 July 2024.
         </p>
+
+      {% endif %}
 
       {% if mentors.length %}
         {{ govukButton({
@@ -48,7 +50,7 @@
       {% if claims.length %}
         {% include "_includes/claims/list.njk" %}
         {% include "_includes/pagination.njk" %}
-      {% elseif mentors.length %}
+      {% else %}
         <p class="govuk-body">There are no claims for {{ organisation.name if organisation.name else "your organisation" }}.</p>
       {% endif %}
 

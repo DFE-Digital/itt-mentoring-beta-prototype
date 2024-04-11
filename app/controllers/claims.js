@@ -40,8 +40,7 @@ exports.claim_list = (req, res) => {
     actions: {
       new: `/organisations/${req.params.organisationId}/claims/new`,
       view: `/organisations/${req.params.organisationId}/claims`,
-      mentors: `/organisations/${req.params.organisationId}/mentors`,
-      check: `/organisations/${req.params.organisationId}/claims/check`
+      mentors: `/organisations/${req.params.organisationId}/mentors`
     }
   })
 }
@@ -425,27 +424,4 @@ exports.delete_claim_post = (req, res) => {
 
   req.flash('success', 'Claim deleted')
   res.redirect(`/organisations/${req.params.organisationId}/claims`)
-}
-
-/// ------------------------------------------------------------------------ ///
-/// CHECK DRAFT CLAIM
-/// ------------------------------------------------------------------------ ///
-
-exports.draft_claim_check_get = (req, res) => {
-  const organisation = organisationModel.findOne({ organisationId: req.params.organisationId })
-  const claim = claimModel.findOne({
-    organisationId: req.params.organisationId,
-    claimId: req.params.claimId
-  })
-
-  res.render('../views/claims/check-your-answers', {
-    organisation,
-    claim,
-    actions: {
-      save: `/organisations/${req.params.organisationId}/claims/${req.params.claimId}/confirmation`,
-      delete: `/organisations/${req.params.organisationId}/claims/${req.params.claimId}/delete`,
-      back: `/organisations/${req.params.organisationId}/claims/`,
-      cancel: `/organisations/${req.params.organisationId}/claims`
-    }
-  })
 }
