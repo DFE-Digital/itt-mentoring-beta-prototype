@@ -3,7 +3,11 @@
 {% set primaryNavId = "claims" %}
 
 {% set title = "Check your answers" %}
-{% set caption = "Add claim" %}
+{% if claim.id %}
+  {% set caption = "Claim - " + claim.reference %}
+{% else %}
+  {% set caption = "Add claim" %}
+{% endif %}
 
 {% block pageTitle %}
   {{ "Error: " if errors.length }}{{ title + " - " if title }}{{ caption + " - " if caption }}{{ serviceName }} - GOV.UK
@@ -50,12 +54,12 @@
                 text: "Accredited provider"
               },
               value: {
-                text: claim.provider | getProviderName
+                text: claim.providerId | getProviderName
               },
               actions: {
                 items: [
                   {
-                    href: actions.change + "?referrer=check",
+                    href: "#",
                     text: "Change",
                     visuallyHiddenText: "accredited provider"
                   }
