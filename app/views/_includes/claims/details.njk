@@ -28,7 +28,7 @@
       actions: {
         items: [
           {
-            href: actions.change + "?referrer=check",
+            href: "#",
             text: "Change",
             visuallyHiddenText: "accredited provider"
           }
@@ -45,13 +45,17 @@
       actions: {
         items: [
           {
-            href: actions.change + "/mentors?referrer=check",
+            href: "#",
             text: "Change",
             visuallyHiddenText: "mentors included in the claim"
           }
         ]
       } if claim.status == "draft"
-    },
+    }
+  ]
+}) }}
+
+{# ,
     {
       key: {
         text: "Status"
@@ -78,6 +82,4 @@
       value: {
         text: claim.submittedAt | datetime('dd MMMM yyyy') if claim.submittedAt else "-"
       }
-    }
-  ]
-}) }}
+    } #}

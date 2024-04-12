@@ -134,7 +134,7 @@ exports.updateOne = (params) => {
 
     claim.updatedAt = new Date()
 
-    const filePath = directoryPath + '/' + claim.id + '.json'
+    const filePath = directoryPath + '/' + params.claimId + '.json'
 
     // create a JSON sting for the submitted data
     const fileData = JSON.stringify(claim)

@@ -40,8 +40,7 @@ exports.claim_list = (req, res) => {
     actions: {
       new: `/organisations/${req.params.organisationId}/claims/new`,
       view: `/organisations/${req.params.organisationId}/claims`,
-      mentors: `/organisations/${req.params.organisationId}/mentors`,
-      check: `/organisations/${req.params.organisationId}/claims/check`
+      mentors: `/organisations/${req.params.organisationId}/mentors`
     }
   })
 }
@@ -65,7 +64,7 @@ exports.claim_details = (req, res) => {
       delete: `/organisations/${req.params.organisationId}/claims/${req.params.claimId}/delete`,
       back: `/organisations/${req.params.organisationId}/claims`,
       cancel: `/organisations/${req.params.organisationId}/claims`,
-      submit: '#'
+      submit: `/organisations/${req.params.organisationId}/claims/${req.params.claimId}/check`
     }
   })
 }
@@ -335,8 +334,7 @@ exports.new_claim_check_post = (req, res) => {
 
   delete req.session.data.claim
 
-  // route based on button clicked - submit vs save
-
+  // TODO: route based on button clicked - submit vs save
   // req.flash('success', 'Claim added')
 
   res.redirect(`/organisations/${req.params.organisationId}/claims/${claim.id}/confirmation`)
@@ -354,6 +352,46 @@ exports.new_claim_confirmation_get = (req, res) => {
       back: `/organisations/${req.params.organisationId}/claims`
     }
   })
+}
+
+/// ------------------------------------------------------------------------ ///
+/// EDIT CLAIM
+/// ------------------------------------------------------------------------ ///
+
+exports.edit_claim_check_get = (req, res) => {
+  const organisation = organisationModel.findOne({ organisationId: req.params.organisationId })
+  const claim = claimModel.findOne({ claimId: req.params.claimId })
+
+  req.session.data.claim = claim
+
+  res.render('../views/claims/check-your-answers', {
+    organisation,
+    claim: req.session.data.claim,
+    actions: {
+      save: `/organisations/${req.params.organisationId}/claims/${req.params.claimId}/check`,
+      back: `/organisations/${req.params.organisationId}/claims/${req.params.claimId}`,
+      change: `/organisations/${req.params.organisationId}/claims/${req.params.claimId}`,
+      cancel: `/organisations/${req.params.organisationId}/claims/${req.params.claimId}`
+    }
+  })
+}
+
+exports.edit_claim_check_post = (req, res) => {
+  req.session.data.claim.status = 'submitted'
+
+  claimModel.updateOne({
+    organisationId: req.params.organisationId,
+    claimId: req.params.claimId,
+    userId: req.session.passport.user.id,
+    claim: req.session.data.claim
+  })
+
+  delete req.session.data.claim
+
+  // TODO: route based on button clicked - submit vs save
+  // req.flash('success', 'Claim updated')
+
+  res.redirect(`/organisations/${req.params.organisationId}/claims/${req.params.claimId}/confirmation`)
 }
 
 /// ------------------------------------------------------------------------ ///
@@ -386,27 +424,4 @@ exports.delete_claim_post = (req, res) => {
 
   req.flash('success', 'Claim deleted')
   res.redirect(`/organisations/${req.params.organisationId}/claims`)
-}
-
-/// ------------------------------------------------------------------------ ///
-/// CHECK DRAFT CLAIM
-/// ------------------------------------------------------------------------ ///
-
-exports.draft_claim_check_get = (req, res) => {
-  const organisation = organisationModel.findOne({ organisationId: req.params.organisationId })
-  const claim = claimModel.findOne({
-    organisationId: req.params.organisationId,
-    claimId: req.params.claimId
-  })
-
-  res.render('../views/claims/check-your-answers', {
-    organisation,
-    claim,
-    actions: {
-      save: `/organisations/${req.params.organisationId}/claims/${req.params.claimId}/confirmation`,
-      delete: `/organisations/${req.params.organisationId}/claims/${req.params.claimId}/delete`,
-      back: `/organisations/${req.params.organisationId}/claims/`,
-      cancel: `/organisations/${req.params.organisationId}/claims`
-    }
-  })
 }
