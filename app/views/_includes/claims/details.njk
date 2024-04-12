@@ -51,7 +51,11 @@
           }
         ]
       } if claim.status == "draft"
-    },
+    }
+  ]
+}) }}
+
+{# ,
     {
       key: {
         text: "Status"
@@ -78,6 +82,4 @@
       value: {
         text: claim.submittedAt | datetime('dd MMMM yyyy') if claim.submittedAt else "-"
       }
-    }
-  ]
-}) }}
+    } #}
