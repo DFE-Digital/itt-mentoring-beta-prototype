@@ -5,4 +5,7 @@
     </span>
   {% endif %}
   {{ title }}
+  {% if headingTag.length %}
+    {{ headingTag | safe }}
+  {% endif %}
 </h1>
