@@ -1,0 +1,3 @@
+{% if claim.status == "submitted" %}
+  <p class="govuk-body">Submitted by {{ claim.submittedBy | getUserName }} on {{ claim.submittedAt | datetime('dd MMMM yyyy') }}.</p>
+{% endif %}
