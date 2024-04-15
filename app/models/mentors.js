@@ -4,7 +4,7 @@ const { v4: uuid } = require('uuid')
 
 const organisationModel = require('./organisations')
 
-const directoryPath = path.join(__dirname, '../data/dist/mentors/')
+const directoryPath = path.join(__dirname, '../data/dist/mentors')
 
 exports.findMany = (params) => {
   // to prevent errors, check if directoryPath exists and if not, create
