@@ -49,6 +49,7 @@ router.use(passport.session())
 const accountController = require('./controllers/account')
 const authenticationController = require('./controllers/authentication')
 const claimController = require('./controllers/claims')
+const errorController = require('./controllers/errors')
 const contentController = require('./controllers/content')
 const feedbackController = require('./controllers/feedback')
 const mentorController = require('./controllers/mentors')
@@ -396,6 +397,14 @@ router.get('/privacy', contentController.privacy)
 router.get('/terms', contentController.terms)
 
 router.get('/grant-conditions', contentController.grant)
+
+router.get('/404', checkIsAuthenticated, errorController.page_not_found)
+
+router.get('/500', errorController.unexpected_error)
+
+router.get('/503', errorController.service_unavailable)
+
+router.get('/unauthorised', errorController.unauthorised)
 
 /// ------------------------------------------------------------------------ ///
 /// AUTOCOMPLETE ROUTES
