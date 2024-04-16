@@ -21,22 +21,17 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
 
-      <h1 class="govuk-heading-l">
-        {% if caption.length %}
-          <span class="govuk-caption-l">
-            {{ caption }}
-          </span>
-        {% endif %}
-        {{ title }}
+      {# tag used in the heading #}
+      {% set headingTag %}
         {{ govukTag({
           text: claim.status | capitalize,
-          classes: "" + claim.status | getClaimStatusClasses
+          classes: claim.status | getClaimStatusClasses
         }) }}
-      </h1>
+      {% endset %}
 
-      {% if claim.status == "submitted" %}
-        <p class="govuk-body">Submitted by {{ claim.submittedBy | getUserName }} on {{ claim.submittedAt | datetime('dd MMMM yyyy') }}.</p>
-      {% endif %}
+      {% include "_includes/page-heading.njk" %}
+
+      {% include "_includes/claims/meta-data.njk" %}
 
       {% include "_includes/claims/details.njk" %}
 
