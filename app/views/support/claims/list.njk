@@ -59,11 +59,8 @@
               <header class="app-claim-card__header">
                 <h3 class="govuk-heading-s govuk-!-width-two-thirds">
                   <a href="{{ actions.view }}/{{ claim.id }}" class="govuk-link govuk-link--no-visited-state">
-                    {{ claim.organisationId | getSchoolName }}
+                    {{ claim.reference }} - {{ claim.organisationId | getSchoolName }}
                   </a>
-                  <span class="app-claim-card__caption">
-                    {{ claim.reference }}
-                  </span>
                 </h3>
                 {{ govukTag({
                   text: claim.status | capitalize,
