@@ -19,9 +19,12 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
 
-      {% set headingHtml %}
-        {% include "_includes/page-heading-legend.njk" %}
-      {% endset %}
+      {% include "_includes/page-heading.njk" %}
+
+      {{ govukDetails({
+        summaryText: "Why are not all mentors shown here?",
+        html: "<p>This list includes all mentors who can be included on a claim. If a mentor you have added is not showing in this list, that is because they have already had 20 hours of training claimed for with this provider.</p><p>Training may have been claimed for by a different school.</p>"
+      }) }}
 
       <form action="{{ actions.save }}" method="post" accept-charset="utf-8" novalidate>
 
@@ -29,13 +32,10 @@
           name: "mentorChoices[]",
           fieldset: {
             legend: {
-              html: headingHtml,
-              isPageHeading: true,
-              classes: "govuk-fieldset__legend--l"
+              text: "Select the mentors for this claim",
+              isPageHeading: false,
+              classes: "govuk-fieldset__legend--s"
             }
-          },
-          hint: {
-            text: "Select all that apply"
           },
           values: mentorChoices,
           items: mentorOptions,
