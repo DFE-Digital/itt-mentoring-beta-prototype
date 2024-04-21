@@ -222,10 +222,12 @@ exports.new_claim_hours_get = (req, res) => {
   const position = req.session.data.position
   const mentorTrn = req.session.data.mentorChoices[position]
 
-  claimHelper.getProviderMentorTotalHours({
+  const mentorHours = claimHelper.getProviderMentorTotalHours({
     providerId: req.session.data.claim.providerId,
     trn: mentorTrn
   })
+
+  const mentorRemainingHours = 20 - mentorHours
 
   let mentor = req.session.data.mentor
   if (req.query.referrer === 'check') {
@@ -237,6 +239,7 @@ exports.new_claim_hours_get = (req, res) => {
     mentorTrn,
     position,
     mentor,
+    mentorRemainingHours,
     actions: {
       save,
       back,
@@ -255,6 +258,13 @@ exports.new_claim_hours_post = (req, res) => {
 
   const position = req.session.data.position
   const mentorTrn = req.session.data.mentorChoices[position]
+
+  const mentorHours = claimHelper.getProviderMentorTotalHours({
+    providerId: req.session.data.claim.providerId,
+    trn: mentorTrn
+  })
+
+  const mentorRemainingHours = 20 - mentorHours
 
   let mentor = req.session.data.mentor
   if (req.query.referrer === 'check') {
@@ -279,12 +289,12 @@ exports.new_claim_hours_post = (req, res) => {
     } else if (
       isNaN(req.session.data.mentor.otherHours)
       || req.session.data.mentor.otherHours < 1
-      || req.session.data.mentor.otherHours > 20
+      || req.session.data.mentor.otherHours > mentorRemainingHours
     ) {
       const error = {}
       error.fieldName = 'otherHours'
       error.href = '#otherHours'
-      error.text = 'Enter the number of hours between 1 and 20'
+      error.text = `Enter the number of hours between 1 and ${mentorRemainingHours}`
       errors.push(error)
     }
     // else if (!Number.isInteger(req.session.data.mentor.otherHours)) {
@@ -302,6 +312,7 @@ exports.new_claim_hours_post = (req, res) => {
       mentorTrn,
       position,
       mentor,
+      mentorRemainingHours,
       actions: {
         save,
         back,
