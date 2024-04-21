@@ -26,7 +26,8 @@
         Show the number of remaining hours in the message and options
       #}
       {% set insetHtml %}
-        <p>There are 20 hours left to claim for {{ mentorTrn | getMentorName }} for {{ claim.providerId | getProviderName }}.</p><p>Contact <a href='mailto:ittmentor.funding@ducation.gov.uk'>ittmentor.funding@ducation.gov.uk</a> if you think there is a problem.</p>
+        <p class="govuk-body">There are <b>{{ mentorRemainingHours }} hours left to claim</b> for {{ mentorTrn | getMentorName }} for {{ claim.providerId | getProviderName }}.</p>
+        <p class="govuk-body">Contact <a class="govuk-link" href="mailto:ittmentor.funding@ducation.gov.uk">ittmentor.funding@ducation.gov.uk</a> if you think there is a problem.</p>
       {% endset %}
 
       {{ govukInsetText({
@@ -49,10 +50,10 @@
           value: mentor.hours,
           items: [
             {
-              value: "20",
-              text: "20 hours",
+              value: mentorRemainingHours,
+              text: mentorRemainingHours + " hours",
               hint: {
-                text: "The full amount of hours for standard training"
+                text: "The " + ("standard" if mentorRemainingHours == 20 else "remaining") + " amount of hours for standard training"
               }
             },
             {
@@ -78,7 +79,7 @@
                     classes: "govuk-label--s"
                   },
                   hint: {
-                    text: "Enter whole numbers up to a maximum of 20 hours"
+                    text: "Enter whole numbers up to a maximum of " + mentorRemainingHours + " hours"
                   },
                   value: mentor.otherHours,
                   errorMessage: errors | getErrorMessage("otherHours"),
