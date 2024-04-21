@@ -1,3 +1,5 @@
+const claimModel = require('../models/claims')
+
 const fundingHelper = require('./funding')
 
 exports.generateClaimID = () => {
@@ -48,4 +50,30 @@ exports.getClaimStatusClasses = (status) => {
   }
 
   return classes
+}
+
+exports.getProviderMentorTotalHours = (params) => {
+  let totalHours = 0
+
+  if (params.providerId && params.trn) {
+    const claims = claimModel.findMany({ providerId: params.providerId })
+
+    const mentorClaims = claims.filter(claim => {
+      return claim.mentors.find(mentor => parseInt(mentor.trn) === parseInt(params.trn))
+    })
+
+    mentorClaims.forEach(claim => {
+      claim?.mentors.forEach(mentor => {
+        if (parseInt(mentor.trn) === parseInt(params.trn)) {
+          if (mentor.hours === 'other') {
+            totalHours += parseInt(mentor.otherHours)
+          } else {
+            totalHours += parseInt(mentor.hours)
+          }
+        }
+      })
+    })
+  }
+
+  return totalHours
 }
