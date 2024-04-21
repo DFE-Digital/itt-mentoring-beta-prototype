@@ -21,13 +21,9 @@
 
       {% include "_includes/page-heading.njk" %}
 
-      {# TODO:
-        Only show if the training hours have been limited
-        Show the number of remaining hours in the message and options
-      #}
       {% set insetHtml %}
         <p class="govuk-body">There are <b>{{ mentorRemainingHours }} hours left to claim</b> for {{ mentorTrn | getMentorName }} for {{ claim.providerId | getProviderName }}.</p>
-        <p class="govuk-body">Contact <a class="govuk-link" href="mailto:ittmentor.funding@ducation.gov.uk">ittmentor.funding@ducation.gov.uk</a> if you think there is a problem.</p>
+        <p class="govuk-body">Contact <a href="mailto:ittmentor.funding@ducation.gov.uk" class="govuk-link">ittmentor.funding@ducation.gov.uk</a> if you think there is a problem.</p>
       {% endset %}
 
       {{ govukInsetText({
