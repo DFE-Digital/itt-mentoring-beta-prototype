@@ -19,22 +19,32 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
 
-      <form action="{{ actions.save }}" method="post" accept-charset="utf-8" novalidate>
-
-        {% if mentorOptionsCount < mentorsCount %}
+      {% if mentorOptionsCount == 0 %}
 
           {% include "_includes/page-heading.njk" %}
 
-          {% set insetHtml %}
-            <p class="govuk-body">This list includes all mentors who can be included on a claim. If a mentor you have added is not showing in this list, that is because they have already had 20 hours of training claimed for with this provider.</p>
-            <p class="govuk-body">Training may have been claimed for by a different school.</p>
-          {% endset %}
+          <p class="govuk-body">There are no mentors you can include in a claim for {{ claim.providerId | getProviderName }} training.</p>
 
-          {{ govukInsetText({
-            html: insetHtml
-          }) }}
+          <p class="govuk-body">Try <a href="{{ actions.back }}" class="govuk-link">changing your accredited provider</a>.</p>
 
-          {{ govukCheckboxes({
+      {% else %}
+
+        <form action="{{ actions.save }}" method="post" accept-charset="utf-8" novalidate>
+
+          {% if mentorOptionsCount < mentorsCount %}
+
+            {% include "_includes/page-heading.njk" %}
+
+            {% set insetHtml %}
+              <p class="govuk-body">This list includes all mentors who can be included on a claim. If a mentor you have added is not showing in this list, that is because they have already had 20 hours of training claimed for with this provider.</p>
+              <p class="govuk-body">Training may have been claimed for by a different school.</p>
+            {% endset %}
+
+            {{ govukInsetText({
+              html: insetHtml
+            }) }}
+
+            {{ govukCheckboxes({
               name: "mentorChoices[]",
               fieldset: {
                 legend: {
@@ -48,40 +58,42 @@
               errorMessage: errors | getErrorMessage("mentorChoices")
             }) }}
 
-        {% else %}
+          {% else %}
 
-          {% set headingHtml %}
-            {% include "_includes/page-heading-legend.njk" %}
-          {% endset %}
+            {% set headingHtml %}
+              {% include "_includes/page-heading-legend.njk" %}
+            {% endset %}
 
-          {{ govukCheckboxes({
-            name: "mentorChoices[]",
-            fieldset: {
-              legend: {
-                html: headingHtml,
-                isPageHeading: true,
-                classes: "govuk-fieldset__legend--l"
-              }
-            },
-            hint: {
-              text: "Select all that apply"
-            },
-            values: mentorChoices,
-            items: mentorOptions,
-            errorMessage: errors | getErrorMessage("mentorChoices")
+            {{ govukCheckboxes({
+              name: "mentorChoices[]",
+              fieldset: {
+                legend: {
+                  html: headingHtml,
+                  isPageHeading: true,
+                  classes: "govuk-fieldset__legend--l"
+                }
+              },
+              hint: {
+                text: "Select all that apply"
+              },
+              values: mentorChoices,
+              items: mentorOptions,
+              errorMessage: errors | getErrorMessage("mentorChoices")
+            }) }}
+
+          {% endif %}
+
+          {{ govukButton({
+            text: "Continue"
           }) }}
 
-        {% endif %}
+        </form>
 
-        {{ govukButton({
-          text: "Continue"
-        }) }}
+        <p class="govuk-body">
+          <a class="govuk-link" href="{{ actions.cancel }}">Cancel</a>
+        </p>
 
-      </form>
-
-      <p class="govuk-body">
-        <a class="govuk-link" href="{{ actions.cancel }}">Cancel</a>
-      </p>
+      {% endif %}
 
     </div>
   </div>
