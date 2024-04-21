@@ -1,6 +1,8 @@
 const claimModel = require('../../models/claims')
+const organisationModel = require('../../models/organisations')
 
 const Pagination = require('../../helpers/pagination')
+const claimHelper = require('../../helpers/claims')
 const filterHelper = require('../../helpers/filters')
 const providerHelper = require('../../helpers/providers')
 const schoolHelper = require('../../helpers/schools')
@@ -208,8 +210,14 @@ exports.removeKeywordSearch = (req, res) => {
 
 exports.show_claim_get = (req, res) => {
   const claim = claimModel.findOne({ claimId: req.params.claimId })
+  const organisation = organisationModel.findOne({ organisationId: claim.organisationId })
+
+  claim.totalHours = claimHelper.calculateClaimTotalHours(
+    claim.mentors
+  )
 
   res.render('../views/support/claims/show', {
+    organisation,
     claim,
     actions: {
       back: `/support/claims`
