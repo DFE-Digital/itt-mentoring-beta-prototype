@@ -129,11 +129,27 @@ exports.new_claim_post = (req, res) => {
 }
 
 exports.new_claim_mentors_get = (req, res) => {
-  const mentorOptions = mentorHelper.getMentorOptions({ organisationId: req.params.organisationId })
+  const mentorsCount = mentorModel.findMany({ organisationId: req.params.organisationId }).length
+  let mentorOptions = mentorHelper.getMentorOptions({ organisationId: req.params.organisationId })
+
+  mentorOptions = mentorOptions.filter(mentor => {
+    const mentorHours = claimHelper.getProviderMentorTotalHours({
+      providerId: req.session.data.claim.providerId,
+      trn: mentor.value
+    })
+
+    if (mentorHours < 20) {
+      return mentor
+    }
+  })
+
+  const mentorOptionsCount = mentorOptions.length
 
   res.render('../views/claims/mentors', {
     claim: req.session.data.claim,
+    mentorsCount,
     mentorOptions,
+    mentorOptionsCount,
     mentorChoices: req.session.data.mentorChoices,
     actions: {
       save: `/organisations/${req.params.organisationId}/claims/new/mentors`,
@@ -144,7 +160,21 @@ exports.new_claim_mentors_get = (req, res) => {
 }
 
 exports.new_claim_mentors_post = (req, res) => {
-  const mentorOptions = mentorHelper.getMentorOptions({ organisationId: req.params.organisationId })
+  const mentorsCount = mentorModel.findMany({ organisationId: req.params.organisationId }).length
+  let mentorOptions = mentorHelper.getMentorOptions({ organisationId: req.params.organisationId })
+
+  mentorOptions = mentorOptions.filter(mentor => {
+    const mentorHours = claimHelper.getProviderMentorTotalHours({
+      providerId: req.session.data.claim.providerId,
+      trn: mentor.value
+    })
+
+    if (mentorHours < 20) {
+      return mentor
+    }
+  })
+
+  const mentorOptionsCount = mentorOptions.length
 
   const errors = []
 
@@ -159,7 +189,9 @@ exports.new_claim_mentors_post = (req, res) => {
   if (errors.length) {
     res.render('../views/claims/mentors', {
       claim: req.session.data.claim,
+      mentorsCount,
       mentorOptions,
+      mentorOptionsCount,
       mentorChoices: req.session.data.mentorChoices,
       actions: {
         save: `/organisations/${req.params.organisationId}/claims/new/mentors`,
@@ -189,6 +221,11 @@ exports.new_claim_hours_get = (req, res) => {
 
   const position = req.session.data.position
   const mentorTrn = req.session.data.mentorChoices[position]
+
+  claimHelper.getProviderMentorTotalHours({
+    providerId: req.session.data.claim.providerId,
+    trn: mentorTrn
+  })
 
   let mentor = req.session.data.mentor
   if (req.query.referrer === 'check') {
