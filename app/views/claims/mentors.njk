@@ -19,33 +19,59 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
 
-      {% include "_includes/page-heading.njk" %}
-
-      {# TODO: Only show if the mentor list has been limited #}
-      {% set insetHtml %}
-        <p class="govuk-body">This list includes all mentors who can be included on a claim. If a mentor you have added is not showing in this list, that is because they have already had 20 hours of training claimed for with this provider.</p>
-        <p class="govuk-body">Training may have been claimed for by a different school.</p>
-      {% endset %}
-
-      {{ govukInsetText({
-        html: insetHtml
-      }) }}
-
       <form action="{{ actions.save }}" method="post" accept-charset="utf-8" novalidate>
 
-        {{ govukCheckboxes({
-          name: "mentorChoices[]",
-          fieldset: {
-            legend: {
-              text: "Select the mentors for this claim",
-              isPageHeading: false,
-              classes: "govuk-fieldset__legend--s"
-            }
-          },
-          values: mentorChoices,
-          items: mentorOptions,
-          errorMessage: errors | getErrorMessage("mentorChoices")
-        }) }}
+        {% if mentorOptionsCount < mentorsCount %}
+
+          {% include "_includes/page-heading.njk" %}
+
+          {% set insetHtml %}
+            <p class="govuk-body">This list includes all mentors who can be included on a claim. If a mentor you have added is not showing in this list, that is because they have already had 20 hours of training claimed for with this provider.</p>
+            <p class="govuk-body">Training may have been claimed for by a different school.</p>
+          {% endset %}
+
+          {{ govukInsetText({
+            html: insetHtml
+          }) }}
+
+          {{ govukCheckboxes({
+              name: "mentorChoices[]",
+              fieldset: {
+                legend: {
+                  text: "Select the mentors for this claim",
+                  isPageHeading: false,
+                  classes: "govuk-fieldset__legend--s"
+                }
+              },
+              values: mentorChoices,
+              items: mentorOptions,
+              errorMessage: errors | getErrorMessage("mentorChoices")
+            }) }}
+
+        {% else %}
+
+          {% set headingHtml %}
+            {% include "_includes/page-heading-legend.njk" %}
+          {% endset %}
+
+          {{ govukCheckboxes({
+            name: "mentorChoices[]",
+            fieldset: {
+              legend: {
+                html: headingHtml,
+                isPageHeading: true,
+                classes: "govuk-fieldset__legend--l"
+              }
+            },
+            hint: {
+              text: "Select all that apply"
+            },
+            values: mentorChoices,
+            items: mentorOptions,
+            errorMessage: errors | getErrorMessage("mentorChoices")
+          }) }}
+
+        {% endif %}
 
         {{ govukButton({
           text: "Continue"
