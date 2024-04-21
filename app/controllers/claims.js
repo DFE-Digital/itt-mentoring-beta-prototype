@@ -56,6 +56,10 @@ exports.claim_details = (req, res) => {
     claimId: req.params.claimId
   })
 
+  claim.totalHours = claimHelper.calculateClaimTotalHours(
+    claim.mentors
+  )
+
   res.render('../views/claims/show', {
     organisation,
     claim,
@@ -367,6 +371,10 @@ exports.edit_claim_check_get = (req, res) => {
   const claim = claimModel.findOne({ claimId: req.params.claimId })
 
   req.session.data.claim = claim
+
+  req.session.data.claim.totalHours = claimHelper.calculateClaimTotalHours(
+    req.session.data.claim.mentors
+  )
 
   res.render('../views/claims/check-your-answers', {
     organisation,
