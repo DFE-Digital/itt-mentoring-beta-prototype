@@ -2,8 +2,13 @@
 
 {% set primaryNavId = "claims" %}
 
-{% set title = "Mentor" %}
-{% set caption = "Add claim - " + (claim.providerId | getProviderName) %}
+{% if mentorOptionsCount == 0 %}
+  {% set title = "No mentors for " + (claim.providerId | getProviderName) %}
+  {% set caption = "Add claim" %}
+{% else %}
+  {% set title = "Mentor" %}
+  {% set caption = "Add claim - " + (claim.providerId | getProviderName) %}
+{% endif %}
 
 {% block beforeContent %}
 {{ govukBackLink({
@@ -23,9 +28,9 @@
 
           {% include "_includes/page-heading.njk" %}
 
-          <p class="govuk-body">There are no mentors you can include in a claim for {{ claim.providerId | getProviderName }} training.</p>
+          <p class="govuk-body">There are no mentors you can include in a claim because they have already had 20 hours of training claimed for with {{ claim.providerId | getProviderName }}.</p>
 
-          <p class="govuk-body">Try <a href="{{ actions.back }}" class="govuk-link">changing your accredited provider</a>.</p>
+          <p class="govuk-body"><a href="{{ actions.back }}" class="govuk-link">Change the accredited provider</a></p>
 
       {% else %}
 
