@@ -277,7 +277,7 @@ exports.new_claim_hours_post = (req, res) => {
     const error = {}
     error.fieldName = 'hours'
     error.href = '#hours'
-    error.text = 'Select the number of hours'
+    error.text = 'Select the hours of training'
     errors.push(error)
   } else if (req.session.data.mentor.hours === 'other') {
     if (!req.session.data.mentor.otherHours.length) {
