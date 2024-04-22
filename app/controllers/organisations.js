@@ -1,5 +1,5 @@
+const contentModel = require('../models/content')
 const organisationModel = require('../models/organisations')
-
 const providerModel = require('../models/providers')
 const schoolModel = require('../models/schools')
 
@@ -28,10 +28,50 @@ exports.organisation = (req, res) => {
   // for use around the service
   req.session.passport.organisation = organisation
   if (organisation.type === 'school') {
-    res.redirect(`/organisations/${req.params.organisationId}/claims`)
+    if (organisation?.conditionsAgreed) {
+      res.redirect(`/organisations/${req.params.organisationId}/claims`)
+    } else {
+      res.redirect(`/organisations/${req.params.organisationId}/conditions`)
+    }
   } else {
     res.redirect(`/organisations/${req.params.organisationId}/details`)
   }
+}
+
+/// ------------------------------------------------------------------------ ///
+/// AGREE TO GRANT CONDITIONS
+/// ------------------------------------------------------------------------ ///
+
+exports.organisation_conditions_get = (req, res) => {
+  const organisation = organisationModel.findOne({
+    organisationId: req.params.organisationId
+  })
+
+  const conditions = contentModel.findOne({
+    fileName: 'grant-conditions'
+  })
+
+  res.render('../views/organisations/conditions', {
+    organisation,
+    content: conditions.content,
+    actions: {
+      back: `/organisations/${req.params.organisationId}`,
+      save: `/organisations/${req.params.organisationId}/conditions`
+    }
+  })
+}
+
+exports.organisation_conditions_post = (req, res) => {
+  organisationModel.updateOne({
+    organisationId: req.params.organisationId,
+    userId: req.session.passport.user.id,
+    organisation: {
+      conditionsAgreed: true
+    }
+  })
+
+  req.flash('success', 'Grant conditions accepted')
+  res.redirect(`/organisations/${req.params.organisationId}`)
 }
 
 /// ------------------------------------------------------------------------ ///
