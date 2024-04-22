@@ -14,7 +14,19 @@
   {{ govukHeader({
     homepageUrl: "/",
     productName: serviceName,
-    containerClasses: "govuk-width-container"
+    containerClasses: "govuk-width-container",
+    navigationClasses: "govuk-header__navigation--end",
+    navigation: [
+      {
+        href: "/account",
+        text: "Your account",
+        active: headerNavId == "account"
+      },
+      {
+        href: "/sign-out",
+        text: "Sign out"
+      }
+    ] if not hideAccountNavigation
   }) }}
 
   {% include "_includes/phase-banner.njk" %}
