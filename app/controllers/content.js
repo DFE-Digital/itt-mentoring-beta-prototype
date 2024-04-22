@@ -1,4 +1,3 @@
-const _ = require('lodash')
 const contentModel = require('../models/content')
 
 exports.accessibility = (req, res) => {
