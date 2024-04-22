@@ -1,3 +1,4 @@
+const claimModel = require('../models/claims')
 const mentorModel = require('../models/mentors')
 const organisationModel = require('../models/organisations')
 const teacherModel = require('../models/teachers')
@@ -161,14 +162,28 @@ exports.new_mentor_check_post = (req, res) => {
 
 exports.delete_mentor_get = (req, res) => {
   const organisation = organisationModel.findOne({ organisationId: req.params.organisationId })
+
   const mentor = mentorModel.findOne({
     organisationId: req.params.organisationId,
     mentorId: req.params.mentorId
   })
 
+  const claims = claimModel
+    .findMany({ organisationId: req.params.organisationId })
+    .filter(claim => {
+      if (claim.mentors) {
+        return claim.mentors.find(
+          claimMentor => parseInt(claimMentor.trn) === parseInt(mentor.trn)
+        )
+      }
+    })
+
+  const hasClaims = !!claims.length
+
   res.render('../views/mentors/delete', {
     organisation,
     mentor,
+    hasClaims,
     actions: {
       save: `/organisations/${req.params.organisationId}/mentors/${req.params.mentorId}/delete`,
       back: `/organisations/${req.params.organisationId}/mentors/${req.params.mentorId}`,
