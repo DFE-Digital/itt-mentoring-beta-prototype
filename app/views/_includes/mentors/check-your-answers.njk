@@ -1,21 +1,17 @@
+{% set dobHtml %}
+  <p class="govuk-body">{{ mentor.dateOfBirth | datetime('dd/MM/yyyy') }}</p>
+  <p class="govuk-hint">We do not store date of birth</p>
+{% endset %}
 {{ govukSummaryList({
   rows: [
+
     {
       key: {
         text: "First name"
       },
       value: {
         text: mentor.firstName
-      },
-      actions: {
-        items: [
-          {
-            href: actions.change,
-            text: "Change",
-            visuallyHiddenText: "first name"
-          }
-        ]
-      } if 1==0
+      }
     },
     {
       key: {
@@ -23,16 +19,7 @@
       },
       value: {
         text: mentor.lastName
-      },
-      actions: {
-        items: [
-          {
-            href: actions.change,
-            text: "Change",
-            visuallyHiddenText: "last name"
-          }
-        ]
-      } if 1==0
+      }
     },
     {
       key: {
@@ -47,6 +34,23 @@
             href: actions.change,
             text: "Change",
             visuallyHiddenText: "teacher reference number (TRN)"
+          }
+        ]
+      }
+    },
+    {
+      key: {
+        text: "Date of birth"
+      },
+      value: {
+        html: dobHtml
+      },
+      actions: {
+        items: [
+          {
+            href: actions.change,
+            text: "Change",
+            visuallyHiddenText: "date of birth"
           }
         ]
       }
