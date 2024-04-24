@@ -60,19 +60,19 @@
             {
               name: "mentor[dob]",
               label: "Day",
-              value: data.mentor[dob][0],
+              value: data.mentor.dob[0],
               classes: "govuk-input--width-2" + (" govuk-input--error" if errors | getErrorMessage("dob"))
             },
             {
               name: "mentor[dob]",
               label: "Month",
-              value: data.mentor[dob][1],
+              value: data.mentor.dob[1],
               classes: "govuk-input--width-2" + (" govuk-input--error" if errors | getErrorMessage("dob"))
             },
             {
               name: "mentor[dob]",
               label: "Year",
-              value: data.mentor[dob][2],
+              value: data.mentor.dob[2],
               classes: "govuk-input--width-4" + (" govuk-input--error" if errors | getErrorMessage("dob"))
             }
           ],
