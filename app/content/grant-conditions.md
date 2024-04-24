@@ -144,7 +144,7 @@ For each mentor that completes the full 20 hours of training, the table below se
 
 If a mentor undertakes fewer than 20 hours of training, the funding is calculated per hour. For example, if a mentor in a school outside London completed 10 hours of training, the school can claim £438. This is calculated at £43.80 (per hour) x 10 (hours of training).
 
-| Funding available | Funding period | Recipient of funding | How is it paid |
+| Funding available per mentor | Funding period | Recipient of funding | How is it paid |
 | --- | --- | --- | --- |
 | Up to £876 (£43.80 per hour) — for schools outside London (the rest of England)<br><br>Up to £902 (£45.10 per hour) — for schools in the fringe region (the area between Outer London and the rest of England)<br><br>Up to £965 (£48.25 per hour) — for schools in Outer London<br><br>Up to £1,072 (£53.60 per hour) — for schools in Inner London | Academic year 2023/24 | Schools who host ITT trainees | Payments will be made in arrears based on the number of hours of training<br><br>Schools will be able to claim this funding at the end of the 2024/25 academic year |
 
