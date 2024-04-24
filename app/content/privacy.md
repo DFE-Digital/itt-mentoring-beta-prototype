@@ -9,7 +9,7 @@ processed as part of Claim funding for mentor training.
 
 ## Why our use of your personal data is lawful
 
-In order for our use of your personal data to be lawful, we need to meet one (or more) conditions in the data protection legislation. For the purpose of this service, this processing is necessary to complete a task in the public interest as stated under GDPR Article 6 (1)(e).
+In order for our use of your personal data to be lawful, we need to meet one (or more) conditions in the data protection legislation. For the purpose of this service, this processing is necessary to complete a task in the public interest as stated under General Data Protection Regulations (GDPR) Article 6 (1)(e).
 
 ## When we collect your information
 
@@ -64,7 +64,7 @@ We may check information in your application with:
 - the Teacher Pension Service
 - Softwire Technology Limited as a processor working with the DfE
 - Zendesk
-- GOV.UK PaaS
+- GOV.UK Platform as a Service (PaaS)
 
 Where we need to share your personal data with others, we ensure that this data sharing complies with data protection legislation.
 
@@ -85,7 +85,7 @@ You have the right:
 - to object to direct marketing (including profiling) and processing for the purposes of scientific/historical research and statistics
 - not to be subject to decisions based purely on automated processing where it produces a legal or similarly significant effect on you
 
-You can find more information about how we handle personal data in our personal information charter.
+You can find more information about how we handle personal data in our [personal information charter](https://www.gov.uk/government/organisations/department-for-education/about/personal-information-charter).
 
 ## Getting help and raising a concern
 
@@ -93,7 +93,7 @@ If you would like to exercise any of your rights, you can email us at becomingat
 
 ## Your right to raise a complaint
 
-You can use our contact form to get in touch with our Data Protection Officer. If we cannot resolve your issue, you have the right to raise it with the Information Commissioner’s Office (ICO) at https://ico.org.uk/make-a-complaint/.
+You can use our [contact form](https://form.education.gov.uk/) to get in touch with our Data Protection Officer. If we cannot resolve your issue, you have the right to raise it with the Information Commissioner’s Office (ICO) at https://ico.org.uk/make-a-complaint/.
 
 ## Keeping our privacy notice up to date
 
