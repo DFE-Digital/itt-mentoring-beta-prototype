@@ -23,8 +23,14 @@ exports.findMany = (params) => {
     claims.push(data)
   })
 
+  // School
   if (params.organisationId) {
     claims = claims.filter(claim => claim.organisationId === params.organisationId)
+  }
+
+  // Accredited provider
+  if (params.providerId) {
+    claims = claims.filter(claim => claim.providerId === params.providerId)
   }
 
   return claims
