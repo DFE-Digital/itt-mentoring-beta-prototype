@@ -6,8 +6,8 @@
   {% set title = "No mentors for " + (claim.providerId | getProviderName) %}
   {% set caption = "Add claim" %}
 {% else %}
-  {% set title = "Mentor" %}
-  {% set caption = "Add claim - " + (claim.providerId | getProviderName) %}
+  {% set title = "Mentors for " + (claim.providerId | getProviderName) %}
+  {% set caption = "Add claim" %}
 {% endif %}
 
 {% block beforeContent %}
@@ -41,8 +41,8 @@
             {% include "_includes/page-heading.njk" %}
 
             {% set insetHtml %}
-              <p class="govuk-body">This list includes all mentors who can be included on a claim. If a mentor you have added is not showing in this list, that is because they have already had 20 hours of training claimed for with this provider.</p>
-              <p class="govuk-body">Training may have been claimed for by a different school.</p>
+              <p class="govuk-body">This list includes all mentors who can be included on a claim. If a mentor you have added is not showing in this list, that is because they have already had 20 hours of training claimed for with {{ claim.providerId | getProviderName }}.</p>
+              <p class="govuk-body">Contact <a href="mailto:ittmentor.funding@ducation.gov.uk" class="govuk-link">ittmentor.funding@ducation.gov.uk</a> if you think there is a problem.</p>
             {% endset %}
 
             {{ govukInsetText({
@@ -53,10 +53,13 @@
               name: "mentorChoices[]",
               fieldset: {
                 legend: {
-                  text: "Select the mentors for this claim",
+                  text: "Mentor",
                   isPageHeading: false,
                   classes: "govuk-fieldset__legend--s"
                 }
+              },
+              hint: {
+                text: "Select all that apply"
               },
               values: mentorChoices,
               items: mentorOptions,
