@@ -155,6 +155,9 @@ router.get('/account', checkIsAuthenticated, accountController.user_account)
 
 router.get('/organisations/:organisationId/details', checkIsAuthenticated, organisationController.show_organisation_get)
 
+router.get('/organisations/:organisationId/conditions', checkIsAuthenticated, organisationController.organisation_conditions_get)
+router.post('/organisations/:organisationId/conditions', checkIsAuthenticated, organisationController.organisation_conditions_post)
+
 router.get('/organisations/:organisationId', checkIsAuthenticated, organisationController.organisation)
 
 router.get('/organisations', checkIsAuthenticated, organisationController.list_organisations_get)

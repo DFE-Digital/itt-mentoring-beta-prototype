@@ -79,16 +79,10 @@ exports.updateOne = (params) => {
   if (params.organisationId) {
     organisation = this.findOne({ organisationId: params.organisationId })
 
-    if (params.organisation.trainingWithDisabilities !== undefined) {
-      organisation.trainingWithDisabilities = params.organisation.trainingWithDisabilities
-    }
-
-    if (params.organisation.send !== undefined) {
-      organisation.send = params.organisation.send
-    }
-
-    if (params.organisation.specialClasses !== undefined) {
-      organisation.specialClasses = params.organisation.specialClasses
+    if (params.organisation.conditionsAgreed) {
+      organisation.conditionsAgreed = true
+      organisation.conditionsAgreedBy = params.userId
+      organisation.conditionsAgreedAt = new Date()
     }
 
     organisation.updatedAt = new Date()
