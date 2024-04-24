@@ -54,32 +54,3 @@
     }
   ]
 }) }}
-
-{# ,
-    {
-      key: {
-        text: "Status"
-      },
-      value: {
-        html: govukTag({
-          text: claim.status | capitalize,
-            classes: claim.status | getClaimStatusClasses
-        })
-      }
-    },
-    {
-      key: {
-        text: "Submitted by"
-      },
-      value: {
-        text: claim.submittedBy | getUserName if claim.submittedBy else "-"
-      }
-    },
-    {
-      key: {
-        text: "Date submitted"
-      },
-      value: {
-        text: claim.submittedAt | datetime('dd MMMM yyyy') if claim.submittedAt else "-"
-      }
-    } #}

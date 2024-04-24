@@ -16,21 +16,31 @@ exports.generateClaimID = () => {
   return claimID
 }
 
+exports.calculateClaimTotalHours = (mentors) => {
+  let totalHours = 0
+
+  if (mentors) {
+    const mentorHours = mentors.map(mentor => {
+      if (mentor.hours === 'other') {
+        return parseInt(mentor.otherHours)
+      } else {
+        return parseInt(mentor.hours)
+      }
+    })
+
+    const initialHours = 0
+
+    totalHours = mentorHours.reduce(
+      (accumulator, currentValue) => accumulator + currentValue,
+      initialHours
+    )
+  }
+
+  return totalHours
+}
+
 exports.calculateClaimTotal = (organisation, mentors) => {
-  const mentorHours = mentors.map(mentor => {
-    if (mentor.hours === 'other') {
-      return parseInt(mentor.otherHours)
-    } else {
-      return parseInt(mentor.hours)
-    }
-  })
-
-  const initialHours = 0
-
-  const totalHours = mentorHours.reduce(
-    (accumulator, currentValue) => accumulator + currentValue,
-    initialHours
-  )
+  const totalHours = this.calculateClaimTotalHours(mentors)
 
   let fundingRate = 0
   if (organisation.location?.districtAdministrativeCode) {
