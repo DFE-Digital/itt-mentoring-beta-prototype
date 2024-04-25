@@ -35,6 +35,14 @@
 
           {% include "_includes/mentors/check-your-answers.njk" %}
 
+          {% set confirmationHtml %}
+            <p class="govuk-body">I confirm that {{ mentor.firstName }} {{ mentor.lastName }} has been informed that their information will be shared in line with our <a href="/privacy" class="govuk-link">privacy notice</a>.</p>
+          {% endset %}
+
+          {{ govukInsetText({
+            html: confirmationHtml
+          }) }}
+
           {{ govukButton({
             text: "Save mentor"
           }) }}
@@ -45,7 +53,6 @@
           <a class="govuk-link" href="{{ actions.cancel }}">Cancel</a>
         </p>
       {% else %}
-
         <p class="govuk-body">
           Check that you typed in the teacher reference number (TRN) correctly.
         </p>
