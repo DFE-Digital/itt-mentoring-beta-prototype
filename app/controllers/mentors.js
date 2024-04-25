@@ -93,10 +93,9 @@ exports.new_mentor_post = (req, res) => {
   })
 
   req.session.data.mentor.dateOfBirth = arrayHelper.removeEmpty(req.session.data.mentor.dob)
-  console.log(req.session.data.mentor.dateOfBirth);
+
   if (req.session.data.mentor.dateOfBirth) {
     req.session.data.mentor.dateOfBirth = dateHelper.arrayToDateObject(req.session.data.mentor.dob)
-    console.log(req.session.data.mentor.dateOfBirth);
   }
 
   if (!req.session.data.mentor.trn.length) {
