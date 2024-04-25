@@ -2,7 +2,9 @@
 title: Claim funding for mentor training privacy notice
 ---
 
-## Who we are
+[Read privacy information section 8.4](https://www.gov.uk/government/publications/privacy-information-education-providers-workforce-including-teachers/privacy-information-education-providers-workforce-including-teachers#using-your-data-to-maintain-a-list-of-teachers) which tells you what we do with your data when you make contact with us or use this service.
+
+<!-- ## Who we are
 
 This work is being carried out by Department for Education (DfE) Digital, which is a part of DfE. For the purpose of data protection legislation, the DfE is the data controller for the personal data
 processed as part of Claim funding for mentor training.
@@ -99,4 +101,4 @@ You can use our [contact form](https://form.education.gov.uk/) to get in touch w
 
 We may need to update this privacy notice periodically, so we recommend that you revisit this information from time to time.
 
-This version was last updated on 8 March 2024.
+This version was last updated on 8 March 2024. -->
