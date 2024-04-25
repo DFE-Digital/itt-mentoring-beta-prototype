@@ -1,7 +1,3 @@
-{% set dobHtml %}
-  <p class="govuk-body">{{ mentor.dateOfBirth | datetime('dd/MM/yyyy') }}</p>
-  <p class="govuk-hint">We do not store date of birth</p>
-{% endset %}
 {{ govukSummaryList({
   rows: [
 
@@ -43,7 +39,7 @@
         text: "Date of birth"
       },
       value: {
-        html: dobHtml
+        text: mentor.dateOfBirth | datetime('dd/MM/yyyy')
       },
       actions: {
         items: [
