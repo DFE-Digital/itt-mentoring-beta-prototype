@@ -79,8 +79,6 @@ exports.updateOne = (params) => {
   if (params.organisationId) {
     organisation = this.findOne({ organisationId: params.organisationId })
 
-    console.log(typeof (params.organisation?.conditionsAgreed) === 'boolean');
-
     if (typeof (params.organisation?.conditionsAgreed) === 'boolean') {
       if (params.organisation.conditionsAgreed) {
         organisation.conditionsAgreed = true
