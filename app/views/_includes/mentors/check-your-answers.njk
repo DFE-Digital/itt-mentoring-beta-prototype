@@ -1,21 +1,13 @@
 {{ govukSummaryList({
   rows: [
+
     {
       key: {
         text: "First name"
       },
       value: {
         text: mentor.firstName
-      },
-      actions: {
-        items: [
-          {
-            href: actions.change,
-            text: "Change",
-            visuallyHiddenText: "first name"
-          }
-        ]
-      } if 1==0
+      }
     },
     {
       key: {
@@ -23,16 +15,7 @@
       },
       value: {
         text: mentor.lastName
-      },
-      actions: {
-        items: [
-          {
-            href: actions.change,
-            text: "Change",
-            visuallyHiddenText: "last name"
-          }
-        ]
-      } if 1==0
+      }
     },
     {
       key: {
@@ -47,6 +30,23 @@
             href: actions.change,
             text: "Change",
             visuallyHiddenText: "teacher reference number (TRN)"
+          }
+        ]
+      }
+    },
+    {
+      key: {
+        text: "Date of birth"
+      },
+      value: {
+        text: mentor.dateOfBirth | datetime('dd/MM/yyyy')
+      },
+      actions: {
+        items: [
+          {
+            href: actions.change,
+            text: "Change",
+            visuallyHiddenText: "date of birth"
           }
         ]
       }

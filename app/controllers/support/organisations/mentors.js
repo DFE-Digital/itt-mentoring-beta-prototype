@@ -3,6 +3,8 @@ const organisationModel = require('../../../models/organisations')
 const teacherModel = require('../../../models/teachers')
 
 const Pagination = require('../../../helpers/pagination')
+const arrayHelper = require('../../../helpers/arrays')
+const dateHelper = require('../../../helpers/dates')
 const validationHelper = require('../../../helpers/validators')
 
 /// ------------------------------------------------------------------------ ///
@@ -88,23 +90,37 @@ exports.new_mentor_post = (req, res) => {
     trn: req.session.data.mentor.trn
   })
 
+  req.session.data.mentor.dateOfBirth = arrayHelper.removeEmpty(req.session.data.mentor.dob)
+
+  if (req.session.data.mentor.dateOfBirth) {
+    req.session.data.mentor.dateOfBirth = dateHelper.arrayToDateObject(req.session.data.mentor.dob)
+  }
+
   if (!req.session.data.mentor.trn.length) {
     const error = {}
-    error.fieldName = 'mentor'
-    error.href = '#mentor'
+    error.fieldName = 'trn'
+    error.href = '#trn'
     error.text = 'Enter a teacher reference number (TRN)'
     errors.push(error)
   } else if (!validationHelper.isValidTRN(req.session.data.mentor.trn)) {
     const error = {}
-    error.fieldName = 'mentor'
-    error.href = '#mentor'
+    error.fieldName = 'trn'
+    error.href = '#trn'
     error.text = 'Enter a valid teacher reference number (TRN)'
     errors.push(error)
   } else if (mentor) {
     const error = {}
-    error.fieldName = 'mentor'
-    error.href = '#mentor'
+    error.fieldName = 'trn'
+    error.href = '#trn'
     error.text = 'The mentor has already been added'
+    errors.push(error)
+  }
+
+  if (req.session.data.mentor.dateOfBirth === undefined) {
+    const error = {}
+    error.fieldName = 'dob'
+    error.href = '#dob'
+    error.text = 'Enter a date of birth'
     errors.push(error)
   }
 
@@ -126,7 +142,11 @@ exports.new_mentor_post = (req, res) => {
 
 exports.new_mentor_check_get = (req, res) => {
   const organisation = organisationModel.findOne({ organisationId: req.params.organisationId })
-  const mentor = teacherModel.findOne({ query: req.session.data.mentor.trn })
+
+  const mentor = teacherModel.findOne({
+    trn: req.session.data.mentor.trn,
+    dob: req.session.data.mentor.dateOfBirth
+  })
 
   res.render('../views/support/organisations/mentors/check-your-answers', {
     organisation,
@@ -141,7 +161,10 @@ exports.new_mentor_check_get = (req, res) => {
 }
 
 exports.new_mentor_check_post = (req, res) => {
-  const mentor = teacherModel.findOne({ query: req.session.data.mentor.trn })
+  const mentor = teacherModel.findOne({
+    trn: req.session.data.mentor.trn,
+    dob: req.session.data.mentor.dateOfBirth
+  })
 
   mentorModel.saveOne({
     organisationId: req.params.organisationId,

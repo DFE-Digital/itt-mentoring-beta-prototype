@@ -3,7 +3,7 @@
 {% set primaryNavId = "organisations" %}
 {% set secondaryNavId = "mentors" %}
 
-{% set title = "Enter a teacher reference number (TRN)" %}
+{% set title = "Find teacher" %}
 {% set caption = "Add mentor - " + organisation.name %}
 
 {% block beforeContent %}
@@ -20,9 +20,7 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
 
-      {% set headingHtml %}
-        {% include "_includes/page-heading-legend.njk" %}
-      {% endset %}
+      {% include "_includes/page-heading.njk" %}
 
       <form action="{{ actions.save }}" method="post" accept-charset="utf-8" novalidate>
 
@@ -30,18 +28,56 @@
           id: "mentor",
           name: "mentor[trn]",
           label: {
-            html: headingHtml,
-            isPageHeading: true,
-            classes: "govuk-label--l"
+            text: "Teacher reference number (TRN)",
+            isPageHeading: false,
+            classes: "govuk-label--s"
+          },
+          hint: {
+            text: "For example, 1234567"
           },
           value: data.mentor.trn,
           classes: "govuk-input--width-20",
-          errorMessage: errors | getErrorMessage("mentor")
+          errorMessage: errors | getErrorMessage("trn")
         }) }}
 
-        {{ govukDetails({
+        {# {{ govukDetails({
           summaryText: "Help with the teacher reference number (TRN)",
           html: 'If you don’t have a TRN, read the <a href="https://www.gov.uk/guidance/teacher-reference-number-trn" rel="noreferrer noopener" target="_blank">teacher reference number (TRN) guidance (opens in new tab)</a> to find a lost TRN, or apply for one.'
+        }) }} #}
+
+        {{ govukDateInput({
+          id: "dob",
+          fieldset: {
+            legend: {
+              text: "Date of birth",
+              isPageHeading: false,
+              classes: "govuk-fieldset__legend--s"
+            }
+          },
+          hint: {
+            text: "For example, 31 3 1980"
+          },
+          items: [
+            {
+              name: "mentor[dob]",
+              label: "Day",
+              value: data.mentor.dob[0],
+              classes: "govuk-input--width-2" + (" govuk-input--error" if errors | getErrorMessage("dob"))
+            },
+            {
+              name: "mentor[dob]",
+              label: "Month",
+              value: data.mentor.dob[1],
+              classes: "govuk-input--width-2" + (" govuk-input--error" if errors | getErrorMessage("dob"))
+            },
+            {
+              name: "mentor[dob]",
+              label: "Year",
+              value: data.mentor.dob[2],
+              classes: "govuk-input--width-4" + (" govuk-input--error" if errors | getErrorMessage("dob"))
+            }
+          ],
+          errorMessage: errors | getErrorMessage("dob")
         }) }}
 
         {{ govukButton({
