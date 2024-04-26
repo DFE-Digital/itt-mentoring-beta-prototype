@@ -25,10 +25,10 @@
   }) }}
 
   <p class="govuk-body">
-    <a href="/grant-conditions" class="govuk-link">View grant conditions</a>
+    <a class="govuk-link app-link--destructive" href="{{ actions.deleteConditionsAgreement }}">Remove user’s agreement to the grant conditions</a>
   </p>
 {% else %}
   <p class="govuk-body">
-    <a href="{{ actions.conditions }}" class="govuk-link">Review and agree to grant conditions</a>
+    This school has not agreed to the grant conditions.
   </p>
 {% endif %}
