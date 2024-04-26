@@ -378,6 +378,9 @@ router.get('/support/organisations/remove-all-filters', checkIsAuthenticated, su
 
 router.get('/support/organisations/remove-keyword-search', checkIsAuthenticated, supportOrganisationController.removeKeywordSearch)
 
+router.get('/support/organisations/:organisationId/remove-agreement-grant-conditions', checkIsAuthenticated, supportOrganisationController.remove_organisation_agreement_get)
+router.post('/support/organisations/:organisationId/remove-agreement-grant-conditions', checkIsAuthenticated, supportOrganisationController.remove_organisation_agreement_post)
+
 router.get('/support/organisations/:organisationId', checkIsAuthenticated, supportOrganisationController.show_organisation_get)
 
 router.get('/support/organisations', checkIsAuthenticated, supportOrganisationController.list_organisations_get)

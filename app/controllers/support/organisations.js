@@ -125,9 +125,41 @@ exports.show_organisation_get = (req, res) => {
     actions: {
       back: `/support/organisations`,
       change: `/support/organisations/${req.params.organisationId}`,
-      delete: `/support/organisations/${req.params.organisationId}/delete`
+      delete: `/support/organisations/${req.params.organisationId}/delete`,
+      deleteConditionsAgreement: `/support/organisations/${req.params.organisationId}/remove-agreement-grant-conditions`
     }
   })
+}
+
+/// ------------------------------------------------------------------------ ///
+/// REMOVE USER'S AGREEMENT TO GRANT CONDITIONS
+/// ------------------------------------------------------------------------ ///
+
+exports.remove_organisation_agreement_get = (req, res) => {
+  const organisation = organisationModel.findOne({ organisationId: req.params.organisationId })
+
+  res.render('../views/support/organisations/remove-agreement-grant-conditions', {
+    organisation,
+    actions: {
+      back: `/support/organisations/${req.params.organisationId}`,
+      cancel: `/support/organisations/${req.params.organisationId}`,
+      save: `/support/organisations/${req.params.organisationId}/remove-agreement-grant-conditions`
+    }
+  })
+}
+
+exports.remove_organisation_agreement_post = (req, res) => {
+
+  organisationModel.updateOne({
+    organisationId: req.params.organisationId,
+    userId: req.session.passport.user.id,
+    organisation: {
+      conditionsAgreed: false
+    }
+  })
+
+  req.flash('success', 'Agreement to grant conditions removed')
+  res.redirect(`/support/organisations/${req.params.organisationId}`)
 }
 
 /// ------------------------------------------------------------------------ ///
