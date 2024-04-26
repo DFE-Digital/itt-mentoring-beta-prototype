@@ -79,10 +79,18 @@ exports.updateOne = (params) => {
   if (params.organisationId) {
     organisation = this.findOne({ organisationId: params.organisationId })
 
-    if (params.organisation.conditionsAgreed) {
-      organisation.conditionsAgreed = true
-      organisation.conditionsAgreedBy = params.userId
-      organisation.conditionsAgreedAt = new Date()
+    console.log(typeof (params.organisation?.conditionsAgreed) === 'boolean');
+
+    if (typeof (params.organisation?.conditionsAgreed) === 'boolean') {
+      if (params.organisation.conditionsAgreed) {
+        organisation.conditionsAgreed = true
+        organisation.conditionsAgreedBy = params.userId
+        organisation.conditionsAgreedAt = new Date()
+      } else {
+        organisation.conditionsAgreed = false
+        delete organisation.conditionsAgreedBy
+        delete organisation.conditionsAgreedAt
+      }
     }
 
     organisation.updatedAt = new Date()
