@@ -2,13 +2,26 @@
 title: Claim funding for mentor training privacy notice
 ---
 
-## Who we are
+[Read privacy information section 8.4](https://www.gov.uk/government/publications/privacy-information-education-providers-workforce-including-teachers/privacy-information-education-providers-workforce-including-teachers#using-your-data-to-maintain-a-list-of-teachers) which tells you what we do with you and your mentors’ data when you make contact with us or use this service.
 
-This work is being carried out by Department for Education (DfE) Digital, which is a part of DfE. For the purpose of data protection legislation, the DfE is the data controller for the personal data processed as part of Claim funding for mentor training.
+<!-- ## Who we are
+
+This work is being carried out by Department for Education (DfE) Digital, which is a part of DfE. For the purpose of data protection legislation, the DfE is the data controller for the personal data
+processed as part of Claim funding for mentor training.
 
 ## Why our use of your personal data is lawful
 
-In order for our use of your personal data to be lawful, we need to meet one (or more) conditions in the data protection legislation. For the purpose of this service, this processing is necessary to complete a task in the public interest as stated under GDPR Article 6 (1)(e).
+In order for our use of your personal data to be lawful, we need to meet one (or more) conditions in the data protection legislation. For the purpose of this service, this processing is necessary to complete a task in the public interest as stated under General Data Protection Regulations (GDPR) Article 6 (1)(e).
+
+## When we collect your information
+
+We will collect your information when:
+
+- when you access and use the service
+- when you make a claim
+- when you contact us for support via the service
+- when you leave feedback
+- when you provide evidence for sampling
 
 ## What personal information we will store
 
@@ -36,23 +49,26 @@ We sometimes need to make personal data available to other organisations. These 
 
 Where we need to share your personal data with others, we ensure that this data sharing complies with data protection legislation. We share specific types of personal data with our contracted suppliers, who have been contracted by DfE to manage the delivery of the digital service.
 
-Our contracted suppliers use your data data in the following way
+Our contracted suppliers use your data data in the following way:
 
 - for user research that informs development of the service: if you share your name, email address and phone number our contracted suppliers will store these in its research library
 - for security purposes: our contracted suppliers collect part of the IP addresses of people visiting the Claim funding for mentor training website (for example, if we were receiving continuous direct denial of service attacks from an IP address range then we could block it)
 - to enable users to use the service and receive updates: our contracted suppliers collect the names and emails of those publishing course listings on ‘Claim funding for mentor training’
 
-### Customer service management systems
+## Who we will make your personal data available to
 
-We use Zendesk to manage and respond to your queries.
+We sometimes need to make your information available to contracted partners (who we have employed to process your personal data on our behalf) and/or other organisations (with whom we need to share your personal data for specific purposes).
 
-[Visit the Zendesk website to find out how they use and look after your data (“service data”)](https://www.zendesk.co.uk/company/privacy-and-data-protection/#faq-general-1)
+We may check information in your application with:
 
-### Website hosting services
+- the school you are currently employed to teach at
+- the Teaching Regulation Agency’s Database of Qualified Teachers
+- the Teacher Pension Service
+- Softwire Technology Limited as a processor working with the DfE
+- Zendesk
+- GOV.UK Platform as a Service (PaaS)
 
-We use GOV.UK PaaS to enable us to run the service.
-
-[Visit the GOV.UK PaaS website to find out how they use and look after your data (“end user data”)](https://www.cloud.service.gov.uk/privacy-notice/#what-data-we-collect-from-end-users)
+Where we need to share your personal data with others, we ensure that this data sharing complies with data protection legislation.
 
 ## How long we will keep your personal data
 
@@ -75,14 +91,14 @@ You can find more information about how we handle personal data in our [personal
 
 ## Getting help and raising a concern
 
-If you would like to exercise any of your rights, you can email us at [ittmentor.funding@education.gov.uk](mailto:ittmentor.funding@education.gov.uk).
+If you would like to exercise any of your rights, you can email us at becomingateacher@digital.education.gov.uk.
 
-You can also use our [contact form](https://form.education.gov.uk/) to get in touch with our Data Protection Officer.
+## Your right to raise a complaint
 
-If we cannot resolve your issue, you have the right to raise it with the Information Commissioner’s Office (ICO) at [https://ico.org.uk/make-a-complaint/](https://ico.org.uk/make-a-complaint/).
+You can use our [contact form](https://form.education.gov.uk/) to get in touch with our Data Protection Officer. If we cannot resolve your issue, you have the right to raise it with the Information Commissioner’s Office (ICO) at https://ico.org.uk/make-a-complaint/.
 
 ## Keeping our privacy notice up to date
 
-We’ll update this privacy notice when required. You should regularly review the notice.
+We may need to update this privacy notice periodically, so we recommend that you revisit this information from time to time.
 
-This version was last updated on 18 December 2023.
+This version was last updated on 8 March 2024. -->
