@@ -1,0 +1,41 @@
+<h2 class="govuk-heading-m govuk-!-margin-top-9">
+  Grant conditions
+</h2>
+
+{% if organisation.conditionsAgreed %}
+  {{ govukSummaryList({
+    rows: [
+      {
+        key: {
+          text: "Agreed by"
+        },
+        value: {
+          text: organisation.conditionsAgreedBy | getUserName
+        }
+      },
+      {
+        key: {
+          text: "Agreed on"
+        },
+        value: {
+          text: organisation.conditionsAgreedAt | datetime('dd MMMM yyyy')
+        }
+      }
+    ]
+  }) }}
+
+  <p class="govuk-body">
+    <a href="/grant-conditions" class="govuk-link">View grant conditions</a>
+  </p>
+{% else %}
+  {# a bit of a hack to show a different message to support #}
+  {% if actions.conditions | length %}
+    <p class="govuk-body">
+      <a href="{{ actions.conditions }}" class="govuk-link">Review and agree to grant conditions</a>
+    </p>
+  {% else %}
+    <p class="govuk-body">
+      This school has not agreed to the grant conditions.
+    </p>
+  {% endif %}
+{% endif %}

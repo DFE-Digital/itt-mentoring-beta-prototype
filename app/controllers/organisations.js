@@ -88,6 +88,7 @@ exports.show_organisation_get = (req, res) => {
     actions: {
       back: `/organisations/${req.params.organisationId}`,
       change: `/organisations/${req.params.organisationId}`,
+      conditions: `/organisations/${req.params.organisationId}/conditions`,
       delete: `/organisations/${req.params.organisationId}/delete`
     }
   })
