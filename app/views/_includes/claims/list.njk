@@ -1,12 +1,13 @@
-<table class="govuk-table app-table--vertical-align-middle">
+<div class="govuk-table--overflow">
+<table class="govuk-table">
   <thead class="govuk-table__head">
     <tr class="govuk-table__row">
-      <th class="govuk-table__header">Claim reference</th>
-      <th class="govuk-table__header govuk-!-width-one-quarter">Accredited provider</th>
-      <th class="govuk-table__header govuk-!-width-one-quarter">Mentors</th>
-      <th class="govuk-table__header govuk-table__header--numeric">Claim amount</th>
-      <th class="govuk-table__header">Date submitted</th>
-      <th class="govuk-table__header">Status</th>
+      <th scope="col" class="govuk-table__header">Claim reference</th>
+      <th scope="col" class="govuk-table__header govuk-!-width-one-quarter">Accredited provider</th>
+      <th scope="col" class="govuk-table__header govuk-!-width-one-quarter">Mentors</th>
+      <th scope="col" class="govuk-table__header govuk-table__header--numeric">Claim amount</th>
+      <th scope="col" class="govuk-table__header">Date submitted</th>
+      <th scope="col" class="govuk-table__header">Status</th>
     </tr>
   </thead>
   <tbody class="govuk-table__body">
@@ -49,3 +50,4 @@
     {% endfor %}
   </tbody>
 </table>
+</div>
