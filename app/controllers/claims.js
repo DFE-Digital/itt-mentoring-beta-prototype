@@ -379,21 +379,29 @@ exports.new_claim_check_get = (req, res) => {
 }
 
 exports.new_claim_check_post = (req, res) => {
-  req.session.data.claim.reference = claimHelper.generateClaimID()
-  req.session.data.claim.status = 'submitted'
+  const errors = []
 
-  const claim = claimModel.insertOne({
-    organisationId: req.params.organisationId,
-    userId: req.session.passport.user.id,
-    claim: req.session.data.claim
-  })
+  // TODO: check claim is valid
 
-  delete req.session.data.claim
+  if (errors.length) {
+    res.redirect(`/organisations/${req.params.organisationId}/claims/rejected`)
+  } else {
+    // req.session.data.claim.reference = claimHelper.generateClaimID()
+    req.session.data.claim.status = 'submitted'
 
-  // TODO: route based on button clicked - submit vs save
-  // req.flash('success', 'Claim added')
+    const claim = claimModel.insertOne({
+      organisationId: req.params.organisationId,
+      userId: req.session.passport.user.id,
+      claim: req.session.data.claim
+    })
 
-  res.redirect(`/organisations/${req.params.organisationId}/claims/${claim.id}/confirmation`)
+    delete req.session.data.claim
+
+    // TODO: route based on button clicked - submit vs save
+    // req.flash('success', 'Claim added')
+
+    res.redirect(`/organisations/${req.params.organisationId}/claims/${claim.id}/confirmation`)
+  }
 }
 
 exports.new_claim_confirmation_get = (req, res) => {
@@ -406,6 +414,20 @@ exports.new_claim_confirmation_get = (req, res) => {
     claim,
     actions: {
       back: `/organisations/${req.params.organisationId}/claims`
+    }
+  })
+}
+
+exports.new_claim_rejection_get = (req, res) => {
+  const organisation = organisationModel.findOne({ organisationId: req.params.organisationId })
+
+  delete req.session.data.claim
+
+  res.render('../views/claims/rejection', {
+    organisation,
+    actions: {
+      back: `/organisations/${req.params.organisationId}/claims`,
+      new: `/organisations/${req.params.organisationId}/claims/new`
     }
   })
 }
