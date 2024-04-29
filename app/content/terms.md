@@ -12,7 +12,7 @@ Access and use by you of this Service constitutes your acceptance of these Gener
 
 If we change these General Terms we will post the revised document here with an updated effective date. If we make significant changes to these terms, we may notify you by other means such as sending an email or posting a notice on our home page.
 
-## Information About Us
+## Information about us
 
 This Service is operated by the Department for Education (“we”, “our”, or “us”). We are a central government department and have our registered office at Sanctuary Buildings, 20 Great Smith Street, SW1P 3BT.
 
@@ -34,7 +34,7 @@ We do not object to you linking directly to pages on this site and you do not ne
 
 You may not charge your website’s users to click on a link to any page on the Service.
 
-## Third Party Content and Hyperlinking from the Service
+## Third party content and hyperlinking from the Service
 
 We are not liable or responsible for the third party content on the Service. Third party content includes, for example, material posted by other users of the Service.
 
@@ -48,7 +48,7 @@ We make every effort to check and test material at all stages of production. We 
 
 We will report misuse, unauthorised access or other breaches of the [Computer Misuse Act 1990](https://www.legislation.gov.uk/ukpga/1990/18/contents) to the relevant law enforcement authorities and co-operate with them to determine your identity.
 
-## Disclaimer and Liability
+## Disclaimer and liability
 
 The content of this Service includes both content created by us (included but not limited to content that helps you use the Service) and third-party content (including information about teacher reference numbers (TRNs). We do not:
 
@@ -68,11 +68,11 @@ In no event will we be liable for:
 - any action you may take as a result of relying on any information or materials provided on the Service or for any loss or damage suffered by you as a result of you taking such action including, without limitation, indirect or consequential loss or damage, or any loss or damages whatsoever arising from or in connection with the use of the Service
 - any dealings you have with third parties (e.g. other users) that take place using or facilitated by the Service
 
-## Validity of these General Terms
+## Validity of these general terms
 
 If any of these general terms are held to be invalid, unenforceable or illegal for any reason, the remaining general terms will still apply.
 
-## Applicable Law and Jurisdiction
+## Applicable law and jurisdiction
 
 These General Terms are governed by the laws of England and Wales. Any dispute arising under these General Terms will be subject to the exclusive jurisdiction of the courts of England and Wales.
 
@@ -82,7 +82,7 @@ Access and use by you of this Service constitutes your acceptance of these gener
 
 By using this Service you agree to abide by the following terms and conditions.
 
-## Unacceptable Use
+## Unacceptable use
 
 You must not add a mentor to the service without informing them that the Department for Education will store their information in line with the [privacy notice](/privacy) and have provided them with a copy of this notice for reference.
 
