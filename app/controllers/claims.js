@@ -386,7 +386,7 @@ exports.new_claim_check_post = (req, res) => {
   if (errors.length) {
     res.redirect(`/organisations/${req.params.organisationId}/claims/rejected`)
   } else {
-    // req.session.data.claim.reference = claimHelper.generateClaimID()
+    req.session.data.claim.reference = claimHelper.generateClaimID()
     req.session.data.claim.status = 'submitted'
 
     const claim = claimModel.insertOne({
