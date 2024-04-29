@@ -22,15 +22,17 @@
 
       {# <h2 class="govuk-heading-m govuk-!-margin-top-9">Declaration</h2> #}
 
+      {% set buttonLabel = "Accept grant conditions" %}
+
       {{ govukWarningText({
-        text: "By selecting ‘Continue’ you declare that you have read and agreed to the above grant conditions as an authorised representative of " + organisation.name,
+        text: "By selecting ‘" + buttonLabel + "’ you declare that you have read and agreed to the above grant conditions as an authorised representative of " + organisation.name + ".",
         iconFallbackText: "Warning"
       }) }}
 
       <form action="{{ actions.save }}" method="post" accept-charset="utf-8" novalidate>
 
         {{ govukButton({
-          text: "Continue"
+          text: buttonLabel
         }) }}
 
       </form>
