@@ -97,3 +97,5 @@ Data ownership: schools have sole responsibility for the accuracy and appropriat
 ## Privacy
 
 [Read privacy information section 8.4](https://www.gov.uk/government/publications/privacy-information-education-providers-workforce-including-teachers/privacy-information-education-providers-workforce-including-teachers#using-your-data-to-maintain-a-list-of-teachers) which tells you what we do with you and your mentors’ data when you make contact with us or use this service.
+
+Last updated 29 April 2024
