@@ -15,3 +15,5 @@ Essential cookies keep your information secure while you use Claim funding for m
 |\_claim\_funding\_mentor\_training\_session|Identify the user of the service|20 minutes after inactivity|
 
 Read more about how we process personal data in our [privacy notice](/privacy).
+
+Last updated 29 April 2024
