@@ -4,17 +4,19 @@ title: Terms and conditions
 
 ## Using our website
 
-Please read these Terms of Use (“General Terms”) carefully before using this Claim funding for mentor training (the “Service”).
+Please read these Terms of Use (“General Terms”) carefully before using this Claim funding for mentor training service (the “Service”).
 
-This Service is maintained for your personal use and viewing. Access and use by you of this Service constitutes your acceptance of these General Terms. This takes effect from the date on which you first use this website. If you do not agree to these terms, you must not use this website.
+This Service is maintained to enable your organisation to claim funding for mentor training as detailed in the [Grant conditions](/grant-conditions).
+
+Access and use by you of this Service constitutes your acceptance of these General Terms. This takes effect from the date on which you first use this website. If you do not agree to these terms, you must not use this website.
 
 If we change these General Terms we will post the revised document here with an updated effective date. If we make significant changes to these terms, we may notify you by other means such as sending an email or posting a notice on our home page.
 
-## Information About Us
+## Information about us
 
 This Service is operated by the Department for Education (“we”, “our”, or “us”). We are a central government department and have our registered office at Sanctuary Buildings, 20 Great Smith Street, SW1P 3BT.
 
-You can contact us using the following email address: [ittmentor.funding@education.gov.uk](mailto:ittmentor.funding@education.gov.uk)
+You can contact us using the following email address: <ittmentor.funding@education.gov.uk>
 
 ## Access to the Service
 
@@ -24,7 +26,7 @@ If you choose, or are provided with, a user verification code, password or any o
 
 We reserve the right to restrict or deny you access to all or some part of the Service if in our opinion you have failed to comply with these Terms and Conditions.
 
-The Department for Education withholds the right to withdraw without notice listings that breach these terms and to withdraw the access of users who breach them.
+The Department for Education withholds the right to withdraw without notice claims and mentors that breach these terms and to withdraw the access of users who breach them.
 
 ## Hyperlinking to the Claim funding for mentor training website
 
@@ -32,9 +34,9 @@ We do not object to you linking directly to pages on this site and you do not ne
 
 You may not charge your website’s users to click on a link to any page on the Service.
 
-## Third Party Content and Hyperlinking from the Service
+## Third party content and hyperlinking from the Service
 
-We are not liable or responsible for the third party content on the Service. Third party content includes, for example, material posted by other users of the Service and course listings.
+We are not liable or responsible for the third party content on the Service. Third party content includes, for example, material posted by other users of the Service.
 
 Where the Service contains links to other sites and resources, we are not liable or responsible for the content or reliability of those websites and resources and do not necessarily endorse the views expressed within them.
 
@@ -44,15 +46,16 @@ We aim to replace broken links to other sites but cannot guarantee that these li
 
 We make every effort to check and test material at all stages of production. We do not guarantee our service will be secure or free from bugs or viruses. We cannot accept any responsibility for any loss, disruption or damage to your data or your computer system which may occur whilst using material derived from this website.
 
-We will report misuse, unauthorised access or other breaches of the Computer Misuse Act 1990 to the relevant law enforcement authorities and co-operate with them to determine your identity.
+We will report misuse, unauthorised access or other breaches of the [Computer Misuse Act 1990](https://www.legislation.gov.uk/ukpga/1990/18/contents) to the relevant law enforcement authorities and co-operate with them to determine your identity.
 
-## Disclaimer and Liability
+## Disclaimer and liability
 
-The content of this Service includes both content created by us (included but not limited to content that helps you use the Service) and third-party content (included but not limited to course listings). We do not:
+The content of this Service includes both content created by us (included but not limited to content that helps you use the Service) and third-party content (including information about teacher reference numbers (TRNs). We do not:
 
 - endorse third-party content
 - vouch for its accuracy
 - guarantee that the views, instructions and/or assertions expressed in it are our own
+
 
 The content we create for the Service is not advice. You should verify any information on the Service yourself and use your own judgement before doing or not doing anything on the basis of the content.
 
@@ -62,33 +65,37 @@ We do not warrant that the functions contained in the material contained in this
 
 In no event will we be liable for:
 
-- any action you may take as a result of relying on any information/materials provided on the Service or for any loss or damage suffered by you as a result of you taking such action including, without limitation, indirect or consequential loss or damage, or any loss or damages whatsoever arising from or in connection with the use of the Service
+- any action you may take as a result of relying on any information or materials provided on the Service or for any loss or damage suffered by you as a result of you taking such action including, without limitation, indirect or consequential loss or damage, or any loss or damages whatsoever arising from or in connection with the use of the Service
 - any dealings you have with third parties (e.g. other users) that take place using or facilitated by the Service
 
-These terms and conditions shall be governed by and construed in accordance with the laws of England and Wales. Any dispute arising under these terms and conditions shall be subject to the exclusive jurisdiction of the courts of England and Wales.
+## Validity of these general terms
 
-## Validity of these General Terms
+If any of these general terms are held to be invalid, unenforceable or illegal for any reason, the remaining general terms will still apply.
 
-If any of these terms and conditions are held to be invalid, unenforceable or illegal for any reason, the remaining terms and conditions will still apply.
-
-## Applicable Law and Jurisdiction
+## Applicable law and jurisdiction
 
 These General Terms are governed by the laws of England and Wales. Any dispute arising under these General Terms will be subject to the exclusive jurisdiction of the courts of England and Wales.
 
 ## Using the Service
 
-Access and use by you of this Service constitutes your acceptance of these Terms and Conditions. This takes effect from the date on which you first use this website. If you do not agree to these terms, you must not use this website.
+Access and use by you of this Service constitutes your acceptance of these general terms.
 
-By using Claim funding for mentor training you agree to abide by the following terms and conditions.
+By using this Service you agree to abide by the following terms and conditions.
 
-## Unacceptable Use
+## Unacceptable use
 
-You must not publish:
+You must not add a mentor to the service without informing them that the Department for Education will store their information in line with the [privacy notice](/privacy) and have provided them with a copy of this notice for reference.
 
-- Item 1
-- Item 2
-- Item 3
+## Mentor data
 
-## Listing Data
+Data ownership: schools have sole responsibility for maintaining the accuracy and appropriateness of their mentor data contained in the Service
 
-Data ownership: training providers and schools have sole responsibility for maintaining the accuracy and appropriateness of the data contained in their listings.
+## Claims
+
+Data ownership: schools have sole responsibility for the accuracy and appropriateness of the claims for funding data contained in the Service.
+
+## Privacy
+
+[Read privacy information section 8.4](https://www.gov.uk/government/publications/privacy-information-education-providers-workforce-including-teachers/privacy-information-education-providers-workforce-including-teachers#using-your-data-to-maintain-a-list-of-teachers) which tells you what we do with you and your mentors’ data when you make contact with us or use this service.
+
+Last updated 29 April 2024
