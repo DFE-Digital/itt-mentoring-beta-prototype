@@ -50,12 +50,11 @@ We will report misuse, unauthorised access or other breaches of the [Computer Mi
 
 ## Disclaimer and liability
 
-The content of this Service includes both content created by us (included but not limited to content that helps you use the Service) and third-party content (including information about teacher reference numbers (TRNs). We do not:
+The content of this Service includes both content created by us (included but not limited to content that helps you use the Service) and third-party content including information about teacher reference numbers (TRNs). We do not:
 
 - endorse third-party content
 - vouch for its accuracy
 - guarantee that the views, instructions and/or assertions expressed in it are our own
-
 
 The content we create for the Service is not advice. You should verify any information on the Service yourself and use your own judgement before doing or not doing anything on the basis of the content.
 
@@ -66,7 +65,7 @@ We do not warrant that the functions contained in the material contained in this
 In no event will we be liable for:
 
 - any action you may take as a result of relying on any information or materials provided on the Service or for any loss or damage suffered by you as a result of you taking such action including, without limitation, indirect or consequential loss or damage, or any loss or damages whatsoever arising from or in connection with the use of the Service
-- any dealings you have with third parties (e.g. other users) that take place using or facilitated by the Service
+- any dealings you have with third parties, like other users, that take place using or facilitated by the Service
 
 ## Validity of these general terms
 
@@ -98,4 +97,4 @@ Data ownership: schools have sole responsibility for the accuracy and appropriat
 
 [Read privacy information section 8.4](https://www.gov.uk/government/publications/privacy-information-education-providers-workforce-including-teachers/privacy-information-education-providers-workforce-including-teachers#using-your-data-to-maintain-a-list-of-teachers) which tells you what we do with you and your mentors’ data when you make contact with us or use this service.
 
-Last updated 29 April 2024
+Last updated 1 May 2024
