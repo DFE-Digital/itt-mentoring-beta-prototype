@@ -1,0 +1,65 @@
+{% extends "layouts/main.njk" %}
+
+{% set primaryNavId = "claims" %}
+
+{% set title = "Declaration" %}
+{% set caption = "Claim - " + claim.reference %}
+
+{% block pageTitle %}
+  {{ "Error: " if errors.length }}{{ title + " - " if title }}{{ caption + " - " if caption }}{{ serviceName }} - GOV.UK
+{% endblock %}
+
+{% block beforeContent %}
+{{ govukBackLink({
+  text: "Back",
+  href: actions.back
+}) }}
+{% endblock %}
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      {% include "_includes/page-heading.njk" %}
+
+      <form action="{{ actions.save }}" method="post" accept-charset="utf-8" novalidate>
+
+        <p class="govuk-body">
+          By submitting this claim, I confirm that:
+        </p>
+
+        <ul class="govuk-list govuk-list--bullet">
+          <li>
+            I am authorised to claim on behalf of the school
+          </li>
+          <li>
+            I have read and accepted the grant terms and conditions
+          </li>
+          <li>
+            the information detailed above is accurate and the total I am claiming back has been used to support the cost of the mentor training
+          </li>
+          <li>
+            I will provide evidence to support this claim if requested by the Department for Education
+          </li>
+        </ul>
+
+        {{ govukWarningText({
+          text: "You will not be able to change any of the claim details once you have submitted it.",
+          iconFallbackText: "Warning"
+        }) }}
+
+        {{ govukButton({
+          text: "Submit claim"
+        }) }}
+
+      </form>
+
+      <p class="govuk-body">
+        <a class="govuk-link" href="{{ actions.cancel }}">Cancel</a>
+      </p>
+
+    </div>
+  </div>
+
+{% endblock %}
