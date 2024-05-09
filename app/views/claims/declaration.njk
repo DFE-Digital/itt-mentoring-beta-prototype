@@ -25,6 +25,66 @@
 
       <form action="{{ actions.save }}" method="post" accept-charset="utf-8" novalidate>
 
+        {% set mentorListHtml %}
+          <ul class="govuk-list">
+            {% for mentor in claim.mentors %}
+              <li>
+                {{ mentor.trn | getMentorName }}
+              </li>
+            {% endfor %}
+          </ul>
+        {% endset %}
+
+        {{ govukSummaryList({
+          rows: [
+            {
+              key: {
+                text: "School"
+              },
+              value: {
+                text: organisation.name
+              }
+            },
+            {
+              key: {
+                text: "Accredited provider"
+              },
+              value: {
+                text: claim.providerId | getProviderName
+              }
+            },
+            {
+              key: {
+                text: "Mentor" + ("s" if claim.mentors.length > 1)
+              },
+              value: {
+                html: mentorListHtml
+              }
+            }
+          ]
+        }) }}
+
+        <h2 class="govuk-heading-m">Hours of training</h2>
+
+        <dl class="govuk-summary-list">
+          {% for mentor in claim.mentors %}
+            <div class="govuk-summary-list__row">
+              <dt class="govuk-summary-list__key">
+                {{ mentor.trn | getMentorName }}
+              </dt>
+              <dd class="govuk-summary-list__value">
+                {% if mentor.hours == "other" %}
+                  {{ mentor.otherHours + " hours" if mentor.otherHours else "Not entered" }}
+                {% else %}
+                  {{ mentor.hours + " hours" if mentor.hours else "Not entered" }}
+                {% endif %}
+              </dd>
+            </div>
+          {% endfor %}
+        </dl>
+
+        {% include "_includes/claims/grant-funding.njk" %}
+
         <p class="govuk-body">
           By submitting this claim, I confirm that:
         </p>
