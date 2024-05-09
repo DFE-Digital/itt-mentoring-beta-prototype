@@ -1,4 +1,4 @@
-# Claim funding for mentor training
+# Claim funding for mentor training prototype
 
 Claim funding for mentor training is a service for schools to claim funding for their general mentors’ training.
 
