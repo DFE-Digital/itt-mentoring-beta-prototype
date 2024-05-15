@@ -2,12 +2,8 @@
 
 {% set primaryNavId = "claims" %}
 
-{% set title = "Check your answers" %}
-{% if claim.id %}
-  {% set caption = "Claim - " + claim.reference %}
-{% else %}
-  {% set caption = "Add claim" %}
-{% endif %}
+{% set title = "Declaration" %}
+{% set caption = "Claim - " + claim.reference %}
 
 {% block pageTitle %}
   {{ "Error: " if errors.length }}{{ title + " - " if title }}{{ caption + " - " if caption }}{{ serviceName }} - GOV.UK
@@ -55,15 +51,6 @@
               },
               value: {
                 text: claim.providerId | getProviderName
-              },
-              actions: {
-                items: [
-                  {
-                    href: "#",
-                    text: "Change",
-                    visuallyHiddenText: "accredited provider"
-                  }
-                ]
               }
             },
             {
@@ -72,15 +59,6 @@
               },
               value: {
                 html: mentorListHtml
-              },
-              actions: {
-                items: [
-                  {
-                    href: "#",
-                    text: "Change",
-                    visuallyHiddenText: "mentors included in the claim"
-                  }
-                ]
               }
             }
           ]
@@ -101,19 +79,11 @@
                   {{ mentor.hours + " hours" if mentor.hours else "Not entered" }}
                 {% endif %}
               </dd>
-              <dd class="govuk-summary-list__actions">
-                <a class="govuk-link" href="#">
-                  {# {{ actions.change }}/hours?referrer=check&position={{ loop.index0 }} #}
-                  Change<span class="govuk-visually-hidden"> hours of training undertaken by {{ mentor.trn | getMentorName }}</span>
-                </a>
-              </dd>
             </div>
           {% endfor %}
         </dl>
 
         {% include "_includes/claims/grant-funding.njk" %}
-
-        <h2 class="govuk-heading-m">Declaration</h2>
 
         {% include "_includes/claims/declaration.njk" %}
 

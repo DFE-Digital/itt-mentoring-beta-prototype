@@ -446,7 +446,7 @@ exports.edit_claim_check_get = (req, res) => {
     req.session.data.claim.mentors
   )
 
-  res.render('../views/claims/check-your-answers', {
+  res.render('../views/claims/declaration', {
     organisation,
     claim: req.session.data.claim,
     actions: {
