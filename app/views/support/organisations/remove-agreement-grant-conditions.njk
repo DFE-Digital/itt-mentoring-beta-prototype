@@ -1,9 +1,9 @@
-{% extends "layouts/main.njk" %}
+{% extends "layouts/support.njk" %}
 
-{% set primaryNavId = "users" %}
+{% set primaryNavId = "organisations" %}
 
-{% set title = "Are you sure you want to remove " + organisation.conditionsAgreedBy | getUserName + "’s agreement?" %}
-{% set caption = "Agreement to grant conditions" %}
+{% set title = "Are you sure you want to remove " + organisation.conditionsAgreedBy | getUserName + "’s agreement to the grant conditions?" %}
+{% set caption = "Grant conditions - " + organisation.name %}
 
 {% block pageTitle %}
   {{ "Error: " if errors.length }}{{ title + " - " if title }}{{ caption + " - " if caption }}{{ serviceName }} - GOV.UK
