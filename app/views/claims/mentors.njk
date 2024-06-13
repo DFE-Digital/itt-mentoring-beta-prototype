@@ -41,8 +41,8 @@
             {% include "_includes/page-heading.njk" %}
 
             {% set insetHtml %}
-              <p class="govuk-body">This list includes all mentors who can be included on a claim. If a mentor you have added is not showing in this list, that is because they have already had 20 hours of training claimed for with {{ claim.providerId | getProviderName }}.</p>
-              <p class="govuk-body">Contact <a href="mailto:ittmentor.funding@ducation.gov.uk" class="govuk-link">ittmentor.funding@ducation.gov.uk</a> if you think there is a problem.</p>
+              <p class="govuk-body">This list includes all mentors who can be included in a claim. If a mentor you have added is not showing in this list, that is because they have already had 20 hours of training claimed for with {{ claim.providerId | getProviderName }}.</p>
+              <p class="govuk-body">Contact <a href="mailto:ittmentor.funding@education.gov.uk" class="govuk-link">ittmentor.funding@education.gov.uk</a> if you think there is a problem.</p>
             {% endset %}
 
             {{ govukInsetText({
