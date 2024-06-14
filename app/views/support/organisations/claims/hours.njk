@@ -20,67 +20,136 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
 
-      {% set headingHtml %}
-        {% include "_includes/page-heading-legend.njk" %}
-      {% endset %}
-
       <form action="{{ actions.save }}" method="post" accept-charset="utf-8" novalidate>
         <input type="hidden" name="mentor[trn]" value="{{ mentorTrn }}">
         <input type="hidden" name="mentor[name]" value="{{ mentorTrn | getMentorName }}">
 
-        {{ govukRadios({
-          name: "mentor[hours]",
-          fieldset: {
-            legend: {
-              html: headingHtml,
-              isPageHeading: true,
-              classes: "govuk-fieldset__legend--l"
-            }
-          },
-          value: mentor.hours,
-          items: [
-            {
-              value: "20",
-              text: "20 hours",
-              hint: {
-                text: "The full amount of hours for standard training"
-              }
-            },
-            {
-              value: "6",
-              text: "6 hours",
-              hint: {
-                text: "The amount of hours for top up training"
-              }
-            } if 1==0,
-            {
-              divider: "or"
-            },
-            {
-              value: "other",
-              text: "Another amount",
-              conditional: {
-                html: govukInput({
-                  id: "otherAmount",
-                  name: "mentor[otherHours]",
-                  label: {
-                    text: "Number of hours",
-                    isPageHeading: false,
-                    classes: "govuk-label--s"
-                  },
-                  hint: {
-                    text: "Enter whole numbers up to a maximum of 20 hours"
-                  },
-                  value: mentor.otherHours,
-                  errorMessage: errors | getErrorMessage("otherHours"),
-                  classes: "govuk-input--width-2"
-                })
-              }
-            }
-          ],
-          errorMessage: errors | getErrorMessage("hours")
-        }) }}
+        {% if mentorRemainingHours < 20 %}
 
+          {% include "_includes/page-heading.njk" %}
+
+          {% set insetHtml %}
+            <p class="govuk-body">There are <b>{{ mentorRemainingHours }} hours left to claim</b> for {{ mentorTrn | getMentorName }} for {{ claim.providerId | getProviderName }}.</p>
+            <p class="govuk-body">Contact <a href="mailto:ittmentor.funding@education.gov.uk" class="govuk-link">ittmentor.funding@education.gov.uk</a> if you think there is a problem.</p>
+          {% endset %}
+
+          {{ govukInsetText({
+            html: insetHtml
+          }) }}
+
+          {{ govukRadios({
+            name: "mentor[hours]",
+            fieldset: {
+              legend: {
+                text: "Hours of training",
+                isPageHeading: false,
+                classes: "govuk-fieldset__legend--s"
+              }
+            },
+            value: mentor.hours,
+            items: [
+              {
+                value: mentorRemainingHours,
+                text: mentorRemainingHours + " hours",
+                hint: {
+                  text: "The " + ("standard" if mentorRemainingHours == 20 else "remaining") + " amount of hours for standard training"
+                }
+              },
+              {
+                value: "6",
+                text: "6 hours",
+                hint: {
+                  text: "The amount of hours for top up training"
+                }
+              } if 1==0,
+              {
+                divider: "or"
+              },
+              {
+                value: "other",
+                text: "Another amount",
+                conditional: {
+                  html: govukInput({
+                    id: "otherAmount",
+                    name: "mentor[otherHours]",
+                    label: {
+                      text: "Number of hours",
+                      isPageHeading: false,
+                      classes: "govuk-label--s"
+                    },
+                    hint: {
+                      text: "Enter whole numbers up to a maximum of " + mentorRemainingHours + " hours"
+                    },
+                    value: mentor.otherHours,
+                    errorMessage: errors | getErrorMessage("otherHours"),
+                    classes: "govuk-input--width-2"
+                  })
+                }
+              }
+            ],
+            errorMessage: errors | getErrorMessage("hours")
+          }) }}
+
+        {% else %}
+
+          {% set headingHtml %}
+            {% include "_includes/page-heading-legend.njk" %}
+          {% endset %}
+
+          {{ govukRadios({
+            name: "mentor[hours]",
+            fieldset: {
+              legend: {
+                html: headingHtml,
+                isPageHeading: true,
+                classes: "govuk-fieldset__legend--l"
+              }
+            },
+            value: mentor.hours,
+            items: [
+              {
+                value: mentorRemainingHours,
+                text: mentorRemainingHours + " hours",
+                hint: {
+                  text: "The " + ("standard" if mentorRemainingHours == 20 else "remaining") + " amount of hours for standard training"
+                }
+              },
+              {
+                value: "6",
+                text: "6 hours",
+                hint: {
+                  text: "The amount of hours for top up training"
+                }
+              } if 1==0,
+              {
+                divider: "or"
+              },
+              {
+                value: "other",
+                text: "Another amount",
+                conditional: {
+                  html: govukInput({
+                    id: "otherAmount",
+                    name: "mentor[otherHours]",
+                    label: {
+                      text: "Number of hours",
+                      isPageHeading: false,
+                      classes: "govuk-label--s"
+                    },
+                    hint: {
+                      text: "Enter whole numbers up to a maximum of " + mentorRemainingHours + " hours"
+                    },
+                    value: mentor.otherHours,
+                    errorMessage: errors | getErrorMessage("otherHours"),
+                    classes: "govuk-input--width-2"
+                  })
+                }
+              }
+            ],
+            errorMessage: errors | getErrorMessage("hours")
+          }) }}
+
+        {% endif %}
 
         {{ govukButton({
           text: "Continue"

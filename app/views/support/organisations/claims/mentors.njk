@@ -20,38 +20,84 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
 
-      {% set headingHtml %}
-        {% include "_includes/page-heading-legend.njk" %}
-      {% endset %}
+      {% if mentorOptionsCount == 0 %}
 
-      <form action="{{ actions.save }}" method="post" accept-charset="utf-8" novalidate>
+          {% include "_includes/page-heading.njk" %}
 
-        {{ govukCheckboxes({
-          name: "mentorChoices[]",
-          fieldset: {
-            legend: {
-              html: headingHtml,
-              isPageHeading: true,
-              classes: "govuk-fieldset__legend--l"
-            }
-          },
-          hint: {
-            text: "Select all that apply"
-          },
-          values: mentorChoices,
-          items: mentorOptions,
-          errorMessage: errors | getErrorMessage("mentorChoices")
-        }) }}
+          <p class="govuk-body">There are no mentors you can include in a claim because they have already had 20 hours of training claimed for with {{ claim.providerId | getProviderName }}.</p>
 
-        {{ govukButton({
-          text: "Continue"
-        }) }}
+          <p class="govuk-body"><a href="{{ actions.back }}" class="govuk-link">Change the accredited provider</a></p>
 
-      </form>
+      {% else %}
 
-      <p class="govuk-body">
-        <a class="govuk-link" href="{{ actions.cancel }}">Cancel</a>
-      </p>
+        <form action="{{ actions.save }}" method="post" accept-charset="utf-8" novalidate>
+
+          {% if mentorOptionsCount < mentorsCount %}
+
+            {% include "_includes/page-heading.njk" %}
+
+            {% set insetHtml %}
+              <p class="govuk-body">This list includes all mentors who can be included in a claim. If a mentor you have added is not showing in this list, that is because they have already had 20 hours of training claimed for with {{ claim.providerId | getProviderName }}.</p>
+              <p class="govuk-body">Contact <a href="mailto:ittmentor.funding@education.gov.uk" class="govuk-link">ittmentor.funding@education.gov.uk</a> if you think there is a problem.</p>
+            {% endset %}
+
+            {{ govukInsetText({
+              html: insetHtml
+            }) }}
+
+            {{ govukCheckboxes({
+              name: "mentorChoices[]",
+              fieldset: {
+                legend: {
+                  text: "Mentor",
+                  isPageHeading: false,
+                  classes: "govuk-fieldset__legend--s"
+                }
+              },
+              hint: {
+                text: "Select all that apply"
+              },
+              values: mentorChoices,
+              items: mentorOptions,
+              errorMessage: errors | getErrorMessage("mentorChoices")
+            }) }}
+
+          {% else %}
+
+            {% set headingHtml %}
+              {% include "_includes/page-heading-legend.njk" %}
+            {% endset %}
+
+            {{ govukCheckboxes({
+              name: "mentorChoices[]",
+              fieldset: {
+                legend: {
+                  html: headingHtml,
+                  isPageHeading: true,
+                  classes: "govuk-fieldset__legend--l"
+                }
+              },
+              hint: {
+                text: "Select all that apply"
+              },
+              values: mentorChoices,
+              items: mentorOptions,
+              errorMessage: errors | getErrorMessage("mentorChoices")
+            }) }}
+
+          {% endif %}
+
+          {{ govukButton({
+            text: "Continue"
+          }) }}
+
+        </form>
+
+        <p class="govuk-body">
+          <a class="govuk-link" href="{{ actions.cancel }}">Cancel</a>
+        </p>
+
+      {% endif %}
 
     </div>
   </div>

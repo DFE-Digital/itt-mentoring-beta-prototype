@@ -66,7 +66,7 @@ exports.claim_details = (req, res) => {
     claim,
     actions: {
       change: '#',
-      delete: `/support/organisations/${req.params.organisationId}/claims/${req.params.claimsId}/delete`,
+      delete: `/support/organisations/${req.params.organisationId}/claims/${req.params.claimId}/delete`,
       back: `/support/organisations/${req.params.organisationId}/claims`,
       cancel: `/support/organisations/${req.params.organisationId}/claims`,
       submit: '#'
@@ -141,12 +141,30 @@ exports.new_claim_post = (req, res) => {
 
 exports.new_claim_mentors_get = (req, res) => {
   const organisation = organisationModel.findOne({ organisationId: req.params.organisationId })
-  const mentorOptions = mentorHelper.getMentorOptions({ organisationId: req.params.organisationId })
+  // const mentorOptions = mentorHelper.getMentorOptions({ organisationId: req.params.organisationId })
+
+  const mentorsCount = mentorModel.findMany({ organisationId: req.params.organisationId }).length
+  let mentorOptions = mentorHelper.getMentorOptions({ organisationId: req.params.organisationId })
+
+  mentorOptions = mentorOptions.filter(mentor => {
+    const mentorHours = claimHelper.getProviderMentorTotalHours({
+      providerId: req.session.data.claim.providerId,
+      trn: mentor.value
+    })
+
+    if (mentorHours < 20) {
+      return mentor
+    }
+  })
+
+  const mentorOptionsCount = mentorOptions.length
 
   res.render('../views/support/organisations/claims/mentors', {
     organisation,
     claim: req.session.data.claim,
+    mentorsCount,
     mentorOptions,
+    mentorOptionsCount,
     mentorChoices: req.session.data.mentorChoices,
     actions: {
       save: `/support/organisations/${req.params.organisationId}/claims/new/mentors`,
@@ -158,7 +176,22 @@ exports.new_claim_mentors_get = (req, res) => {
 
 exports.new_claim_mentors_post = (req, res) => {
   const organisation = organisationModel.findOne({ organisationId: req.params.organisationId })
-  const mentorOptions = mentorHelper.getMentorOptions({ organisationId: req.params.organisationId })
+  // const mentorOptions = mentorHelper.getMentorOptions({ organisationId: req.params.organisationId })
+
+  let mentorOptions = mentorHelper.getMentorOptions({ organisationId: req.params.organisationId })
+
+  mentorOptions = mentorOptions.filter(mentor => {
+    const mentorHours = claimHelper.getProviderMentorTotalHours({
+      providerId: req.session.data.claim.providerId,
+      trn: mentor.value
+    })
+
+    if (mentorHours < 20) {
+      return mentor
+    }
+  })
+
+  const mentorOptionsCount = mentorOptions.length
 
   const errors = []
 
@@ -174,7 +207,9 @@ exports.new_claim_mentors_post = (req, res) => {
     res.render('../views/support/organisations/claims/mentors', {
       organisation,
       claim: req.session.data.claim,
+      mentorsCount,
       mentorOptions,
+      mentorOptionsCount,
       mentorChoices: req.session.data.mentorChoices,
       actions: {
         save: `/support/organisations/${req.params.organisationId}/claims/new/mentors`,
@@ -207,6 +242,13 @@ exports.new_claim_hours_get = (req, res) => {
   const position = req.session.data.position
   const mentorTrn = req.session.data.mentorChoices[position]
 
+  const mentorHours = claimHelper.getProviderMentorTotalHours({
+    providerId: req.session.data.claim.providerId,
+    trn: mentorTrn
+  })
+
+  const mentorRemainingHours = 20 - mentorHours
+
   let mentor = req.session.data.mentor
   if (req.query.referrer === 'check') {
     mentor = req.session.data.claim.mentors[position]
@@ -218,6 +260,7 @@ exports.new_claim_hours_get = (req, res) => {
     mentorTrn,
     position,
     mentor,
+    mentorRemainingHours,
     actions: {
       save,
       back,
@@ -239,6 +282,13 @@ exports.new_claim_hours_post = (req, res) => {
   const position = req.session.data.position
   const mentorTrn = req.session.data.mentorChoices[position]
 
+  const mentorHours = claimHelper.getProviderMentorTotalHours({
+    providerId: req.session.data.claim.providerId,
+    trn: mentorTrn
+  })
+
+  const mentorRemainingHours = 20 - mentorHours
+
   let mentor = req.session.data.mentor
   if (req.query.referrer === 'check') {
     mentor = req.session.data.claim.mentors[position]
@@ -250,7 +300,7 @@ exports.new_claim_hours_post = (req, res) => {
     const error = {}
     error.fieldName = 'hours'
     error.href = '#hours'
-    error.text = 'Select the number of hours'
+    error.text = 'Select the hours of training'
     errors.push(error)
   } else if (req.session.data.mentor.hours === 'other') {
     if (!req.session.data.mentor.otherHours.length) {
@@ -262,12 +312,12 @@ exports.new_claim_hours_post = (req, res) => {
     } else if (
       isNaN(req.session.data.mentor.otherHours)
       || req.session.data.mentor.otherHours < 1
-      || req.session.data.mentor.otherHours > 20
+      || req.session.data.mentor.otherHours > mentorRemainingHours
     ) {
       const error = {}
       error.fieldName = 'otherHours'
       error.href = '#otherHours'
-      error.text = 'Enter the number of hours between 1 and 20'
+      error.text = `Enter the number of hours between 1 and ${mentorRemainingHours}`
       errors.push(error)
     }
     // else if (!Number.isInteger(req.session.data.mentor.otherHours)) {
@@ -286,6 +336,7 @@ exports.new_claim_hours_post = (req, res) => {
       mentorTrn,
       position,
       mentor,
+      mentorRemainingHours,
       actions: {
         save,
         back,
