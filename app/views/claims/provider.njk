@@ -14,53 +14,50 @@
 
 {% block content %}
 
-  {% include "_includes/error-summary.njk" %}
 
   <div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds">
+  <div class="govuk-grid-column-two-thirds">
 
       {% set headingHtml %}
         {% include "_includes/page-heading-legend.njk" %}
       {% endset %}
 
-      <form action="{{ actions.save }}" method="post" accept-charset="utf-8" novalidate>
+    <form novalidate method="post">
 
-        <div class="govuk-form-group {{- ' govuk-form-group--error' if (errors | getErrorMessage('provider'))}}">
+      {{ govukSelect({
+        id: "[choose][provider]",
+        name: "[choose][provider]",
+        classes: "providerAutocomplete",
+        label: {
+          html: headingHtml,
+          classes: "govuk-label--l",
+          isPageHeading: true
+        },
+        value: data.choose.provider,
+        items: [
+            { value: "aaaaaaaaa", text: "aaaaaaaaa" },
+            { value: "bbbbbbbbb", text: "bbbbbbbbb" },
+            { value: "ccccccccc", text: "ccccccccc" },
+            { value: "ddddddddd", text: "ddddddddd" },
+            { value: "eeeeeeeeee", text: "eeeeeeeeee" },
+            { value: "fffffffff", text: "fffffffff" }
+        ]
+      }) }}
 
-        {{ xGovukAutocomplete({
-          id: "provider",
-            name: "provider[name]",
-            label: {
-              html: headingHtml,
-              isPageHeading: true,
-              classes: "govuk-label--l"
-            },
-            value: data.provider.name,
-            formGroup: {
-              classes: "govuk-!-margin-bottom-0"
-            },
-            errorMessage: errors | getErrorMessage("provider"),
-          items: [
-            { text: "Austria" },
-            { text: "Sweden" }
-          ]
-        }) }}
-
-          <div id="provider-autocomplete" class="govuk-body"></div>
-        </div>
-
-
-        {{ govukButton({
-          text: "Continue"
-        }) }}
-
-      </form>
-
-      <p class="govuk-body">
-        <a class="govuk-link" href="{{ actions.cancel }}">Cancel</a>
-      </p>
-
-    </div>
+      {{ govukButton({
+        text: "Continue"
+      }) }}
+    </form>
   </div>
+</div>
 
+{% endblock %}
+
+{% block scripts %}
+  {{ super() }}
+  <script>
+    accessibleAutocomplete.enhanceSelectElement({
+      selectElement: document.querySelector('.providerAutocomplete')
+    })
+  </script>
 {% endblock %}

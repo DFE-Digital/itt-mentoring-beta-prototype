@@ -421,3 +421,10 @@ router.get('/unauthorised', errorController.unauthorised)
 router.get('/provider-suggestions', organisationController.provider_suggestions_json)
 
 router.get('/school-suggestions', organisationController.school_suggestions_json)
+
+
+// Provider //////////////
+
+router.post('/claims/provider', (req, res) => {
+      res.redirect('/claims/test')
+})

@@ -1,0 +1,39 @@
+{% extends "layouts/main.njk" %}
+
+{% set primaryNavId = "claims" %}
+
+{% set title = "Test" %}
+{% set caption = "Caption here" %}
+
+{% block beforeContent %}
+{{ govukBackLink({
+  text: "Back",
+  href: actions.back
+}) }}
+{% endblock %}
+
+{% block content %}
+
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      {% set headingHtml %}
+        {% include "_includes/page-heading-legend.njk" %}
+      {% endset %}
+
+       <h1>Some stuff</h1>
+
+    </div>
+  </div>
+
+{% endblock %}
+
+{% block scripts %}
+  {{ super() }}
+  <script>
+    accessibleAutocomplete.enhanceSelectElement({
+      selectElement: document.querySelector('.providerAutocomplete')
+    })
+  </script>
+{% endblock %}
