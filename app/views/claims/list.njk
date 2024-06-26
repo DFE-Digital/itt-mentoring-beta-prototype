@@ -27,7 +27,7 @@
             Claims can only be made for the school year September 2023 to July 2024.
           </p>
           <p class="govuk-body">
-            The final date to submit a claim is 19 July 2024.
+            The final date to submit a claim is 19 July 2024.  *THIS IS THE CLAIM WINDOW*
           </p>
         {% endif %}
 
@@ -39,7 +39,7 @@
 
       {% if mentors.length %}
         {{ govukButton({
-          text: "Add claim",
+          text: "Add claim (Lose button for close claim window)",
           href: actions.new
         }) }}
       {% endif %}
