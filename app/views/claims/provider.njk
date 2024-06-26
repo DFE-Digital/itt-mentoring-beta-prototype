@@ -26,8 +26,9 @@
       <form action="{{ actions.save }}" method="post" accept-charset="utf-8" novalidate>
 
         <div class="govuk-form-group {{- ' govuk-form-group--error' if (errors | getErrorMessage('provider'))}}">
-          {{ govukInput({
-            id: "provider",
+
+        {{ xGovukAutocomplete({
+          id: "provider",
             name: "provider[name]",
             label: {
               html: headingHtml,
@@ -35,49 +36,12 @@
               classes: "govuk-label--l"
             },
             value: data.provider.name,
-            autocomplete: "off",
             formGroup: {
               classes: "govuk-!-margin-bottom-0"
             },
-            errorMessage: errors | getErrorMessage("provider")
-          }) }}
-
-        {{ xGovukAutocomplete({
-          id: "country",
-          name: "country",
-          allowEmpty: false,
-          label: {
-            classes: "govuk-label--l",
-            isPageHeading: true,
-            text: "Pick a country"
-          },
+            errorMessage: errors | getErrorMessage("provider"),
           items: [
             { text: "Austria" },
-            { text: "Belgium" },
-            { text: "Bulgaria" },
-            { text: "Croatia" },
-            { text: "Republic of Cyprus" },
-            { text: "Czech Republic" },
-            { text: "Denmark" },
-            { text: "Estonia" },
-            { text: "Finland" },
-            { text: "France" },
-            { text: "Germany" },
-            { text: "Greece" },
-            { text: "Hungary" },
-            { text: "Ireland" },
-            { text: "Italy" },
-            { text: "Latvia" },
-            { text: "Lithuania" },
-            { text: "Luxembourg" },
-            { text: "Malta" },
-            { text: "Netherlands" },
-            { text: "Poland" },
-            { text: "Portugal" },
-            { text: "Romania" },
-            { text: "Slovakia" },
-            { text: "Slovenia" },
-            { text: "Spain" },
             { text: "Sweden" }
           ]
         }) }}
