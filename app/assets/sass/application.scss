@@ -26,3 +26,6 @@ $app-assets-path: '/public/';
 @import "components/filter-layout";
 @import "components/inset-text";
 @import "components/search-results";
+
+
+@import "node_modules/@x-govuk/govuk-prototype-components/x-govuk/all";

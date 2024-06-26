@@ -25,28 +25,66 @@
 
       <form action="{{ actions.save }}" method="post" accept-charset="utf-8" novalidate>
 
-        {{ govukRadios({
-          name: "claim[providerId]",
-          fieldset: {
-            legend: {
+        <div class="govuk-form-group {{- ' govuk-form-group--error' if (errors | getErrorMessage('provider'))}}">
+          {{ govukInput({
+            id: "provider",
+            name: "provider[name]",
+            label: {
               html: headingHtml,
               isPageHeading: true,
-              classes: "govuk-fieldset__legend--l"
-            }
-          },
-          value: claim.providerId,
-          items: [
-            {
-              value: "41164d27-f161-4a0f-b07c-fcf19fe53cc2",
-              text: "Best Practice Network"
+              classes: "govuk-label--l"
             },
-            {
-              value: "15ca4914-3505-41a1-80ea-5a0312c8ead4",
-              text: "NIoT: National Institute of Teaching, founded by the School-Led Development Trust"
-            }
-          ],
-          errorMessage: errors | getErrorMessage("provider")
+            value: data.provider.name,
+            autocomplete: "off",
+            formGroup: {
+              classes: "govuk-!-margin-bottom-0"
+            },
+            errorMessage: errors | getErrorMessage("provider")
+          }) }}
+
+        {{ xGovukAutocomplete({
+          id: "country",
+          name: "country",
+          allowEmpty: false,
+          label: {
+            classes: "govuk-label--l",
+            isPageHeading: true,
+            text: "Pick a country"
+          },
+          items: [
+            { text: "Austria" },
+            { text: "Belgium" },
+            { text: "Bulgaria" },
+            { text: "Croatia" },
+            { text: "Republic of Cyprus" },
+            { text: "Czech Republic" },
+            { text: "Denmark" },
+            { text: "Estonia" },
+            { text: "Finland" },
+            { text: "France" },
+            { text: "Germany" },
+            { text: "Greece" },
+            { text: "Hungary" },
+            { text: "Ireland" },
+            { text: "Italy" },
+            { text: "Latvia" },
+            { text: "Lithuania" },
+            { text: "Luxembourg" },
+            { text: "Malta" },
+            { text: "Netherlands" },
+            { text: "Poland" },
+            { text: "Portugal" },
+            { text: "Romania" },
+            { text: "Slovakia" },
+            { text: "Slovenia" },
+            { text: "Spain" },
+            { text: "Sweden" }
+          ]
         }) }}
+
+          <div id="provider-autocomplete" class="govuk-body"></div>
+        </div>
+
 
         {{ govukButton({
           text: "Continue"
