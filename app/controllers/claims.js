@@ -5,7 +5,6 @@ const providerModel = require('../models/providers')
 
 const Pagination = require('../helpers/pagination')
 const claimHelper = require('../helpers/claims')
-const fundingHelper = require('../helpers/funding')
 const mentorHelper = require('../helpers/mentors')
 
 /// ------------------------------------------------------------------------ ///
