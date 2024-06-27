@@ -21,6 +21,7 @@ exports.claim_list = (req, res) => {
   delete req.session.data.mentor
   delete req.session.data.mentorChoices
   delete req.session.data.position
+  delete req.session.data.provider
 
   claims.sort((a, b) => {
     return new Date(b.submittedAt) - new Date(a.submittedAt)
