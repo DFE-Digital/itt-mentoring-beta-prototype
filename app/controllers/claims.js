@@ -1,6 +1,7 @@
 const claimModel = require('../models/claims')
 const mentorModel = require('../models/mentors')
 const organisationModel = require('../models/organisations')
+const providerModel = require('../models/providers')
 
 const Pagination = require('../helpers/pagination')
 const claimHelper = require('../helpers/claims')
@@ -85,6 +86,10 @@ exports.new_claim_get = (req, res) => {
     save += `?referrer=${req.query.referrer}`
   }
 
+  if (!req.session.data.claim) {
+    req.session.data.claim = {}
+  }
+
   res.render('../views/claims/provider', {
     claim: req.session.data.claim,
     actions: {
@@ -105,25 +110,26 @@ exports.new_claim_post = (req, res) => {
 
   const errors = []
 
-  if (!req.session.data.claim?.providerId) {
+  if (!req.session.data.provider.name.length) {
     const error = {}
     error.fieldName = 'provider'
     error.href = '#provider'
-    error.text = 'Select an accredited provider'
+    error.text = 'Enter an accredited provider name, UKPRN, URN or postcode'
     errors.push(error)
-  }
 
-  if (errors.length) {
     res.render('../views/claims/provider', {
-      claim: req.session.data.claim,
       actions: {
         save,
         back,
-        cancel: `/organisations/${req.params.organisationId}/claims`
+        cancel: '/support/organisations'
       },
       errors
     })
   } else {
+    const provider = providerModel.findOne({ query: req.session.data.provider.name })
+
+    req.session.data.claim.providerId = provider.id
+
     if (req.query.referrer === 'check') {
       res.redirect(`/organisations/${req.params.organisationId}/claims/new/check`)
     } else {
@@ -396,6 +402,7 @@ exports.new_claim_check_post = (req, res) => {
     })
 
     delete req.session.data.claim
+    delete req.session.data.provider
 
     // TODO: route based on button clicked - submit vs save
     // req.flash('success', 'Claim added')
