@@ -423,8 +423,12 @@ router.get('/provider-suggestions', organisationController.provider_suggestions_
 router.get('/school-suggestions', organisationController.school_suggestions_json)
 
 
-// Provider //////////////
+
+
+// Provider test route  //////////////
 
 router.post('/claims/provider', (req, res) => {
+  if (req.session.data.choose.provider) {
       res.redirect('/claims/test')
+  }
 })
