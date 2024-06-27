@@ -121,7 +121,7 @@ exports.new_claim_post = (req, res) => {
       actions: {
         save,
         back,
-        cancel: '/support/organisations'
+        cancel: `/organisations/${req.params.organisationId}/claims`
       },
       errors
     })
