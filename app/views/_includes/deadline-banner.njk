@@ -1,0 +1,17 @@
+{% set deadlineBanner %}
+  <div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+      <p class="govuk-notification-banner__heading">
+        Final closing date for claims: <strong>19 July 2024 by 11.59 pm</strong>
+        <a class="govuk-notification-banner__link" href="#">Claim funding</a>.
+      </p>
+</div>
+</div>
+{% endset %}
+
+{{ govukNotificationBanner({
+  html: deadlineBanner
+}) }}
+
+
+

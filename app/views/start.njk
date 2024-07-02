@@ -2,13 +2,20 @@
 
 {% set title = serviceName %}
 
-{% block beforeContent %}
 
-{% endblock %}
 
 {% block content %}
   <div class="govuk-grid-row">
+
+    {% block deadlineBanner %}
+  {% include "_includes/deadline-banner.njk" %}
+{% endblock %}
+
+
     <div class="govuk-grid-column-two-thirds">
+
+
+
 
       <h1 class="govuk-heading-xl">{{ title }}</h1>
 
