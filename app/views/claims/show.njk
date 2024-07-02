@@ -30,12 +30,27 @@
 
       {% include "_includes/page-heading.njk" %}
 
+      {% set insetHtml %}
+        {% if not mentors.length %}
+          <p class="govuk-body">
+            Claims can no longer be submitted for school year September 2023 to July 2024.
+          </p>
+          <p class="govuk-body">
+            You can still <a href="{{ actions.mentors }}" class="govuk-link">add a mentor</a>.
+          </p>
+        {% else %}
+          <p class="govuk-body">
+            Claims can no longer be submitted for school year September 2023 to July 2024.
+          </p>
+
+        {% endif %}
+
+      {% endset %}
+
       {% if claim.status == "draft" %}
-        {{ govukButton({
-          text: "Submit claim",
-          href: actions.submit
-        }) }}
-      {% else %}
+         {{ govukInsetText({
+        html: insetHtml
+      }) }}
         {% include "_includes/claims/meta-data.njk" %}
       {% endif %}
 
