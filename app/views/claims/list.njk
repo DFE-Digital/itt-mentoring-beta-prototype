@@ -24,11 +24,11 @@
           </p>
         {% else %}
           <p class="govuk-body">
-            Claims can only be made for the school year September 2023 to July 2024.
+            Claims can no longer be submitted for school year September 2023 to July 2024.
           </p>
-          <p class="govuk-body">
+          {# <p class="govuk-body">
             The final date to submit a claim is 19 July 2024.  *THIS IS THE CLAIM WINDOW*
-          </p>
+          </p> #}
         {% endif %}
 
       {% endset %}
@@ -37,19 +37,30 @@
         html: insetHtml
       }) }}
 
-      {% if mentors.length %}
+      {# {% if mentors.length %}
         {{ govukButton({
           text: "Add claim (Lose button for close claim window)",
           href: actions.new
         }) }}
-      {% endif %}
+      {% endif %} #}
+
+
 
       {% if claims.length %}
+        <p class="govuk-body">
+         <a href="#" class="govuk-link">Contact the support team</a> if you have a query about claims.
+        </p>
         {% include "_includes/claims/list.njk" %}
         {% include "_includes/pagination.njk" %}
+
       {% else %}
         <p class="govuk-body">There are no claims for {{ organisation.name if organisation.name else "your organisation" }}.</p>
+        <p class="govuk-body">
+         <a href="#" class="govuk-link">Contact the support team</a> if you have a query about claims.
+        </p>
       {% endif %}
+
+
 
     </div>
   </div>
