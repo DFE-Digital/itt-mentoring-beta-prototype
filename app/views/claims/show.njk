@@ -42,10 +42,15 @@
           <p class="govuk-body">
             Claims can no longer be submitted for school year September 2023 to July 2024.
           </p>
-
         {% endif %}
-
       {% endset %}
+
+      {% if claim.status == "draft" %}
+        <p class="govuk-body">
+          {# <a class="govuk-link app-link--destructive" href="{{ actions.delete }}" >Remove claim</a> #}
+          <a href="{{ actions.delete }}" role="button" draggable="false" class="govuk-button govuk-button--warning" data-module="govuk-button">Remove claim</a>
+        </p>
+      {% endif %}
 
       {% if claim.status == "draft" %}
          {{ govukInsetText({
@@ -60,11 +65,7 @@
 
       {% include "_includes/claims/grant-funding.njk" %}
 
-      {% if claim.status == "draft" %}
-        <p class="govuk-body">
-          {# <a class="govuk-link app-link--destructive" href="{{ actions.delete }}">Remove claim</a> #}
-        </p>
-      {% endif %}
+
 
     </div>
   </div>
