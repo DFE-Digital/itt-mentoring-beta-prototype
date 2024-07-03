@@ -42,7 +42,12 @@ const initAutocomplete = ({ element, input, path, selectNameAndCode, type = null
   const getTemplate = (type, result) => {
     let template = `${result.name}`
     if (type === "provider") {
-      template = `${result.name} (${result.code})`
+      template = `${result.name}`
+      if (result.ukprn) {
+        template += ` (UKPRN: ${result.ukprn})`
+      } else if (result.urn) {
+        template += ` (URN: ${result.urn})`
+      }
     } else if (type === "school") {
       template = `${result.name} (${result.address.town}, ${result.address.postcode})`
     }
