@@ -8,6 +8,14 @@
   </ul>
 {% endset %}
 
+{% set organisationNameHtml %}
+  <p class="govuk-body">
+    {% if showOrganisationLink %}<a href="{{ actions.organisations }}/{{ claim.organisationId }}" class="govuk-link">{% endif %}
+      {{- organisation.name if organisation.name else claim.organisationId | getSchoolName -}}
+    {% if showOrganisationLink %}</a>{% endif %}
+  </p>
+{% endset %}
+
 {{ govukSummaryList({
   rows: [
     {
@@ -15,7 +23,7 @@
         text: "School"
       },
       value: {
-        text: organisation.name if organisation.name else claim.organisationId | getSchoolName
+        html: organisationNameHtml
       }
     },
     {
