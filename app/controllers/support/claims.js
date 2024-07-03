@@ -219,8 +219,10 @@ exports.show_claim_get = (req, res) => {
   res.render('../views/support/claims/show', {
     organisation,
     claim,
+    showOrganisationLink: true,
     actions: {
-      back: `/support/claims`
+      back: `/support/claims`,
+      organisations: `/support/organisations`
     }
   })
 }
