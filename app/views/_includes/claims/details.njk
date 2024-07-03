@@ -8,6 +8,7 @@
   </ul>
 {% endset %}
 
+
 {{ govukSummaryList({
   rows: [
     {
@@ -33,7 +34,7 @@
             visuallyHiddenText: "accredited provider"
           }
         ]
-      } if claim.status == "draft"
+      } if claim.status == "draft" and claim.status === "submitted"
     },
     {
       key: {
@@ -50,7 +51,7 @@
             visuallyHiddenText: "mentors included in the claim"
           }
         ]
-      } if claim.status == "draft"
+      } if claim.status == "draft" and claim.status === "submitted"
     }
   ]
 }) }}

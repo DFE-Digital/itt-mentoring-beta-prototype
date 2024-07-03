@@ -13,7 +13,7 @@
           {{ mentor.hours + " hours" if mentor.hours else "Not entered" }}
         {% endif %}
       </dd>
-      {% if claim.status == "draft" %}
+      {% if claim.status == "draft" and claim.status == "submitted" %}
         <dd class="govuk-summary-list__actions">
           <a class="govuk-link" href="#"> {# {{ actions.change }}/hours?referrer=check&position={{ loop.index0 }} #}
             Change<span class="govuk-visually-hidden"> hours of training undertaken by {{ mentor.trn | getMentorName }}</span>
