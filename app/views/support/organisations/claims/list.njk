@@ -17,12 +17,13 @@
   {% include "_includes/notification-banner.njk" %}
 
   <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      {% include "_includes/deadline-banner.njk" %}
+    </div>
+  </div>
 
-      {% block deadlineBanner %}
-        {% include "_includes/deadline-banner.njk" %}
-      {% endblock %}
-
-    <div class="govuk-grid-column-two-thirds">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
       {% include "_includes/page-heading.njk" %}
     </div>
   </div>
