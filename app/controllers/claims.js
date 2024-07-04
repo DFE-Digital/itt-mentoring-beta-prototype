@@ -7,6 +7,8 @@ const Pagination = require('../helpers/pagination')
 const claimHelper = require('../helpers/claims')
 const mentorHelper = require('../helpers/mentors')
 
+const settings = require('../data/dist/settings')
+
 /// ------------------------------------------------------------------------ ///
 /// LIST CLAIM
 /// ------------------------------------------------------------------------ ///
@@ -28,9 +30,7 @@ exports.claim_list = (req, res) => {
       || new Date(b.createdAt) - new Date(a.createdAt)
   })
 
-  // TODO: get pageSize from settings
-  let pageSize = 25
-  let pagination = new Pagination(claims, req.query.page, pageSize)
+  const pagination = new Pagination(claims, req.query.page, settings.pageSize)
   claims = pagination.getData()
 
   res.render('../views/claims/list', {
