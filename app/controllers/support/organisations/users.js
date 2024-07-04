@@ -4,6 +4,8 @@ const organisationModel = require('../../../models/organisations')
 const Pagination = require('../../../helpers/pagination')
 const validationHelper = require('../../../helpers/validators')
 
+const settings = require('../../../data/dist/settings')
+
 /// ------------------------------------------------------------------------ ///
 /// SHOW USER
 /// ------------------------------------------------------------------------ ///
@@ -16,9 +18,7 @@ exports.user_list = (req, res) => {
     return a.firstName.localeCompare(b.firstName) || a.lastName.localeCompare(b.lastName)
   })
 
-  // TODO: get pageSize from settings
-  let pageSize = 25
-  let pagination = new Pagination(users, req.query.page, pageSize)
+  const pagination = new Pagination(users, req.query.page, settings.pageSize)
   users = pagination.getData()
 
   delete req.session.data.user
