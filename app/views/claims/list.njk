@@ -13,8 +13,7 @@
   {% include "_includes/notification-banner.njk" %}
 
   <div class="govuk-grid-row">
-    <div class="govuk-grid-column-full">
-
+    <div class="govuk-grid-column-two-thirds">
       {% include "_includes/page-heading.njk" %}
 
       {% set insetHtml %}
@@ -27,7 +26,7 @@
             Claims can only be made for the school year September 2023 to July 2024.
           </p>
           <p class="govuk-body">
-            The final date to submit a claim is 19 July 2024.
+            Final closing date for claims: <strong>19 July 2024 at 11.59 pm</strong>
           </p>
         {% endif %}
 
@@ -43,6 +42,11 @@
           href: actions.new
         }) }}
       {% endif %}
+    </div>
+  </div>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
 
       {% if claims.length %}
         {% include "_includes/claims/list.njk" %}

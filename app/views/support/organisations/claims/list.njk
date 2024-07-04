@@ -29,23 +29,32 @@
   </div>
 
   <div class="govuk-grid-row">
-    <div class="govuk-grid-column-full">
+    <div class="govuk-grid-column-two-thirds">
 
       <h2 class="govuk-heading-m">Claims</h2>
 
       {% if not mentors.length %}
-        {% set mentorHtml %}
+        {% set insetHtml %}
           <p class="govuk-body">
-            You need to <a href="{{ actions.mentors }}" class="govuk-link">add a mentor</a> before creating a claim.
+            Before you can start a claim you will need to <a href="{{ actions.mentors }}" class="govuk-link">add a mentor</a>.
           </p>
         {% endset %}
 
         {{ govukInsetText({
-          html: mentorHtml
+          html: insetHtml
         }) }}
       {% else %}
+        {% set insetHtml %}
+          <p class="govuk-body">
+            Claims can only be made for the school year September 2023 to July 2024.
+          </p>
+          <p class="govuk-body">
+            Final closing date for claims: <strong>19 July 2024 at 11.59 pm</strong>
+          </p>
+        {% endset %}
+
         {{ govukInsetText({
-          text: "You can only claim for the academic year September 2023 to July 2024."
+          html: insetHtml
         }) }}
 
         {{ govukButton({
@@ -53,6 +62,12 @@
           href: actions.new
         }) }}
       {% endif %}
+
+    </div>
+  </div>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
 
       {% if claims.length %}
         {% include "_includes/claims/list.njk" %}
