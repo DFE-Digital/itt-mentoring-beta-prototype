@@ -3,8 +3,13 @@
 {% set primaryNavId = "organisations" %}
 {% set secondaryNavId = "claims" %}
 
-{% set title = "Mentor" %}
-{% set caption = "Add claim - " + organisation.name %}
+{% if mentorOptionsCount == 0 %}
+  {% set title = "No mentors for " + (claim.providerId | getProviderName) %}
+  {% set caption = "Add claim - " + organisation.name %}
+{% else %}
+  {% set title = "Mentors for " + (claim.providerId | getProviderName) %}
+  {% set caption = "Add claim - " + organisation.name %}
+{% endif %}
 
 {% block beforeContent %}
 {{ govukBackLink({
