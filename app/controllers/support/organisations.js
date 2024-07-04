@@ -6,6 +6,8 @@ const schoolModel = require('../../models/schools')
 const Pagination = require('../../helpers/pagination')
 const utilsHelper = require('../../helpers/utils')
 
+const settings = require('../../data/dist/settings')
+
 exports.list_organisations_get = (req, res) => {
   // Clean out data from add organisation flow if present
   delete req.session.data.organisation
@@ -66,9 +68,7 @@ exports.list_organisations_get = (req, res) => {
     return a.name.localeCompare(b.name) || a.type.localeCompare(b.type)
   })
 
-
-  let pageSize = 25
-  let pagination = new Pagination(organisations, req.query.page, pageSize)
+  const pagination = new Pagination(organisations, req.query.page, settings.pageSize)
   organisations = pagination.getData()
 
   res.render('../views/support/organisations/list', {

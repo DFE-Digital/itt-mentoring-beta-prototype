@@ -1,11 +1,14 @@
 const claimModel = require('../../../models/claims')
 const mentorModel = require('../../../models/mentors')
 const organisationModel = require('../../../models/organisations')
+const providerModel = require('../../../models/providers')
 
 const Pagination = require('../../../helpers/pagination')
 const claimHelper = require('../../../helpers/claims')
 const fundingHelper = require('../../../helpers/funding')
 const mentorHelper = require('../../../helpers/mentors')
+
+const settings = require('../../../data/dist/settings')
 
 /// ------------------------------------------------------------------------ ///
 /// LIST CLAIM
@@ -27,9 +30,7 @@ exports.claim_list = (req, res) => {
       || new Date(b.createdAt) - new Date(a.createdAt)
   })
 
-  // TODO: get pageSize from settings
-  let pageSize = 25
-  let pagination = new Pagination(claims, req.query.page, pageSize)
+  const pagination = new Pagination(claims, req.query.page, settings.pageSize)
   claims = pagination.getData()
 
   res.render('../views/support/organisations/claims/list', {
@@ -88,6 +89,10 @@ exports.new_claim_get = (req, res) => {
     save += `?referrer=${req.query.referrer}`
   }
 
+  if (!req.session.data.claim) {
+    req.session.data.claim = {}
+  }
+
   res.render('../views/support/organisations/claims/provider', {
     organisation,
     claim: req.session.data.claim,
@@ -111,18 +116,15 @@ exports.new_claim_post = (req, res) => {
 
   const errors = []
 
-  if (!req.session.data.claim?.providerId) {
+  if (!req.session.data.provider.name.length) {
     const error = {}
     error.fieldName = 'provider'
     error.href = '#provider'
-    error.text = 'Select an accredited provider'
+    error.text = 'Enter an accredited provider name, UKPRN, URN or postcode'
     errors.push(error)
-  }
 
-  if (errors.length) {
     res.render('../views/support/organisations/claims/provider', {
       organisation,
-      claim: req.session.data.claim,
       actions: {
         save,
         back,
@@ -131,6 +133,10 @@ exports.new_claim_post = (req, res) => {
       errors
     })
   } else {
+    const provider = providerModel.findOne({ query: req.session.data.provider.name })
+
+    req.session.data.claim.providerId = provider.id
+
     if (req.query.referrer === 'check') {
       res.redirect(`/support/organisations/${req.params.organisationId}/claims/new/check`)
     } else {
@@ -347,8 +353,6 @@ exports.new_claim_hours_post = (req, res) => {
   } else {
     // if (req.query.referrer === 'check') {
 
-
-
     // } else {
       // put the submitted the mentor information into the mentors array in the claim
       req.session.data.claim.mentors.push(req.session.data.mentor)
@@ -375,6 +379,7 @@ exports.new_claim_hours_post = (req, res) => {
 
 exports.new_claim_check_get = (req, res) => {
   const organisation = organisationModel.findOne({ organisationId: req.params.organisationId })
+
   const position = req.session.data.claim.mentors.length - 1
 
   req.session.data.claim.totalHours = claimHelper.calculateClaimTotalHours(
@@ -422,6 +427,7 @@ exports.new_claim_check_post = (req, res) => {
 
 exports.delete_claim_get = (req, res) => {
   const organisation = organisationModel.findOne({ organisationId: req.params.organisationId })
+
   const claim = claimModel.findOne({
     organisationId: req.params.organisationId,
     claimId: req.params.claimId

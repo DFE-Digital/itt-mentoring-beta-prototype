@@ -7,6 +7,8 @@ const arrayHelper = require('../../../helpers/arrays')
 const dateHelper = require('../../../helpers/dates')
 const validationHelper = require('../../../helpers/validators')
 
+const settings = require('../../../data/dist/settings')
+
 /// ------------------------------------------------------------------------ ///
 /// LIST MENTOR
 /// ------------------------------------------------------------------------ ///
@@ -19,9 +21,7 @@ exports.mentor_list = (req, res) => {
     return a.firstName.localeCompare(b.firstName) || a.lastName.localeCompare(b.lastName)
   })
 
-  // TODO: get pageSize from settings
-  let pageSize = 25
-  let pagination = new Pagination(mentors, req.query.page, pageSize)
+  const pagination = new Pagination(mentors, req.query.page, settings.pageSize)
   mentors = pagination.getData()
 
   delete req.session.data.mentor
