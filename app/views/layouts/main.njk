@@ -39,8 +39,6 @@
     classes: "govuk-width-container" + (" govuk-phase-banner--no-border-bottom" if passport.user.organisations.length == 1 and headerNavId != "account")
   }) }}
 
-
-
   {% if passport.user.organisations.length > 1 %}
     {% set organisationHtml %}
       {{ passport.organisation.name }}
