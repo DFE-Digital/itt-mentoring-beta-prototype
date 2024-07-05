@@ -75,6 +75,29 @@
           classes: "govuk-radios--inline"
         }) }}
 
+        {{ govukRadios({
+          name: "settings[showDeadlineBanner]",
+          fieldset: {
+            legend: {
+              text: "Show claim deadline banner",
+              isPageHeading: false,
+              classes: "govuk-fieldset__legend--s"
+            }
+          },
+          value: settings.showDeadlineBanner,
+          items: [
+            {
+              value: "true",
+              text: "Yes"
+            },
+            {
+              value: "false",
+              text: "No"
+            }
+          ],
+          classes: "govuk-radios--inline"
+        }) }}
+
         {{ govukInput({
           id: "settings-pagesize",
           name: "settings[pageSize]",

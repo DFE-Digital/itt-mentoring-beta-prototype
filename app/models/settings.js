@@ -14,6 +14,10 @@ exports.update = (params) => {
     settings.showStartPage = params.settings.showStartPage
   }
 
+  if (params.settings.showDeadlineBanner) {
+    settings.showDeadlineBanner = params.settings.showDeadlineBanner
+  }
+
   if (params.settings.pageSize) {
     settings.pageSize = params.settings.pageSize
   }
