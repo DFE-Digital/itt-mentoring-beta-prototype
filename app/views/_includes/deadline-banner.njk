@@ -1,0 +1,9 @@
+{% set deadlineBanner %}
+  <p class="govuk-notification-banner__heading">
+    You must submit a claim by <strong>11:59pm on Friday 19 July 2024.</strong>
+  </p>
+{% endset %}
+
+{{ govukNotificationBanner({
+  html: deadlineBanner
+}) }}
