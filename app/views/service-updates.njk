@@ -2,15 +2,20 @@
 
 {% set title = serviceName %}
 
-{% block beforeContent %}
+{% set pageName = "News and updates" %}
 
+{% block beforeContent %}
+  {{ govukBackLink({
+    text: "Back",
+    href: "start"
+  }) }}
 {% endblock %}
 
 {% block content %}
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
 
-      <h1 class="govuk-heading-xl">{{ title }}</h1>
+      <h1 class="govuk-heading-xl">{{ pageName }}</h1>
 
     </div>
   </div>
@@ -18,86 +23,56 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
 
-      <p class="govuk-body">
-        Use this service to claim for mentors who supported, or intended to support, trainee teachers from September 2023 to July 2024.
-      </p>
+      <h2 class="govuk-heading-m">Contents</h2>
 
-      <p class="govuk-body">
-        Final closing date for claims: <strong>19 July 2024 at 11:59 pm</strong>
-      </p>
-
-      <p class="govuk-body">
-        You must wait until May 2025 to claim for training that took place from April 2024 for the school year starting September 2025.
-      </p>
-
-      <h2 class="govuk-heading-m">Before you start</h2>
-
-      <p class="govuk-body">
-        You’ll be asked for:
-      </p>
-
-      <ul class="govuk-list govuk-list--bullet">
+      <ul class="govuk-list app-list--dash govuk-!-margin-bottom-8">
         <li>
-          initial teacher training (ITT) provider name
+          <a href="#update-section-1" class="govuk-link">anchor to update 1</a>
         </li>
         <li>
-          your mentors’ teacher reference numbers (TRN)
+          <a href="#update-section-2" class="govuk-link">anchor to update 2</a>
         </li>
         <li>
-          your mentors’ dates of birth
+          <a href="#update-section-3" class="govuk-link">anchor to update 3</a>
         </li>
         <li>
-          hours of training each mentor completed
+          <a href="#update-section4" class="govuk-link">anchor to update 4</a>
         </li>
       </ul>
 
-      {{ govukButton({
-        classes: "govuk-!-margin-top-4",
-        text: "Start now",
-        href: "/sign-in",
-        isStartButton: true
-      }) }}
+      <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+      <section id="update-section-1">
+        <h2 class="govuk-heading-m">Heading for update 1</h2>
+        <p class="govuk-body">Some paragraph text</p>
+        <p class="govuk-body">Mud minnow featherfin knifefish brook lamprey Ganges shark gombessa Kafue pike. Butterflyfish orangestriped triggerfish European eel straptail moray eel green swordtail pompano half-gill, sand tilefish roosterfish.</p>
+        <p class="govuk-body">Mahi-mahi, largenose fish eelblenny silver carp. Wahoo mrigal, poolfish sandperch. Sundaland noodlefish snake mudhead wolf-eel Pacific argentine collared carpetshark labyrinth fish prickleback velvetfish jellynose fish.</p>
+      </section>
 
-      <h2 class="govuk-heading-m">Get an account to claim funding for mentor training</h2>
+      <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+      <section id="update-section-2">
+        <h2 class="govuk-heading-m">Heading for update 2</h2>
+        <p class="govuk-body">Some paragraph text</p>
+        <p class="govuk-body">A cod cisco spadefish boga anglerfish saury coho salmon boafish. Yellowfin grouper glass catfish mudminnow sturgeon, graveldiver tube-snout fire bar danio.</p>
+        <p class="govuk-body">Razorfish glass catfish convict cichlid bocaccio: Canthigaster rostrata Atlantic trout. Armoured catfish plownose chimaera prickly shark baikal oilfish, basslet.</p>
+        <p class="govuk-body">Silver driftfish, swallower darter Atlantic silverside cobbler sand stargazer spiderfish zebra turkeyfish round stingray dogfish.</p>
+      </section>
 
-      <p class="govuk-body">
-        Ask a colleague within your organisation to add you if you do not have an account.
-      </p>
+      <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+      <section id="update-section-3">
+        <h2 class="govuk-heading-m">Heading for update 3</h2>
+        <p class="govuk-body">Some paragraph text</p>
+        <p class="govuk-body">Walleye. Flying gurnard molly dhufish mudminnow squeaker blacktip reef shark pilot fish. European perch tailor springfish, mullet powen eulachon; northern Stargazer tadpole fish Black scalyfin. American sole combtail gourami.</p>
+        <p class="govuk-body">Shark tompot blenny marblefish cuckoo wrasse: greeneye: mudminnow pike beluga sturgeon.</p>
+        <p class="govuk-body">American sole combtail gourami, searobin southern Dolly Varden spadefish, velvetfish.</p>
+      </section>
 
-      <p class="govuk-body">
-        If your organisation has not been set up to claim funding for mentor training, send an email to <a href="mailto:ittmentor.funding@education.gov.uk" class="govuk-link">ittmentor.funding@education.gov.uk</a>.
-      </p>
-
-      <h2 class="govuk-heading-m">Latest news and updates</h2>
-
-      <ul class="govuk-list govuk-list--bullet">
-        <li>
-          update here
-        </li>
-        <li>
-          update here
-        </li>
-      </ul>
-
-      <p class="govuk-body">
-        <a href="#" class="govuk-link">View all news and updates</a>.
-      </p>
-
-
-    </div>
-    <div class="govuk-grid-column-one-third">
-
-      {{ appRelated({
-        title: "Related content",
-        items: [{
-          text: "Guidance for providers on initial teacher training (ITT)",
-          href: "https://www.gov.uk/government/collections/initial-teacher-training"
-        }, {
-          text: "Find out what a teacher reference number (TRN) is and how to find or request a TRN",
-          href: "https://www.gov.uk/guidance/teacher-reference-number-trn"
-        }]
-      }) }}
-
+      <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+      <section id="update-section-4">
+        <h2 class="govuk-heading-m">Heading for update 4</h2>
+        <p class="govuk-body">Some paragraph text</p>
+        <p class="govuk-body">Zebra trout pike characid loach Celebes rainbowfish lancetfish, pelagic cod viperfish triplespine, halibut eelblenny deep sea smelt, snubnose parasitic eel Rainbow trout.</p>
+        <p class="govuk-body">Tench elephant fish flier mud catfish whale shark, starry flounder combfish mummichog spikefish popeye catafula? Freshwater hatchetfish, wallago starry flounder smooth dogfish halfbeak.</p>
+      </section>
     </div>
   </div>
 {% endblock %}
