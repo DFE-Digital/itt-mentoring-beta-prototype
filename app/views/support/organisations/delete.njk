@@ -1,0 +1,60 @@
+{% extends "layouts/support.njk" %}
+
+{% set primaryNavId = "organisations" %}
+{% set secondaryNavId = "details" %}
+
+{% if hasClaims or hasMentors or hasUsers %}
+  {% set title = "You cannot remove this organisation" %}
+{% else %}
+  {% set title = "Are you sure you want to remove this organisation?" %}
+{% endif %}
+
+{% set caption = organisation.name %}
+
+{% block pageTitle %}
+  {{ "Error: " if errors.length }}{{ title + " - " if title }}{{ caption + " - " if caption }}{{ serviceName }} - GOV.UK
+{% endblock %}
+
+{% block beforeContent %}
+{{ govukBackLink({
+  text: "Back",
+  href: actions.back
+}) }}
+{% endblock %}
+
+{% block content %}
+
+  {% include "_includes/error-summary.njk" %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      {% include "_includes/page-heading.njk" %}
+
+      <form action="{{ actions.save }}" method="post" accept-charset="utf-8" novalidate>
+
+        {% if hasClaims or hasMentors or hasUsers %}
+
+          {# <p class="govuk-body">You cannot remove this organisation because they are included in an active claim.</p>
+
+          <p class="govuk-body">You will be able to remove the organisation once we have processed the claim.</p> #}
+
+        {% else %}
+
+          {{ govukButton({
+            text: "Remove organisation",
+            classes: "govuk-button--warning"
+          }) }}
+
+        {% endif %}
+
+      </form>
+
+      <p class="govuk-body">
+        <a class="govuk-link" href="{{ actions.cancel }}">Cancel</a>
+      </p>
+
+    </div>
+  </div>
+
+{% endblock %}

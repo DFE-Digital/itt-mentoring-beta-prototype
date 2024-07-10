@@ -1,7 +1,9 @@
+const claimModel = require('../../models/claims')
+const mentorModel = require('../../models/mentors')
 const organisationModel = require('../../models/organisations')
-
 const providerModel = require('../../models/providers')
 const schoolModel = require('../../models/schools')
+const userModel = require('../../models/users')
 
 const Pagination = require('../../helpers/pagination')
 const utilsHelper = require('../../helpers/utils')
@@ -675,5 +677,46 @@ exports.new_check_post = (req, res) => {
   delete req.session.data.type
 
   req.flash('success', 'Organisation added')
+  res.redirect(`/support/organisations`)
+}
+
+/// ------------------------------------------------------------------------ ///
+/// DELETE ORGANISATION
+/// ------------------------------------------------------------------------ ///
+
+exports.delete_organisation_get = (req, res) => {
+  const organisation = organisationModel.findOne({ organisationId: req.params.organisationId })
+
+  const claims = claimModel.findMany({ organisationId: req.params.organisationId })
+  const hasClaims = !!claims.length
+
+  const mentors = mentorModel.findMany({ organisationId: req.params.organisationId })
+  const hasMentors = !!mentors.length
+
+  const users = userModel.findMany({ organisationId: req.params.organisationId })
+  const hasUsers = !!users.length
+
+  res.render('../views/support/organisations/delete', {
+    organisation,
+    hasClaims,
+    hasMentors,
+    hasUsers,
+    actions: {
+      save: `/support/organisations/${req.params.organisationId}/delete`,
+      back: `/support/organisations/${req.params.organisationId}`,
+      cancel: `/support/organisations/${req.params.organisationId}`
+    }
+  })
+}
+
+exports.delete_organisation_post = (req, res) => {
+  organisationModel.deleteOne({
+    organisationId: req.params.organisationId
+  })
+
+  // if a search has been done previously, let's delete the keywords
+  delete req.session.data.keywords
+
+  req.flash('success', 'Organisation removed')
   res.redirect(`/support/organisations`)
 }
