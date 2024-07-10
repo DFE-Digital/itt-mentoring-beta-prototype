@@ -13,11 +13,7 @@
   {% include "_includes/notification-banner.njk" %}
 
   {% if showDeadlineBanner == "true" %}
-  <div class="govuk-grid-row">
-    <div class="govuk-grid-column-full">
-      {% include "_includes/deadline-banner.njk" %}
-    </div>
-  </div>
+    {% include "_includes/deadline-banner.njk" %}
   {% endif %}
 
   <div class="govuk-grid-row">
