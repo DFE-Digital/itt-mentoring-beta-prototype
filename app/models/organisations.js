@@ -106,5 +106,8 @@ exports.updateOne = (params) => {
 }
 
 exports.deleteOne = (params) => {
-
+  if (params.organisationId) {
+    const filePath = directoryPath + '/' + params.organisationId + '.json'
+    fs.unlinkSync(filePath)
+  }
 }
