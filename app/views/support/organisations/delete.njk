@@ -39,6 +39,19 @@
 
           <p class="govuk-body">You will be able to remove the organisation once we have processed the claim.</p> #}
 
+          <p class="govuk-body">To remove this organisation you must first remove any associated:</p>
+          <ul class="govuk-list">
+            <li>
+              <a class="govuk-link" href="#">Draft claims</a>
+            </li>
+            <li>
+              <a class="govuk-link" href="#">Mentors</a>
+            </li>
+            <li>
+              <a class="govuk-link" href="#">Users</a>
+            </li>
+          </ul>
+
         {% else %}
 
           {{ govukButton({
