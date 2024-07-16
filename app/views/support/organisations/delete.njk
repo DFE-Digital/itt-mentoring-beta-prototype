@@ -35,20 +35,16 @@
 
         {% if hasClaims or hasMentors or hasUsers %}
 
-          {# <p class="govuk-body">You cannot remove this organisation because they are included in an active claim.</p>
-
-          <p class="govuk-body">You will be able to remove the organisation once we have processed the claim.</p> #}
-
           <p class="govuk-body">To remove this organisation you must first remove any associated:</p>
-          <ul class="govuk-list">
+          <ul class="govuk-list govuk-list--bullet">
             <li>
-              <a class="govuk-link" href="#">Draft claims</a>
+              <a class="govuk-link" href="/claims/list.njk">draft claims</a>
             </li>
             <li>
-              <a class="govuk-link" href="#">Mentors</a>
+              <a class="govuk-link" href="/mentors/list.njk">mentors</a>
             </li>
             <li>
-              <a class="govuk-link" href="#">Users</a>
+              <a class="govuk-link" href="/users/list.njk">users</a>
             </li>
           </ul>
 
