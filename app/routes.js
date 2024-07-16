@@ -6,7 +6,7 @@
 const govukPrototypeKit = require('govuk-prototype-kit')
 const router = govukPrototypeKit.requests.setupRouter()
 
-const settings = require('./data/settings')
+const settings = require('./data/dist/settings')
 
 /// ------------------------------------------------------------------------ ///
 /// Flash messaging
@@ -54,6 +54,7 @@ const errorController = require('./controllers/errors')
 const feedbackController = require('./controllers/feedback')
 const mentorController = require('./controllers/mentors')
 const organisationController = require('./controllers/organisations')
+const settingController = require('./controllers/settings')
 const userController = require('./controllers/users')
 
 const supportOrganisationController = require('./controllers/support/organisations')
@@ -88,15 +89,19 @@ const checkIsAuthenticated = (req, res, next) => {
 /// ------------------------------------------------------------------------ ///
 
 router.all('*', (req, res, next) => {
-  res.locals.settings = settings
   res.locals.referrer = req.query.referrer
   res.locals.query = req.query
   res.locals.flash = req.flash('success') // pass through 'success' messages only
+
+  for (let settingName of Object.keys(settings)) {
+    res.locals[settingName] = settings[settingName]
+  }
+
   next()
 })
 
 router.get('/', (req, res) => {
-  if (process.env.SHOW_START_PAGE === 'true') {
+  if (settings.showStartPage === 'true' || process.env.SHOW_START_PAGE === 'true') {
     res.render('start')
   } else {
     res.redirect('/sign-in')
@@ -383,6 +388,9 @@ router.get('/support/organisations/remove-keyword-search', checkIsAuthenticated,
 router.get('/support/organisations/:organisationId/remove-agreement-grant-conditions', checkIsAuthenticated, supportOrganisationController.remove_organisation_agreement_get)
 router.post('/support/organisations/:organisationId/remove-agreement-grant-conditions', checkIsAuthenticated, supportOrganisationController.remove_organisation_agreement_post)
 
+router.get('/support/organisations/:organisationId/delete', checkIsAuthenticated, supportOrganisationController.delete_organisation_get)
+router.post('/support/organisations/:organisationId/delete', checkIsAuthenticated, supportOrganisationController.delete_organisation_post)
+
 router.get('/support/organisations/:organisationId', checkIsAuthenticated, supportOrganisationController.show_organisation_get)
 
 router.get('/support/organisations', checkIsAuthenticated, supportOrganisationController.list_organisations_get)
@@ -390,6 +398,9 @@ router.get('/support/organisations', checkIsAuthenticated, supportOrganisationCo
 /// ------------------------------------------------------------------------ ///
 /// GENERAL ROUTES
 /// ------------------------------------------------------------------------ ///
+
+router.get('/settings', settingController.settings_form_get)
+router.post('/settings', settingController.settings_form_post)
 
 router.get('/feedback', feedbackController.feedback_form_get)
 router.post('/feedback', feedbackController.feedback_form_post)

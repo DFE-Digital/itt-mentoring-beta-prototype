@@ -13,17 +13,17 @@
   },
   "dependencies": {
     "connect-flash": "^0.1.1",
-    "govuk-frontend": "^5.4.0",
+    "govuk-frontend": "^5.4.1",
     "govuk-prototype-kit": "13.16.2",
     "gray-matter": "^4.0.3",
     "lodash": "^4.17.21",
     "luxon": "^3.4.4",
-    "marked": "^13.0.0",
+    "marked": "^13.0.2",
     "marked-gfm-heading-id": "^4.0.0",
     "numeral": "^2.0.6",
     "passport": "^0.7.0",
     "passport-local": "^1.0.0",
-    "rimraf": "^5.0.7",
+    "rimraf": "^6.0.1",
     "uuid": "^10.0.0"
   }
 }

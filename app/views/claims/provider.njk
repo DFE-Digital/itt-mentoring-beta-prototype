@@ -2,7 +2,7 @@
 
 {% set primaryNavId = "claims" %}
 
-{% set title = "Accredited provider" %}
+{% set title = "Enter an accredited provider name, UKPRN, URN or postcode" %}
 {% set caption = "Add claim" %}
 
 {% block beforeContent %}
@@ -25,28 +25,24 @@
 
       <form action="{{ actions.save }}" method="post" accept-charset="utf-8" novalidate>
 
-        {{ govukRadios({
-          name: "claim[providerId]",
-          fieldset: {
-            legend: {
+        <div class="govuk-form-group {{- ' govuk-form-group--error' if (errors | getErrorMessage('provider'))}}">
+          {{ govukInput({
+            id: "provider",
+            name: "provider[name]",
+            label: {
               html: headingHtml,
               isPageHeading: true,
-              classes: "govuk-fieldset__legend--l"
-            }
-          },
-          value: claim.providerId,
-          items: [
-            {
-              value: "41164d27-f161-4a0f-b07c-fcf19fe53cc2",
-              text: "Best Practice Network"
+              classes: "govuk-label--l"
             },
-            {
-              value: "15ca4914-3505-41a1-80ea-5a0312c8ead4",
-              text: "NIoT: National Institute of Teaching, founded by the School-Led Development Trust"
-            }
-          ],
-          errorMessage: errors | getErrorMessage("provider")
-        }) }}
+            value: data.provider.name,
+            autocomplete: "off",
+            formGroup: {
+              classes: "govuk-!-margin-bottom-0"
+            },
+            errorMessage: errors | getErrorMessage("provider")
+          }) }}
+          <div id="provider-autocomplete" class="govuk-body"></div>
+        </div>
 
         {{ govukButton({
           text: "Continue"
@@ -61,4 +57,19 @@
     </div>
   </div>
 
+{% endblock %}
+
+{% block pageScripts %}
+  <script src="/public/javascripts/accessible-autocomplete.min.js"></script>
+  <script src="/public/javascripts/debounce.js"></script>
+  <script src="/public/javascripts/init-autocomplete.js"></script>
+
+  <script type="text/javascript">
+  initAutocomplete({
+    element: "provider-autocomplete",
+    input: "provider",
+    path: "/provider-suggestions",
+    type: "provider"
+  });
+  </script>
 {% endblock %}

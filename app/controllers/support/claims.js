@@ -10,6 +10,8 @@ const statusHelper = require('../../helpers/statuses')
 
 const claimDecorator = require('../../decorators/claims')
 
+const settings = require('../../data/dist/settings')
+
 /// ------------------------------------------------------------------------ ///
 /// LIST CLAIMS
 /// ------------------------------------------------------------------------ ///
@@ -141,8 +143,7 @@ exports.list_claims_get = (req, res) => {
   //   return a.name.localeCompare(b.name) || a.type.localeCompare(b.type)
   // })
 
-  let pageSize = 25
-  let pagination = new Pagination(claims, req.query.page, pageSize)
+  const pagination = new Pagination(claims, req.query.page, settings.pageSize)
   claims = pagination.getData()
 
   res.render('../views/support/claims/list', {
@@ -219,8 +220,10 @@ exports.show_claim_get = (req, res) => {
   res.render('../views/support/claims/show', {
     organisation,
     claim,
+    showOrganisationLink: true,
     actions: {
-      back: `/support/claims`
+      back: `/support/claims`,
+      organisations: `/support/organisations`
     }
   })
 }

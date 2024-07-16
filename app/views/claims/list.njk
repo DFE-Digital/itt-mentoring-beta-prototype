@@ -14,9 +14,12 @@
   {# {% include "_includes/deadline-banner.njk" %} #}
 
 
-  <div class="govuk-grid-row">
-    <div class="govuk-grid-column-full">
+  {% if showDeadlineBanner == "true" %}
+    {% include "_includes/deadline-banner.njk" %}
+  {% endif %}
 
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
       {% include "_includes/page-heading.njk" %}
 
       {% set insetHtml %}
@@ -33,6 +36,7 @@
           </p>
           <p class="govuk-body">
             You can still <a href="{{ actions.mentors }}" class="govuk-link">add a mentor</a>.
+            Final closing date for claims: <strong>11:59pm on Friday 19 July 2024.</strong>
           </p>
         {% endif %}
       {% endset %}
@@ -41,14 +45,11 @@
         html: insetHtml
       }) }}
 
-      {# {% if mentors.length %}
-        {{ govukButton({
-          text: "Add claim (Lose button for close claim window)",
-          href: actions.new
-        }) }}
-      {% endif %} #}
+    </div>
+  </div>
 
-
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
 
       {% if claims.length %}
         <p class="govuk-body">
