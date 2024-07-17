@@ -703,6 +703,7 @@ exports.delete_organisation_get = (req, res) => {
     hasUsers,
     actions: {
       save: `/support/organisations/${req.params.organisationId}/delete`,
+      change: `/support/organisations/${req.params.organisationId}`,
       back: `/support/organisations/${req.params.organisationId}`,
       cancel: `/support/organisations/${req.params.organisationId}`
     }
