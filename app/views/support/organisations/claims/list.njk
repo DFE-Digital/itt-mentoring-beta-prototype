@@ -41,21 +41,24 @@
           <p class="govuk-body">
             You can still <a href="{{ actions.mentors }}" class="govuk-link">add a mentor</a>.
           </p>
-        {% else %}
+          {% endset %}
+      {% else %}
+      {% set insetHtml %}
           <p class="govuk-body">
             Claims can no longer be submitted for school year September 2023 to July 2024.
           </p>
           <p class="govuk-body">
             You can still <a href="{{ actions.mentors }}" class="govuk-link">add a mentor</a>.
           </p>
-       {% endif %}
-      {% endset %}
+        {% endset %}
+      {% endif %}
+
 
 
       {{ govukInsetText({
         html: insetHtml
       }) }}
-      
+
     </div>
   </div>
 
