@@ -26,14 +26,17 @@
 
   {% include "_includes/error-summary.njk" %}
 
+
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
+
+    {% if hasClaims or hasMentors or hasUsers %}
 
       {% include "_includes/page-heading.njk" %}
 
       <form action="{{ actions.save }}" method="post" accept-charset="utf-8" novalidate>
 
-        {% if hasClaims or hasMentors or hasUsers %}
+
 
           <p class="govuk-body">To remove this organisation you must first remove any associated:</p>
           <ul class="govuk-list govuk-list--bullet">
