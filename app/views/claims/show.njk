@@ -30,14 +30,38 @@
 
       {% include "_includes/page-heading.njk" %}
 
+      {% set insetHtml %}
+        {% if not mentors.length %}
+          <p class="govuk-body">
+            Claims can no longer be submitted for school year September 2023 to July 2024.
+          </p>
+          <p class="govuk-body">
+            You can still <a href="{{ actions.mentors }}" class="govuk-link">add a mentor</a>.
+          </p>
+        {% else %}
+          <p class="govuk-body">
+            Claims can no longer be submitted for school year September 2023 to July 2024.
+          </p>
+        {% endif %}
+      {% endset %}
+
       {% if claim.status == "draft" %}
-        {{ govukButton({
-          text: "Submit claim",
-          href: actions.submit
-        }) }}
-      {% else %}
+        <p class="govuk-body">
+          {# <a class="govuk-link app-link--destructive" href="{{ actions.delete }}" >Remove claim</a> #}
+          <a href="{{ actions.delete }}" role="button" draggable="false" class="govuk-button govuk-button--warning" data-module="govuk-button">Remove claim</a>
+        </p>
+      {% endif %}
+
+      {% if claim.status == "draft" %}
+         {{ govukInsetText({
+        html: insetHtml
+      }) }}
         {% include "_includes/claims/meta-data.njk" %}
       {% endif %}
+
+      <p class="govuk-body">
+        Email <a class="govuk-link" href="mailto:ittmentor.funding@education.gov.uk"> ittmentor.funding@education.gov.uk</a> if you have a query about your claims.
+      </p>
 
       {% include "_includes/claims/details.njk" %}
 
@@ -45,11 +69,7 @@
 
       {% include "_includes/claims/grant-funding.njk" %}
 
-      {% if claim.status == "draft" %}
-        <p class="govuk-body">
-          <a class="govuk-link app-link--destructive" href="{{ actions.delete }}">Remove claim</a>
-        </p>
-      {% endif %}
+
 
     </div>
   </div>

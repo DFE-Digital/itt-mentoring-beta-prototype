@@ -36,32 +36,28 @@
       {% if not mentors.length %}
         {% set insetHtml %}
           <p class="govuk-body">
-            Before you can start a claim you will need to <a href="{{ actions.mentors }}" class="govuk-link">add a mentor</a>.
+            Before you can start a claim you will need to <a href="{{ actions.mentors }}" class="govuk-link">add a mentor</a>
           </p>
-        {% endset %}
-
-        {{ govukInsetText({
-          html: insetHtml
-        }) }}
+          <p class="govuk-body">
+            You can still <a href="{{ actions.mentors }}" class="govuk-link">add a mentor</a>.
+          </p>
+          {% endset %}
       {% else %}
-        {% set insetHtml %}
+      {% set insetHtml %}
           <p class="govuk-body">
-            Claims can only be made for the school year September 2023 to July 2024.
+            Claims can no longer be submitted for school year September 2023 to July 2024.
           </p>
           <p class="govuk-body">
-            Final closing date for claims: <strong>19 July 2024 at 11:59 pm</strong>
+            You can still <a href="{{ actions.mentors }}" class="govuk-link">add a mentor</a>.
           </p>
         {% endset %}
-
-        {{ govukInsetText({
-          html: insetHtml
-        }) }}
-
-        {{ govukButton({
-          text: "Add claim",
-          href: actions.new
-        }) }}
       {% endif %}
+
+
+
+      {{ govukInsetText({
+        html: insetHtml
+      }) }}
 
     </div>
   </div>
@@ -70,10 +66,17 @@
     <div class="govuk-grid-column-full">
 
       {% if claims.length %}
+        {# <p class="govuk-body">
+         <a class="govuk-link" href="mailto:ittmentor.funding@education.gov.uk">Contact the support team</a> if you have a query about your claims.
+        </p> #}
         {% include "_includes/claims/list.njk" %}
         {% include "_includes/pagination.njk" %}
+
       {% else %}
         <p class="govuk-body">There are no claims for {{ organisation.name if organisation.name else "your organisation" }}.</p>
+        {# <p class="govuk-body">
+         <a class="govuk-link" href="mailto:ittmentor.funding@education.gov.uk">Contact the support team</a> if you have a query about your claims.
+        </p> #}
       {% endif %}
 
     </div>
