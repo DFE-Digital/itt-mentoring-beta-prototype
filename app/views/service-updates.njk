@@ -1,0 +1,78 @@
+{% extends "layouts/start.njk" %}
+
+{% set title = serviceName %}
+
+{% set pageName = "News and updates" %}
+
+{% block beforeContent %}
+  {{ govukBackLink({
+    text: "Back",
+    href: "start"
+  }) }}
+{% endblock %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      <h1 class="govuk-heading-xl">{{ pageName }}</h1>
+
+    </div>
+  </div>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      <h2 class="govuk-heading-m">Contents</h2>
+
+      <ul class="govuk-list app-list--dash govuk-!-margin-bottom-8">
+        <li>
+          <a href="#update-section-1" class="govuk-link">Claim window closed on 19 July</a>
+        </li>
+        <li>
+          <a href="#update-section-1" class="govuk-link">Private beta orgs eligibility for public beta funding</a>
+        </li>
+        <li>
+          <a href="#update-section-2" class="govuk-link">How payments will be made - by who they will be liasing with and when</a>
+        </li>
+        <li>
+          <a href="#update-section-3" class="govuk-link">Successes of private beta? e.g how many orgs were involved and next steps etc?</a>
+        </li>
+      </ul>
+
+      <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+      <section id="update-section-1">
+        <h2 class="govuk-heading-m">Claim window closed on 19 July</h2>
+        <p class="govuk-body">1 July 2024</p>
+        <p class="govuk-body">Mud minnow featherfin knifefish brook lamprey Ganges shark gombessa Kafue pike. Butterflyfish orangestriped triggerfish European eel straptail moray eel green swordtail pompano half-gill, sand tilefish roosterfish.</p>
+        <p class="govuk-body">Mahi-mahi, largenose fish eelblenny silver carp. Wahoo mrigal, poolfish sandperch. Sundaland noodlefish snake mudhead wolf-eel Pacific argentine collared carpetshark labyrinth fish prickleback velvetfish jellynose fish.</p>
+      </section>
+
+      <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+      <section id="update-section-1">
+        <h2 class="govuk-heading-m">Private beta orgs eligibility for public beta funding</h2>
+        <p class="govuk-body">1 July 2024</p>
+        <p class="govuk-body">Mud minnow featherfin knifefish brook lamprey Ganges shark gombessa Kafue pike. Butterflyfish orangestriped triggerfish European eel straptail moray eel green swordtail pompano half-gill, sand tilefish roosterfish.</p>
+        <p class="govuk-body">Mahi-mahi, largenose fish eelblenny silver carp. Wahoo mrigal, poolfish sandperch. Sundaland noodlefish snake mudhead wolf-eel Pacific argentine collared carpetshark labyrinth fish prickleback velvetfish jellynose fish.</p>
+      </section>
+
+      <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+      <section id="update-section-2">
+        <h2 class="govuk-heading-m">How payments will be made - by who they will be liasing with and when</h2>
+        <p class="govuk-body">22 May 2024</p>
+        <p class="govuk-body">A cod cisco spadefish boga anglerfish saury coho salmon boafish. Yellowfin grouper glass catfish mudminnow sturgeon, graveldiver tube-snout fire bar danio.</p>
+        <p class="govuk-body">Razorfish glass catfish convict cichlid bocaccio: Canthigaster rostrata Atlantic trout. Armoured catfish plownose chimaera prickly shark baikal oilfish, basslet.</p>
+        <p class="govuk-body">Silver driftfish, swallower darter Atlantic silverside cobbler sand stargazer spiderfish zebra turkeyfish round stingray dogfish.</p>
+      </section>
+
+      <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+      <section id="update-section-3">
+        <h2 class="govuk-heading-m">Successes of private beta? e.g how many orgs were involved and next steps etc?</h2>
+        <p class="govuk-body">14 March 2024</p>
+        <p class="govuk-body">Walleye. Flying gurnard molly dhufish mudminnow squeaker blacktip reef shark pilot fish. European perch tailor springfish, mullet powen eulachon; northern Stargazer tadpole fish Black scalyfin. American sole combtail gourami.</p>
+        <p class="govuk-body">Shark tompot blenny marblefish cuckoo wrasse: greeneye: mudminnow pike beluga sturgeon.</p>
+        <p class="govuk-body">American sole combtail gourami, searobin southern Dolly Varden spadefish, velvetfish.</p>
+      </section>
+    </div>
+  </div>
+{% endblock %}
