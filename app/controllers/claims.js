@@ -138,6 +138,123 @@ exports.new_claim_post = (req, res) => {
   }
 }
 
+exports.new_choose_provider_get = (req, res) => {
+  const providers = providerModel.findMany({
+    query: req.session.data.provider.name
+  })
+
+  // store total number of results
+  const providerCount = providers.length
+
+  // parse the provider results for use in macro
+  let providerItems = []
+  providers.forEach(provider => {
+    const item = {}
+    item.text = provider.name
+    item.value = provider.urn || provider.address.postcode
+    item.hint = {
+      text: `${provider.address.town}, ${provider.address.postcode}`
+    }
+    providerItems.push(item)
+  })
+
+  // sort items alphabetically
+  providerItems.sort((a,b) => {
+    return a.text.localeCompare(b.text)
+  })
+
+  // only get the first 15 items
+  providerItems = providerItems.slice(0,15)
+
+  let save = `/organisations/${req.params.organisationId}/claims/new/choose`
+  let back = `/organisations/${req.params.organisationId}/claims/new/`
+
+  // if (req.query.referrer === 'check') {
+  //   save += '?referrer=check'
+  //   back = '/support/organisations/new/check'
+  // }
+
+  res.render('../views/claims/provider-choose', {
+    providerItems,
+    providerCount,
+    searchTerm: req.session.data.provider.name,
+    actions: {
+      save,
+      back,
+      cancel: `/organisations/${req.params.organisationId}/claims`
+    }
+  })
+}
+
+exports.new_choose_provider_post = (req, res) => {
+  const providers = providerModel.findMany({
+    query: req.session.data.provider.name
+  })
+
+  // store total number of results
+  const providerCount = providers.length
+
+  // parse the provider results for use in macro
+  let providerItems = []
+  providers.forEach(provider => {
+    const item = {}
+    item.text = provider.name
+    item.value = provider.urn || provider.address.postcode
+    item.hint = {
+      text: `${provider.address.town}, ${provider.address.postcode}`
+    }
+    providerItems.push(item)
+  })
+
+  // sort items alphabetically
+  providerItems.sort((a,b) => {
+    return a.text.localeCompare(b.text)
+  })
+
+  // only get the first 15 items
+  providerItems = providerItems.slice(0,15)
+
+  let save = `/organisations/${req.params.organisationId}/claims/new/choose`
+  let back = `/organisations/${req.params.organisationId}/claims/new/`
+
+  // if (req.query.referrer === 'check') {
+  //   save += '?referrer=check'
+  //   back = '/support/organisations/new/check'
+  // }
+
+  const errors = []
+
+  if (!req.session.data.provider.id) {
+    const error = {}
+    error.fieldName = 'provider'
+    error.href = '#provider'
+    error.text = 'Select an accredited provider'
+    errors.push(error)
+  }
+
+  if (errors.length) {
+    res.render('../views/claims/provider-choose', {
+      providerItems,
+      providerCount,
+      searchTerm: req.session.data.provider.name,
+      actions: {
+        save,
+        back,
+        cancel: `/organisations/${req.params.organisationId}/claims`
+      },
+      errors
+    })
+  } else {
+    req.session.data.claim.providerId = provider.id
+
+    if (req.query.referrer === 'check') {
+      res.redirect(`/organisations/${req.params.organisationId}/claims/new/check`)
+    } else {
+      res.redirect(`/organisations/${req.params.organisationId}/claims/new/mentors`)
+    }
+  }
+}
+
 exports.new_claim_mentors_get = (req, res) => {
   const mentorsCount = mentorModel.findMany({ organisationId: req.params.organisationId }).length
   let mentorOptions = mentorHelper.getMentorOptions({ organisationId: req.params.organisationId })

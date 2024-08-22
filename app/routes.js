@@ -222,6 +222,9 @@ router.get('/organisations/:organisationId/mentors', checkIsAuthenticated, mento
 router.get('/organisations/:organisationId/claims/new', checkIsAuthenticated, claimController.new_claim_get)
 router.post('/organisations/:organisationId/claims/new', checkIsAuthenticated, claimController.new_claim_post)
 
+router.get('/organisations/:organisationId/claims/new/choose', checkIsAuthenticated, claimController.new_choose_provider_get)
+router.post('/organisations/:organisationId/claims/new/choose', checkIsAuthenticated, claimController.new_choose_provider_post)
+
 router.get('/organisations/:organisationId/claims/new/mentors', checkIsAuthenticated, claimController.new_claim_mentors_get)
 router.post('/organisations/:organisationId/claims/new/mentors', checkIsAuthenticated, claimController.new_claim_mentors_post)
 
