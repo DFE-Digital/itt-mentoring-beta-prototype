@@ -1,0 +1,25 @@
+{{ appSecondaryNavigation({
+  label: "Sub navigation",
+  items: [
+    {
+      href: "/support/claims",
+      text: "All claims",
+      active: secondaryNavId == "claims"
+    },
+    {
+      href: "/support/claims/payments",
+      text: "Payments",
+      active: secondaryNavId == "payments"
+    },
+    {
+      href: "/support/claims/sampling",
+      text: "Sampling",
+      active: secondaryNavId == "sampling"
+    },
+    {
+      href: "/support/claims/clawbacks",
+      text: "Clawbacks",
+      active: secondaryNavId == "clawbacks"
+    }
+  ]
+}) }}
