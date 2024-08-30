@@ -64,6 +64,10 @@ const supportOrganisationUserController = require('./controllers/support/organis
 const supportUserController = require('./controllers/support/users')
 const supportClaimController = require('./controllers/support/claims')
 
+const supportPaymentController = require('./controllers/support/payments')
+const supportSamplingController = require('./controllers/support/sampling')
+const supportClawbackController = require('./controllers/support/clawbacks')
+
 // Authentication middleware
 const checkIsAuthenticated = (req, res, next) => {
   if (req.session.passport) {
@@ -320,6 +324,12 @@ router.get('/support/organisations/:organisationId/claims', checkIsAuthenticated
 /// ------------------------------------------------------------------------ ///
 /// SUPPORT - CLAIM ROUTES
 /// ------------------------------------------------------------------------ ///
+
+router.get('/support/claims/payments', checkIsAuthenticated, supportPaymentController.list_claims_get)
+
+router.get('/support/claims/sampling', checkIsAuthenticated, supportSamplingController.list_claims_get)
+
+router.get('/support/claims/clawbacks', checkIsAuthenticated, supportClawbackController.list_claims_get)
 
 router.get('/support/claims/remove-status-filter/:status', checkIsAuthenticated, supportClaimController.removeStatusFilter)
 router.get('/support/claims/remove-school-filter/:school', checkIsAuthenticated, supportClaimController.removeSchoolFilter)

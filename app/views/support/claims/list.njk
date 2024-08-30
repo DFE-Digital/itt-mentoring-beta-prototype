@@ -1,8 +1,11 @@
 {% extends "layouts/support.njk" %}
 
 {% set primaryNavId = "claims" %}
+{% set secondaryNavId = "claims" %}
 
-{% set title %}
+{% set title = "Claims" %}
+
+{% set subtitle %}
   {% if pagination.totalCount > 0 %}
     Claims ({{ pagination.totalCount | numeral('0,0') }})
   {% else %}
@@ -21,9 +24,23 @@
 {% block content %}
 
   <div class="govuk-grid-row">
-    <div class="govuk-grid-column-full">
-
+    <div class="govuk-grid-column-two-thirds">
       {% include "_includes/page-heading.njk" %}
+    </div>
+  </div>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      {% include "./_secondary-navigation.njk" %}
+    </div>
+  </div>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      <h2 class="govuk-heading-m">
+        {{ subtitle }}
+      </h2>
 
       {{ govukButton({
         text: "Download CSV"
