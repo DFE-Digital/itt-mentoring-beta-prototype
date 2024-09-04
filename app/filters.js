@@ -178,6 +178,8 @@ addFilter('getProviderName', providerHelper.getProviderName)
 /* ------------------------------------------------------------------
 Claim utility functions
 ------------------------------------------------------------------ */
+addFilter('getClaimStatusLabel', claimHelper.getClaimStatusLabel)
+
 addFilter('getClaimStatusClasses', claimHelper.getClaimStatusClasses)
 
 /* ------------------------------------------------------------------

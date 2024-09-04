@@ -2,6 +2,8 @@ const claimModel = require('../models/claims')
 
 const fundingHelper = require('./funding')
 
+const claimStatuses = require('../data/dist/statuses/claim-statuses')
+
 exports.generateClaimID = () => {
   // Generate a random number, convert it to base 36, and extract digits 2 to 10
   // The substring starts at index 2 to skip the "0." part of the decimal result from Math.random()
@@ -52,11 +54,21 @@ exports.calculateClaimTotal = (organisation, mentors) => {
   return totalAmount
 }
 
+exports.getClaimStatusLabel = (status) => {
+  let label = 'Unknown'
+
+  if (status) {
+    label = claimStatuses.find(claimStatus => claimStatus.code === status).name
+  }
+
+  return label
+}
+
 exports.getClaimStatusClasses = (status) => {
   let classes = 'govuk-tag--blue'
 
-  if (status && status === 'draft') {
-    classes = 'govuk-tag--grey'
+  if (status) {
+    classes = claimStatuses.find(claimStatus => claimStatus.code === status).classes
   }
 
   return classes
