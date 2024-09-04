@@ -15,6 +15,9 @@ app/data/schools/
 app/data/teachers/
 app/data/users/
 
+# Ignore uploaded data
+app/uploads/
+
 # Prototype ignores - per-user
 .tmp/
 .env
