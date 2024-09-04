@@ -33,6 +33,11 @@ exports.findMany = (params) => {
     claims = claims.filter(claim => claim.providerId === params.providerId)
   }
 
+  // Claim status
+  if (params.status) {
+    claims = claims.filter(claim => claim.status === params.status)
+  }
+
   return claims
 }
 
