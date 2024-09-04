@@ -327,6 +327,14 @@ router.get('/support/organisations/:organisationId/claims', checkIsAuthenticated
 
 router.get('/support/claims/payments', checkIsAuthenticated, supportPaymentController.list_claims_get)
 
+router.get('/support/claims/payments/export', checkIsAuthenticated, supportPaymentController.export_claims_get)
+router.post('/support/claims/payments/export', checkIsAuthenticated, supportPaymentController.export_claims_post)
+
+router.get('/support/claims/payments/response', checkIsAuthenticated, supportPaymentController.claims_response_get)
+router.post('/support/claims/payments/response', checkIsAuthenticated, supportPaymentController.claims_response_post)
+
+router.get('/support/claims/payments/:exportId', checkIsAuthenticated, supportPaymentController.export_claims_details_get)
+
 router.get('/support/claims/sampling', checkIsAuthenticated, supportSamplingController.list_claims_get)
 
 router.get('/support/claims/clawbacks', checkIsAuthenticated, supportClawbackController.list_claims_get)
