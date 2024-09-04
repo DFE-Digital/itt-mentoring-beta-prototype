@@ -16,6 +16,8 @@
 
 {% block content %}
 
+  {% include "_includes/notification-banner.njk" %}
+
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
       {% include "_includes/page-heading.njk" %}
@@ -34,6 +36,112 @@
       <h2 class="govuk-heading-m">
         {{ subtitle }}
       </h2>
+
+      {{ govukButton({
+        text: "Send claims to ESFA",
+        href: actions.export
+      }) }}
+
+      {{ govukButton({
+        text: "Upload ESFA response",
+        href: actions.response,
+        classes: "govuk-button--secondary"
+      }) }}
+
+      {# {{ govukTable({
+        caption: "Data exports",
+        captionClasses: "govuk-visually-hidden",
+        firstCellIsHeader: false,
+        head: [
+          {
+            text: "Date"
+          },
+          {
+            text: "Sent by"
+          },
+          {
+            text: "Payments file"
+          }
+        ],
+        rows: [
+          [
+            {
+              text: "28 August 2024 at 1:30pm"
+            },
+            {
+              text: "Oliver Oldfield"
+            },
+            {
+              html: '<a href="#" class="govuk-link">Download</a>'
+            }
+          ],
+          [
+            {
+              text: "29 August 2024 at 1:30pm"
+            },
+            {
+              text: "Christoper Broughton"
+            },
+            {
+              html: '<a href="#" class="govuk-link">Download</a>'
+            }
+          ],
+          [
+            {
+              text: "2 September 2024 at 1:30pm"
+            },
+            {
+              text: "Lara Hayes"
+            },
+            {
+              html: '<a href="#" class="govuk-link">Download</a>'
+            }
+          ]
+        ]
+      }) }} #}
+
+      {{ govukTable({
+        caption: "Data exports",
+        captionClasses: "govuk-visually-hidden",
+        firstCellIsHeader: false,
+        head: [
+          {
+            text: "Date"
+          },
+          {
+            text: "Sent by"
+          }
+        ],
+        rows: [
+          [
+            {
+              text: "28 August 2024 at 1:30pm",
+              html: '<a href="'+ actions.view +'/e9a42b6a-951d-420d-bef1-8bced7a8761b" class="govuk-link">28 August 2024 at 1:30pm</a>'
+            },
+            {
+              text: "Oliver Oldfield"
+            }
+          ],
+          [
+            {
+              text: "29 August 2024 at 1:30pm",
+              html: '<a href="#" class="govuk-link">29 August 2024 at 1:30pm</a>'
+            },
+            {
+              text: "Christoper Broughton"
+            }
+          ],
+          [
+            {
+              text: "2 September 2024 at 1:30pm",
+              html: '<a href="#" class="govuk-link">2 September 2024 at 1:30pm</a>'
+            },
+            {
+              text: "Lara Hayes"
+            }
+          ]
+        ]
+      }) }}
 
     </div>
   </div>
