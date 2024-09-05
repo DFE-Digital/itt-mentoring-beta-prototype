@@ -2,7 +2,7 @@
 
 {% set primaryNavId = "claims" %}
 
-{% set title = "Upload ESFA response" %}
+{% set title = "Review uploaded data" %}
 {% set caption = "Payments" %}
 
 {% block pageTitle %}
@@ -23,25 +23,13 @@
 
       {% include "_includes/page-heading.njk" %}
 
-      <form action="{{ actions.save }}" method="post" accept-charset="utf-8" enctype="multipart/form-data" novalidate>
+      <form action="{{ actions.save }}" method="post" accept-charset="utf-8" novalidate>
 
-        <p class="govuk-body">Some important information to describe the process</p>
+        <p class="govuk-body">Some important information</p>
 
-        {{ govukFileUpload({
-          id: "file-upload-1",
-          name: "file-upload-1",
-          label: {
-            text: "Upload CSV file",
-            isPageHeading: false,
-            classes: "govuk-label--m"
-          },
-          hint: {
-            text: "Hint text"
-          }
-        }) }}
 
         {{ govukButton({
-          text: "Upload reponse"
+          text: "ACTION"
         }) }}
 
       </form>
