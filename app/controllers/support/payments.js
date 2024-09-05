@@ -1,10 +1,13 @@
+const fs = require('fs')
+const csv = require('csv-string')
+
 const claimModel = require('../../models/claims')
 const paymentModel = require('../../models/payments')
 
+const Pagination = require('../../helpers/pagination')
 const paymentHelper = require('../../helpers/payments')
 
-const fs = require('fs')
-const csv = require('csv-string')
+const settings = require('../../data/dist/settings')
 
 exports.list_claims_get = (req, res) => {
   res.render('../views/support/claims/payments/index', {
@@ -152,6 +155,10 @@ exports.import_claims_post = (req, res) => {
     csv.readAll(raw, delimiter, data => {
       payments = data
     })
+
+    // remove header row from the payments array
+    payments.shift()
+
     // put the data into the session for use later
     req.session.data.payments = paymentHelper.parseData(payments)
 
@@ -160,7 +167,17 @@ exports.import_claims_post = (req, res) => {
 }
 
 exports.review_claims_get = (req, res) => {
+  let payments = req.session.data.payments
+
+  const paymentsCount = payments.length
+
+  const pagination = new Pagination(payments, req.query.page, settings.pageSize)
+  payments = pagination.getData()
+
   res.render('../views/support/claims/payments/review', {
+    payments,
+    paymentsCount,
+    pagination,
     actions: {
       save: `/support/claims/payments/review`,
       back: `/support/claims/payments/import`,
