@@ -19,16 +19,3 @@ exports.getClaimStatusOptions = (selectedItem) => {
 
   return items
 }
-
-exports.getClaimStatusLabel = (code) => {
-  const statuses = require('../data/dist/statuses/claim-statuses')
-  const status = statuses.find(status => status.code === code)
-
-  let label = code
-
-  if (status) {
-    label = status.name
-  }
-
-  return label
-}
