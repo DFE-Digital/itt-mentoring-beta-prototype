@@ -53,16 +53,26 @@ const multer = require('multer')
 
 // create a separate storage variable for each type of file
 const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, path.join(__dirname, 'uploads'))
+  destination: (req, file, callback) => {
+    callback(null, path.join(__dirname, 'uploads'))
   },
-  filename:  (req, file, cb) => {
+  filename:  (req, file, callback) => {
     const uniqueSuffix = new Date()
-    cb(null, file.fieldname + '-' + uniqueSuffix.toISOString() + '.csv')
+    callback(null, file.fieldname + '-' + uniqueSuffix.toISOString() + '.csv')
   }
 })
 
-const upload = multer({ storage })
+const upload = multer({
+  storage
+  // ,
+  // fileFilter: (req, file, callback) => {
+  //   if (file.mimetype === 'text/csv') {
+  //     callback(null, true)
+  //   } else {
+  //     return callback(new Error('Invalid mimetype'))
+  //   }
+  // }
+})
 
 /// ------------------------------------------------------------------------ ///
 /// Controller modules
