@@ -24,7 +24,7 @@
       {# tag used in the heading #}
       {% set headingTag %}
         {{ govukTag({
-          text: claim.status | capitalize,
+          text: claim.status | getClaimStatusLabel,
           classes: claim.status | getClaimStatusClasses
         }) }}
       {% endset %}
