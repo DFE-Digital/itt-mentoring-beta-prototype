@@ -45,7 +45,28 @@ passport.use(new LocalStrategy(
 router.use(passport.initialize())
 router.use(passport.session())
 
-// Controller modules
+/// ------------------------------------------------------------------------ ///
+/// File uploads
+/// ------------------------------------------------------------------------ ///
+const path = require('path')
+const multer = require('multer')
+
+// create a separate storage variable for each type of file
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, path.join(__dirname, 'uploads'))
+  },
+  filename:  (req, file, cb) => {
+    const uniqueSuffix = new Date()
+    cb(null, file.fieldname + '-' + uniqueSuffix.toISOString() + '.csv')
+  }
+})
+
+const upload = multer({ storage })
+
+/// ------------------------------------------------------------------------ ///
+/// Controller modules
+/// ------------------------------------------------------------------------ ///
 const accountController = require('./controllers/account')
 const authenticationController = require('./controllers/authentication')
 const claimController = require('./controllers/claims')
@@ -330,8 +351,12 @@ router.get('/support/claims/payments', checkIsAuthenticated, supportPaymentContr
 router.get('/support/claims/payments/export', checkIsAuthenticated, supportPaymentController.export_claims_get)
 router.post('/support/claims/payments/export', checkIsAuthenticated, supportPaymentController.export_claims_post)
 
-router.get('/support/claims/payments/response', checkIsAuthenticated, supportPaymentController.claims_response_get)
-router.post('/support/claims/payments/response', checkIsAuthenticated, supportPaymentController.claims_response_post)
+router.get('/support/claims/payments/import', checkIsAuthenticated, supportPaymentController.import_claims_get)
+// the upload.single('payments') middleware uses the form field file name
+router.post('/support/claims/payments/import', checkIsAuthenticated, upload.single('payments'), supportPaymentController.import_claims_post)
+
+router.get('/support/claims/payments/review', checkIsAuthenticated, supportPaymentController.review_claims_get)
+router.post('/support/claims/payments/review', checkIsAuthenticated, supportPaymentController.review_claims_post)
 
 router.get('/support/claims/payments/:exportId', checkIsAuthenticated, supportPaymentController.export_claims_details_get)
 
