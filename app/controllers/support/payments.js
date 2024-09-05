@@ -7,6 +7,8 @@ const paymentModel = require('../../models/payments')
 const Pagination = require('../../helpers/pagination')
 const paymentHelper = require('../../helpers/payments')
 
+const paymentDecorator = require('../../decorators/payments')
+
 const settings = require('../../data/dist/settings')
 
 exports.list_claims_get = (req, res) => {
@@ -100,8 +102,7 @@ exports.import_claims_get = (req, res) => {
 exports.import_claims_post = (req, res) => {
   const errors = []
 
-  console.log(req.file)
-  console.log(req.file.mimetype)
+  // console.log(req.file)
 
   if (!req.file) {
     const error = {}
@@ -160,7 +161,14 @@ exports.import_claims_post = (req, res) => {
     payments.shift()
 
     // put the data into the session for use later
-    req.session.data.payments = paymentHelper.parseData(payments)
+    payments = paymentHelper.parseData(payments)
+
+    // decorate payment data with claim ID
+    payments = payments.map(payment => {
+      return payment = paymentDecorator.decorate(payment)
+    })
+
+    req.session.data.payments = payments
 
     res.redirect('/support/claims/payments/review')
   }
@@ -187,24 +195,21 @@ exports.review_claims_get = (req, res) => {
 }
 
 exports.review_claims_post = (req, res) => {
-  const errors = []
+  const payments = req.session.data.payments
 
-  if (errors.length) {
-
-    res.render('../views/support/claims/payments/review', {
-      actions: {
-        save: `/support/claims/payments/review`,
-        back: `/support/claims/payments/import`,
-        cancel: `/support/claims/payments`
-      },
-      errors
+  payments.forEach(payment => {
+    claimModel.updateOne({
+      organisationId: payment.organisationId,
+      claimId: payment.claimId,
+      userId: req.session.passport.user.id,
+      claim: {
+        status: payment.claim_status
+      }
     })
-  } else {
+  })
 
-
-    req.flash('success', 'ESFA reponse uploaded')
-    res.redirect('/support/claims/payments')
-  }
+  req.flash('success', 'ESFA reponse uploaded')
+  res.redirect('/support/claims/payments')
 }
 
 exports.export_claims_details_get = (req, res) => {
