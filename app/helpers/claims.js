@@ -55,9 +55,9 @@ exports.calculateClaimTotal = (organisation, mentors) => {
 }
 
 exports.getClaimStatusLabel = (status) => {
-  let label = 'Unknown'
+  let label = status
 
-  if (status) {
+  if (status?.length) {
     label = claimStatuses.find(claimStatus => claimStatus.code === status).name
   }
 
