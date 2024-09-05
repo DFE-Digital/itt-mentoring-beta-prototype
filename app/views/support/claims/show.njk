@@ -25,7 +25,7 @@
       {% set headingTag %}
         {{ govukTag({
           text: claim.status | getClaimStatusLabel,
-          classes: claim.status | getClaimStatusClasses
+          classes: "govuk-tag--no-max-width " + (claim.status | getClaimStatusClasses)
         }) }}
       {% endset %}
 

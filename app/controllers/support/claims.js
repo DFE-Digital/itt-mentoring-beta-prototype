@@ -57,7 +57,7 @@ exports.list_claims_get = (req, res) => {
         heading: { text: 'Status' },
         items: statuses.map((status) => {
           return {
-            text: statusHelper.getClaimStatusLabel(status),
+            text: claimHelper.getClaimStatusLabel(status),
             href: `/support/claims/remove-status-filter/${status}`
           }
         })
