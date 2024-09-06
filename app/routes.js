@@ -331,6 +331,8 @@ router.get('/support/claims/sampling', checkIsAuthenticated, supportSamplingCont
 
 router.get('/support/claims/clawbacks', checkIsAuthenticated, supportClawbackController.list_claims_get)
 
+router.get('/support/claims/download', checkIsAuthenticated, supportClaimController.download_claims_get)
+
 router.get('/support/claims/remove-status-filter/:status', checkIsAuthenticated, supportClaimController.removeStatusFilter)
 router.get('/support/claims/remove-school-filter/:school', checkIsAuthenticated, supportClaimController.removeSchoolFilter)
 router.get('/support/claims/remove-provider-filter/:provider', checkIsAuthenticated, supportClaimController.removeProviderFilter)
