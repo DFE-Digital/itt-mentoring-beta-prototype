@@ -415,6 +415,9 @@ router.get('/support/organisations', checkIsAuthenticated, supportOrganisationCo
 router.get('/settings', settingController.settings_form_get)
 router.post('/settings', settingController.settings_form_post)
 
+router.get('/settings/reset-data', settingController.reset_data_get)
+router.post('/settings/reset-data', settingController.reset_data_post)
+
 router.get('/feedback', feedbackController.feedback_form_get)
 router.post('/feedback', feedbackController.feedback_form_post)
 
