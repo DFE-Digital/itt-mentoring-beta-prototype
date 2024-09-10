@@ -33,3 +33,18 @@ exports.settings_form_post = (req, res) => {
     res.redirect('/settings')
   }
 }
+
+exports.reset_data_get = (req, res) => {
+  res.render('../views/settings/data', {
+    actions: {
+      save: `/settings/reset-data`,
+      home: '/organisations'
+    }
+  })
+}
+
+exports.reset_data_post = (req, res) => {
+  delete req.session.data
+  settingModel.reset()
+  res.redirect('/sign-out')
+}

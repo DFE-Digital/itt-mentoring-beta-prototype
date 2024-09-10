@@ -1,0 +1,44 @@
+{% extends "layouts/auth.njk" %}
+
+{% set headerNavId = "settings" %}
+
+{% set hidePrimaryNavigation = true %}
+{% set hideOrganisationSwitcher = true %}
+
+{% set title = "Reset prototype data" %}
+
+{% block beforeContent %}
+{{ govukBreadcrumbs({
+  items: [{
+    text: "Home",
+    href: "/"
+  }, {
+    text: title
+  }]
+}) }}
+{% endblock %}
+
+{% block content %}
+
+  {% include "_includes/notification-banner.njk" %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      {% include "_includes/page-heading.njk" %}
+
+      <form action="{{ actions.save }}" method="post" accept-charset="utf-8" novalidate>
+
+        <p class="govuk-body">Selecting ‘{{ title }}’ will rebuild the prototype database. This action cannot be undone.</p>
+
+        {{ govukButton({
+          text: title,
+          classes: "govuk-button--warning"
+        }) }}
+
+      </form>
+
+    </div>
+  </div>
+
+{% endblock %}

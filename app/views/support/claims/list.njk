@@ -42,9 +42,11 @@
         {{ subtitle }}
       </h2>
 
-      {{ govukButton({
-        text: "Download CSV"
-      }) }}
+      <form action="{{ actions.download }}" method="get" accept-charset="utf-8" novalidate>
+        {{ govukButton({
+          text: "Download CSV"
+        }) }}
+      </form>
 
     </div>
   </div>

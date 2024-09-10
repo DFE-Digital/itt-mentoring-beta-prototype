@@ -374,6 +374,8 @@ router.get('/support/claims/sampling', checkIsAuthenticated, supportSamplingCont
 
 router.get('/support/claims/clawbacks', checkIsAuthenticated, supportClawbackController.list_claims_get)
 
+router.get('/support/claims/download', checkIsAuthenticated, supportClaimController.download_claims_get)
+
 router.get('/support/claims/remove-status-filter/:status', checkIsAuthenticated, supportClaimController.removeStatusFilter)
 router.get('/support/claims/remove-school-filter/:school', checkIsAuthenticated, supportClaimController.removeSchoolFilter)
 router.get('/support/claims/remove-provider-filter/:provider', checkIsAuthenticated, supportClaimController.removeProviderFilter)
@@ -457,6 +459,9 @@ router.get('/support/organisations', checkIsAuthenticated, supportOrganisationCo
 
 router.get('/settings', settingController.settings_form_get)
 router.post('/settings', settingController.settings_form_post)
+
+router.get('/settings/reset-data', settingController.reset_data_get)
+router.post('/settings/reset-data', settingController.reset_data_post)
 
 router.get('/feedback', feedbackController.feedback_form_get)
 router.post('/feedback', feedbackController.feedback_form_post)
