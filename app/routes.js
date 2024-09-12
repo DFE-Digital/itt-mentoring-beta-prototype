@@ -358,6 +358,15 @@ router.get('/support/organisations/:organisationId/claims', checkIsAuthenticated
 
 router.get('/support/claims/payments', checkIsAuthenticated, supportPaymentController.list_claims_get)
 
+router.get('/support/claims/payments/remove-school-filter/:school', checkIsAuthenticated, supportPaymentController.removeSchoolFilter)
+router.get('/support/claims/payments/remove-provider-filter/:provider', checkIsAuthenticated, supportPaymentController.removeProviderFilter)
+
+router.get('/support/claims/payments/remove-all-filters', checkIsAuthenticated, supportPaymentController.removeAllFilters)
+
+router.get('/support/claims/payments/remove-keyword-search', checkIsAuthenticated, supportPaymentController.removeKeywordSearch)
+
+router.get('/support/claims/payments/:claimId', checkIsAuthenticated, supportPaymentController.show_claim_get)
+
 router.get('/support/claims/payments/export', checkIsAuthenticated, supportPaymentController.export_claims_get)
 router.post('/support/claims/payments/export', checkIsAuthenticated, supportPaymentController.export_claims_post)
 

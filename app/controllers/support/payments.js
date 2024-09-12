@@ -6,20 +6,166 @@ const paymentModel = require('../../models/payments')
 
 const Pagination = require('../../helpers/pagination')
 const paymentHelper = require('../../helpers/payments')
+const filterHelper = require('../../helpers/filters')
+const providerHelper = require('../../helpers/providers')
+const schoolHelper = require('../../helpers/schools')
 
+const claimDecorator = require('../../decorators/claims')
 const paymentDecorator = require('../../decorators/payments')
 
 const settings = require('../../data/dist/settings')
 
 exports.list_claims_get = (req, res) => {
+  // Search
+  const keywords = req.session.data.keywords
+  const hasSearch = !!((keywords))
+
+  // Filters
+  const school = null
+  const provider = null
+
+  let schools
+  if (req.session.data.filters?.school) {
+    schools = filterHelper.getCheckboxValues(school, req.session.data.filters.school)
+  }
+
+  let providers
+  if (req.session.data.filters?.provider) {
+    providers = filterHelper.getCheckboxValues(provider, req.session.data.filters.provider)
+  }
+
+  const hasFilters = !!((schools?.length > 0)
+    || (providers?.length > 0))
+
+  let selectedFilters = null
+
+  if (hasFilters) {
+    selectedFilters = {
+      categories: []
+    }
+
+    if (schools?.length) {
+      selectedFilters.categories.push({
+        heading: { text: 'School' },
+        items: schools.map((school) => {
+          return {
+            text: schoolHelper.getSchoolName(school),
+            href: `/support/claims/payments/remove-school-filter/${school}`
+          }
+        })
+      })
+    }
+
+    if (providers?.length) {
+      selectedFilters.categories.push({
+        heading: { text: 'Accredited provider' },
+        items: providers.map((provider) => {
+          return {
+            text: providerHelper.getProviderName(provider),
+            href: `/support/claims/payments/remove-provider-filter/${provider}`
+          }
+        })
+      })
+    }
+  }
+
+  // get filter items
+  const filterSchoolItems = schoolHelper.getSchoolOptions(schools)
+  const filterProviderItems = providerHelper.getProviderOptions(providers)
+
+  // Get list of all claims
+  let claims = claimModel.findMany({})
+
+  // add details of school to each claim
+  if (claims.length) {
+    claims = claims.map(claim => {
+      return claim = claimDecorator.decorate(claim)
+    })
+  }
+
+  claims = claims.filter(claim => claim.status === 'information_needed')
+
+  if (schools?.length) {
+    claims = claims.filter(claim => {
+      return schools.includes(claim.organisationId)
+    })
+  }
+
+  if (providers?.length) {
+    claims = claims.filter(claim => {
+      return providers.includes(claim.providerId)
+    })
+  }
+
+  if (keywords?.length) {
+    claims = claims.filter(claim => claim.reference.toLowerCase().includes(keywords.toLowerCase()))
+  }
+
+  const pagination = new Pagination(claims, req.query.page, settings.pageSize)
+  claims = pagination.getData()
+
   res.render('../views/support/claims/payments/index', {
+    claims,
+    pagination,
+    selectedFilters,
+    hasFilters,
+    hasSearch,
+    keywords,
+    filterSchoolItems,
+    filterProviderItems,
     actions: {
       export: `/support/claims/payments/export`,
       response: `/support/claims/payments/import`,
-      view: `/support/claims/payments`
+      view: `/support/claims/payments`,
+      filters: {
+        apply: '/support/claims/payments',
+        remove: '/support/claims/payments/remove-all-filters'
+      },
+      search: {
+        find: '/support/claims/payments',
+        remove: '/support/claims/payments/remove-keyword-search'
+      }
     }
   })
 }
+
+exports.removeSchoolFilter = (req, res) => {
+  req.session.data.filters.school = filterHelper.removeFilter(
+    req.params.school,
+    req.session.data.filters.school
+  )
+  res.redirect('/support/claims/payments')
+}
+
+exports.removeProviderFilter = (req, res) => {
+  req.session.data.filters.provider = filterHelper.removeFilter(
+    req.params.provider,
+    req.session.data.filters.provider
+  )
+  res.redirect('/support/claims/payments')
+}
+
+exports.removeAllFilters = (req, res) => {
+  delete req.session.data.filters
+  res.redirect('/support/claims/payments')
+}
+
+exports.removeKeywordSearch = (req, res) => {
+  delete req.session.data.keywords
+  res.redirect('/support/claims/payments')
+}
+
+/// ------------------------------------------------------------------------ ///
+/// SHOW CLAIM
+/// ------------------------------------------------------------------------ ///
+
+exports.show_claim_get = (req, res) => {
+  res.send('Not implemented yet')
+}
+
+/// ------------------------------------------------------------------------ ///
+/// SEND CLAIMS FOR PAYMENT
+/// ------------------------------------------------------------------------ ///
 
 exports.export_claims_get = (req, res) => {
   const claims = claimModel
@@ -81,6 +227,10 @@ exports.export_claims_post = (req, res) => {
     res.redirect('/support/claims/payments')
   }
 }
+
+/// ------------------------------------------------------------------------ ///
+/// IMPORT CLAIM PAYMENT RESPONSE
+/// ------------------------------------------------------------------------ ///
 
 exports.import_claims_get = (req, res) => {
   const claims = claimModel
