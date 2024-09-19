@@ -1,0 +1,22 @@
+{% extends "layouts/error.njk" %}
+
+{% set title = "Ask for an account to " + (serviceName | lower) %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <h1 class="govuk-heading-l">{{ title }}</h1>
+      <p class="govuk-body">Although you have a DfE Sign-in account, you also need an account on {{ serviceName }}.</p>
+      <p class="govuk-body">If you think you should have an account, email us at <a class="govuk-link" href="mailto:ittmentor.funding@education.gov.uk">ittmentor.funding@education.gov.uk</a>.</p>
+      {# <p class="govuk-body">In your email tell us:</p>
+      <ul class="govuk-list govuk-list--bullet">
+        <li>
+          the email address associated with your {{ serviceName }} account
+        </li>
+        <li>
+          which organisation you’d like to be added to
+        </li>
+      </ul> #}
+    </div>
+  </div>
+{% endblock %}
