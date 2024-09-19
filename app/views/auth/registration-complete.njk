@@ -2,7 +2,7 @@
 
 {% set hideAccountNavigation = true %}
 
-{% set title = "Your DfE Sign-in account has been created"  %}
+{% set title = "Registration complete"  %}
 
 {% block pageTitle %}
 {{ title }} – {{ serviceName }} – GOV.UK
@@ -20,7 +20,9 @@
     <div class="govuk-grid-column-two-thirds">
 
       {{ govukPanel({
-        titleText: title
+        titleText: title,
+        text: "Your DfE Sign-in account is ready to use. You will need your email address and password to sign in to your DfE Sign-in account",
+        classes: "govuk-!-font-size-24"
       }) }}
 
       {{ govukButton({
