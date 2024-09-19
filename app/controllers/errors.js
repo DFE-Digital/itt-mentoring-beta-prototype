@@ -18,3 +18,11 @@ exports.service_unavailable = (req, res) => {
 exports.unauthorised = (req, res) => {
   res.render('../views/errors/unauthorised')
 }
+
+exports.account_not_recognised = (req, res) => {
+  res.render('../views/errors/account-not-recognised')
+}
+
+exports.account_no_organisation = (req, res) => {
+  res.render('../views/errors/account-no-organisation')
+}
