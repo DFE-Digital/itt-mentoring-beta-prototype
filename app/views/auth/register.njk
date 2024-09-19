@@ -58,6 +58,17 @@
             classes: "govuk-!-width-two-thirds"
           }) }}
 
+          {% set warningText %}
+            Do not use a generic email name (for example, headmaster@ or admin@) or domain (for example, @yahoo.co.uk or @gmail.com) as they compromise security.
+            If you create an account with a generic email address, you will not be able to access services or other areas of DfE Sign-in.
+          {% endset %}
+
+          {{ govukWarningText({
+            html: warningText,
+            iconFallbackText: "Warning",
+            classes: "govuk-!-font-weight-regular"
+          }) }}
+
           {{ govukInput({
             id: "email",
             name: "email",
@@ -79,7 +90,7 @@
         {% endcall %}
 
         {% set termsConditionsHtml %}
-          By continuing you accept the <a class="govuk-link govuk-link--no-visited-state" href="{{ actions.terms }}">terms and conditions</a>.
+          By continuing you accept the <a class="govuk-link govuk-link--no-visited-state" href="{{ actions.terms }}">DfE Sign-in terms and conditions</a>.
         {% endset %}
 
         {{ govukInsetText({
