@@ -48,86 +48,92 @@
         classes: "govuk-button--secondary"
       }) }}
 
-      <h3 class="govuk-heading-s">
-        {{ pagination.totalCount if pagination.totalCount else "No" }} claims need further information
-      </h3>
-
-    </div>
-  </div>
-
-  <div class="app-filter-layout">
-    <div class="app-filter-layout__filter">
-
-      {% include "./_filter-panel.njk" %}
-
-    </div>
-
-    <div class="app-filter-layout__content">
-
-      <div class="app-action-bar">
-        <div class="app-action-bar__filter"></div>
-      </div>
-
-      {% include "../_search-panel.njk" %}
-
-      <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
-
-      {# {% include "../_sort-options.njk" %} #}
-
-      {% if claims.length %}
-
-        <div class="app-claim-cards">
-          {% for claim in claims %}
-            <section class="app-claim-card">
-              <header class="app-claim-card__header">
-                <h3 class="govuk-heading-s govuk-!-width-two-thirds">
-                  <a href="{{ actions.view }}/{{ claim.id }}" class="govuk-link govuk-link--no-visited-state">
-                    {{ claim.reference }} - {{ claim.organisationId | getSchoolName }}
-                  </a>
-                </h3>
-                {{ govukTag({
-                  text: claim.status | getClaimStatusLabel,
-                  classes: claim.status | getClaimStatusClasses
-                }) }}
-              </header>
-
-              <div class="govuk-grid-row">
-                <div class="govuk-grid-column-two-thirds">
-                  <dl class="app-claim-card__list">
-                    <dt class="govuk-visually-hidden">Accredited provider</dt>
-                    <dd class="govuk-body-s  govuk-!-margin-bottom-1">
-                      {{ claim.providerId | getProviderName }}
-                    </dd>
-                  </dl>
-                </div>
-
-                <div class="govuk-grid-column-one-third">
-                  <dl class="app-claim-card__list app-claim-card__list--secondary">
-                    <dt class="govuk-visually-hidden">Submitted on</dt>
-                    <dd class="govuk-body-s govuk-!-margin-bottom-1">
-                      {{ claim.submittedAt | datetime('dd/MM/yyyy') }}
-                    </dd>
-                    <dt class="govuk-visually-hidden">Total amount</dt>
-                    <dd class="govuk-body-s  govuk-!-margin-bottom-1">
-                      £{{ claim.totalAmount | numeral('0,0.00') }}
-                    </dd>
-                  </dl>
-                </div>
-              </div>
-            </section>
-          {% endfor %}
-        </div>
-
-        {% include "_includes/pagination.njk" %}
-
+      {% if hasClaims %}
+        <h3 class="govuk-heading-s">
+          {{ pagination.totalCount if pagination.totalCount else "No" }} claims need further information
+        </h3>
       {% else %}
-
-        {% include "../_no-results.njk" %}
-
+        <p class="govuk-body">There are no claims waiting to be processed.</p>
       {% endif %}
 
     </div>
   </div>
+
+  {% if hasClaims %}
+    <div class="app-filter-layout">
+      <div class="app-filter-layout__filter">
+
+        {% include "./_filter-panel.njk" %}
+
+      </div>
+
+      <div class="app-filter-layout__content">
+
+        <div class="app-action-bar">
+          <div class="app-action-bar__filter"></div>
+        </div>
+
+        {% include "../_search-panel.njk" %}
+
+        <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+
+        {# {% include "../_sort-options.njk" %} #}
+
+        {% if claims.length %}
+
+          <div class="app-claim-cards">
+            {% for claim in claims %}
+              <section class="app-claim-card">
+                <header class="app-claim-card__header">
+                  <h3 class="govuk-heading-s govuk-!-width-two-thirds">
+                    <a href="{{ actions.view }}/{{ claim.id }}" class="govuk-link govuk-link--no-visited-state">
+                      {{ claim.reference }} - {{ claim.organisationId | getSchoolName }}
+                    </a>
+                  </h3>
+                  {{ govukTag({
+                    text: claim.status | getClaimStatusLabel,
+                    classes: claim.status | getClaimStatusClasses
+                  }) }}
+                </header>
+
+                <div class="govuk-grid-row">
+                  <div class="govuk-grid-column-two-thirds">
+                    <dl class="app-claim-card__list">
+                      <dt class="govuk-visually-hidden">Accredited provider</dt>
+                      <dd class="govuk-body-s  govuk-!-margin-bottom-1">
+                        {{ claim.providerId | getProviderName }}
+                      </dd>
+                    </dl>
+                  </div>
+
+                  <div class="govuk-grid-column-one-third">
+                    <dl class="app-claim-card__list app-claim-card__list--secondary">
+                      <dt class="govuk-visually-hidden">Submitted on</dt>
+                      <dd class="govuk-body-s govuk-!-margin-bottom-1">
+                        {{ claim.submittedAt | datetime('dd/MM/yyyy') }}
+                      </dd>
+                      <dt class="govuk-visually-hidden">Total amount</dt>
+                      <dd class="govuk-body-s  govuk-!-margin-bottom-1">
+                        £{{ claim.totalAmount | numeral('0,0.00') }}
+                      </dd>
+                    </dl>
+                  </div>
+                </div>
+              </section>
+            {% endfor %}
+          </div>
+
+          {% include "_includes/pagination.njk" %}
+
+        {% else %}
+
+          {% include "../_no-results.njk" %}
+
+        {% endif %}
+
+      </div>
+    </div>
+  {% endif %}
 
 {% endblock %}
 

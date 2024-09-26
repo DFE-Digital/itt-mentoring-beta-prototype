@@ -85,6 +85,8 @@ exports.list_claims_get = (req, res) => {
 
   claims = claims.filter(claim => claim.status === 'information_needed')
 
+  const hasClaims = !!claims.length
+
   if (schools?.length) {
     claims = claims.filter(claim => {
       return schools.includes(claim.organisationId)
@@ -110,6 +112,7 @@ exports.list_claims_get = (req, res) => {
     selectedFilters,
     hasFilters,
     hasSearch,
+    hasClaims,
     keywords,
     filterSchoolItems,
     filterProviderItems,
