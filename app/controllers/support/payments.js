@@ -114,8 +114,8 @@ exports.list_claims_get = (req, res) => {
     filterSchoolItems,
     filterProviderItems,
     actions: {
-      export: `/support/claims/payments/export`,
-      response: `/support/claims/payments/import`,
+      export: `/support/claims/payments/send`,
+      response: `/support/claims/payments/receive`,
       view: `/support/claims/payments`,
       filters: {
         apply: '/support/claims/payments',
@@ -167,24 +167,24 @@ exports.show_claim_get = (req, res) => {
 /// SEND CLAIMS FOR PAYMENT
 /// ------------------------------------------------------------------------ ///
 
-exports.export_claims_get = (req, res) => {
+exports.send_claims_get = (req, res) => {
   const claims = claimModel
     .findMany({ })
     .filter(claim => claim.status === 'submitted')
 
   const hasClaims = !!claims.length
 
-  res.render('../views/support/claims/payments/export', {
+  res.render('../views/support/claims/payments/send', {
     hasClaims,
     actions: {
-      save: `/support/claims/payments/export`,
+      save: `/support/claims/payments/send`,
       back: `/support/claims/payments`,
       cancel: `/support/claims/payments`
     }
   })
 }
 
-exports.export_claims_post = (req, res) => {
+exports.send_claims_post = (req, res) => {
   console.log(req.file);
 
   const errors = []
@@ -196,10 +196,10 @@ exports.export_claims_post = (req, res) => {
 
     const hasClaims = !!claims.length
 
-    res.render('../views/support/claims/payments/export', {
+    res.render('../views/support/claims/payments/send', {
       hasClaims,
       actions: {
-        save: `/support/claims/payments/export`,
+        save: `/support/claims/payments/send`,
         back: `/support/claims/payments`,
         cancel: `/support/claims/payments`
       },
@@ -232,24 +232,24 @@ exports.export_claims_post = (req, res) => {
 /// IMPORT CLAIM PAYMENT RESPONSE
 /// ------------------------------------------------------------------------ ///
 
-exports.import_claims_get = (req, res) => {
+exports.receive_claims_get = (req, res) => {
   const claims = claimModel
     .findMany({ })
     .filter(claim => claim.status === 'payment_pending')
 
   const hasClaims = !!claims.length
 
-  res.render('../views/support/claims/payments/import', {
+  res.render('../views/support/claims/payments/receive', {
     hasClaims,
     actions: {
-      save: `/support/claims/payments/import`,
+      save: `/support/claims/payments/receive`,
       back: `/support/claims/payments`,
       cancel: `/support/claims/payments`
     }
   })
 }
 
-exports.import_claims_post = (req, res) => {
+exports.receive_claims_post = (req, res) => {
   const errors = []
 
   // console.log(req.file)
@@ -287,10 +287,10 @@ exports.import_claims_post = (req, res) => {
 
     const hasClaims = !!claims.length
 
-    res.render('../views/support/claims/payments/import', {
+    res.render('../views/support/claims/payments/receive', {
       hasClaims,
       actions: {
-        save: `/support/claims/payments/import`,
+        save: `/support/claims/payments/receive`,
         back: `/support/claims/payments`,
         cancel: `/support/claims/payments`
       },
@@ -338,7 +338,7 @@ exports.review_claims_get = (req, res) => {
     pagination,
     actions: {
       save: `/support/claims/payments/review`,
-      back: `/support/claims/payments/import`,
+      back: `/support/claims/payments/receive`,
       cancel: `/support/claims/payments`
     }
   })
@@ -362,7 +362,7 @@ exports.review_claims_post = (req, res) => {
   res.redirect('/support/claims/payments')
 }
 
-exports.export_claims_details_get = (req, res) => {
+exports.send_claims_details_get = (req, res) => {
   res.render('../views/support/claims/payments/show', {
     actions: {
       back: `/support/claims/payments`

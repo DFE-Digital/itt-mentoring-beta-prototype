@@ -365,12 +365,12 @@ router.get('/support/claims/payments/remove-all-filters', checkIsAuthenticated, 
 
 router.get('/support/claims/payments/remove-keyword-search', checkIsAuthenticated, supportPaymentController.removeKeywordSearch)
 
-router.get('/support/claims/payments/export', checkIsAuthenticated, supportPaymentController.export_claims_get)
-router.post('/support/claims/payments/export', checkIsAuthenticated, supportPaymentController.export_claims_post)
+router.get('/support/claims/payments/send', checkIsAuthenticated, supportPaymentController.send_claims_get)
+router.post('/support/claims/payments/send', checkIsAuthenticated, supportPaymentController.send_claims_post)
 
-router.get('/support/claims/payments/import', checkIsAuthenticated, supportPaymentController.import_claims_get)
+router.get('/support/claims/payments/receive', checkIsAuthenticated, supportPaymentController.receive_claims_get)
 // the upload.single('payments') middleware uses the form field file name
-router.post('/support/claims/payments/import', checkIsAuthenticated, upload.single('payments'), supportPaymentController.import_claims_post)
+router.post('/support/claims/payments/receive', checkIsAuthenticated, upload.single('payments'), supportPaymentController.receive_claims_post)
 
 router.get('/support/claims/payments/review', checkIsAuthenticated, supportPaymentController.review_claims_get)
 router.post('/support/claims/payments/review', checkIsAuthenticated, supportPaymentController.review_claims_post)
