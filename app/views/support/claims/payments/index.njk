@@ -49,7 +49,7 @@
       }) }}
 
       <h3 class="govuk-heading-s">
-        {{ pagination.totalCount }} claims need further information
+        {{ pagination.totalCount if pagination.totalCount else "No" }} claims need further information
       </h3>
 
     </div>
