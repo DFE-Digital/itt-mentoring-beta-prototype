@@ -9,7 +9,6 @@ const paymentHelper = require('../../helpers/payments')
 const filterHelper = require('../../helpers/filters')
 const providerHelper = require('../../helpers/providers')
 const schoolHelper = require('../../helpers/schools')
-const claimHelper = require('../../helpers/claims')
 
 const claimDecorator = require('../../decorators/claims')
 const paymentDecorator = require('../../decorators/payments')
@@ -169,10 +168,6 @@ exports.show_claim_get = (req, res) => {
   })
 
   claim = claimDecorator.decorate(claim)
-
-  claim.totalHours = claimHelper.calculateClaimTotalHours(
-    claim.mentors
-  )
 
   const organisation = claim.school
 

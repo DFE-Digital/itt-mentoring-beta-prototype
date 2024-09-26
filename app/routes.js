@@ -279,7 +279,7 @@ router.post('/organisations/:organisationId/claims/:claimId/check', checkIsAuthe
 router.get('/organisations/:organisationId/claims/:claimId/delete', checkIsAuthenticated, claimController.delete_claim_get)
 router.post('/organisations/:organisationId/claims/:claimId/delete', checkIsAuthenticated, claimController.delete_claim_post)
 
-router.get('/organisations/:organisationId/claims/:claimId', checkIsAuthenticated, claimController.claim_details)
+router.get('/organisations/:organisationId/claims/:claimId', checkIsAuthenticated, claimController.show_claim_get)
 
 router.get('/organisations/:organisationId/claims', checkIsAuthenticated, claimController.claim_list)
 
@@ -348,7 +348,7 @@ router.post('/support/organisations/:organisationId/claims/new/check', checkIsAu
 router.get('/support/organisations/:organisationId/claims/:claimId/delete', checkIsAuthenticated, supportOrganisationClaimController.delete_claim_get)
 router.post('/support/organisations/:organisationId/claims/:claimId/delete', checkIsAuthenticated, supportOrganisationClaimController.delete_claim_post)
 
-router.get('/support/organisations/:organisationId/claims/:claimId', checkIsAuthenticated, supportOrganisationClaimController.claim_details)
+router.get('/support/organisations/:organisationId/claims/:claimId', checkIsAuthenticated, supportOrganisationClaimController.show_claim_get)
 
 router.get('/support/organisations/:organisationId/claims', checkIsAuthenticated, supportOrganisationClaimController.claim_list)
 
