@@ -365,8 +365,6 @@ router.get('/support/claims/payments/remove-all-filters', checkIsAuthenticated, 
 
 router.get('/support/claims/payments/remove-keyword-search', checkIsAuthenticated, supportPaymentController.removeKeywordSearch)
 
-router.get('/support/claims/payments/:claimId', checkIsAuthenticated, supportPaymentController.show_claim_get)
-
 router.get('/support/claims/payments/export', checkIsAuthenticated, supportPaymentController.export_claims_get)
 router.post('/support/claims/payments/export', checkIsAuthenticated, supportPaymentController.export_claims_post)
 
@@ -377,7 +375,9 @@ router.post('/support/claims/payments/import', checkIsAuthenticated, upload.sing
 router.get('/support/claims/payments/review', checkIsAuthenticated, supportPaymentController.review_claims_get)
 router.post('/support/claims/payments/review', checkIsAuthenticated, supportPaymentController.review_claims_post)
 
-router.get('/support/claims/payments/:exportId', checkIsAuthenticated, supportPaymentController.export_claims_details_get)
+router.get('/support/claims/payments/:claimId', checkIsAuthenticated, supportPaymentController.show_claim_get)
+
+// router.get('/support/claims/payments/:exportId', checkIsAuthenticated, supportPaymentController.export_claims_details_get)
 
 router.get('/support/claims/sampling', checkIsAuthenticated, supportSamplingController.list_claims_get)
 
