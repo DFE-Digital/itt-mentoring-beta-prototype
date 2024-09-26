@@ -9,6 +9,7 @@ const paymentHelper = require('../../helpers/payments')
 const filterHelper = require('../../helpers/filters')
 const providerHelper = require('../../helpers/providers')
 const schoolHelper = require('../../helpers/schools')
+const claimHelper = require('../../helpers/claims')
 
 const claimDecorator = require('../../decorators/claims')
 const paymentDecorator = require('../../decorators/payments')
@@ -163,7 +164,27 @@ exports.removeKeywordSearch = (req, res) => {
 /// ------------------------------------------------------------------------ ///
 
 exports.show_claim_get = (req, res) => {
-  res.send('Not implemented yet')
+  let claim = claimModel.findOne({
+    claimId: req.params.claimId
+  })
+
+  claim = claimDecorator.decorate(claim)
+
+  claim.totalHours = claimHelper.calculateClaimTotalHours(
+    claim.mentors
+  )
+
+  const organisation = claim.school
+
+  res.render('../views/support/claims/payments/show', {
+    claim,
+    organisation,
+    actions: {
+      save: `/support/claims/payments/send`,
+      back: `/support/claims/payments`,
+      cancel: `/support/claims/payments`
+    }
+  })
 }
 
 /// ------------------------------------------------------------------------ ///

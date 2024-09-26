@@ -2,8 +2,8 @@
 
 {% set primaryNavId = "claims" %}
 
-{% set title = "Export 28 September 2024 at 1:30pm" %}
-{% set caption = "Payments" %}
+{% set title = claim.organisationId | getSchoolName %}
+{% set caption = "Claim - " + claim.reference | upper %}
 
 {% block pageTitle %}
   {{ "Error: " if errors.length }}{{ title + " - " if title }}{{ caption + " - " if caption }}{{ serviceName }} - GOV.UK
@@ -21,9 +21,34 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
 
+      {# tag used in the heading #}
+      {% set headingTag %}
+        {{ govukTag({
+          text: claim.status | getClaimStatusLabel,
+          classes: "govuk-tag--no-max-width " + (claim.status | getClaimStatusClasses)
+        }) }}
+      {% endset %}
+
       {% include "_includes/page-heading.njk" %}
 
-      <p class="govuk-body">Details go here, for example a list of claims and actions</p>
+      {{ govukButton({
+        text: "Information sent to ESFA",
+        href: "#"
+      }) }}
+
+      {{ govukButton({
+        text: "Payment not approved",
+        href: "#",
+        classes: "govuk-button--secondary"
+      }) }}
+
+      {% include "_includes/claims/meta-data.njk" %}
+
+      {% include "_includes/claims/details.njk" %}
+
+      {% include "_includes/claims/hours-of-training.njk" %}
+
+      {% include "_includes/claims/grant-funding.njk" %}
 
     </div>
   </div>
