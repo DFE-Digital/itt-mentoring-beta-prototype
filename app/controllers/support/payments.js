@@ -280,6 +280,12 @@ exports.receive_claims_post = (req, res) => {
     }
   }
 
+  // other errors:
+  // the selected file has the incorrect number of fields
+  // the selected file contains incorrect headers
+  //
+  // if the file contains an error in a line of data, we reject the entire file
+
   if (errors.length) {
     const claims = claimModel
       .findMany({ })
