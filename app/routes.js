@@ -98,6 +98,7 @@ const supportClaimController = require('./controllers/support/claims')
 const supportPaymentController = require('./controllers/support/payments')
 const supportSamplingController = require('./controllers/support/sampling')
 const supportClawbackController = require('./controllers/support/clawbacks')
+const supportActivityController = require('./controllers/support/activity')
 
 // Authentication middleware
 const checkIsAuthenticated = (req, res, next) => {
@@ -382,6 +383,8 @@ router.get('/support/claims/payments/:claimId', checkIsAuthenticated, supportPay
 router.get('/support/claims/sampling', checkIsAuthenticated, supportSamplingController.list_claims_get)
 
 router.get('/support/claims/clawbacks', checkIsAuthenticated, supportClawbackController.list_claims_get)
+
+router.get('/support/claims/activity', checkIsAuthenticated, supportActivityController.list_activity_get)
 
 router.get('/support/claims/download', checkIsAuthenticated, supportClaimController.download_claims_get)
 
