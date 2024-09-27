@@ -242,9 +242,17 @@ exports.send_claims_post = (req, res) => {
       newStatus: 'payment_pending'
     })
 
-    req.flash('success', 'Claims sent to ESFA')
-    res.redirect('/support/claims/payments')
+    // req.flash('success', 'Claims sent to ESFA')
+    res.redirect('/support/claims/payments/confirmation')
   }
+}
+
+exports.send_claims_confirmation_get = (req, res) => {
+  res.render('../views/support/claims/payments/confirmation', {
+    actions: {
+      claims: '/support/claims'
+    }
+  })
 }
 
 /// ------------------------------------------------------------------------ ///
