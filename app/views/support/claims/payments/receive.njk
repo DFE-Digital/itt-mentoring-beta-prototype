@@ -34,8 +34,6 @@
 
         <form action="{{ actions.save }}" method="post" accept-charset="utf-8" enctype="multipart/form-data" novalidate>
 
-          {# <p class="govuk-body">Some important information to describe the process</p> #}
-
           {#
             the field name is used in the upload process
             if you change the name, you will need to change it in the routes.js too
@@ -50,6 +48,50 @@
               classes: "govuk-label--s"
             },
             errorMessage: errors | getErrorMessage("payments")
+          }) }}
+
+          {% set helpText %}
+            <p class="govuk-body">Use this form to upload the CSV file sent by the ESFA.</p>
+
+            <p class="govuk-body">The CSV file must contain the following headers in the first row:</p>
+
+            <ul class="govuk-list govuk-list--bullet">
+              <li>
+                claim_reference
+              </li>
+              <li>
+                school_urn
+              </li>
+              <li>
+                school_name
+              </li>
+              <li>
+                school_local_authority_name
+              </li>
+              <li>
+                claim_amount
+              </li>
+              <li>
+                school_type_of_establishment
+              </li>
+              <li>
+                school_group
+              </li>
+              <li>
+                claim_submission_date
+              </li>
+              <li>
+                claim_status
+              </li>
+              <li>
+                claim_unpaid_reason
+              </li>
+            </ul>
+          {% endset %}
+
+          {{ govukDetails({
+            summaryText: "Help with the CSV file",
+            html: helpText
           }) }}
 
           {{ govukButton({
