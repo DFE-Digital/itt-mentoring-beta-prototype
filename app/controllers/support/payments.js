@@ -242,8 +242,8 @@ exports.send_claims_post = (req, res) => {
       newStatus: 'payment_pending'
     })
 
-    // req.flash('success', 'Claims sent to ESFA')
-    res.redirect('/support/claims/payments/confirmation')
+    req.flash('success', 'Claims sent to ESFA')
+    res.redirect('/support/claims/payments')
   }
 }
 
@@ -352,6 +352,9 @@ exports.receive_claims_post = (req, res) => {
     })
 
     req.session.data.payments = payments
+
+    // delete the file now it's not needed
+    fs.unlinkSync(req.file.path)
 
     res.redirect('/support/claims/payments/review')
   }
