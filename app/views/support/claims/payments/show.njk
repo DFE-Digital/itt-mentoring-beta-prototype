@@ -18,6 +18,8 @@
 
 {% block content %}
 
+  {% include "_includes/notification-banner.njk" %}
+
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
 
@@ -34,13 +36,13 @@
       {% if claim.status !== "information_sent" %}
         {{ govukButton({
           text: "Information sent to ESFA",
-          href: "#"
+          href: actions.informationSent
         }) }}
       {% endif %}
 
       {{ govukButton({
         text: "Payment not approved",
-        href: "#",
+        href: actions.paymentNotApproved,
         classes: "govuk-button--secondary" if claim.status !== "information_sent"
       }) }}
 

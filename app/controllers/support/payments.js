@@ -175,11 +175,38 @@ exports.show_claim_get = (req, res) => {
     claim,
     organisation,
     actions: {
-      save: `/support/claims/payments/send`,
+      informationSent: `/support/claims/payments/${req.params.claimId}/status/information_sent`,
+      paymentNotApproved: `/support/claims/payments/${req.params.claimId}/status/not_paid`,
       back: `/support/claims/payments`,
       cancel: `/support/claims/payments`
     }
   })
+}
+
+/// ------------------------------------------------------------------------ ///
+/// UPDATE CLAIM STATUS
+/// ------------------------------------------------------------------------ ///
+
+exports.update_claim_status_get = (req, res) => {
+  const claim = claimModel.findOne({
+    claimId: req.params.claimId
+  })
+
+  claimModel.updateOne({
+    organisationId: claim.organisationId,
+    claimId: claim.id,
+    claim: {
+      status: req.params.claimStatus
+    }
+  })
+
+  if (req.params.claimStatus === 'information_sent') {
+    req.flash('success', 'Claim marked as information sent')
+    res.redirect(`/support/claims/payments/${req.params.claimId}`)
+  } else {
+    req.flash('success', 'Claim marked as payment not approved')
+    res.redirect(`/support/claims/payments`)
+  }
 }
 
 /// ------------------------------------------------------------------------ ///

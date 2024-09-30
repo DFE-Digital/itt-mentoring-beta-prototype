@@ -380,7 +380,7 @@ router.post('/support/claims/payments/review', checkIsAuthenticated, supportPaym
 
 router.get('/support/claims/payments/:claimId', checkIsAuthenticated, supportPaymentController.show_claim_get)
 
-// router.get('/support/claims/payments/:exportId', checkIsAuthenticated, supportPaymentController.export_claims_details_get)
+router.get('/support/claims/payments/:claimId/status/:claimStatus', checkIsAuthenticated, supportPaymentController.update_claim_status_get)
 
 router.get('/support/claims/sampling', checkIsAuthenticated, supportSamplingController.list_claims_get)
 
