@@ -83,7 +83,7 @@ exports.list_claims_get = (req, res) => {
     })
   }
 
-  claims = claims.filter(claim => claim.status === 'information_needed')
+  claims = claims.filter(claim => ['information_needed','information_sent'].includes(claim.status))
 
   const hasClaims = !!claims.length
 
