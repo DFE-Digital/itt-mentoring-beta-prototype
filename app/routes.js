@@ -45,7 +45,38 @@ passport.use(new LocalStrategy(
 router.use(passport.initialize())
 router.use(passport.session())
 
-// Controller modules
+/// ------------------------------------------------------------------------ ///
+/// File uploads
+/// ------------------------------------------------------------------------ ///
+const path = require('path')
+const multer = require('multer')
+
+// create a separate storage variable for each type of file
+const storage = multer.diskStorage({
+  destination: (req, file, callback) => {
+    callback(null, path.join(__dirname, 'uploads'))
+  },
+  filename:  (req, file, callback) => {
+    const uniqueSuffix = new Date()
+    callback(null, file.fieldname + '-' + uniqueSuffix.toISOString() + '.csv')
+  }
+})
+
+const upload = multer({
+  storage
+  // ,
+  // fileFilter: (req, file, callback) => {
+  //   if (file.mimetype === 'text/csv') {
+  //     callback(null, true)
+  //   } else {
+  //     return callback(new Error('Invalid mimetype'))
+  //   }
+  // }
+})
+
+/// ------------------------------------------------------------------------ ///
+/// Controller modules
+/// ------------------------------------------------------------------------ ///
 const accountController = require('./controllers/account')
 const authenticationController = require('./controllers/authentication')
 const claimController = require('./controllers/claims')
@@ -67,6 +98,7 @@ const supportClaimController = require('./controllers/support/claims')
 const supportPaymentController = require('./controllers/support/payments')
 const supportSamplingController = require('./controllers/support/sampling')
 const supportClawbackController = require('./controllers/support/clawbacks')
+const supportActivityController = require('./controllers/support/activity')
 
 // Authentication middleware
 const checkIsAuthenticated = (req, res, next) => {
@@ -248,7 +280,7 @@ router.post('/organisations/:organisationId/claims/:claimId/check', checkIsAuthe
 router.get('/organisations/:organisationId/claims/:claimId/delete', checkIsAuthenticated, claimController.delete_claim_get)
 router.post('/organisations/:organisationId/claims/:claimId/delete', checkIsAuthenticated, claimController.delete_claim_post)
 
-router.get('/organisations/:organisationId/claims/:claimId', checkIsAuthenticated, claimController.claim_details)
+router.get('/organisations/:organisationId/claims/:claimId', checkIsAuthenticated, claimController.show_claim_get)
 
 router.get('/organisations/:organisationId/claims', checkIsAuthenticated, claimController.claim_list)
 
@@ -317,7 +349,7 @@ router.post('/support/organisations/:organisationId/claims/new/check', checkIsAu
 router.get('/support/organisations/:organisationId/claims/:claimId/delete', checkIsAuthenticated, supportOrganisationClaimController.delete_claim_get)
 router.post('/support/organisations/:organisationId/claims/:claimId/delete', checkIsAuthenticated, supportOrganisationClaimController.delete_claim_post)
 
-router.get('/support/organisations/:organisationId/claims/:claimId', checkIsAuthenticated, supportOrganisationClaimController.claim_details)
+router.get('/support/organisations/:organisationId/claims/:claimId', checkIsAuthenticated, supportOrganisationClaimController.show_claim_get)
 
 router.get('/support/organisations/:organisationId/claims', checkIsAuthenticated, supportOrganisationClaimController.claim_list)
 
@@ -327,9 +359,37 @@ router.get('/support/organisations/:organisationId/claims', checkIsAuthenticated
 
 router.get('/support/claims/payments', checkIsAuthenticated, supportPaymentController.list_claims_get)
 
+router.get('/support/claims/payments/remove-school-filter/:school', checkIsAuthenticated, supportPaymentController.removeSchoolFilter)
+router.get('/support/claims/payments/remove-provider-filter/:provider', checkIsAuthenticated, supportPaymentController.removeProviderFilter)
+
+router.get('/support/claims/payments/remove-all-filters', checkIsAuthenticated, supportPaymentController.removeAllFilters)
+
+router.get('/support/claims/payments/remove-keyword-search', checkIsAuthenticated, supportPaymentController.removeKeywordSearch)
+
+router.get('/support/claims/payments/send', checkIsAuthenticated, supportPaymentController.send_claims_get)
+router.post('/support/claims/payments/send', checkIsAuthenticated, supportPaymentController.send_claims_post)
+
+router.get('/support/claims/payments/confirmation', checkIsAuthenticated, supportPaymentController.send_claims_confirmation_get)
+
+router.get('/support/claims/payments/receive', checkIsAuthenticated, supportPaymentController.receive_claims_get)
+// the upload.single('payments') middleware uses the form field file name
+router.post('/support/claims/payments/receive', checkIsAuthenticated, upload.single('payments'), supportPaymentController.receive_claims_post)
+
+router.get('/support/claims/payments/review', checkIsAuthenticated, supportPaymentController.review_claims_get)
+router.post('/support/claims/payments/review', checkIsAuthenticated, supportPaymentController.review_claims_post)
+
+router.get('/support/claims/payments/download', checkIsAuthenticated, supportPaymentController.download_claims_get)
+router.post('/support/claims/payments/download', checkIsAuthenticated, supportPaymentController.download_claims_post)
+
+router.get('/support/claims/payments/:claimId', checkIsAuthenticated, supportPaymentController.show_claim_get)
+
+router.get('/support/claims/payments/:claimId/status/:claimStatus', checkIsAuthenticated, supportPaymentController.update_claim_status_get)
+
 router.get('/support/claims/sampling', checkIsAuthenticated, supportSamplingController.list_claims_get)
 
 router.get('/support/claims/clawbacks', checkIsAuthenticated, supportClawbackController.list_claims_get)
+
+router.get('/support/claims/activity', checkIsAuthenticated, supportActivityController.list_activity_get)
 
 router.get('/support/claims/download', checkIsAuthenticated, supportClaimController.download_claims_get)
 

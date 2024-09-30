@@ -1,0 +1,89 @@
+{% extends "layouts/support.njk" %}
+
+{% set primaryNavId = "claims" %}
+
+{% set title = "Are you sure you want to upload the payment data?" %}
+{% set caption = "Payments" %}
+
+{% block pageTitle %}
+  {{ "Error: " if errors.length }}{{ title + " - " if title }}{{ caption + " - " if caption }}{{ serviceName }} - GOV.UK
+{% endblock %}
+
+{% block beforeContent %}
+{{ govukBackLink({
+  text: "Back",
+  href: actions.back
+}) }}
+{% endblock %}
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      {% include "_includes/page-heading.njk" %}
+
+      <form action="{{ actions.save }}" method="post" accept-charset="utf-8" novalidate>
+
+        <p class="govuk-body">There are {{ paymentsCount | numeral('0,0') }} claims included in this upload.</p>
+
+        {{ govukButton({
+          text: "Upload data"
+        }) }}
+
+      </form>
+
+      <p class="govuk-body">
+        <a class="govuk-link" href="{{ actions.cancel }}">Cancel</a>
+      </p>
+
+    </div>
+  </div>
+
+  {# <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+
+      <h2 class="govuk-heading-m">Claims ({{ paymentsCount | numeral('0,0') }})</h2>
+
+      {% if payments.length %}
+        <table class="govuk-table">
+          <thead class="govuk-table__head">
+            <tr class="govuk-table__row">
+              <th scope="col" class="govuk-table__header">Claim reference</th>
+              <th scope="col" class="govuk-table__header">School name</th>
+              <th scope="col" class="govuk-table__header govuk-table__header--numeric">Total amount</th>
+              <th scope="col" class="govuk-table__header">Status</th>
+            </tr>
+          </thead>
+          <tbody class="govuk-table__body">
+            {% for payment in payments %}
+              <tr class="govuk-table__row">
+                <td class="govuk-table__cell">
+                  {{ payment.claim_reference }}
+                </td>
+                <td class="govuk-table__cell">
+                  {{ payment.school_name }}
+                </td>
+                <td class="govuk-table__cell govuk-table__cell--numeric">
+                  &pound;{{ payment.claim_amount | numeral('0,0.00') }}
+                </td>
+                <td class="govuk-table__cell">
+                  {{ govukTag({
+                    text: payment.claim_status | getClaimStatusLabel,
+                    classes: "govuk-tag--no-max-width " + (payment.claim_status | getClaimStatusClasses)
+                  }) }}
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+
+        {% include "_includes/pagination.njk" %}
+      {% else %}
+
+      {% endif %}
+
+    </div>
+  </div> #}
+
+{% endblock %}

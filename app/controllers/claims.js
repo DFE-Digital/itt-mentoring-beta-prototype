@@ -7,6 +7,8 @@ const Pagination = require('../helpers/pagination')
 const claimHelper = require('../helpers/claims')
 const mentorHelper = require('../helpers/mentors')
 
+const claimDecorator = require('../decorators/claims')
+
 const settings = require('../data/dist/settings')
 
 /// ------------------------------------------------------------------------ ///
@@ -50,16 +52,14 @@ exports.claim_list = (req, res) => {
 /// SHOW CLAIM
 /// ------------------------------------------------------------------------ ///
 
-exports.claim_details = (req, res) => {
+exports.show_claim_get = (req, res) => {
   const organisation = organisationModel.findOne({ organisationId: req.params.organisationId })
-  const claim = claimModel.findOne({
-    organisationId: req.params.organisationId,
+
+  let claim = claimModel.findOne({
     claimId: req.params.claimId
   })
 
-  claim.totalHours = claimHelper.calculateClaimTotalHours(
-    claim.mentors
-  )
+  claim = claimDecorator.decorate(claim)
 
   res.render('../views/claims/show', {
     organisation,

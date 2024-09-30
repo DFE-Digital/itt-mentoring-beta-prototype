@@ -1,0 +1,45 @@
+{% extends "layouts/support.njk" %}
+
+{% set primaryNavId = "claims" %}
+{% set secondaryNavId = "activity" %}
+
+{% set title = "Claims" %}
+{% set subtitle = "Activity log" %}
+
+{% block pageTitle %}
+{{ "Error: " if errors }}{{ subtitle + " - " if subtitle }}{{ title + " - " if title }}{{ caption + " - " if caption }}{{ serviceName }} - GOV.UK
+{% endblock %}
+
+{% block beforeContent %}
+
+{% endblock %}
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      {% include "_includes/page-heading.njk" %}
+    </div>
+  </div>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      {% include "../_secondary-navigation.njk" %}
+    </div>
+  </div>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      <h2 class="govuk-heading-m">
+        {{ subtitle }}
+      </h2>
+
+    </div>
+  </div>
+
+{% endblock %}
+
+{% block pageScripts %}
+
+{% endblock %}

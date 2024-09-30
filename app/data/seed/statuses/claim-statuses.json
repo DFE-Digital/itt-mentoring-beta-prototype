@@ -1,6 +1,1 @@
-[
-  { "id": "ab48d443-31ff-4fc6-9be5-47f451593b9c", "code": "draft", "name": "Draft" },
-  { "id": "d3d4a026-d3c3-42b0-b9d9-2eac19c3dce0", "code": "submitted", "name": "Submitted" },
-  { "id": "b5b7f22b-4ae2-4c15-9492-8f85f3427254", "code": "processed", "name": "Processed" },
-  { "id": "a2db56a3-c29f-4788-ae39-abaa52772d97", "code": "paid", "name": "Paid" }
-]
+[{"id":"ab48d443-31ff-4fc6-9be5-47f451593b9c","code":"draft","name":"Draft","classes":"govuk-tag--grey","sortOrder":1},{"id":"d3d4a026-d3c3-42b0-b9d9-2eac19c3dce0","code":"submitted","name":"Submitted","classes":"govuk-tag--blue","sortOrder":2},{"id":"b5b7f22b-4ae2-4c15-9492-8f85f3427254","code":"payment_pending","name":"Payment pending","classes":"govuk-tag--purple","sortOrder":3},{"id":"b5b7f22b-4ae2-4c15-9492-8f85f3427254","code":"information_needed","name":"Information needed","classes":"govuk-tag--pink","sortOrder":4},{"id":"880ad79f-88e4-471b-bc73-6048c329cee8","code":"information_sent","name":"Information sent","classes":"govuk-tag--yellow","sortOrder":5},{"id":"a2db56a3-c29f-4788-ae39-abaa52772d97","code":"paid","name":"Paid","classes":"govuk-tag--turquoise","sortOrder":6},{"id":"49e7a0a4-677a-4be1-99e1-34d8cced36a9","code":"not_paid","name":"Payment not approved","classes":"govuk-tag--red","sortOrder":7}]

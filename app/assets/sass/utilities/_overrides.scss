@@ -14,3 +14,7 @@ h1 .govuk-tag {
   position: relative;
   top: -7px;
 }
+
+.govuk-tag--no-max-width {
+  max-width: none;
+}

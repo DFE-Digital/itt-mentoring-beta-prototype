@@ -2,7 +2,6 @@ const path = require('path')
 const csvWriter = require('csv-writer').createObjectCsvWriter
 
 const claimModel = require('../../models/claims')
-const organisationModel = require('../../models/organisations')
 
 const Pagination = require('../../helpers/pagination')
 const claimHelper = require('../../helpers/claims')
@@ -60,7 +59,7 @@ exports.list_claims_get = (req, res) => {
         heading: { text: 'Status' },
         items: statuses.map((status) => {
           return {
-            text: statusHelper.getClaimStatusLabel(status),
+            text: claimHelper.getClaimStatusLabel(status),
             href: `/support/claims/remove-status-filter/${status}`
           }
         })
@@ -310,12 +309,13 @@ exports.download_claims_get = async (req, res) => {
 /// ------------------------------------------------------------------------ ///
 
 exports.show_claim_get = (req, res) => {
-  const claim = claimModel.findOne({ claimId: req.params.claimId })
-  const organisation = organisationModel.findOne({ organisationId: claim.organisationId })
+  let claim = claimModel.findOne({
+    claimId: req.params.claimId
+  })
 
-  claim.totalHours = claimHelper.calculateClaimTotalHours(
-    claim.mentors
-  )
+  claim = claimDecorator.decorate(claim)
+
+  const organisation = claim.school
 
   res.render('../views/support/claims/show', {
     organisation,
