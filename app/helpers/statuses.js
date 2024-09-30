@@ -1,5 +1,11 @@
 exports.getClaimStatusOptions = (selectedItem) => {
   const options = require('../data/dist/statuses/claim-statuses')
+
+  // sort the status options by sortOrder
+  options.sort((a, b) => {
+    return a.sortOrder - b.sortOrder
+  })
+
   const items = []
 
   options.forEach((option, i) => {
@@ -12,10 +18,6 @@ exports.getClaimStatusOptions = (selectedItem) => {
 
     items.push(item)
   })
-
-  // items.sort((a, b) => {
-  //   return a.text.localeCompare(b.text)
-  // })
 
   return items
 }
