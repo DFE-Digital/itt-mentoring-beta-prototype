@@ -31,15 +31,17 @@
 
       {% include "_includes/page-heading.njk" %}
 
-      {{ govukButton({
-        text: "Information sent to ESFA",
-        href: "#"
-      }) }}
+      {% if claim.status !== "information_sent" %}
+        {{ govukButton({
+          text: "Information sent to ESFA",
+          href: "#"
+        }) }}
+      {% endif %}
 
       {{ govukButton({
         text: "Payment not approved",
         href: "#",
-        classes: "govuk-button--secondary"
+        classes: "govuk-button--secondary" if claim.status !== "information_sent"
       }) }}
 
       {% include "_includes/claims/meta-data.njk" %}
