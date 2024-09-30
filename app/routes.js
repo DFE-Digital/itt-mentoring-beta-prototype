@@ -378,6 +378,9 @@ router.post('/support/claims/payments/receive', checkIsAuthenticated, upload.sin
 router.get('/support/claims/payments/review', checkIsAuthenticated, supportPaymentController.review_claims_get)
 router.post('/support/claims/payments/review', checkIsAuthenticated, supportPaymentController.review_claims_post)
 
+router.get('/support/claims/payments/download', checkIsAuthenticated, supportPaymentController.download_claims_get)
+router.post('/support/claims/payments/download', checkIsAuthenticated, supportPaymentController.download_claims_post)
+
 router.get('/support/claims/payments/:claimId', checkIsAuthenticated, supportPaymentController.show_claim_get)
 
 router.get('/support/claims/payments/:claimId/status/:claimStatus', checkIsAuthenticated, supportPaymentController.update_claim_status_get)

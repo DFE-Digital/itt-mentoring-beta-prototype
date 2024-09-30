@@ -432,3 +432,23 @@ exports.send_claims_details_get = (req, res) => {
     }
   })
 }
+
+/// ------------------------------------------------------------------------ ///
+/// IMPORT CLAIM PAYMENT RESPONSE
+/// ------------------------------------------------------------------------ ///
+
+exports.download_claims_get = (req, res) => {
+  const hasError = req.query.error
+  res.render('../views/support/claims/payments/download', {
+    hasError,
+    actions: {
+      download: `/support/claims/payments/download`
+    }
+  })
+}
+
+exports.download_claims_post = (req, res) => {
+
+  req.flash('success', 'Claims downloaded')
+  res.redirect(`/support/claims/payments/download`)
+}
