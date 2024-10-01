@@ -2,16 +2,15 @@ const fs = require('fs')
 const csv = require('csv-string')
 
 const claimModel = require('../../models/claims')
-const paymentModel = require('../../models/payments')
 
 const Pagination = require('../../helpers/pagination')
-const paymentHelper = require('../../helpers/payments')
+const samplingHelper = require('../../helpers/payments')
 const filterHelper = require('../../helpers/filters')
 const providerHelper = require('../../helpers/providers')
 const schoolHelper = require('../../helpers/schools')
 
 const claimDecorator = require('../../decorators/claims')
-const paymentDecorator = require('../../decorators/payments')
+const samplingDecorator = require('../../decorators/sampling')
 
 const settings = require('../../data/dist/settings')
 
@@ -83,7 +82,7 @@ exports.list_claims_get = (req, res) => {
     })
   }
 
-  claims = claims.filter(claim => ['sampling_in_progress'].includes(claim.status))
+  claims = claims.filter(claim => ['sampling_in_progress','sampling_not_approved'].includes(claim.status))
 
   const hasClaims = !!claims.length
 
@@ -200,13 +199,13 @@ exports.update_claim_status_get = (req, res) => {
     }
   })
 
-  if (req.params.claimStatus === 'information_sent') {
-    req.flash('success', 'Claim marked as information sent')
-    res.redirect(`/support/claims/sampling/${req.params.claimId}`)
-  } else {
-    req.flash('success', 'Claim marked as payment not approved')
+  // if (req.params.claimStatus === 'information_sent') {
+  //   req.flash('success', 'Claim marked as information sent')
+  //   res.redirect(`/support/claims/sampling/${req.params.claimId}`)
+  // } else {
+    req.flash('success', 'Claim marked as XYZ')
     res.redirect(`/support/claims/sampling`)
-  }
+  // }
 }
 
 /// ------------------------------------------------------------------------ ///
@@ -233,6 +232,40 @@ exports.upload_claims_get = (req, res) => {
 exports.upload_claims_post = (req, res) => {
   const errors = []
 
+  console.log(req.file)
+
+  if (!req.file) {
+    const error = {}
+    error.fieldName = 'sample'
+    error.href = '#sample'
+    error.text = 'Select a CSV file to upload'
+    errors.push(error)
+  } else {
+    if (req.file.mimetype !== 'text/csv') {
+      const error = {}
+      error.fieldName = 'sample'
+      error.href = '#sample'
+      error.text = 'The selected file must be a CSV'
+      errors.push(error)
+      // delete the incorrect file
+      fs.unlinkSync(req.file.path)
+    } else if (!req.file.size) {
+      const error = {}
+      error.fieldName = 'sample'
+      error.href = '#sample'
+      error.text = 'The selected file is empty'
+      errors.push(error)
+      // delete the incorrect file
+      fs.unlinkSync(req.file.path)
+    }
+  }
+
+  // other errors:
+  // the selected file has the incorrect number of fields
+  // the selected file contains incorrect headers
+  //
+  // if the file contains an error in a line of data, we reject the entire file
+
   if (errors.length) {
     const claims = claimModel
       .findMany({ })
@@ -250,34 +283,75 @@ exports.upload_claims_post = (req, res) => {
       errors
     })
   } else {
-    // get all submitted claims
-    // const payments = paymentModel.findMany({
-    //   status: 'submitted'
-    // })
+    // get the CSV delimiter
+    const delimiter = csv.detect(req.file.path)
+    // read the raw CSV data
+    const raw = fs.readFileSync(req.file.path, 'utf8')
+    // parse the CSV data
+    let claims = []
+    csv.readAll(raw, delimiter, data => {
+      claims = data
+    })
 
-    // // create a CSV file
-    // paymentModel.writeFile({
-    //   payments
-    // })
+    // remove header row from the claims array
+    claims.shift()
 
-    // // update claim status to 'pending_payment'
-    // paymentModel.updateMany({
-    //   userId: req.session.passport.user.id,
-    //   currentStatus: 'submitted',
-    //   newStatus: 'payment_pending'
-    // })
+    // put the data into the session for use later
+    claims = samplingHelper.parseData(claims)
 
-    req.flash('success', 'Sampling file uploaded')
-    res.redirect('/support/claims/sampling')
+    // decorate payment data with claim ID
+    claims = claims.map(item => {
+      return item = samplingDecorator.decorate(item)
+    })
+
+    req.session.data.claims = claims
+
+    // delete the file now it's not needed
+    fs.unlinkSync(req.file.path)
+
+    res.redirect('/support/claims/sampling/upload/review')
   }
 }
 
 exports.review_upload_claims_get = (req, res) => {
+  let claims = req.session.data.claims
 
+  const claimsCount = claims.length
+
+  const pagination = new Pagination(claims, req.query.page, settings.pageSize)
+  claims = pagination.getData()
+
+  const pageHeading = 'Are you sure you want to upload the sampling data?'
+
+  res.render('../views/support/claims/sampling/review', {
+    claims,
+    claimsCount,
+    pagination,
+    pageHeading,
+    actions: {
+      save: `/support/claims/sampling/response/review`,
+      back: `/support/claims/sampling/response`,
+      cancel: `/support/claims/sampling`
+    }
+  })
 }
 
 exports.review_upload_claims_post = (req, res) => {
+  const claims = req.session.data.claims
 
+  claims.forEach(claim => {
+    claimModel.updateOne({
+      organisationId: claim.organisationId,
+      claimId: claim.claimId,
+      userId: req.session.passport.user.id,
+      claim: {
+        status: claim.claim_status
+      }
+    })
+  })
+
+  req.flash('success', 'Sampling data uploaded')
+  res.redirect('/support/claims/sampling')
 }
 
 /// ------------------------------------------------------------------------ ///
@@ -287,7 +361,7 @@ exports.review_upload_claims_post = (req, res) => {
 exports.response_claims_get = (req, res) => {
   const claims = claimModel
     .findMany({ })
-    .filter(claim => claim.status === 'payment_pending')
+    .filter(claim => claim.status === 'sampling_in_progress')
 
   const hasClaims = !!claims.length
 
@@ -308,23 +382,23 @@ exports.response_claims_post = (req, res) => {
 
   if (!req.file) {
     const error = {}
-    error.fieldName = 'payments'
-    error.href = '#payments'
+    error.fieldName = 'response'
+    error.href = '#response'
     error.text = 'Select a CSV file to upload'
     errors.push(error)
   } else {
     if (req.file.mimetype !== 'text/csv') {
       const error = {}
-      error.fieldName = 'payments'
-      error.href = '#payments'
+      error.fieldName = 'response'
+      error.href = '#response'
       error.text = 'The selected file must be a CSV'
       errors.push(error)
       // delete the incorrect file
       fs.unlinkSync(req.file.path)
     } else if (!req.file.size) {
       const error = {}
-      error.fieldName = 'payments'
-      error.href = '#payments'
+      error.fieldName = 'response'
+      error.href = '#response'
       error.text = 'The selected file is empty'
       errors.push(error)
       // delete the incorrect file
@@ -341,7 +415,7 @@ exports.response_claims_post = (req, res) => {
   if (errors.length) {
     const claims = claimModel
       .findMany({ })
-      .filter(claim => claim.status === 'payment_pending')
+      .filter(claim => claim.status === 'sampling_in_progress')
 
     const hasClaims = !!claims.length
 
@@ -360,45 +434,48 @@ exports.response_claims_post = (req, res) => {
     // read the raw CSV data
     const raw = fs.readFileSync(req.file.path, 'utf8')
     // parse the CSV data
-    let payments = []
+    let claims = []
     csv.readAll(raw, delimiter, data => {
-      payments = data
+      claims = data
     })
 
-    // remove header row from the payments array
-    payments.shift()
+    // remove header row from the claims array
+    claims.shift()
 
     // put the data into the session for use later
-    payments = paymentHelper.parseData(payments)
+    claims = samplingHelper.parseData(claims)
 
     // decorate payment data with claim ID
-    payments = payments.map(payment => {
-      return payment = paymentDecorator.decorate(payment)
+    claims = claims.map(item => {
+      return item = samplingDecorator.decorate(item)
     })
 
-    req.session.data.payments = payments
+    req.session.data.claims = claims
 
     // delete the file now it's not needed
     fs.unlinkSync(req.file.path)
 
-    res.redirect('/support/claims/sampling/review')
+    res.redirect('/support/claims/sampling/response/review')
   }
 }
 
 exports.review_response_claims_get = (req, res) => {
-  let payments = req.session.data.payments
+  let claims = req.session.data.claims
 
-  const claimsCount = payments.length
+  const claimsCount = claims.length
 
-  const pagination = new Pagination(payments, req.query.page, settings.pageSize)
-  payments = pagination.getData()
+  const pagination = new Pagination(claims, req.query.page, settings.pageSize)
+  claims = pagination.getData()
+
+  const pageHeading = 'Are you sure you want to upload the provider’s response?'
 
   res.render('../views/support/claims/sampling/review', {
-    payments,
+    claims,
     claimsCount,
     pagination,
+    pageHeading,
     actions: {
-      save: `/support/claims/sampling/review`,
+      save: `/support/claims/sampling/response/review`,
       back: `/support/claims/sampling/response`,
       cancel: `/support/claims/sampling`
     }
@@ -406,29 +483,21 @@ exports.review_response_claims_get = (req, res) => {
 }
 
 exports.review_response_claims_post = (req, res) => {
-  const payments = req.session.data.payments
+  const claims = req.session.data.claims
 
-  payments.forEach(payment => {
+  claims.forEach(claim => {
     claimModel.updateOne({
-      organisationId: payment.organisationId,
-      claimId: payment.claimId,
+      organisationId: claim.organisationId,
+      claimId: claim.claimId,
       userId: req.session.passport.user.id,
       claim: {
-        status: payment.claim_status
+        status: claim.claim_status
       }
     })
   })
 
-  req.flash('success', 'ESFA reponse uploaded')
+  req.flash('success', 'Provider reponse uploaded')
   res.redirect('/support/claims/sampling')
-}
-
-exports.send_claims_details_get = (req, res) => {
-  res.render('../views/support/claims/sampling/show', {
-    actions: {
-      back: `/support/claims/sampling`
-    }
-  })
 }
 
 /// ------------------------------------------------------------------------ ///
