@@ -55,7 +55,7 @@
 
             <p class="govuk-body">The CSV file must contain the following headers in the first row:</p>
 
-            {# <ul class="govuk-list govuk-list--bullet">
+            <ul class="govuk-list govuk-list--bullet">
               <li>
                 claim_reference
               </li>
@@ -66,27 +66,21 @@
                 school_name
               </li>
               <li>
-                school_local_authority_name
+                school_post_code
               </li>
               <li>
-                claim_amount
+                mentor_full_name
               </li>
               <li>
-                school_type_of_establishment
+                claim_hours_of_training
               </li>
               <li>
-                school_group
+                claim_assured
               </li>
               <li>
-                claim_submission_date
+                claim_assured_reason
               </li>
-              <li>
-                claim_status
-              </li>
-              <li>
-                claim_unpaid_reason
-              </li>
-            </ul> #}
+            </ul>
           {% endset %}
 
           {{ govukDetails({
