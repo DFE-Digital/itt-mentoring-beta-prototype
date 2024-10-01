@@ -118,7 +118,7 @@ exports.list_claims_get = (req, res) => {
     filterProviderItems,
     actions: {
       export: `/support/claims/payments/send`,
-      response: `/support/claims/payments/receive`,
+      response: `/support/claims/payments/response`,
       view: `/support/claims/payments`,
       filters: {
         apply: '/support/claims/payments',
@@ -286,24 +286,24 @@ exports.send_claims_confirmation_get = (req, res) => {
 /// IMPORT CLAIM PAYMENT RESPONSE
 /// ------------------------------------------------------------------------ ///
 
-exports.receive_claims_get = (req, res) => {
+exports.response_claims_get = (req, res) => {
   const claims = claimModel
     .findMany({ })
     .filter(claim => claim.status === 'payment_pending')
 
   const hasClaims = !!claims.length
 
-  res.render('../views/support/claims/payments/receive', {
+  res.render('../views/support/claims/payments/response', {
     hasClaims,
     actions: {
-      save: `/support/claims/payments/receive`,
+      save: `/support/claims/payments/response`,
       back: `/support/claims/payments`,
       cancel: `/support/claims/payments`
     }
   })
 }
 
-exports.receive_claims_post = (req, res) => {
+exports.response_claims_post = (req, res) => {
   const errors = []
 
   // console.log(req.file)
@@ -347,10 +347,10 @@ exports.receive_claims_post = (req, res) => {
 
     const hasClaims = !!claims.length
 
-    res.render('../views/support/claims/payments/receive', {
+    res.render('../views/support/claims/payments/response', {
       hasClaims,
       actions: {
-        save: `/support/claims/payments/receive`,
+        save: `/support/claims/payments/response`,
         back: `/support/claims/payments`,
         cancel: `/support/claims/payments`
       },
@@ -390,18 +390,18 @@ exports.receive_claims_post = (req, res) => {
 exports.review_claims_get = (req, res) => {
   let payments = req.session.data.payments
 
-  const paymentsCount = payments.length
+  const claimsCount = payments.length
 
   const pagination = new Pagination(payments, req.query.page, settings.pageSize)
   payments = pagination.getData()
 
   res.render('../views/support/claims/payments/review', {
     payments,
-    paymentsCount,
+    claimsCount,
     pagination,
     actions: {
       save: `/support/claims/payments/review`,
-      back: `/support/claims/payments/receive`,
+      back: `/support/claims/payments/response`,
       cancel: `/support/claims/payments`
     }
   })
