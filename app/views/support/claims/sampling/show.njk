@@ -1,0 +1,58 @@
+{% extends "layouts/support.njk" %}
+
+{% set primaryNavId = "claims" %}
+
+{% set title = claim.organisationId | getSchoolName %}
+{% set caption = "Claim - " + claim.reference | upper %}
+
+{% block pageTitle %}
+  {{ "Error: " if errors.length }}{{ title + " - " if title }}{{ caption + " - " if caption }}{{ serviceName }} - GOV.UK
+{% endblock %}
+
+{% block beforeContent %}
+{{ govukBackLink({
+  text: "Back",
+  href: actions.back
+}) }}
+{% endblock %}
+
+{% block content %}
+
+  {% include "_includes/notification-banner.njk" %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      {# tag used in the heading #}
+      {% set headingTag %}
+        {{ govukTag({
+          text: claim.status | getClaimStatusLabel,
+          classes: "govuk-tag--no-max-width " + (claim.status | getClaimStatusClasses)
+        }) }}
+      {% endset %}
+
+      {% include "_includes/page-heading.njk" %}
+
+      {{ govukButton({
+        text: "Action A",
+        href: "#"
+      }) }}
+
+      {{ govukButton({
+        text: "Action B",
+        href: "#",
+        classes: "govuk-button--secondary"
+      }) }}
+
+      {% include "_includes/claims/meta-data.njk" %}
+
+      {% include "_includes/claims/details.njk" %}
+
+      {% include "_includes/claims/hours-of-training.njk" %}
+
+      {% include "_includes/claims/grant-funding.njk" %}
+
+    </div>
+  </div>
+
+{% endblock %}
