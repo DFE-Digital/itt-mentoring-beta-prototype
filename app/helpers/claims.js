@@ -70,7 +70,7 @@ exports.getClaimStatusLabel = (status) => {
 exports.getClaimStatusClasses = (status) => {
   let classes = 'govuk-tag--blue'
 
-  if (status) {
+  if (status?.length) {
     classes = claimStatuses.find(claimStatus =>
       claimStatus.code === status
       || claimStatus.id === status
