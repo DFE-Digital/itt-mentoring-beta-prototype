@@ -1,20 +1,5 @@
 {% set filterOptionsHtml %}
 {{ appCheckboxFilter({
-  idPrefix: "filter-school",
-  name: "filters[school]",
-  fieldset: {
-    legend: {
-      html: 'School<span class="govuk-visually-hidden"> filter</span>',
-      classes: "govuk-fieldset__legend--s"
-    }
-  },
-  items: filterSchoolItems,
-  values: filters.school,
-  showSelectedTags: false,
-  classes: "govuk-!-margin-bottom-7"
-}) }}
-
-{{ appCheckboxFilter({
   idPrefix: "filter-provider",
   name: "filters[provider]",
   fieldset: {
@@ -25,6 +10,21 @@
   },
   items: filterProviderItems,
   values: filters.provider,
+  showSelectedTags: false,
+  classes: "govuk-!-margin-bottom-7"
+}) }}
+
+{{ appCheckboxFilter({
+  idPrefix: "filter-school",
+  name: "filters[school]",
+  fieldset: {
+    legend: {
+      html: 'School<span class="govuk-visually-hidden"> filter</span>',
+      classes: "govuk-fieldset__legend--s"
+    }
+  },
+  items: filterSchoolItems,
+  values: filters.school,
   showSelectedTags: false,
   classes: "govuk-!-margin-bottom-7"
 }) }}
