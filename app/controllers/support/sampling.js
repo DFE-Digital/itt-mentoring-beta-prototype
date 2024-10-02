@@ -170,7 +170,7 @@ exports.show_claim_get = (req, res) => {
 
   const organisation = claim.school
 
-  res.render('../views/support/claims/sampling/show', {
+  res.render('../views/support/claims/show', {
     claim,
     organisation,
     actions: {
