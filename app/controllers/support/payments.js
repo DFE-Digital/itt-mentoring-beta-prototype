@@ -188,6 +188,27 @@ exports.show_claim_get = (req, res) => {
 /// ------------------------------------------------------------------------ ///
 
 exports.update_claim_status_get = (req, res) => {
+  let claim = claimModel.findOne({
+    claimId: req.params.claimId
+  })
+
+  claim = claimDecorator.decorate(claim)
+
+  const organisation = claim.school
+
+  res.render('../views/support/claims/payments/confirm', {
+    claim,
+    organisation,
+    status: req.params.claimStatus,
+    actions: {
+      save: `/support/claims/payments/${req.params.claimId}/status/${req.params.claimStatus}`,
+      back: `/support/claims/payments/${req.params.claimId}`,
+      cancel: `/support/claims/payments/${req.params.claimId}`
+    }
+  })
+}
+
+exports.update_claim_status_post = (req, res) => {
   const claim = claimModel.findOne({
     claimId: req.params.claimId
   })
@@ -200,11 +221,11 @@ exports.update_claim_status_get = (req, res) => {
     }
   })
 
+  req.flash('success', 'Claim updated')
+
   if (req.params.claimStatus === 'information_sent') {
-    req.flash('success', 'Claim marked as information sent')
     res.redirect(`/support/claims/payments/${req.params.claimId}`)
   } else {
-    req.flash('success', 'Claim marked as payment not approved')
     res.redirect(`/support/claims/payments`)
   }
 }
@@ -272,14 +293,6 @@ exports.send_claims_post = (req, res) => {
     req.flash('success', 'Claims sent to ESFA')
     res.redirect('/support/claims/payments')
   }
-}
-
-exports.send_claims_confirmation_get = (req, res) => {
-  res.render('../views/support/claims/payments/confirmation', {
-    actions: {
-      claims: '/support/claims'
-    }
-  })
 }
 
 /// ------------------------------------------------------------------------ ///
@@ -423,14 +436,6 @@ exports.review_claims_post = (req, res) => {
 
   req.flash('success', 'ESFA reponse uploaded')
   res.redirect('/support/claims/payments')
-}
-
-exports.send_claims_details_get = (req, res) => {
-  res.render('../views/support/claims/payments/show', {
-    actions: {
-      back: `/support/claims/payments`
-    }
-  })
 }
 
 /// ------------------------------------------------------------------------ ///

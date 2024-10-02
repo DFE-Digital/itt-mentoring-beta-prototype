@@ -1,0 +1,54 @@
+{% extends "layouts/support.njk" %}
+
+{% set primaryNavId = "claims" %}
+
+{% set title = 'Are you sure you want to update the claim status to ‘' + (status | getClaimStatusLabel | lower) + '’?' %}
+{% set caption = "Payments" %}
+
+{% block pageTitle %}
+  {{ "Error: " if errors.length }}{{ title + " - " if title }}{{ caption + " - " if caption }}{{ serviceName }} - GOV.UK
+{% endblock %}
+
+{% block beforeContent %}
+{{ govukBackLink({
+  text: "Back",
+  href: actions.back
+}) }}
+{% endblock %}
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      {% include "_includes/page-heading.njk" %}
+
+      <form action="{{ actions.save }}" method="post" accept-charset="utf-8" novalidate>
+
+        {% if status === "not_paid" %}
+          <p class="govuk-body">This will result in this claim not being paid.</p>
+        {% elif status === "information_sent" %}
+          <p class="govuk-body">You confirm that you have sent the ESFA the information they requested so they can pay the claim.</p>
+        {% endif %}
+
+
+
+        {{ govukWarningText({
+          text: "This action cannot be undone.",
+          iconFallbackText: "Warning"
+        }) }}
+
+        {{ govukButton({
+          text: "Update claim"
+        }) }}
+
+      </form>
+
+      <p class="govuk-body">
+        <a class="govuk-link" href="{{ actions.cancel }}">Cancel</a>
+      </p>
+
+    </div>
+  </div>
+
+{% endblock %}

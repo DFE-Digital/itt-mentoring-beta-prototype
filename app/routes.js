@@ -369,8 +369,6 @@ router.get('/support/claims/payments/remove-keyword-search', checkIsAuthenticate
 router.get('/support/claims/payments/send', checkIsAuthenticated, supportPaymentController.send_claims_get)
 router.post('/support/claims/payments/send', checkIsAuthenticated, supportPaymentController.send_claims_post)
 
-// router.get('/support/claims/payments/confirmation', checkIsAuthenticated, supportPaymentController.send_claims_confirmation_get)
-
 router.get('/support/claims/payments/response', checkIsAuthenticated, supportPaymentController.response_claims_get)
 // the upload.single('payments') middleware uses the form field file name
 router.post('/support/claims/payments/response', checkIsAuthenticated, upload.single('payments'), supportPaymentController.response_claims_post)
@@ -384,6 +382,7 @@ router.post('/support/claims/payments/download', checkIsAuthenticated, supportPa
 router.get('/support/claims/payments/:claimId', checkIsAuthenticated, supportPaymentController.show_claim_get)
 
 router.get('/support/claims/payments/:claimId/status/:claimStatus', checkIsAuthenticated, supportPaymentController.update_claim_status_get)
+router.post('/support/claims/payments/:claimId/status/:claimStatus', checkIsAuthenticated, supportPaymentController.update_claim_status_post)
 
 /// ------------------------------------------------------------------------ ///
 
