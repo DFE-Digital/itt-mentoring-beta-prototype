@@ -33,16 +33,18 @@
 
       {% include "_includes/page-heading.njk" %}
 
-      {{ govukButton({
-        text: "Action A",
-        href: "#"
-      }) }}
+      {% if claim.status === "sampling_in_progress" %}
+        {{ govukButton({
+          text: "Claim approved",
+          href: actions.samplingApproved
+        }) }}
 
-      {{ govukButton({
-        text: "Action B",
-        href: "#",
-        classes: "govuk-button--secondary"
-      }) }}
+        {{ govukButton({
+          text: "Clawback required",
+          href: actions.clawbackRequired,
+          classes: "govuk-button--secondary"
+        }) }}
+      {% endif %}
 
       {% include "_includes/claims/meta-data.njk" %}
 
