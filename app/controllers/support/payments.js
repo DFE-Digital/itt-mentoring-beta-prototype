@@ -83,7 +83,7 @@ exports.list_claims_get = (req, res) => {
     })
   }
 
-  claims = claims.filter(claim => ['information_needed','information_sent'].includes(claim.status))
+  claims = claims.filter(claim => ['payment_information_requested','payment_information_sent'].includes(claim.status))
 
   const hasClaims = !!claims.length
 
@@ -175,7 +175,7 @@ exports.show_claim_get = (req, res) => {
     claim,
     organisation,
     actions: {
-      informationSent: `/support/claims/payments/${req.params.claimId}/status/information_sent`,
+      informationSent: `/support/claims/payments/${req.params.claimId}/status/payment_information_sent`,
       paymentNotApproved: `/support/claims/payments/${req.params.claimId}/status/not_paid`,
       back: `/support/claims/payments`,
       cancel: `/support/claims/payments`
@@ -223,7 +223,7 @@ exports.update_claim_status_post = (req, res) => {
 
   req.flash('success', 'Claim updated')
 
-  if (req.params.claimStatus === 'information_sent') {
+  if (req.params.claimStatus === 'payment_information_sent') {
     res.redirect(`/support/claims/payments/${req.params.claimId}`)
   } else {
     res.redirect(`/support/claims/payments`)
@@ -251,9 +251,7 @@ exports.send_claims_get = (req, res) => {
   })
 }
 
-exports.send_claims_post = (req, res) => {
-  console.log(req.file);
-
+exports.send_claims_post = (req, res) => {;
   const errors = []
 
   if (errors.length) {
@@ -318,8 +316,6 @@ exports.response_claims_get = (req, res) => {
 
 exports.response_claims_post = (req, res) => {
   const errors = []
-
-  // console.log(req.file)
 
   if (!req.file) {
     const error = {}
@@ -434,7 +430,7 @@ exports.review_claims_post = (req, res) => {
     })
   })
 
-  req.flash('success', 'ESFA reponse uploaded')
+  req.flash('success', 'ESFA response uploaded')
   res.redirect('/support/claims/payments')
 }
 

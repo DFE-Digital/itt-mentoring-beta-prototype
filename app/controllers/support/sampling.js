@@ -174,8 +174,8 @@ exports.show_claim_get = (req, res) => {
     claim,
     organisation,
     actions: {
-      informationSent: `/support/claims/sampling/${req.params.claimId}/status/information_sent`,
-      paymentNotApproved: `/support/claims/sampling/${req.params.claimId}/status/not_paid`,
+      clawbackRequired: `/support/claims/sampling/${req.params.claimId}/status/clawback_requested`,
+      samplingApproved: `/support/claims/sampling/${req.params.claimId}/status/paid`,
       back: `/support/claims/sampling`,
       cancel: `/support/claims/sampling`
     }
@@ -187,6 +187,27 @@ exports.show_claim_get = (req, res) => {
 /// ------------------------------------------------------------------------ ///
 
 exports.update_claim_status_get = (req, res) => {
+  let claim = claimModel.findOne({
+    claimId: req.params.claimId
+  })
+
+  claim = claimDecorator.decorate(claim)
+
+  const organisation = claim.school
+
+  res.render('../views/support/claims/sampling/confirm', {
+    claim,
+    organisation,
+    status: req.params.claimStatus,
+    actions: {
+      save: `/support/claims/sampling/${req.params.claimId}/status/${req.params.claimStatus}`,
+      back: `/support/claims/sampling/${req.params.claimId}`,
+      cancel: `/support/claims/sampling/${req.params.claimId}`
+    }
+  })
+}
+
+exports.update_claim_status_post = (req, res) => {
   const claim = claimModel.findOne({
     claimId: req.params.claimId
   })
@@ -199,13 +220,13 @@ exports.update_claim_status_get = (req, res) => {
     }
   })
 
-  // if (req.params.claimStatus === 'information_sent') {
-  //   req.flash('success', 'Claim marked as information sent')
-  //   res.redirect(`/support/claims/sampling/${req.params.claimId}`)
-  // } else {
-    req.flash('success', 'Claim marked as XYZ')
+  req.flash('success', 'Claim updated')
+
+  if (req.params.claimStatus === 'clawback_requested') {
+    res.redirect(`/support/claims/sampling/${req.params.claimId}`)
+  } else {
     res.redirect(`/support/claims/sampling`)
-  // }
+  }
 }
 
 /// ------------------------------------------------------------------------ ///
@@ -231,8 +252,6 @@ exports.upload_claims_get = (req, res) => {
 
 exports.upload_claims_post = (req, res) => {
   const errors = []
-
-  console.log(req.file)
 
   if (!req.file) {
     const error = {}
@@ -329,8 +348,8 @@ exports.review_upload_claims_get = (req, res) => {
     pagination,
     pageHeading,
     actions: {
-      save: `/support/claims/sampling/response/review`,
-      back: `/support/claims/sampling/response`,
+      save: `/support/claims/sampling/upload/review`,
+      back: `/support/claims/sampling/upload`,
       cancel: `/support/claims/sampling`
     }
   })
@@ -377,8 +396,6 @@ exports.response_claims_get = (req, res) => {
 
 exports.response_claims_post = (req, res) => {
   const errors = []
-
-  // console.log(req.file)
 
   if (!req.file) {
     const error = {}
@@ -496,7 +513,7 @@ exports.review_response_claims_post = (req, res) => {
     })
   })
 
-  req.flash('success', 'Provider reponse uploaded')
+  req.flash('success', 'Provider response uploaded')
   res.redirect('/support/claims/sampling')
 }
 
