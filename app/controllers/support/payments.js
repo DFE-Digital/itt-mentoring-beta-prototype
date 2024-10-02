@@ -15,7 +15,20 @@ const paymentDecorator = require('../../decorators/payments')
 
 const settings = require('../../data/dist/settings')
 
+/// ------------------------------------------------------------------------ ///
+/// LIST CLAIMS
+/// ------------------------------------------------------------------------ ///
+
 exports.list_claims_get = (req, res) => {
+  // delete the filter and search data if the referrer is
+  // the all claims,sampling or clawbacks lists since they have
+  // similar functionality
+  const regex = /\/support\/claims(\/(sampling|clawbacks)|(?=\?|$))/
+  if (regex.test(req.headers.referer)) {
+    delete req.session.data.filters
+    delete req.session.data.keywords
+  }
+
   // Search
   const keywords = req.session.data.keywords
   const hasSearch = !!((keywords))
