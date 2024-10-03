@@ -1,0 +1,41 @@
+<div class="govuk-button-group">
+{% if claim.status == "payment_information_requested" %}
+  {{ govukButton({
+    text: "Confirm information sent",
+    href: actions.informationSent
+  }) }}
+
+  {{ govukButton({
+    text: "Reject claim",
+    href: actions.paymentNotApproved,
+    classes: "govuk-button--secondary"
+  }) }}
+{% endif %}
+
+{% if claim.status == "payment_information_sent" %}
+  {{ govukButton({
+    text: "Reject claim",
+    href: actions.paymentNotApproved
+  }) }}
+{% endif %}
+
+{% if claim.status === "sampling_in_progress" %}
+  {{ govukButton({
+    text: "Approve claim",
+    href: actions.samplingApproved
+  }) }}
+
+  {{ govukButton({
+    text: "Request clawback",
+    href: actions.clawbackRequired,
+    classes: "govuk-button--secondary"
+  }) }}
+{% endif %}
+
+{% if claim.status == "sampling_not_approved" %}
+  {{ govukButton({
+    text: "Request clawback",
+    href: actions.clawbackRequired
+  }) }}
+{% endif %}
+</div>

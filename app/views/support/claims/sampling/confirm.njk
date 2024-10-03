@@ -1,0 +1,62 @@
+{% extends "layouts/support.njk" %}
+
+{% set primaryNavId = "claims" %}
+
+{% if status == "clawback_requested" %}
+  {% set title = "Are you sure you want to request a clawback for the claim?" %}
+  {% set buttonLabel = "Request clawback" %}
+{% elif status == "paid" %}
+  {% set title = "Are you sure you want to approve the claim?" %}
+  {% set buttonLabel = "Approve claim" %}
+{% else %}
+  {% set title = "Are you sure you want to update the claim" %}
+  {% set buttonLabel = "Update claim" %}
+{% endif %}
+
+{% set caption = "Sampling - Claim " + claim.reference | upper  %}
+
+{% block pageTitle %}
+  {{ "Error: " if errors.length }}{{ title + " - " if title }}{{ caption + " - " if caption }}{{ serviceName }} - GOV.UK
+{% endblock %}
+
+{% block beforeContent %}
+{{ govukBackLink({
+  text: "Back",
+  href: actions.back
+}) }}
+{% endblock %}
+
+{% block content %}
+
+    <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      {% include "_includes/page-heading.njk" %}
+
+      <form action="{{ actions.save }}" method="post" accept-charset="utf-8" novalidate>
+
+        {% if status === "clawback_requested" %}
+          <p class="govuk-body">This will mark the claim as ‘Clawback requested’ and move it into the clawback queue.</p>
+        {% elif status === "paid" %}
+          <p class="govuk-body">This will mark the claim as ‘Paid’.</p>
+        {% endif %}
+
+        {{ govukWarningText({
+          text: "This action cannot be undone.",
+          iconFallbackText: "Warning"
+        }) }}
+
+        {{ govukButton({
+          text: buttonLabel
+        }) }}
+
+      </form>
+
+      <p class="govuk-body">
+        <a class="govuk-link" href="{{ actions.cancel }}">Cancel</a>
+      </p>
+
+    </div>
+  </div>
+
+{% endblock %}

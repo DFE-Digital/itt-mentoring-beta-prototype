@@ -5,24 +5,45 @@ const claimModel = require('../../models/claims')
 const paymentModel = require('../../models/payments')
 
 const Pagination = require('../../helpers/pagination')
-const paymentHelper = require('../../helpers/payments')
+const claimHelper = require('../../helpers/claims')
 const filterHelper = require('../../helpers/filters')
+const paymentHelper = require('../../helpers/payments')
 const providerHelper = require('../../helpers/providers')
 const schoolHelper = require('../../helpers/schools')
+const statusHelper = require('../../helpers/statuses')
 
 const claimDecorator = require('../../decorators/claims')
 const paymentDecorator = require('../../decorators/payments')
 
 const settings = require('../../data/dist/settings')
 
+/// ------------------------------------------------------------------------ ///
+/// LIST CLAIMS
+/// ------------------------------------------------------------------------ ///
+
 exports.list_claims_get = (req, res) => {
+  // delete the filter and search data if the referrer is
+  // the all claims,sampling or clawbacks lists since they have
+  // similar functionality
+  const regex = /\/support\/claims(\/(sampling|clawbacks)|(?=\?|$))/
+  if (regex.test(req.headers.referer)) {
+    delete req.session.data.filters
+    delete req.session.data.keywords
+  }
+
   // Search
   const keywords = req.session.data.keywords
   const hasSearch = !!((keywords))
 
   // Filters
+  const status = null
   const school = null
   const provider = null
+
+  let statuses
+  if (req.session.data.filters?.status) {
+    statuses = filterHelper.getCheckboxValues(status, req.session.data.filters.status)
+  }
 
   let schools
   if (req.session.data.filters?.school) {
@@ -34,7 +55,8 @@ exports.list_claims_get = (req, res) => {
     providers = filterHelper.getCheckboxValues(provider, req.session.data.filters.provider)
   }
 
-  const hasFilters = !!((schools?.length > 0)
+  const hasFilters = !!((statuses?.length > 0)
+  || (schools?.length > 0)
     || (providers?.length > 0))
 
   let selectedFilters = null
@@ -42,6 +64,18 @@ exports.list_claims_get = (req, res) => {
   if (hasFilters) {
     selectedFilters = {
       categories: []
+    }
+
+    if (statuses?.length) {
+      selectedFilters.categories.push({
+        heading: { text: 'Status' },
+        items: statuses.map((status) => {
+          return {
+            text: claimHelper.getClaimStatusLabel(status),
+            href: `/support/claims/remove-status-filter/${status}`
+          }
+        })
+      })
     }
 
     if (schools?.length) {
@@ -70,6 +104,9 @@ exports.list_claims_get = (req, res) => {
   }
 
   // get filter items
+  let filterStatusItems = statusHelper.getClaimStatusOptions(statuses)
+  filterStatusItems = filterStatusItems.filter(status => ['payment_information_requested','payment_information_sent'].includes(status.value))
+
   const filterSchoolItems = schoolHelper.getSchoolOptions(schools)
   const filterProviderItems = providerHelper.getProviderOptions(providers)
 
@@ -83,9 +120,15 @@ exports.list_claims_get = (req, res) => {
     })
   }
 
-  claims = claims.filter(claim => ['information_needed','information_sent'].includes(claim.status))
+  claims = claims.filter(claim => ['payment_information_requested','payment_information_sent'].includes(claim.status))
 
   const hasClaims = !!claims.length
+
+  if (statuses?.length) {
+    claims = claims.filter(claim => {
+      return statuses.includes(claim.status)
+    })
+  }
 
   if (schools?.length) {
     claims = claims.filter(claim => {
@@ -114,11 +157,12 @@ exports.list_claims_get = (req, res) => {
     hasSearch,
     hasClaims,
     keywords,
+    filterStatusItems,
     filterSchoolItems,
     filterProviderItems,
     actions: {
       export: `/support/claims/payments/send`,
-      response: `/support/claims/payments/receive`,
+      response: `/support/claims/payments/response`,
       view: `/support/claims/payments`,
       filters: {
         apply: '/support/claims/payments',
@@ -130,6 +174,14 @@ exports.list_claims_get = (req, res) => {
       }
     }
   })
+}
+
+exports.removeStatusFilter = (req, res) => {
+  req.session.data.filters.status = filterHelper.removeFilter(
+    req.params.status,
+    req.session.data.filters.status
+  )
+  res.redirect('/support/claims/payments')
 }
 
 exports.removeSchoolFilter = (req, res) => {
@@ -175,7 +227,7 @@ exports.show_claim_get = (req, res) => {
     claim,
     organisation,
     actions: {
-      informationSent: `/support/claims/payments/${req.params.claimId}/status/information_sent`,
+      informationSent: `/support/claims/payments/${req.params.claimId}/status/payment_information_sent`,
       paymentNotApproved: `/support/claims/payments/${req.params.claimId}/status/not_paid`,
       back: `/support/claims/payments`,
       cancel: `/support/claims/payments`
@@ -188,6 +240,27 @@ exports.show_claim_get = (req, res) => {
 /// ------------------------------------------------------------------------ ///
 
 exports.update_claim_status_get = (req, res) => {
+  let claim = claimModel.findOne({
+    claimId: req.params.claimId
+  })
+
+  claim = claimDecorator.decorate(claim)
+
+  const organisation = claim.school
+
+  res.render('../views/support/claims/payments/confirm', {
+    claim,
+    organisation,
+    status: req.params.claimStatus,
+    actions: {
+      save: `/support/claims/payments/${req.params.claimId}/status/${req.params.claimStatus}`,
+      back: `/support/claims/payments/${req.params.claimId}`,
+      cancel: `/support/claims/payments/${req.params.claimId}`
+    }
+  })
+}
+
+exports.update_claim_status_post = (req, res) => {
   const claim = claimModel.findOne({
     claimId: req.params.claimId
   })
@@ -200,11 +273,11 @@ exports.update_claim_status_get = (req, res) => {
     }
   })
 
-  if (req.params.claimStatus === 'information_sent') {
-    req.flash('success', 'Claim marked as information sent')
+  req.flash('success', 'Claim updated')
+
+  if (req.params.claimStatus === 'payment_information_sent') {
     res.redirect(`/support/claims/payments/${req.params.claimId}`)
   } else {
-    req.flash('success', 'Claim marked as payment not approved')
     res.redirect(`/support/claims/payments`)
   }
 }
@@ -230,9 +303,7 @@ exports.send_claims_get = (req, res) => {
   })
 }
 
-exports.send_claims_post = (req, res) => {
-  console.log(req.file);
-
+exports.send_claims_post = (req, res) => {;
   const errors = []
 
   if (errors.length) {
@@ -274,39 +345,29 @@ exports.send_claims_post = (req, res) => {
   }
 }
 
-exports.send_claims_confirmation_get = (req, res) => {
-  res.render('../views/support/claims/payments/confirmation', {
-    actions: {
-      claims: '/support/claims'
-    }
-  })
-}
-
 /// ------------------------------------------------------------------------ ///
 /// IMPORT CLAIM PAYMENT RESPONSE
 /// ------------------------------------------------------------------------ ///
 
-exports.receive_claims_get = (req, res) => {
+exports.response_claims_get = (req, res) => {
   const claims = claimModel
     .findMany({ })
     .filter(claim => claim.status === 'payment_pending')
 
   const hasClaims = !!claims.length
 
-  res.render('../views/support/claims/payments/receive', {
+  res.render('../views/support/claims/payments/response', {
     hasClaims,
     actions: {
-      save: `/support/claims/payments/receive`,
+      save: `/support/claims/payments/response`,
       back: `/support/claims/payments`,
       cancel: `/support/claims/payments`
     }
   })
 }
 
-exports.receive_claims_post = (req, res) => {
+exports.response_claims_post = (req, res) => {
   const errors = []
-
-  // console.log(req.file)
 
   if (!req.file) {
     const error = {}
@@ -347,10 +408,10 @@ exports.receive_claims_post = (req, res) => {
 
     const hasClaims = !!claims.length
 
-    res.render('../views/support/claims/payments/receive', {
+    res.render('../views/support/claims/payments/response', {
       hasClaims,
       actions: {
-        save: `/support/claims/payments/receive`,
+        save: `/support/claims/payments/response`,
         back: `/support/claims/payments`,
         cancel: `/support/claims/payments`
       },
@@ -390,18 +451,18 @@ exports.receive_claims_post = (req, res) => {
 exports.review_claims_get = (req, res) => {
   let payments = req.session.data.payments
 
-  const paymentsCount = payments.length
+  const claimsCount = payments.length
 
   const pagination = new Pagination(payments, req.query.page, settings.pageSize)
   payments = pagination.getData()
 
   res.render('../views/support/claims/payments/review', {
     payments,
-    paymentsCount,
+    claimsCount,
     pagination,
     actions: {
       save: `/support/claims/payments/review`,
-      back: `/support/claims/payments/receive`,
+      back: `/support/claims/payments/response`,
       cancel: `/support/claims/payments`
     }
   })
@@ -421,20 +482,12 @@ exports.review_claims_post = (req, res) => {
     })
   })
 
-  req.flash('success', 'ESFA reponse uploaded')
+  req.flash('success', 'ESFA response uploaded')
   res.redirect('/support/claims/payments')
 }
 
-exports.send_claims_details_get = (req, res) => {
-  res.render('../views/support/claims/payments/show', {
-    actions: {
-      back: `/support/claims/payments`
-    }
-  })
-}
-
 /// ------------------------------------------------------------------------ ///
-/// IMPORT CLAIM PAYMENT RESPONSE
+/// DOWNLOAD CLAIMS LIST - FOR ESFA
 /// ------------------------------------------------------------------------ ///
 
 exports.download_claims_get = (req, res) => {

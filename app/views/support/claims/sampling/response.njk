@@ -1,0 +1,108 @@
+{% extends "layouts/support.njk" %}
+
+{% set primaryNavId = "claims" %}
+
+{% if hasClaims %}
+  {% set title = "Upload provider response" %}
+{% else %}
+  {% set title = "You cannot upload a provider response" %}
+{% endif %}
+
+{% set caption = "Sampling" %}
+
+{% block pageTitle %}
+  {{ "Error: " if errors.length }}{{ title + " - " if title }}{{ caption + " - " if caption }}{{ serviceName }} - GOV.UK
+{% endblock %}
+
+{% block beforeContent %}
+{{ govukBackLink({
+  text: "Back",
+  href: actions.back
+}) }}
+{% endblock %}
+
+{% block content %}
+
+  {% include "_includes/error-summary.njk" %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      {% include "_includes/page-heading.njk" %}
+
+      {% if hasClaims %}
+
+        <form action="{{ actions.save }}" method="post" accept-charset="utf-8" enctype="multipart/form-data" novalidate>
+
+          {#
+            the field name is used in the upload process
+            if you change the name, you will need to change it in the routes.js too
+          #}
+
+          {{ govukFileUpload({
+            id: "response",
+            name: "response",
+            label: {
+              text: "Upload CSV file",
+              isPageHeading: false,
+              classes: "govuk-label--s"
+            },
+            errorMessage: errors | getErrorMessage("response")
+          }) }}
+
+          {% set helpText %}
+            <p class="govuk-body">Use this form to upload the CSV file sent by the provider.</p>
+
+            <p class="govuk-body">The CSV file must contain the following headers in the first row:</p>
+
+            <ul class="govuk-list govuk-list--bullet">
+              <li>
+                claim_reference
+              </li>
+              <li>
+                school_urn
+              </li>
+              <li>
+                school_name
+              </li>
+              <li>
+                school_post_code
+              </li>
+              <li>
+                mentor_full_name
+              </li>
+              <li>
+                claim_hours_of_training
+              </li>
+              <li>
+                claim_assured
+              </li>
+              <li>
+                claim_assured_reason
+              </li>
+            </ul>
+          {% endset %}
+
+          {{ govukDetails({
+            summaryText: "Help with the CSV file",
+            html: helpText
+          }) }}
+
+          {{ govukButton({
+            text: "Upload CSV file"
+          }) }}
+
+        </form>
+
+      {% else %}
+        <p class="govuk-body">You cannot upload a provider response as there are no claims waiting for a response.</p>
+      {% endif %}
+
+      <p class="govuk-body">
+        <a class="govuk-link" href="{{ actions.cancel }}">Cancel</a>
+      </p>
+
+    </div>
+  </div>
+
+{% endblock %}

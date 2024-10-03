@@ -19,6 +19,14 @@ const settings = require('../../data/dist/settings')
 /// ------------------------------------------------------------------------ ///
 
 exports.list_claims_get = (req, res) => {
+  // delete the filter and search data if the referrer is either
+  // payments, sampling or clawbacks since they have similar functionality
+  const regex = /\/support\/claims\/(payments|sampling|clawbacks)/
+  if (regex.test(req.headers.referer)) {
+    delete req.session.data.filters
+    delete req.session.data.keywords
+  }
+
   // Search
   const keywords = req.session.data.keywords
   const hasSearch = !!((keywords))
@@ -322,6 +330,10 @@ exports.show_claim_get = (req, res) => {
     claim,
     showOrganisationLink: true,
     actions: {
+      informationSent: `/support/claims/payments/${req.params.claimId}/status/payment_information_sent`,
+      paymentNotApproved: `/support/claims/payments/${req.params.claimId}/status/not_paid`,
+      clawbackRequired: `/support/claims/sampling/${req.params.claimId}/status/clawback_requested`,
+      samplingApproved: `/support/claims/sampling/${req.params.claimId}/status/paid`,
       back: `/support/claims`,
       organisations: `/support/organisations`
     }

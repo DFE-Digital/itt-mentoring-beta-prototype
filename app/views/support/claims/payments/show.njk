@@ -3,7 +3,7 @@
 {% set primaryNavId = "claims" %}
 
 {% set title = claim.organisationId | getSchoolName %}
-{% set caption = "Claim - " + claim.reference | upper %}
+{% set caption = "Payments - Claim " + claim.reference | upper %}
 
 {% block pageTitle %}
   {{ "Error: " if errors.length }}{{ title + " - " if title }}{{ caption + " - " if caption }}{{ serviceName }} - GOV.UK
@@ -33,18 +33,7 @@
 
       {% include "_includes/page-heading.njk" %}
 
-      {% if claim.status !== "information_sent" %}
-        {{ govukButton({
-          text: "Information sent to ESFA",
-          href: actions.informationSent
-        }) }}
-      {% endif %}
-
-      {{ govukButton({
-        text: "Payment not approved",
-        href: actions.paymentNotApproved,
-        classes: "govuk-button--secondary" if claim.status !== "information_sent"
-      }) }}
+      {% include "../_actions.njk" %}
 
       {% include "_includes/claims/meta-data.njk" %}
 
