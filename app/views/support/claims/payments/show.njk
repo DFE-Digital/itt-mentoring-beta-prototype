@@ -35,19 +35,6 @@
 
       {% include "../_actions.njk" %}
 
-      {# {% if claim.status !== "payment_information_sent" %}
-        {{ govukButton({
-          text: "Information sent to ESFA",
-          href: actions.informationSent
-        }) }}
-      {% endif %}
-
-      {{ govukButton({
-        text: "Payment not approved",
-        href: actions.paymentNotApproved,
-        classes: "govuk-button--secondary" if claim.status !== "payment_information_sent"
-      }) }} #}
-
       {% include "_includes/claims/meta-data.njk" %}
 
       {% include "_includes/claims/details.njk" %}
