@@ -5,10 +5,12 @@ const claimModel = require('../../models/claims')
 const paymentModel = require('../../models/payments')
 
 const Pagination = require('../../helpers/pagination')
-const paymentHelper = require('../../helpers/payments')
+const claimHelper = require('../../helpers/claims')
 const filterHelper = require('../../helpers/filters')
+const paymentHelper = require('../../helpers/payments')
 const providerHelper = require('../../helpers/providers')
 const schoolHelper = require('../../helpers/schools')
+const statusHelper = require('../../helpers/statuses')
 
 const claimDecorator = require('../../decorators/claims')
 const paymentDecorator = require('../../decorators/payments')
@@ -34,8 +36,14 @@ exports.list_claims_get = (req, res) => {
   const hasSearch = !!((keywords))
 
   // Filters
+  const status = null
   const school = null
   const provider = null
+
+  let statuses
+  if (req.session.data.filters?.status) {
+    statuses = filterHelper.getCheckboxValues(status, req.session.data.filters.status)
+  }
 
   let schools
   if (req.session.data.filters?.school) {
@@ -47,7 +55,8 @@ exports.list_claims_get = (req, res) => {
     providers = filterHelper.getCheckboxValues(provider, req.session.data.filters.provider)
   }
 
-  const hasFilters = !!((schools?.length > 0)
+  const hasFilters = !!((statuses?.length > 0)
+  || (schools?.length > 0)
     || (providers?.length > 0))
 
   let selectedFilters = null
@@ -55,6 +64,18 @@ exports.list_claims_get = (req, res) => {
   if (hasFilters) {
     selectedFilters = {
       categories: []
+    }
+
+    if (statuses?.length) {
+      selectedFilters.categories.push({
+        heading: { text: 'Status' },
+        items: statuses.map((status) => {
+          return {
+            text: claimHelper.getClaimStatusLabel(status),
+            href: `/support/claims/remove-status-filter/${status}`
+          }
+        })
+      })
     }
 
     if (schools?.length) {
@@ -83,6 +104,9 @@ exports.list_claims_get = (req, res) => {
   }
 
   // get filter items
+  let filterStatusItems = statusHelper.getClaimStatusOptions(statuses)
+  filterStatusItems = filterStatusItems.filter(status => ['payment_information_requested','payment_information_sent'].includes(status.value))
+
   const filterSchoolItems = schoolHelper.getSchoolOptions(schools)
   const filterProviderItems = providerHelper.getProviderOptions(providers)
 
@@ -99,6 +123,12 @@ exports.list_claims_get = (req, res) => {
   claims = claims.filter(claim => ['payment_information_requested','payment_information_sent'].includes(claim.status))
 
   const hasClaims = !!claims.length
+
+  if (statuses?.length) {
+    claims = claims.filter(claim => {
+      return statuses.includes(claim.status)
+    })
+  }
 
   if (schools?.length) {
     claims = claims.filter(claim => {
@@ -127,6 +157,7 @@ exports.list_claims_get = (req, res) => {
     hasSearch,
     hasClaims,
     keywords,
+    filterStatusItems,
     filterSchoolItems,
     filterProviderItems,
     actions: {
@@ -143,6 +174,14 @@ exports.list_claims_get = (req, res) => {
       }
     }
   })
+}
+
+exports.removeStatusFilter = (req, res) => {
+  req.session.data.filters.status = filterHelper.removeFilter(
+    req.params.status,
+    req.session.data.filters.status
+  )
+  res.redirect('/support/claims/payments')
 }
 
 exports.removeSchoolFilter = (req, res) => {
@@ -184,7 +223,7 @@ exports.show_claim_get = (req, res) => {
 
   const organisation = claim.school
 
-  res.render('../views/support/claims/show', {
+  res.render('../views/support/claims/payments/show', {
     claim,
     organisation,
     actions: {
@@ -448,7 +487,7 @@ exports.review_claims_post = (req, res) => {
 }
 
 /// ------------------------------------------------------------------------ ///
-/// IMPORT CLAIM PAYMENT RESPONSE
+/// DOWNLOAD CLAIMS LIST - FOR ESFA
 /// ------------------------------------------------------------------------ ///
 
 exports.download_claims_get = (req, res) => {

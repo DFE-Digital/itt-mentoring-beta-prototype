@@ -23,7 +23,6 @@ exports.list_claims_get = (req, res) => {
   // payments, sampling or clawbacks since they have similar functionality
   const regex = /\/support\/claims\/(payments|sampling|clawbacks)/
   if (regex.test(req.headers.referer)) {
-    console.log(regex.test(req.headers.referer));
     delete req.session.data.filters
     delete req.session.data.keywords
   }
