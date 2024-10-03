@@ -1,4 +1,21 @@
 {% set filterOptionsHtml %}
+{{ govukCheckboxes({
+  idPrefix: "filter-status",
+  name: "filters[status]",
+  fieldset: {
+    legend: {
+      html: 'Status<span class="govuk-visually-hidden"> filter</span>',
+      classes: "govuk-fieldset__legend--s"
+    }
+  },
+  formGroup: {
+    classes: "app-filter__group"
+  },
+  items: filterStatusItems,
+  values: filters.status,
+  classes: "govuk-checkboxes--small"
+}) }}
+
 {{ appCheckboxFilter({
   idPrefix: "filter-provider",
   name: "filters[provider]",
