@@ -393,12 +393,14 @@ exports.review_upload_claims_get = (req, res) => {
   claims = pagination.getData()
 
   const pageHeading = 'Are you sure you want to upload the sampling data?'
+  const insetText = 'Each accredited provider included in the sample data will receive an email instructing them to assure their partner schools’ claim.'
 
   res.render('../views/support/claims/sampling/review', {
     claims,
     claimsCount,
     pagination,
     pageHeading,
+    insetText,
     actions: {
       save: `/support/claims/sampling/upload/review`,
       back: `/support/claims/sampling/upload`,
