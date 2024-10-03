@@ -1,11 +1,12 @@
+<div class="govuk-button-group">
 {% if claim.status == "payment_information_requested" %}
   {{ govukButton({
-    text: "Send information",
+    text: "Confirm information sent",
     href: actions.informationSent
   }) }}
 
   {{ govukButton({
-    text: "Decline claim",
+    text: "Reject claim",
     href: actions.paymentNotApproved,
     classes: "govuk-button--secondary"
   }) }}
@@ -13,7 +14,7 @@
 
 {% if claim.status == "payment_information_sent" %}
   {{ govukButton({
-    text: "Decline claim",
+    text: "Reject claim",
     href: actions.paymentNotApproved
   }) }}
 {% endif %}
@@ -37,3 +38,4 @@
     href: actions.clawbackRequired
   }) }}
 {% endif %}
+</div>

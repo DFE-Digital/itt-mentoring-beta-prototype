@@ -2,8 +2,18 @@
 
 {% set primaryNavId = "claims" %}
 
-{% set title = 'Are you sure you want to update the claim status to ‘' + (status | getClaimStatusLabel | lower) + '’?' %}
-{% set caption = "Sampling" %}
+{% if status == "clawback_requested" %}
+  {% set title = "Are you sure you want to request a clawback for the claim?" %}
+  {% set buttonLabel = "Request clawback" %}
+{% elif status == "paid" %}
+  {% set title = "Are you sure you want to approve the claim?" %}
+  {% set buttonLabel = "Approve claim" %}
+{% else %}
+  {% set title = "Are you sure you want to update the claim" %}
+  {% set buttonLabel = "Update claim" %}
+{% endif %}
+
+{% set caption = "Sampling - Claim " + claim.reference | upper  %}
 
 {% block pageTitle %}
   {{ "Error: " if errors.length }}{{ title + " - " if title }}{{ caption + " - " if caption }}{{ serviceName }} - GOV.UK
@@ -26,9 +36,9 @@
       <form action="{{ actions.save }}" method="post" accept-charset="utf-8" novalidate>
 
         {% if status === "clawback_requested" %}
-          <p class="govuk-body">XYZ</p>
+          <p class="govuk-body">This will mark the claim as ‘Clawback requested’ and move it into the clawback queue.</p>
         {% elif status === "paid" %}
-          <p class="govuk-body">ABC</p>
+          <p class="govuk-body">This will mark the claim as ‘Paid’.</p>
         {% endif %}
 
         {{ govukWarningText({
@@ -37,7 +47,7 @@
         }) }}
 
         {{ govukButton({
-          text: "Update claim"
+          text: buttonLabel
         }) }}
 
       </form>

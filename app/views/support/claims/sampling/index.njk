@@ -37,16 +37,18 @@
         {{ subtitle }}
       </h2>
 
-      {{ govukButton({
-        text: "Upload claims to be sampled",
-        href: actions.upload
-      }) }}
+      <div class="govuk-button-group">
+        {{ govukButton({
+          text: "Upload claims to be sampled",
+          href: actions.upload
+        }) }}
 
-      {{ govukButton({
-        text: "Upload provider response",
-        href: actions.response,
-        classes: "govuk-button--secondary"
-      }) }}
+        {{ govukButton({
+          text: "Upload provider response",
+          href: actions.response,
+          classes: "govuk-button--secondary"
+        }) }}
+      </div>
 
       {% if hasClaims %}
         <h3 class="govuk-heading-s">

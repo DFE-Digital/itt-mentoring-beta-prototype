@@ -2,8 +2,18 @@
 
 {% set primaryNavId = "claims" %}
 
-{% set title = 'Are you sure you want to update the claim status to ‘' + (status | getClaimStatusLabel | lower) + '’?' %}
-{% set caption = "Payments" %}
+{% if status == "payment_information_sent" %}
+  {% set title = "Are you sure you want to update the claim?" %}
+  {% set buttonLabel = "Update claim" %}
+{% elif status == "not_paid" %}
+  {% set title = "Are you user you want to reject the claim?" %}
+  {% set buttonLabel = "Reject claim" %}
+{% else %}
+  {% set title = "Are you sure you want to update the claim" %}
+  {% set buttonLabel = "Update claim" %}
+{% endif %}
+
+{% set caption = "Payments - Claim " + claim.reference | upper  %}
 
 {% block pageTitle %}
   {{ "Error: " if errors.length }}{{ title + " - " if title }}{{ caption + " - " if caption }}{{ serviceName }} - GOV.UK
@@ -25,13 +35,11 @@
 
       <form action="{{ actions.save }}" method="post" accept-charset="utf-8" novalidate>
 
-        {% if status === "not_paid" %}
-          <p class="govuk-body">This will result in this claim not being paid.</p>
-        {% elif status === "payment_information_sent" %}
+        {% if status === "payment_information_sent" %}
           <p class="govuk-body">You confirm that you have sent the ESFA the information they requested so they can pay the claim.</p>
+        {% elif status === "not_paid" %}
+          <p class="govuk-body">This will result in this claim not being paid.</p>
         {% endif %}
-
-
 
         {{ govukWarningText({
           text: "This action cannot be undone.",
@@ -39,7 +47,7 @@
         }) }}
 
         {{ govukButton({
-          text: "Update claim"
+          text: buttonLabel
         }) }}
 
       </form>

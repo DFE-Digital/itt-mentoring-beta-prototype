@@ -37,16 +37,18 @@
         {{ subtitle }}
       </h2>
 
-      {{ govukButton({
-        text: "Send claims to ESFA",
-        href: actions.export
-      }) }}
+      <div class="govuk-button-group">
+        {{ govukButton({
+          text: "Send claims to ESFA",
+          href: actions.export
+        }) }}
 
-      {{ govukButton({
-        text: "Upload ESFA response",
-        href: actions.response,
-        classes: "govuk-button--secondary"
-      }) }}
+        {{ govukButton({
+          text: "Upload ESFA response",
+          href: actions.response,
+          classes: "govuk-button--secondary"
+        }) }}
+      </div>
 
       {% if hasClaims %}
         <h3 class="govuk-heading-s">
