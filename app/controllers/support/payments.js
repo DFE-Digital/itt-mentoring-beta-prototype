@@ -103,9 +103,11 @@ exports.list_claims_get = (req, res) => {
     }
   }
 
+  const statusArray = ['payment_information_requested','payment_information_sent']
+
   // get filter items
   let filterStatusItems = statusHelper.getClaimStatusOptions(statuses)
-  filterStatusItems = filterStatusItems.filter(status => ['payment_information_requested','payment_information_sent'].includes(status.value))
+  filterStatusItems = filterStatusItems.filter(status => statusArray.includes(status.value))
 
   const filterSchoolItems = schoolHelper.getSchoolOptions(schools)
   const filterProviderItems = providerHelper.getProviderOptions(providers)
@@ -120,7 +122,7 @@ exports.list_claims_get = (req, res) => {
     })
   }
 
-  claims = claims.filter(claim => ['payment_information_requested','payment_information_sent'].includes(claim.status))
+  claims = claims.filter(claim => statusArray.includes(claim.status))
 
   const hasClaims = !!claims.length
 

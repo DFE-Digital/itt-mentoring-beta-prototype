@@ -102,9 +102,11 @@ exports.list_claims_get = (req, res) => {
     }
   }
 
+  const statusArray = ['sampling_in_progress','sampling_not_approved']
+
   // get filter items
   let filterStatusItems = statusHelper.getClaimStatusOptions(statuses)
-  filterStatusItems = filterStatusItems.filter(status => ['sampling_in_progress','sampling_not_approved'].includes(status.value))
+  filterStatusItems = filterStatusItems.filter(status => statusArray.includes(status.value))
 
   const filterSchoolItems = schoolHelper.getSchoolOptions(schools)
   const filterProviderItems = providerHelper.getProviderOptions(providers)
@@ -119,7 +121,7 @@ exports.list_claims_get = (req, res) => {
     })
   }
 
-  claims = claims.filter(claim => ['sampling_in_progress','sampling_not_approved'].includes(claim.status))
+  claims = claims.filter(claim => statusArray.includes(claim.status))
 
   const hasClaims = !!claims.length
 
