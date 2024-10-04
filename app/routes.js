@@ -427,7 +427,7 @@ router.get('/support/claims/clawbacks/remove-all-filters', checkIsAuthenticated,
 
 router.get('/support/claims/clawbacks/remove-keyword-search', checkIsAuthenticated, supportClawbackController.removeKeywordSearch)
 
-router.get('/support/claims/clawbacks/:claimId', checkIsAuthenticated, supportSamplingController.show_claim_get)
+router.get('/support/claims/clawbacks/:claimId', checkIsAuthenticated, supportClawbackController.show_claim_get)
 
 /// ------------------------------------------------------------------------ ///
 
