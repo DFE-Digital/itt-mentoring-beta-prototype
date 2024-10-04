@@ -4,7 +4,14 @@
 {% set secondaryNavId = "payments" %}
 
 {% set title = "Claims" %}
-{% set subtitle = "Payments" %}
+
+{% set subtitle %}
+  {% if pagination.totalCount > 0 %}
+    Payments ({{ pagination.totalCount | numeral('0,0') }})
+  {% else %}
+    No claims found
+  {% endif %}
+{% endset %}
 
 {% block pageTitle %}
 {{ "Error: " if errors }}{{ subtitle + " - " if subtitle }}{{ title + " - " if title }}{{ caption + " - " if caption }}{{ serviceName }} - GOV.UK
@@ -52,7 +59,7 @@
 
       {% if hasClaims %}
         <h3 class="govuk-heading-s">
-          {{ pagination.totalCount if pagination.totalCount else "No" }} claims need further information
+          {{ pagination.totalCount if pagination.totalCount else "No" }} claim {{- 's' if pagination.totalCount > 1 }} need {{- 's' if pagination.totalCount == 1 }} processing
         </h3>
       {% else %}
         <p class="govuk-body">There are no claims waiting to be processed.</p>
