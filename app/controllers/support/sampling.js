@@ -7,7 +7,7 @@ const Pagination = require('../../helpers/pagination')
 const claimHelper = require('../../helpers/claims')
 const filterHelper = require('../../helpers/filters')
 const providerHelper = require('../../helpers/providers')
-const samplingHelper = require('../../helpers/payments')
+const samplingHelper = require('../../helpers/sampling')
 const schoolHelper = require('../../helpers/schools')
 const statusHelper = require('../../helpers/statuses')
 
@@ -71,7 +71,7 @@ exports.list_claims_get = (req, res) => {
         items: statuses.map((status) => {
           return {
             text: claimHelper.getClaimStatusLabel(status),
-            href: `/support/claims/remove-status-filter/${status}`
+            href: `/support/claims/sampling/remove-status-filter/${status}`
           }
         })
       })

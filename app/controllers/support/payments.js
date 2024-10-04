@@ -72,7 +72,7 @@ exports.list_claims_get = (req, res) => {
         items: statuses.map((status) => {
           return {
             text: claimHelper.getClaimStatusLabel(status),
-            href: `/support/claims/remove-status-filter/${status}`
+            href: `/support/claims/payments/remove-status-filter/${status}`
           }
         })
       })
