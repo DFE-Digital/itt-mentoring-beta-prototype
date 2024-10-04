@@ -414,10 +414,20 @@ router.post('/support/claims/sampling/download', checkIsAuthenticated, supportSa
 router.get('/support/claims/sampling/:claimId', checkIsAuthenticated, supportSamplingController.show_claim_get)
 
 router.get('/support/claims/sampling/:claimId/status/:claimStatus', checkIsAuthenticated, supportSamplingController.update_claim_status_get)
+router.post('/support/claims/sampling/:claimId/status/:claimStatus', checkIsAuthenticated, supportSamplingController.update_claim_status_post)
 
 /// ------------------------------------------------------------------------ ///
 
 router.get('/support/claims/clawbacks', checkIsAuthenticated, supportClawbackController.list_claims_get)
+
+router.get('/support/claims/clawbacks/remove-school-filter/:school', checkIsAuthenticated, supportClawbackController.removeSchoolFilter)
+router.get('/support/claims/clawbacks/remove-provider-filter/:provider', checkIsAuthenticated, supportClawbackController.removeProviderFilter)
+
+router.get('/support/claims/clawbacks/remove-all-filters', checkIsAuthenticated, supportClawbackController.removeAllFilters)
+
+router.get('/support/claims/clawbacks/remove-keyword-search', checkIsAuthenticated, supportClawbackController.removeKeywordSearch)
+
+router.get('/support/claims/clawbacks/:claimId', checkIsAuthenticated, supportSamplingController.show_claim_get)
 
 /// ------------------------------------------------------------------------ ///
 
