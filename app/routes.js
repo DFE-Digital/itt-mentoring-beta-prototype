@@ -396,13 +396,14 @@ router.get('/support/claims/sampling/remove-all-filters', checkIsAuthenticated, 
 router.get('/support/claims/sampling/remove-keyword-search', checkIsAuthenticated, supportSamplingController.removeKeywordSearch)
 
 router.get('/support/claims/sampling/upload', checkIsAuthenticated, supportSamplingController.upload_claims_get)
+// the upload.single('sample') middleware uses the form field file name
 router.post('/support/claims/sampling/upload', checkIsAuthenticated, upload.single('sample'), supportSamplingController.upload_claims_post)
 
 router.get('/support/claims/sampling/upload/review', checkIsAuthenticated, supportSamplingController.review_upload_claims_get)
 router.post('/support/claims/sampling/upload/review', checkIsAuthenticated, supportSamplingController.review_upload_claims_post)
 
 router.get('/support/claims/sampling/response', checkIsAuthenticated, supportSamplingController.response_claims_get)
-// the upload.single('sampling') middleware uses the form field file name
+// the upload.single('response') middleware uses the form field file name
 router.post('/support/claims/sampling/response', checkIsAuthenticated, upload.single('response'), supportSamplingController.response_claims_post)
 
 router.get('/support/claims/sampling/response/review', checkIsAuthenticated, supportSamplingController.review_response_claims_get)
