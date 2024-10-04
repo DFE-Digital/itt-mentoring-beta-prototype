@@ -38,4 +38,17 @@
     href: actions.clawbackRequired
   }) }}
 {% endif %}
+
+{% if claim.status === "clawback_requested" %}
+  {{ govukButton({
+    text: "Action A",
+    href: "#"
+  }) }}
+
+  {{ govukButton({
+    text: "Action B",
+    href: "#",
+    classes: "govuk-button--secondary"
+  }) }}
+{% endif %}
 </div>
