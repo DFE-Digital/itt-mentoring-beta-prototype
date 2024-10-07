@@ -430,6 +430,9 @@ router.get('/support/claims/clawbacks/remove-keyword-search', checkIsAuthenticat
 
 router.get('/support/claims/clawbacks/:claimId', checkIsAuthenticated, supportClawbackController.show_claim_get)
 
+router.get('/support/claims/clawbacks/:claimId/status/:claimStatus', checkIsAuthenticated, supportClawbackController.update_claim_status_get)
+router.post('/support/claims/clawbacks/:claimId/status/:claimStatus', checkIsAuthenticated, supportClawbackController.update_claim_status_post)
+
 /// ------------------------------------------------------------------------ ///
 
 router.get('/support/claims/activity', checkIsAuthenticated, supportActivityController.list_activity_get)

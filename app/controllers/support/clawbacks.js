@@ -19,7 +19,7 @@ exports.list_claims_get = (req, res) => {
   // delete the filter and search data if the referrer is
   // the all claims, payments or clawbacks lists since they have
   // similar functionality
-  const regex = /\/support\/claims(\/(payments|sampling)|(?=\?|$))/
+  const regex = /\/support\/claims(\/(payments|clawbacks)|(?=\?|$))/
   if (regex.test(req.headers.referer)) {
     delete req.session.data.filters
     delete req.session.data.keywords
@@ -97,7 +97,7 @@ exports.list_claims_get = (req, res) => {
     }
   }
 
-  const statusArray = ['clawback_requested','clawback_complete']
+  const statusArray = ['in_review','clawback_requested','clawback_complete']
 
   // get filter items
   let filterStatusItems = statusHelper.getClaimStatusOptions(statuses)
@@ -223,10 +223,57 @@ exports.show_claim_get = (req, res) => {
     claim,
     organisation,
     actions: {
-      clawbackRequired: `/support/claims/clawbacks/${req.params.claimId}/status/clawback_requested`,
-      samplingApproved: `/support/claims/clawbacks/${req.params.claimId}/status/paid`,
+      requestClawback: `/support/claims/clawbacks/${req.params.claimId}/status/clawback_requested`,
+      approveClaim: `/support/claims/clawbacks/${req.params.claimId}/status/paid`,
       back: `/support/claims/clawbacks`,
       cancel: `/support/claims/clawbacks`
     }
   })
+}
+
+/// ------------------------------------------------------------------------ ///
+/// UPDATE CLAIM STATUS
+/// ------------------------------------------------------------------------ ///
+
+exports.update_claim_status_get = (req, res) => {
+  let claim = claimModel.findOne({
+    claimId: req.params.claimId
+  })
+
+  claim = claimDecorator.decorate(claim)
+
+  const organisation = claim.school
+
+  res.render('../views/support/claims/clawbacks/confirm', {
+    claim,
+    organisation,
+    status: req.params.claimStatus,
+    actions: {
+      save: `/support/claims/clawbacks/${req.params.claimId}/status/${req.params.claimStatus}`,
+      back: `/support/claims/clawbacks/${req.params.claimId}`,
+      cancel: `/support/claims/clawbacks/${req.params.claimId}`
+    }
+  })
+}
+
+exports.update_claim_status_post = (req, res) => {
+  const claim = claimModel.findOne({
+    claimId: req.params.claimId
+  })
+
+  claimModel.updateOne({
+    organisationId: claim.organisationId,
+    claimId: claim.id,
+    claim: {
+      status: req.params.claimStatus
+    }
+  })
+
+  req.flash('success', 'Claim updated')
+
+  if (req.params.claimStatus === 'in_review') {
+    res.redirect(`/support/claims/clawbacks/${req.params.claimId}`)
+  } else {
+    res.redirect(`/support/claims/clawbacks`)
+  }
 }

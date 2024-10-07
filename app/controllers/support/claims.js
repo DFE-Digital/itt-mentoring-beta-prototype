@@ -331,8 +331,8 @@ exports.show_claim_get = (req, res) => {
     showOrganisationLink: true,
     actions: {
       informationSent: `/support/claims/payments/${req.params.claimId}/status/payment_information_sent`,
-      paymentNotApproved: `/support/claims/payments/${req.params.claimId}/status/not_paid`,
-      clawbackRequired: `/support/claims/sampling/${req.params.claimId}/status/clawback_requested`,
+      rejectClaim: `/support/claims/payments/${req.params.claimId}/status/not_paid`,
+      requestReview: `/support/claims/sampling/${req.params.claimId}/status/clawback_requested`,
       samplingApproved: `/support/claims/sampling/${req.params.claimId}/status/paid`,
       back: `/support/claims`,
       organisations: `/support/organisations`
