@@ -49,7 +49,7 @@ This funding applies to schools that:
 
 ## 3. Eligibility
 
-Any type of institution within England that hosted an ITT trainee on a course where the accredited provider was BPN or NIoT; or intended to host an ITT trainee on a BPN or NIoT course leading to the award of QTS (except Assessment Only), is eligible to claim funding, including special schools, pupil referral units, early years settings, further education organisations and independent schools.
+Any type of institution within England that hosted an ITT trainee or intended to host an ITT trainee on a course leading to the award of QTS (except Assessment Only), is eligible to claim funding, including special schools, pupil referral units, early years settings, further education organisations and independent schools.
 
 ### Placement duration
 
