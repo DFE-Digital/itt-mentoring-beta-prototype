@@ -26,16 +26,22 @@
   }) }}
 
   {{ govukButton({
-    text: "Request review",
-    href: actions.requestReview,
+    text: "Reject claim",
+    href: actions.rejectClaim,
     classes: "govuk-button--secondary"
   }) }}
 {% endif %}
 
+  {# {{ govukButton({
+    text: "Request review",
+    href: actions.requestReview,
+    classes: "govuk-button--secondary"
+  }) }} #}
+
 {% if claim.status == "sampling_not_approved" %}
   {{ govukButton({
-    text: "Request review",
-    href: actions.requestReview
+    text: "Request clawback",
+    href: actions.requestClawback
   }) }}
 {% endif %}
 
