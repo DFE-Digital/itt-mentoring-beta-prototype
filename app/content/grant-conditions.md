@@ -1,5 +1,5 @@
 ---
-title: General mentor training conditions of grant for early adopters
+title: General mentor training conditions of grant
 contents:
   items:
     - text: 1. Introduction
