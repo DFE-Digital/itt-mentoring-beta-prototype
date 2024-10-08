@@ -359,6 +359,7 @@ router.get('/support/organisations/:organisationId/claims', checkIsAuthenticated
 
 router.get('/support/claims/payments', checkIsAuthenticated, supportPaymentController.list_claims_get)
 
+router.get('/support/claims/payments/remove-status-filter/:status', checkIsAuthenticated, supportPaymentController.removeStatusFilter)
 router.get('/support/claims/payments/remove-school-filter/:school', checkIsAuthenticated, supportPaymentController.removeSchoolFilter)
 router.get('/support/claims/payments/remove-provider-filter/:provider', checkIsAuthenticated, supportPaymentController.removeProviderFilter)
 
@@ -388,6 +389,7 @@ router.post('/support/claims/payments/:claimId/status/:claimStatus', checkIsAuth
 
 router.get('/support/claims/sampling', checkIsAuthenticated, supportSamplingController.list_claims_get)
 
+router.get('/support/claims/sampling/remove-status-filter/:status', checkIsAuthenticated, supportSamplingController.removeStatusFilter)
 router.get('/support/claims/sampling/remove-school-filter/:school', checkIsAuthenticated, supportSamplingController.removeSchoolFilter)
 router.get('/support/claims/sampling/remove-provider-filter/:provider', checkIsAuthenticated, supportSamplingController.removeProviderFilter)
 
@@ -421,6 +423,7 @@ router.post('/support/claims/sampling/:claimId/status/:claimStatus', checkIsAuth
 
 router.get('/support/claims/clawbacks', checkIsAuthenticated, supportClawbackController.list_claims_get)
 
+router.get('/support/claims/clawbacks/remove-status-filter/:status', checkIsAuthenticated, supportClawbackController.removeStatusFilter)
 router.get('/support/claims/clawbacks/remove-school-filter/:school', checkIsAuthenticated, supportClawbackController.removeSchoolFilter)
 router.get('/support/claims/clawbacks/remove-provider-filter/:provider', checkIsAuthenticated, supportClawbackController.removeProviderFilter)
 

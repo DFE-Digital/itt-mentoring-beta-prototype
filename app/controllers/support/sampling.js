@@ -77,18 +77,6 @@ exports.list_claims_get = (req, res) => {
       })
     }
 
-    if (schools?.length) {
-      selectedFilters.categories.push({
-        heading: { text: 'School' },
-        items: schools.map((school) => {
-          return {
-            text: schoolHelper.getSchoolName(school),
-            href: `/support/claims/sampling/remove-school-filter/${school}`
-          }
-        })
-      })
-    }
-
     if (providers?.length) {
       selectedFilters.categories.push({
         heading: { text: 'Accredited provider' },
@@ -96,6 +84,18 @@ exports.list_claims_get = (req, res) => {
           return {
             text: providerHelper.getProviderName(provider),
             href: `/support/claims/sampling/remove-provider-filter/${provider}`
+          }
+        })
+      })
+    }
+
+    if (schools?.length) {
+      selectedFilters.categories.push({
+        heading: { text: 'School' },
+        items: schools.map((school) => {
+          return {
+            text: schoolHelper.getSchoolName(school),
+            href: `/support/claims/sampling/remove-school-filter/${school}`
           }
         })
       })

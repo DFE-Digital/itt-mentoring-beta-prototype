@@ -20,7 +20,7 @@ exports.list_claims_get = (req, res) => {
   // delete the filter and search data if the referrer is
   // the all claims, payments or clawbacks lists since they have
   // similar functionality
-  const regex = /\/support\/claims(\/(payments|clawbacks)|(?=\?|$))/
+  const regex = /\/support\/claims(\/(payments|sampling)|(?=\?|$))/
   if (regex.test(req.headers.referer)) {
     delete req.session.data.filters
     delete req.session.data.keywords
@@ -73,18 +73,6 @@ exports.list_claims_get = (req, res) => {
       })
     }
 
-    if (schools?.length) {
-      selectedFilters.categories.push({
-        heading: { text: 'School' },
-        items: schools.map((school) => {
-          return {
-            text: schoolHelper.getSchoolName(school),
-            href: `/support/claims/clawbacks/remove-school-filter/${school}`
-          }
-        })
-      })
-    }
-
     if (providers?.length) {
       selectedFilters.categories.push({
         heading: { text: 'Accredited provider' },
@@ -92,6 +80,18 @@ exports.list_claims_get = (req, res) => {
           return {
             text: providerHelper.getProviderName(provider),
             href: `/support/claims/clawbacks/remove-provider-filter/${provider}`
+          }
+        })
+      })
+    }
+
+    if (schools?.length) {
+      selectedFilters.categories.push({
+        heading: { text: 'School' },
+        items: schools.map((school) => {
+          return {
+            text: schoolHelper.getSchoolName(school),
+            href: `/support/claims/clawbacks/remove-school-filter/${school}`
           }
         })
       })
