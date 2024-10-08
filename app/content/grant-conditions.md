@@ -41,7 +41,7 @@ This funding will help with the cost of mentors being away from the classroom wh
 - overtime payment to the mentor, if they are training outside normal working hours (teacher workload should be carefully considered in such cases)
 - paying for any costs that come from reducing a mentor’s other responsibilities so they have time to train
 
-This funding applies to early adopter schools that:
+This funding applies to schools that:
 
 - offer placements to ITT trainees, including special schools, pupil referral units, independent schools, early years settings and further education organisations
 - have mentors working with ITT trainees who started or returned to their training at any time between 1 September 2024 and 31 May 2025 (1 June 2024 for apprenticeship trainees)
@@ -65,13 +65,13 @@ Only educational organisations located in England are eligible to apply for this
 
 ### Mentors who cannot continue with mentoring
 
-An early adopter school can claim funding when a mentor starts their initial training between 6 April 2024 and 31 May 2025, begins mentoring a trainee but then cannot continue mentoring for any reason. The school should arrange a new mentor for the trainee. The school can claim funding for both mentors if they both started their training between 6 April 2024 and 31 May 2025.
+A school can claim funding when a mentor starts their initial training between 6 April 2024 and 31 May 2025, begins mentoring a trainee but then cannot continue mentoring for any reason. The school should arrange a new mentor for the trainee. The school can claim funding for both mentors if they both started their training between 6 April 2024 and 31 May 2025.
 
 ### Mentors training with different providers
 
 Each accredited ITT provider can develop their own mentor training, which can result in different training for mentors working with different providers. If a school hosts trainees from different providers, a mentor might have to undertake their initial mentor training with each provider, but accredited ITT providers should consider prior training when deciding what aspects of their mentor training a mentor should complete.
 
-Early adopter schools can claim funding for the time a mentor spends training at each provider.
+Schools can claim funding for the time a mentor spends training at each provider.
 
 For schools to claim this funding, a mentor must have worked with a trainee who started or intended to start their ITT in the 2024/25 academic year (between 1 September 2024 and 31 May 2025, 1 June 2024 for apprenticeship trainees). Schools must ensure a trainee has one dedicated mentor during their placement (unless the mentor works in a job-share). Other teachers may support elements of the trainee’s placement, but schools can only claim funding for the training time of the trainee’s dedicated mentor.
 
@@ -85,7 +85,7 @@ For instance, if school A claimed 10 hours of funding for mentor A, with provide
 
 ### Trainees that defer or withdraw from their training
 
-Early adopter schools can claim mentor funding if a mentor works with a trainee who:
+Schools can claim mentor funding if a mentor works with a trainee who:
 
 - deferred in a previous academic year and then returns to their course in the 2024/25 academic year for any time on school placement
 - defers or withdraws after a mentor has started their initial mentor training – mentors can continue with their training if they commit to being a mentor in the following academic year
@@ -98,7 +98,7 @@ If a trainee withdraws mid-year, the school, accredited provider and the mentor 
 
 ## 4. Conditions of this funding
 
-Early adopter schools will be able to claim this funding at the end of the 2024/25 academic year and will be paid in arrears between September 2025 and January 2026. When schools make a claim, DfE will not ask for evidence where the information provided can be validated through its services including, but not limited to, Publish teacher training courses, Register trainee teachers and Get information about schools. Where this information cannot be validated, as part of the claim process, DfE may ask for evidence of:
+Schools will be able to claim this funding at the end of the 2024/25 academic year and will be paid in arrears between September 2025 and January 2026. When schools make a claim, DfE will not ask for evidence where the information provided can be validated through its services including, but not limited to, Publish teacher training courses, Register trainee teachers and Get information about schools. Where this information cannot be validated, as part of the claim process, DfE may ask for evidence of:
 
 - a mentor’s employment at the school, such as a copy of their employment contract or payslips from the 2024/25 academic year
 - arranging placements at their school for ITT trainees, such as communication with providers
@@ -115,7 +115,7 @@ DfE may also ask the accredited provider who delivered the general mentor traini
 
 DfE will inform organisations of all the claims where they are listed as the accredited ITT provider.
 
-For an early adopter school to claim this funding, the mentor must:
+For a school to claim this funding, the mentor must:
 
 - be employed by the school making the claim
 - undertake up to 20 hours of initial mentor training, per accredited ITT provider
@@ -123,7 +123,7 @@ For an early adopter school to claim this funding, the mentor must:
 
 Mentor training typically takes place at the start of the academic year or during the preceding summer term. In some instances, training can take place later than the start of the autumn term due to some courses starting later. Mentors can start their initial mentor training between 6 April 2024 and 31 May 2025 for courses starting in the 2024/25 academic year.
 
-To claim funding for training that began in advance of the 24/25 academic year, early adopter schools may need to provide evidence of agreeing to host placements at their school for ITT trainees, such as communication with providers to organise this. This evidence may be requested where a mentor did not mentor a trainee during the academic year.
+To claim funding for training that began in advance of the 24/25 academic year, schools may need to provide evidence of agreeing to host placements at their school for ITT trainees, such as communication with providers to organise this. This evidence may be requested where a mentor did not mentor a trainee during the academic year.
 
 Schools can only claim funding for one mentor per trainee, unless the mentor withdraws. If the mentor role is undertaken by staff on a job-share basis then the school can claim full funding for both staff members.
 
@@ -133,7 +133,7 @@ These specific grant conditions are in addition to the [standard grant terms and
 
 ## 5. Funding
 
-The amount of funding early adopter schools will receive depends on:
+The amount of funding schools will receive depends on:
 
 - the location of the school (recognising the different costs in different areas of the country)
 - how many hours a mentor has spent training (which can be up to a maximum of 20 hours, per accredited ITT provider)
@@ -150,9 +150,9 @@ If a mentor undertakes fewer than 20 hours of training, the funding is calculate
 
 ## 6. Payments
 
-Payments will be made in arrears from September 2025. Early adopter schools will be able to submit a claim via a new GOV.UK service. The service will open in May 2025 and schools will be able to submit their claims once their mentors have completed their training.
+Payments will be made in arrears from September 2025. Schools will be able to submit a claim via a new GOV.UK service. The service will open in May 2025 and schools will be able to submit their claims once their mentors have completed their training.
 
-Early adopter schools must complete their claims by the end of July to receive payment from the Educational and Skills Funding Agency (ESFA) in late September/early October. If schools miss the payment window, they will be able to submit a claim in September, with payment being made in December 2025.
+Schools must complete their claims by the end of July to receive payment from the Educational and Skills Funding Agency (ESFA) in late September/early October. If schools miss the payment window, they will be able to submit a claim in September, with payment being made in December 2025.
 
 DfE will begin communicating details of this new service to schools and providers from September 2024.
 
