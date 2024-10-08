@@ -1,4 +1,5 @@
 const claimModel = require('../../models/claims')
+const clawbackModel = require('../../models/clawbacks')
 
 const Pagination = require('../../helpers/pagination')
 const claimHelper = require('../../helpers/claims')
@@ -157,7 +158,7 @@ exports.list_claims_get = (req, res) => {
     filterSchoolItems,
     filterProviderItems,
     actions: {
-      upload: `/support/claims/clawbacks/upload`,
+      send: `/support/claims/clawbacks/send`,
       response: `/support/claims/clawbacks/response`,
       view: `/support/claims/clawbacks`,
       filters: {
@@ -275,5 +276,68 @@ exports.update_claim_status_post = (req, res) => {
     res.redirect(`/support/claims/clawbacks/${req.params.claimId}`)
   } else {
     res.redirect(`/support/claims/clawbacks`)
+  }
+}
+
+/// ------------------------------------------------------------------------ ///
+/// SEND CLAIMS FOR CLAWBACK
+/// ------------------------------------------------------------------------ ///
+
+exports.send_claims_get = (req, res) => {
+  const claims = claimModel
+    .findMany({ })
+    .filter(claim => claim.status === 'clawback_requested')
+
+  const hasClaims = !!claims.length
+
+  res.render('../views/support/claims/clawbacks/send', {
+    hasClaims,
+    actions: {
+      save: `/support/claims/clawbacks/send`,
+      back: `/support/claims/clawbacks`,
+      cancel: `/support/claims/clawbacks`
+    }
+  })
+}
+
+exports.send_claims_post = (req, res) => {;
+  const errors = []
+
+  if (errors.length) {
+    const claims = claimModel
+      .findMany({ })
+      .filter(claim => claim.status === 'clawback_requested')
+
+    const hasClaims = !!claims.length
+
+    res.render('../views/support/claims/clawbacks/send', {
+      hasClaims,
+      actions: {
+        save: `/support/claims/clawbacks/send`,
+        back: `/support/claims/clawbacks`,
+        cancel: `/support/claims/clawbacks`
+      },
+      errors
+    })
+  } else {
+    // get all submitted claims
+    const clawbacks = clawbackModel.findMany({
+      status: 'clawback_requested'
+    })
+
+    // create a CSV file
+    clawbackModel.writeFile({
+      clawbacks
+    })
+
+    // update claim status to 'clawback_in_progress'
+    clawbackModel.updateMany({
+      userId: req.session.passport.user.id,
+      currentStatus: 'clawback_requested',
+      newStatus: 'clawback_in_progress'
+    })
+
+    req.flash('success', 'Claims sent to ESFA')
+    res.redirect('/support/claims/clawbacks')
   }
 }

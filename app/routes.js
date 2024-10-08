@@ -428,6 +428,9 @@ router.get('/support/claims/clawbacks/remove-all-filters', checkIsAuthenticated,
 
 router.get('/support/claims/clawbacks/remove-keyword-search', checkIsAuthenticated, supportClawbackController.removeKeywordSearch)
 
+router.get('/support/claims/clawbacks/send', checkIsAuthenticated, supportClawbackController.send_claims_get)
+router.post('/support/claims/clawbacks/send', checkIsAuthenticated, supportClawbackController.send_claims_post)
+
 router.get('/support/claims/clawbacks/:claimId', checkIsAuthenticated, supportClawbackController.show_claim_get)
 
 router.get('/support/claims/clawbacks/:claimId/status/:claimStatus', checkIsAuthenticated, supportClawbackController.update_claim_status_get)
