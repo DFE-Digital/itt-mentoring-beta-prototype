@@ -5,6 +5,9 @@
 {% if status == "in_review" %}
   {% set title = "Are you sure you want to request a review for the claim?" %}
   {% set buttonLabel = "Request review" %}
+{% elif status == "sampling_not_approved" %}
+  {% set title = "Are you sure you want to reject the claim?" %}
+  {% set buttonLabel = "Reject claim" %}
 {% elif status == "paid" %}
   {% set title = "Are you sure you want to approve the claim?" %}
   {% set buttonLabel = "Approve claim" %}
@@ -35,9 +38,11 @@
 
       <form action="{{ actions.save }}" method="post" accept-charset="utf-8" novalidate>
 
-        {% if status === "in_review" %}
+        {% if status == "in_review" %}
           <p class="govuk-body">This will mark the claim as ‘In review’ and move it into the clawback queue.</p>
-        {% elif status === "paid" %}
+        {% elif status == "sampling_not_approved" %}
+          <p class="govuk-body">This will mark the claim as ‘Claim not approved’ and move it into the clawback queue.</p>
+        {% elif status == "paid" %}
           <p class="govuk-body">This will mark the claim as ‘Paid’.</p>
         {% endif %}
 

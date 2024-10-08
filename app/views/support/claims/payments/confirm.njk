@@ -35,9 +35,9 @@
 
       <form action="{{ actions.save }}" method="post" accept-charset="utf-8" novalidate>
 
-        {% if status === "payment_information_sent" %}
+        {% if status == "payment_information_sent" %}
           <p class="govuk-body">You confirm that you have sent the ESFA the information they requested so they can pay the claim.</p>
-        {% elif status === "not_paid" %}
+        {% elif status == "not_paid" %}
           <p class="govuk-body">This will result in this claim not being paid.</p>
         {% endif %}
 
