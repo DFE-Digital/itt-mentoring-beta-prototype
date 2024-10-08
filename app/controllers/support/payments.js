@@ -163,7 +163,7 @@ exports.list_claims_get = (req, res) => {
     filterSchoolItems,
     filterProviderItems,
     actions: {
-      export: `/support/claims/payments/send`,
+      send: `/support/claims/payments/send`,
       response: `/support/claims/payments/response`,
       view: `/support/claims/payments`,
       filters: {
@@ -335,7 +335,7 @@ exports.send_claims_post = (req, res) => {;
       payments
     })
 
-    // update claim status to 'pending_payment'
+    // update claim status to 'payment_pending'
     paymentModel.updateMany({
       userId: req.session.passport.user.id,
       currentStatus: 'submitted',

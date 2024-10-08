@@ -1,6 +1,6 @@
 const path = require('path')
 // const fs = require('fs')
-const { v4: uuid } = require('uuid')
+// const { v4: uuid } = require('uuid')
 
 // const CSV = require('csv-string')
 const csvWriter = require('csv-writer').createObjectCsvWriter
@@ -69,7 +69,9 @@ exports.updateMany = (params) => {
 
 exports.writeFile = (params) => {
   if (params.payments) {
-    const filePath = directoryPath + '/' + uuid() + '.csv'
+    const fileName = "payments-" + new Date().toISOString()
+    const filePath = directoryPath + '/' + fileName + '.csv'
+    // const filePath = directoryPath + '/' + uuid() + '.csv'
 
     // create the CSV headers
     const csv = csvWriter({
