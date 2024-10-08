@@ -28,9 +28,9 @@ contents:
 
 As detailed in the [initial teacher training reform guidance](https://www.gov.uk/government/publications/initial-teacher-training-reform-funding-guidance) in the 2024/25 academic year (between 1 September 2024 and 31 August 2025), mentors working in schools that offer initial teacher training (ITT) placements will need to complete up to 20 hours of initial mentor training with an accredited training provider.
 
-Schools can claim for the actual hours of training undertaken by the mentor to a maximum of 20 hours, per accredited provider. [Guidance](https://www.gov.uk/government/publications/initial-teacher-training-reform-funding-guidance) explaining the general mentor training, in addition to the lead mentor and intensive training and practice element of the ITT curriculum was updated in March 2024.
+Schools can claim for the actual hours of training undertaken by the mentor to a maximum of 20 hours, per accredited provider. [Guidance explaining the general mentor training](https://www.gov.uk/government/publications/initial-teacher-training-reform-funding-guidance), in addition to the lead mentor and intensive training and practice element of the ITT curriculum was updated in March 2024.
 
-[Guidance](https://www.gov.uk/guidance/offer-a-trainee-teacher-placement) explaining what schools need to do to offer ITT placements from September 2024, was published in November 2023.
+[Guidance explaining what schools need to do to offer ITT placements](https://www.gov.uk/guidance/offer-a-trainee-teacher-placement) from September 2024, was published in November 2023.
 
 ## 2. Details of the grant
 
