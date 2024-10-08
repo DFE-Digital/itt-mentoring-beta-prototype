@@ -102,7 +102,7 @@ exports.list_claims_get = (req, res) => {
     }
   }
 
-  const statusArray = ['sampling_in_progress','sampling_not_approved']
+  const statusArray = ['sampling_in_progress'] // 'sampling_not_approved'
 
   // get filter items
   let filterStatusItems = statusHelper.getClaimStatusOptions(statuses)
@@ -228,8 +228,9 @@ exports.show_claim_get = (req, res) => {
     claim,
     organisation,
     actions: {
-      requestReview: `/support/claims/sampling/${req.params.claimId}/status/in_review`,
       approveClaim: `/support/claims/sampling/${req.params.claimId}/status/paid`,
+      rejectClaim: `/support/claims/sampling/${req.params.claimId}/status/sampling_not_approved`,
+      requestClawback: `/support/claims/sampling/${req.params.claimId}/status/clawback_requested`,
       back: `/support/claims/sampling`,
       cancel: `/support/claims/sampling`
     }
