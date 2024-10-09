@@ -55,7 +55,7 @@
 {% if claim.status === "clawback_in_progress" %}
   {{ govukButton({
     text: "Confirm clawback received",
-    href: "#"
+    href: actions.completeClawback
   }) }}
 {% endif %}
 </div>

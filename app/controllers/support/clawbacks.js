@@ -232,6 +232,7 @@ exports.show_claim_get = (req, res) => {
       requestClawback: `/support/claims/clawbacks/${req.params.claimId}/request`,
       approveClaim: `/support/claims/clawbacks/${req.params.claimId}/status/paid`,
       changeClawback: `/support/claims/clawbacks/${req.params.claimId}/request`,
+      completeClawback: `/support/claims/clawbacks/${req.params.claimId}/status/clawback_complete`,
       back: `/support/claims/clawbacks`,
       cancel: `/support/claims/clawbacks`
     }
