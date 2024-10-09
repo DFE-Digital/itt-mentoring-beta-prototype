@@ -1,0 +1,64 @@
+<h2 class="govuk-heading-m">Clawback details</h2>
+
+{{ govukSummaryList({
+  rows: [
+    {
+      key: {
+        text: "Total hours"
+      },
+      value: {
+        text: claim.clawback.hours | numeral('0,0') + " hour" + ("s" if claim.clawback.hours > 1)
+      },
+      actions: {
+        items: [
+          {
+            href: "Item URL",
+            text: "Change",
+            visuallyHiddenText: "Item label"
+          }
+        ]
+      } if claim.status != "clawback_in_progress"
+    },
+    {
+      key: {
+        text: "Hourly rate"
+      },
+      value: {
+        text: "£" + claim.clawback.fundingRate | numeral('0,0.00')
+      }
+    },
+    {
+      key: {
+        text: "Clawback amount"
+      },
+      value: {
+        text: "£" + claim.clawback.totalAmount | numeral('0,0.00')
+      }
+    },
+    {
+      key: {
+        text: "Reason for clawback"
+      },
+      value: {
+        text: claim.clawback.reason
+      },
+      actions: {
+        items: [
+          {
+            href: "Item URL",
+            text: "Change",
+            visuallyHiddenText: "Item label"
+          }
+        ]
+      } if claim.status != "clawback_in_progress"
+    },
+    {
+      key: {
+        text: "Revised claim amount"
+      },
+      value: {
+        text: "£" + (claim.totalAmount - claim.clawback.totalAmount) | numeral('0,0.00')
+      }
+    }
+  ]
+}) }}

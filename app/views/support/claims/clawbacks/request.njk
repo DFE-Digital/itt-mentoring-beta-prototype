@@ -1,0 +1,74 @@
+{% extends "layouts/support.njk" %}
+
+{% set primaryNavId = "claims" %}
+
+{% set title = "Clawback details" %}
+{% set caption = "Clawbacks - Claim " + claim.reference | upper %}
+
+{% block pageTitle %}
+  {{ "Error: " if errors.length }}{{ title + " - " if title }}{{ caption + " - " if caption }}{{ serviceName }} - GOV.UK
+{% endblock %}
+
+{% block beforeContent %}
+{{ govukBackLink({
+  text: "Back",
+  href: actions.back
+}) }}
+{% endblock %}
+
+{% block content %}
+
+  {% include "_includes/error-summary.njk" %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      {% include "_includes/page-heading.njk" %}
+
+      <form action="{{ actions.save }}" method="post" accept-charset="utf-8" novalidate>
+
+        {{ govukInput({
+          id: "hours",
+          name: "clawback[hours]",
+          label: {
+            text: "Number of hours to clawback",
+            isPageHeading: false,
+            classes: "govuk-label--s"
+          },
+          hint: {
+            text: "Enter whole numbers up to a maximum of " + claim.totalHours + " hours"
+          },
+          value: clawback.hours,
+          errorMessage: errors | getErrorMessage("hours"),
+          classes: "govuk-input--width-2"
+        }) }}
+
+        {{ govukTextarea({
+          id: "reason",
+          name: "clawback[reason]",
+          label: {
+            text: "Reason for clawback",
+            isPageHeading: false,
+            classes: "govuk-label--s"
+          },
+          hint: {
+            text: "Explain why the clawback is being requested. For example, include details of which mentor has received a deducation."
+          },
+          value: clawback.reason,
+          errorMessage: errors | getErrorMessage("reason")
+        }) }}
+
+        {{ govukButton({
+          text: "Continue"
+        }) }}
+
+      </form>
+
+      <p class="govuk-body">
+        <a class="govuk-link" href="{{ actions.cancel }}">Cancel</a>
+      </p>
+
+    </div>
+  </div>
+
+{% endblock %}
