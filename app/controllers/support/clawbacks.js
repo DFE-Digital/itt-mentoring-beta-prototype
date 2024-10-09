@@ -231,6 +231,7 @@ exports.show_claim_get = (req, res) => {
     actions: {
       requestClawback: `/support/claims/clawbacks/${req.params.claimId}/request`,
       approveClaim: `/support/claims/clawbacks/${req.params.claimId}/status/paid`,
+      changeClawback: `/support/claims/clawbacks/${req.params.claimId}/request`,
       back: `/support/claims/clawbacks`,
       cancel: `/support/claims/clawbacks`
     }
@@ -297,10 +298,17 @@ exports.request_clawback_get = (req, res) => {
 
   const organisation = claim.school
 
+  let clawback
+  if (!req.session.data.clawback) {
+    clawback = claim.clawback
+  } else {
+    clawback = req.session.data.clawback
+  }
+
   res.render('../views/support/claims/clawbacks/request', {
     claim,
     organisation,
-    clawback: req.session.data.clawback,
+    clawback,
     actions: {
       save: `/support/claims/clawbacks/${req.params.claimId}/request`,
       back: `/support/claims/clawbacks/${req.params.claimId}`,
@@ -392,9 +400,13 @@ exports.check_clawback_request_get = (req, res) => {
 }
 
 exports.check_clawback_request_post = (req, res) => {
-console.log('check_clawback_request_post');
+  const claim = claimModel.findOne({
+    claimId: req.params.claimId
+  })
 
-  clawbackModel.insertOne({
+  const hasClawbackDetails = !!(claim.clawback)
+
+  clawbackModel.updateOne({
     claimId: req.params.claimId,
     userId: req.session.passport.user.id,
     claim: {
@@ -403,7 +415,11 @@ console.log('check_clawback_request_post');
     clawback: req.session.data.clawback
   })
 
-  req.flash('success', 'Clawback requested')
+  if (hasClawbackDetails) {
+    req.flash('success', 'Clawback request updated')
+  } else {
+    req.flash('success', 'Clawback requested')
+  }
   res.redirect(`/support/claims/clawbacks`)
 }
 

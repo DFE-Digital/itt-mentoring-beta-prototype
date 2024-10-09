@@ -4,7 +4,7 @@
   rows: [
     {
       key: {
-        text: "Total hours"
+        text: "Number of hours"
       },
       value: {
         text: claim.clawback.hours | numeral('0,0') + " hour" + ("s" if claim.clawback.hours > 1)
@@ -12,9 +12,9 @@
       actions: {
         items: [
           {
-            href: "Item URL",
+            href: actions.requestClawback,
             text: "Change",
-            visuallyHiddenText: "Item label"
+            visuallyHiddenText: "number of hours"
           }
         ]
       } if claim.status != "clawback_in_progress"
@@ -45,9 +45,9 @@
       actions: {
         items: [
           {
-            href: "Item URL",
+            href: actions.requestClawback,
             text: "Change",
-            visuallyHiddenText: "Item label"
+            visuallyHiddenText: "reason for clawback"
           }
         ]
       } if claim.status != "clawback_in_progress"

@@ -49,7 +49,7 @@ exports.findMany = (params) => {
   return clawbacks
 }
 
-exports.insertOne = (params) => {
+exports.updateOne = (params) => {
   console.log(params);
 
   let claim = {}
