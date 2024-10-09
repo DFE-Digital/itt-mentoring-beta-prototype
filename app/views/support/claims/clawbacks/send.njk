@@ -31,6 +31,14 @@
       {% if hasClaims %}
         <form action="{{ actions.save }}" method="post" accept-charset="utf-8" novalidate>
 
+          <p class="govuk-body">
+            {% if claimsCount == 1 %}
+              There is 1 claim included in this submission.
+            {% else %}
+              There are {{ claimsCount | numeral('0,0') }} claims included in this submission.
+            {% endif %}
+          </p>
+
           <p class="govuk-body">Selecting ‘Send claims’ will:</p>
 
           <ul class="govuk-list govuk-list--bullet">

@@ -295,8 +295,11 @@ exports.send_claims_get = (req, res) => {
 
   const hasClaims = !!claims.length
 
+  const claimsCount = claims.length
+
   res.render('../views/support/claims/payments/send', {
     hasClaims,
+    claimsCount,
     actions: {
       save: `/support/claims/payments/send`,
       back: `/support/claims/payments`,
@@ -315,8 +318,11 @@ exports.send_claims_post = (req, res) => {;
 
     const hasClaims = !!claims.length
 
+    const claimsCount = claims.length
+
     res.render('../views/support/claims/payments/send', {
       hasClaims,
+      claimsCount,
       actions: {
         save: `/support/claims/payments/send`,
         back: `/support/claims/payments`,

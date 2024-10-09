@@ -434,8 +434,11 @@ exports.send_claims_get = (req, res) => {
 
   const hasClaims = !!claims.length
 
+  const claimsCount = claims.length
+
   res.render('../views/support/claims/clawbacks/send', {
     hasClaims,
+    claimsCount,
     actions: {
       save: `/support/claims/clawbacks/send`,
       back: `/support/claims/clawbacks`,
@@ -454,8 +457,11 @@ exports.send_claims_post = (req, res) => {;
 
     const hasClaims = !!claims.length
 
+    const claimsCount = claims.length
+
     res.render('../views/support/claims/clawbacks/send', {
       hasClaims,
+      claimsCount,
       actions: {
         save: `/support/claims/clawbacks/send`,
         back: `/support/claims/clawbacks`,
