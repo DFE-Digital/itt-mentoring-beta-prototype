@@ -14,6 +14,7 @@ const schoolHelper = require('../../helpers/schools')
 const statusHelper = require('../../helpers/statuses')
 
 const claimDecorator = require('../../decorators/claims')
+const clawbackDecorator = require('../../decorators/clawbacks')
 
 const settings = require('../../data/dist/settings')
 
@@ -586,16 +587,16 @@ exports.response_claims_post = (req, res) => {
     clawbacks = clawbackHelper.parseData(clawbacks)
 
     // decorate clawback data with claim ID
-    // clawbacks = clawbacks.map(clawback => {
-    //   return clawback = clawbackDecorator.decorate(clawback)
-    // })
+    clawbacks = clawbacks.map(clawback => {
+      return clawback = clawbackDecorator.decorate(clawback)
+    })
 
     req.session.data.clawbacks = clawbacks
 
     // delete the file now it's not needed
     fs.unlinkSync(req.file.path)
 
-    res.redirect('/support/claims/clawbacks/review')
+    res.redirect('/support/claims/clawbacks/response/review')
   }
 }
 
@@ -612,7 +613,7 @@ exports.review_response_claims_get = (req, res) => {
     claimsCount,
     pagination,
     actions: {
-      save: `/support/claims/clawbacks/review`,
+      save: `/support/claims/clawbacks/response/review`,
       back: `/support/claims/clawbacks/response`,
       cancel: `/support/claims/clawbacks`
     }
