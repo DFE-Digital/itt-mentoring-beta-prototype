@@ -1,4 +1,5 @@
 const path = require('path')
+const fs = require('fs')
 
 const csvWriter = require('csv-writer').createObjectCsvWriter
 
@@ -6,6 +7,7 @@ const claimModel = require('./claims')
 const organisationModel = require('./organisations')
 
 const directoryPath = path.join(__dirname, '../data/dist/clawbacks')
+const claimDirectoryPath = path.join(__dirname, '../data/dist/claims')
 
 exports.findMany = (params) => {
   const clawbacks = []
@@ -37,14 +39,56 @@ exports.findMany = (params) => {
       clawback.establishment_type_code = 'UNKNOWN'
     }
 
-    clawback.clawback_amount = claim.totalAmount
-    clawback.clawback_date = new Date()
+    clawback.clawback_amount = claim.clawback.totalAmount
+    clawback.clawback_date = claim.clawback.submittedAt
     clawback.claim_status = claim.status
 
     clawbacks.push(clawback)
   })
 
   return clawbacks
+}
+
+exports.insertOne = (params) => {
+  console.log(params);
+
+  let claim = {}
+
+  if (params.claimId) {
+    claim = claimModel.findOne({
+      claimId: params.claimId,
+    })
+
+    if (params.claim.status) {
+      claim.status = params.claim.status
+    }
+
+    if (params.userId) {
+      claim.updatedBy = params.userId
+    }
+
+    claim.updatedAt = new Date()
+
+    if (params.clawback) {
+      claim.clawback = {}
+      claim.clawback.hours = params.clawback.hours
+      claim.clawback.fundingRate = params.clawback.fundingRate
+      claim.clawback.totalAmount = params.clawback.totalAmount
+      claim.clawback.reason = params.clawback.reason
+      claim.clawback.userId = params.userId
+      claim.clawback.submittedAt = claim.updatedAt
+    }
+
+    const filePath = claimDirectoryPath + '/' + params.claimId + '.json'
+
+    // create a JSON sting for the submitted data
+    const fileData = JSON.stringify(claim)
+
+    // write the JSON data
+    fs.writeFileSync(filePath, fileData)
+  }
+
+  return claim
 }
 
 exports.updateMany = (params) => {
