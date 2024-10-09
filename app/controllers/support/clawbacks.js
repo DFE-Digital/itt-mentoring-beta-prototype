@@ -3,7 +3,9 @@ const clawbackModel = require('../../models/clawbacks')
 
 const Pagination = require('../../helpers/pagination')
 const claimHelper = require('../../helpers/claims')
+const clawbackHelper = require('../../helpers/clawbacks')
 const filterHelper = require('../../helpers/filters')
+const fundingHelper = require('../../helpers/funding')
 const providerHelper = require('../../helpers/providers')
 const schoolHelper = require('../../helpers/schools')
 const statusHelper = require('../../helpers/statuses')
@@ -212,6 +214,9 @@ exports.removeKeywordSearch = (req, res) => {
 /// ------------------------------------------------------------------------ ///
 
 exports.show_claim_get = (req, res) => {
+  // delete the request clawback data so we have an empty form later
+  delete req.session.data.clawback
+
   let claim = claimModel.findOne({
     claimId: req.params.claimId
   })
@@ -224,7 +229,7 @@ exports.show_claim_get = (req, res) => {
     claim,
     organisation,
     actions: {
-      requestClawback: `/support/claims/clawbacks/${req.params.claimId}/status/clawback_requested`,
+      requestClawback: `/support/claims/clawbacks/${req.params.claimId}/request`,
       approveClaim: `/support/claims/clawbacks/${req.params.claimId}/status/paid`,
       back: `/support/claims/clawbacks`,
       cancel: `/support/claims/clawbacks`
@@ -277,6 +282,129 @@ exports.update_claim_status_post = (req, res) => {
   } else {
     res.redirect(`/support/claims/clawbacks`)
   }
+}
+
+/// ------------------------------------------------------------------------ ///
+/// REQUEST CLAWBACK
+/// ------------------------------------------------------------------------ ///
+
+exports.request_clawback_get = (req, res) => {
+  let claim = claimModel.findOne({
+    claimId: req.params.claimId
+  })
+
+  claim = claimDecorator.decorate(claim)
+
+  const organisation = claim.school
+
+  res.render('../views/support/claims/clawbacks/request', {
+    claim,
+    organisation,
+    clawback: req.session.data.clawback,
+    actions: {
+      save: `/support/claims/clawbacks/${req.params.claimId}/request`,
+      back: `/support/claims/clawbacks/${req.params.claimId}`,
+      cancel: `/support/claims/clawbacks/${req.params.claimId}`
+    }
+  })
+}
+
+exports.request_clawback_post = (req, res) => {
+  let claim = claimModel.findOne({
+    claimId: req.params.claimId
+  })
+
+  claim = claimDecorator.decorate(claim)
+
+  const organisation = claim.school
+
+  const errors = []
+
+  if (!req.session.data.clawback.hours.length) {
+    const error = {}
+    error.fieldName = 'hours'
+    error.href = '#hours'
+    error.text = 'Enter the number of hours to clawback'
+    errors.push(error)
+  } else if (req.session.data.clawback.hours > claim.totalHours) {
+    const error = {}
+    error.fieldName = 'hours'
+    error.href = '#hours'
+    error.text = `Enter the number of hours between 1 and ${claim.totalHours}`
+    errors.push(error)
+  }
+
+  if (!req.session.data.clawback.reason.length) {
+    const error = {}
+    error.fieldName = 'reason'
+    error.href = '#reason'
+    error.text = 'Enter the reason for clawback'
+    errors.push(error)
+  }
+
+  if (errors.length) {
+    res.render('../views/support/claims/clawbacks/request', {
+      claim,
+      organisation,
+      clawback: req.session.data.clawback,
+      actions: {
+        save: `/support/claims/clawbacks/${req.params.claimId}/request`,
+        back: `/support/claims/clawbacks/${req.params.claimId}`,
+        cancel: `/support/claims/clawbacks/${req.params.claimId}`
+      },
+      errors
+    })
+  } else {
+    res.redirect(`/support/claims/clawbacks/${req.params.claimId}/request/check`)
+  }
+}
+
+exports.check_clawback_request_get = (req, res) => {
+  let claim = claimModel.findOne({
+    claimId: req.params.claimId
+  })
+
+  claim = claimDecorator.decorate(claim)
+
+  const organisation = claim.school
+
+  req.session.data.clawback.totalAmount = clawbackHelper.calculateClawbackTotal(
+    organisation,
+    req.session.data.clawback.hours
+  )
+
+  req.session.data.clawback.fundingRate = 0
+  if (organisation.location?.districtAdministrativeCode) {
+    req.session.data.clawback.fundingRate = fundingHelper.getFundingRate(organisation.location.districtAdministrativeCode)
+  }
+
+  res.render('../views/support/claims/clawbacks/check-your-answers', {
+    claim,
+    organisation,
+    clawback: req.session.data.clawback,
+    actions: {
+      save: `/support/claims/clawbacks/${req.params.claimId}/request/check`,
+      change: `/support/claims/clawbacks/${req.params.claimId}/request`,
+      back: `/support/claims/clawbacks/${req.params.claimId}/request`,
+      cancel: `/support/claims/clawbacks/${req.params.claimId}`
+    }
+  })
+}
+
+exports.check_clawback_request_post = (req, res) => {
+console.log('check_clawback_request_post');
+
+  clawbackModel.insertOne({
+    claimId: req.params.claimId,
+    userId: req.session.passport.user.id,
+    claim: {
+      status: 'clawback_requested'
+    },
+    clawback: req.session.data.clawback
+  })
+
+  req.flash('success', 'Clawback requested')
+  res.redirect(`/support/claims/clawbacks`)
 }
 
 /// ------------------------------------------------------------------------ ///
