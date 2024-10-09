@@ -28,20 +28,27 @@ exports.findMany = (params) => {
     clawback.school_name = school.name
 
     if (school?.location?.localAuthorityCode) {
-      clawback.local_authority_code = school.location.localAuthorityCode
+      clawback.school_local_authority = school.location.localAuthorityCode
     } else {
-      clawback.local_authority_code = 'UNKNOWN'
+      clawback.school_local_authority = 'UNKNOWN'
     }
 
     if (school?.establishmentType) {
-      clawback.establishment_type_code = school.establishmentType
+      clawback.school_establishment_type = school.establishmentType
     } else {
-      clawback.establishment_type_code = 'UNKNOWN'
+      clawback.school_establishment_type = 'UNKNOWN'
+    }
+
+    if (school?.establishmentGroup) {
+      clawback.school_establishment_type_group = school.establishmentGroup
+    } else {
+      clawback.school_establishment_type_group = 'UNKNOWN'
     }
 
     clawback.clawback_amount = claim.clawback.totalAmount
-    clawback.clawback_date = claim.clawback.submittedAt
+    clawback.claim_submission_date = claim.submittedAt
     clawback.claim_status = claim.status
+    clawback.clawback_unsuccessful_reason = ''
 
     clawbacks.push(clawback)
   })
@@ -120,11 +127,12 @@ exports.writeFile = (params) => {
         { id: 'claim_reference', title: 'claim_reference' },
         { id: 'school_urn', title: 'school_urn' },
         { id: 'school_name', title: 'school_name' },
-        { id: 'local_authority_code', title: 'local_authority_code' },
-        { id: 'establishment_type_code', title: 'establishment_type_code' },
+        { id: 'school_local_authority', title: 'school_local_authority' },
+        { id: 'school_establishment_type', title: 'school_establishment_type_group' },
         { id: 'clawback_amount', title: 'clawback_amount' },
-        { id: 'clawback_date', title: 'clawback_date' },
-        { id: 'claim_status', title: 'claim_status' }
+        { id: 'claim_submission_date', title: 'claim_submission_date' },
+        { id: 'claim_status', title: 'claim_status' },
+        { id: 'clawback_unsuccessful_reason', title: 'clawback_unsuccessful_reason' }
       ]
     })
 
