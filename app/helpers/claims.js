@@ -58,10 +58,14 @@ exports.getClaimStatusLabel = (status) => {
   let label = status
 
   if (status?.length) {
-    label = claimStatuses.find(claimStatus =>
+    cs = claimStatuses.find(claimStatus =>
       claimStatus.code === status
       || claimStatus.id === status
-    ).name
+    )
+
+    if (cs) {
+      label = cs.name
+    }
   }
 
   return label
@@ -71,10 +75,14 @@ exports.getClaimStatusClasses = (status) => {
   let classes = 'govuk-tag--blue'
 
   if (status?.length) {
-    classes = claimStatuses.find(claimStatus =>
+    cs = claimStatuses.find(claimStatus =>
       claimStatus.code === status
       || claimStatus.id === status
-    ).classes
+    )
+
+    if (cs) {
+      classes = cs.classes
+    }
   }
 
   return classes
