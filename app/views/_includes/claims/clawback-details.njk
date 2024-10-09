@@ -17,7 +17,7 @@
             visuallyHiddenText: "number of hours"
           }
         ]
-      } if claim.status != "clawback_in_progress"
+      } if claim.status == "clawback_requested" and showClawbackChangeLinks
     },
     {
       key: {
@@ -50,7 +50,7 @@
             visuallyHiddenText: "reason for clawback"
           }
         ]
-      } if claim.status != "clawback_in_progress"
+      } if claim.status == "clawback_requested" and showClawbackChangeLinks
     },
     {
       key: {

@@ -228,6 +228,7 @@ exports.show_claim_get = (req, res) => {
   res.render('../views/support/claims/payments/show', {
     claim,
     organisation,
+    showOrganisationLink: true,
     actions: {
       informationSent: `/support/claims/payments/${req.params.claimId}/status/payment_information_sent`,
       rejectClaim: `/support/claims/payments/${req.params.claimId}/status/not_paid`,

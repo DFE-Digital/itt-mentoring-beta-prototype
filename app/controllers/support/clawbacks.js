@@ -232,6 +232,8 @@ exports.show_claim_get = (req, res) => {
   res.render('../views/support/claims/clawbacks/show', {
     claim,
     organisation,
+    showOrganisationLink: true,
+    showClawbackChangeLinks: true,
     actions: {
       requestClawback: `/support/claims/clawbacks/${req.params.claimId}/request`,
       approveClaim: `/support/claims/clawbacks/${req.params.claimId}/status/paid`,

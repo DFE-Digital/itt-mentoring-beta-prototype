@@ -227,6 +227,7 @@ exports.show_claim_get = (req, res) => {
   res.render('../views/support/claims/sampling/show', {
     claim,
     organisation,
+    showOrganisationLink: true,
     actions: {
       approveClaim: `/support/claims/sampling/${req.params.claimId}/status/paid`,
       rejectClaim: `/support/claims/sampling/${req.params.claimId}/status/sampling_not_approved`,

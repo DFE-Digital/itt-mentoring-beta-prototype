@@ -45,6 +45,10 @@
 
       {% include "_includes/claims/grant-funding.njk" %}
 
+      {% if claim.clawback %}
+        {% include "_includes/claims/clawback-details.njk" %}
+      {% endif %}
+
       {% if claim.status == "draft" %}
         <p class="govuk-body">
           <a class="govuk-link app-link--destructive" href="{{ actions.delete }}">Remove claim</a>
