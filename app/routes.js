@@ -440,6 +440,9 @@ router.post('/support/claims/clawbacks/:claimId/request', checkIsAuthenticated, 
 router.get('/support/claims/clawbacks/:claimId/request/check', checkIsAuthenticated, supportClawbackController.check_clawback_request_get)
 router.post('/support/claims/clawbacks/:claimId/request/check', checkIsAuthenticated, supportClawbackController.check_clawback_request_post)
 
+router.get('/support/claims/clawbacks/download', checkIsAuthenticated, supportClawbackController.download_claims_get)
+router.post('/support/claims/clawbacks/download', checkIsAuthenticated, supportClawbackController.download_claims_post)
+
 router.get('/support/claims/clawbacks/:claimId', checkIsAuthenticated, supportClawbackController.show_claim_get)
 
 router.get('/support/claims/clawbacks/:claimId/status/:claimStatus', checkIsAuthenticated, supportClawbackController.update_claim_status_get)

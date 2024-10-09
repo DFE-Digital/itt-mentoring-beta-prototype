@@ -491,3 +491,23 @@ exports.send_claims_post = (req, res) => {;
     res.redirect('/support/claims/clawbacks')
   }
 }
+
+/// ------------------------------------------------------------------------ ///
+/// DOWNLOAD CLAIMS LIST - FOR ESFA
+/// ------------------------------------------------------------------------ ///
+
+exports.download_claims_get = (req, res) => {
+  const hasError = req.query.error
+  res.render('../views/support/claims/clawbacks/download', {
+    hasError,
+    actions: {
+      download: `/support/claims/clawbacks/download`
+    }
+  })
+}
+
+exports.download_claims_post = (req, res) => {
+
+  req.flash('success', 'Claims downloaded')
+  res.redirect(`/support/claims/clawbacks/download`)
+}
