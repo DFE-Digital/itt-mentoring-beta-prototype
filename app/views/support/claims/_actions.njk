@@ -32,12 +32,6 @@
   }) }}
 {% endif %}
 
-  {# {{ govukButton({
-    text: "Request review",
-    href: actions.requestReview,
-    classes: "govuk-button--secondary"
-  }) }} #}
-
 {% if claim.status == "sampling_not_approved" %}
   {{ govukButton({
     text: "Request clawback",
@@ -58,7 +52,7 @@
   }) }}
 {% endif %}
 
-{% if claim.status === "clawback_requested" %}
+{% if claim.status === "clawback_in_progress" %}
   {{ govukButton({
     text: "Confirm clawback received",
     href: "#"
