@@ -341,11 +341,11 @@ exports.send_claims_post = (req, res) => {;
       payments
     })
 
-    // update claim status to 'payment_pending'
+    // update claim status to 'payment_in_progress'
     paymentModel.updateMany({
       userId: req.session.passport.user.id,
       currentStatus: 'submitted',
-      newStatus: 'payment_pending'
+      newStatus: 'payment_in_progress'
     })
 
     req.flash('success', 'Claims sent to ESFA')
@@ -360,7 +360,7 @@ exports.send_claims_post = (req, res) => {;
 exports.response_claims_get = (req, res) => {
   const claims = claimModel
     .findMany({ })
-    .filter(claim => claim.status === 'payment_pending')
+    .filter(claim => claim.status === 'payment_in_progress')
 
   const hasClaims = !!claims.length
 
@@ -412,7 +412,7 @@ exports.response_claims_post = (req, res) => {
   if (errors.length) {
     const claims = claimModel
       .findMany({ })
-      .filter(claim => claim.status === 'payment_pending')
+      .filter(claim => claim.status === 'payment_in_progress')
 
     const hasClaims = !!claims.length
 
