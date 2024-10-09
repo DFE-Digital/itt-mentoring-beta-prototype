@@ -434,16 +434,23 @@ router.get('/support/claims/clawbacks/remove-keyword-search', checkIsAuthenticat
 router.get('/support/claims/clawbacks/send', checkIsAuthenticated, supportClawbackController.send_claims_get)
 router.post('/support/claims/clawbacks/send', checkIsAuthenticated, supportClawbackController.send_claims_post)
 
-router.get('/support/claims/clawbacks/:claimId/request', checkIsAuthenticated, supportClawbackController.request_clawback_get)
-router.post('/support/claims/clawbacks/:claimId/request', checkIsAuthenticated, supportClawbackController.request_clawback_post)
+router.get('/support/claims/clawbacks/response', checkIsAuthenticated, supportClawbackController.response_claims_get)
+// the upload.single('response') middleware uses the form field file name
+router.post('/support/claims/clawbacks/response', checkIsAuthenticated, upload.single('response'), supportClawbackController.response_claims_post)
 
-router.get('/support/claims/clawbacks/:claimId/request/check', checkIsAuthenticated, supportClawbackController.check_clawback_request_get)
-router.post('/support/claims/clawbacks/:claimId/request/check', checkIsAuthenticated, supportClawbackController.check_clawback_request_post)
+router.get('/support/claims/clawbacks/response/review', checkIsAuthenticated, supportClawbackController.review_response_claims_get)
+router.post('/support/claims/clawbacks/response/review', checkIsAuthenticated, supportClawbackController.review_response_claims_post)
 
 router.get('/support/claims/clawbacks/download', checkIsAuthenticated, supportClawbackController.download_claims_get)
 router.post('/support/claims/clawbacks/download', checkIsAuthenticated, supportClawbackController.download_claims_post)
 
 router.get('/support/claims/clawbacks/:claimId', checkIsAuthenticated, supportClawbackController.show_claim_get)
+
+router.get('/support/claims/clawbacks/:claimId/request', checkIsAuthenticated, supportClawbackController.request_clawback_get)
+router.post('/support/claims/clawbacks/:claimId/request', checkIsAuthenticated, supportClawbackController.request_clawback_post)
+
+router.get('/support/claims/clawbacks/:claimId/request/check', checkIsAuthenticated, supportClawbackController.check_clawback_request_get)
+router.post('/support/claims/clawbacks/:claimId/request/check', checkIsAuthenticated, supportClawbackController.check_clawback_request_post)
 
 router.get('/support/claims/clawbacks/:claimId/status/:claimStatus', checkIsAuthenticated, supportClawbackController.update_claim_status_get)
 router.post('/support/claims/clawbacks/:claimId/status/:claimStatus', checkIsAuthenticated, supportClawbackController.update_claim_status_post)

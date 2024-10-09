@@ -1,3 +1,6 @@
+const fs = require('fs')
+const csv = require('csv-string')
+
 const claimModel = require('../../models/claims')
 const clawbackModel = require('../../models/clawbacks')
 
@@ -491,6 +494,147 @@ exports.send_claims_post = (req, res) => {;
     req.flash('success', 'Claims sent to ESFA')
     res.redirect('/support/claims/clawbacks')
   }
+}
+
+/// ------------------------------------------------------------------------ ///
+/// IMPORT CLAIM CLAWBACK RESPONSE
+/// ------------------------------------------------------------------------ ///
+
+exports.response_claims_get = (req, res) => {
+  const claims = claimModel
+    .findMany({ })
+    .filter(claim => claim.status === 'clawback_in_progress')
+
+  const hasClaims = !!claims.length
+
+  res.render('../views/support/claims/clawbacks/response', {
+    hasClaims,
+    actions: {
+      save: `/support/claims/clawbacks/response`,
+      back: `/support/claims/clawbacks`,
+      cancel: `/support/claims/clawbacks`
+    }
+  })
+}
+
+exports.response_claims_post = (req, res) => {
+  const errors = []
+
+  if (!req.file) {
+    const error = {}
+    error.fieldName = 'clawbacks'
+    error.href = '#clawbacks'
+    error.text = 'Select a CSV file to upload'
+    errors.push(error)
+  } else {
+    if (req.file.mimetype !== 'text/csv') {
+      const error = {}
+      error.fieldName = 'clawbacks'
+      error.href = '#clawbacks'
+      error.text = 'The selected file must be a CSV'
+      errors.push(error)
+      // delete the incorrect file
+      fs.unlinkSync(req.file.path)
+    } else if (!req.file.size) {
+      const error = {}
+      error.fieldName = 'clawbacks'
+      error.href = '#clawbacks'
+      error.text = 'The selected file is empty'
+      errors.push(error)
+      // delete the incorrect file
+      fs.unlinkSync(req.file.path)
+    }
+  }
+
+  // other errors:
+  // the selected file has the incorrect number of fields
+  // the selected file contains incorrect headers
+  //
+  // if the file contains an error in a line of data, we reject the entire file
+
+  if (errors.length) {
+    const claims = claimModel
+      .findMany({ })
+      .filter(claim => claim.status === 'clawback_in_progress')
+
+    const hasClaims = !!claims.length
+
+    res.render('../views/support/claims/clawbacks/response', {
+      hasClaims,
+      actions: {
+        save: `/support/claims/clawbacks/response`,
+        back: `/support/claims/clawbacks`,
+        cancel: `/support/claims/clawbacks`
+      },
+      errors
+    })
+  } else {
+    // get the CSV delimiter
+    const delimiter = csv.detect(req.file.path)
+    // read the raw CSV data
+    const raw = fs.readFileSync(req.file.path, 'utf8')
+    // parse the CSV data
+    let clawbacks = []
+    csv.readAll(raw, delimiter, data => {
+      clawbacks = data
+    })
+
+    // remove header row from the clawbacks array
+    clawbacks.shift()
+
+    // put the data into the session for use later
+    clawbacks = clawbackHelper.parseData(clawbacks)
+
+    // decorate clawback data with claim ID
+    // clawbacks = clawbacks.map(clawback => {
+    //   return clawback = clawbackDecorator.decorate(clawback)
+    // })
+
+    req.session.data.clawbacks = clawbacks
+
+    // delete the file now it's not needed
+    fs.unlinkSync(req.file.path)
+
+    res.redirect('/support/claims/clawbacks/review')
+  }
+}
+
+exports.review_response_claims_get = (req, res) => {
+  let clawbacks = req.session.data.clawbacks
+
+  const claimsCount = clawbacks.length
+
+  const pagination = new Pagination(clawbacks, req.query.page, settings.pageSize)
+  clawbacks = pagination.getData()
+
+  res.render('../views/support/claims/clawbacks/review', {
+    clawbacks,
+    claimsCount,
+    pagination,
+    actions: {
+      save: `/support/claims/clawbacks/review`,
+      back: `/support/claims/clawbacks/response`,
+      cancel: `/support/claims/clawbacks`
+    }
+  })
+}
+
+exports.review_response_claims_post = (req, res) => {
+  const clawbacks = req.session.data.clawbacks
+
+  clawbacks.forEach(clawback => {
+    claimModel.updateOne({
+      organisationId: clawback.organisationId,
+      claimId: clawback.claimId,
+      userId: req.session.passport.user.id,
+      claim: {
+        status: clawback.claim_status
+      }
+    })
+  })
+
+  req.flash('success', 'ESFA response uploaded')
+  res.redirect('/support/claims/clawbacks')
 }
 
 /// ------------------------------------------------------------------------ ///
