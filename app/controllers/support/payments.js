@@ -362,7 +362,7 @@ exports.send_claims_post = (req, res) => {;
 exports.response_claims_get = (req, res) => {
   const claims = claimModel
     .findMany({ })
-    .filter(claim => claim.status === 'payment_in_progress')
+    .filter(claim => ['payment_in_progress','payment_information_sent'].includes(claim.status))
 
   const hasClaims = !!claims.length
 
@@ -414,7 +414,7 @@ exports.response_claims_post = (req, res) => {
   if (errors.length) {
     const claims = claimModel
       .findMany({ })
-      .filter(claim => claim.status === 'payment_in_progress')
+      .filter(claim => ['payment_in_progress','payment_information_sent'].includes(claim.status))
 
     const hasClaims = !!claims.length
 
