@@ -398,6 +398,7 @@ exports.review_upload_claims_get = (req, res) => {
 
   const pageHeading = 'Are you sure you want to upload the sampling data?'
   const insetText = 'Each accredited provider included in the sample data will receive an email instructing them to assure their partner schools’ claim.'
+  const buttonLabel = 'Upload data'
 
   res.render('../views/support/claims/sampling/review', {
     claims,
@@ -405,6 +406,7 @@ exports.review_upload_claims_get = (req, res) => {
     pagination,
     pageHeading,
     insetText,
+    buttonLabel,
     actions: {
       save: `/support/claims/sampling/upload/review`,
       back: `/support/claims/sampling/upload`,
@@ -543,12 +545,14 @@ exports.review_response_claims_get = (req, res) => {
   claims = pagination.getData()
 
   const pageHeading = 'Are you sure you want to upload the provider’s response?'
+  const buttonLabel = 'Upload response'
 
   res.render('../views/support/claims/sampling/review', {
     claims,
     claimsCount,
     pagination,
     pageHeading,
+    buttonLabel,
     actions: {
       save: `/support/claims/sampling/response/review`,
       back: `/support/claims/sampling/response`,
