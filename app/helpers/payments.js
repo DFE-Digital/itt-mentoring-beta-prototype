@@ -7,11 +7,13 @@ exports.parseData = (array) => {
     claim.claim_reference = item[0]
     claim.school_urn = item[1]
     claim.school_name = item[2]
-    claim.local_authority_code = item[3]
-    claim.establishment_type_code = item[4]
-    claim.claim_amount = item[5]
-    claim.date_submitted = item[6]
-    claim.claim_status = item[7]
+    claim.school_local_authority = item[3]
+    claim.school_establishment_type = item[4]
+    claim.school_establishment_type_group = item[5]
+    claim.claim_amount = item[6]
+    claim.claim_submission_date = item[7]
+    claim.claim_status = item[8]
+    claim.claim_unpaid_reason = item[9]
 
     claims.push(claim)
   })
