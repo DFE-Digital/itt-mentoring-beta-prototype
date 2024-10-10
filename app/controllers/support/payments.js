@@ -453,7 +453,7 @@ exports.response_claims_post = (req, res) => {
     // delete the file now it's not needed
     fs.unlinkSync(req.file.path)
 
-    res.redirect('/support/claims/payments/review')
+    res.redirect('/support/claims/payments/response/review')
   }
 }
 
@@ -470,7 +470,7 @@ exports.review_claims_get = (req, res) => {
     claimsCount,
     pagination,
     actions: {
-      save: `/support/claims/payments/review`,
+      save: `/support/claims/payments/response/review`,
       back: `/support/claims/payments/response`,
       cancel: `/support/claims/payments`
     }
