@@ -372,7 +372,7 @@ router.post('/support/claims/payments/send', checkIsAuthenticated, supportPaymen
 
 router.get('/support/claims/payments/response', checkIsAuthenticated, supportPaymentController.response_claims_get)
 // the upload.single('payments') middleware uses the form field file name
-router.post('/support/claims/payments/response', checkIsAuthenticated, upload.single('payments'), supportPaymentController.response_claims_post)
+router.post('/support/claims/payments/response', checkIsAuthenticated, upload.single('response'), supportPaymentController.response_claims_post)
 
 router.get('/support/claims/payments/response/review', checkIsAuthenticated, supportPaymentController.review_claims_get)
 router.post('/support/claims/payments/response/review', checkIsAuthenticated, supportPaymentController.review_claims_post)

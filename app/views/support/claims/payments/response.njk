@@ -40,14 +40,14 @@
           #}
 
           {{ govukFileUpload({
-            id: "payments",
-            name: "payments",
+            id: "response",
+            name: "response",
             label: {
               text: "Upload CSV file",
               isPageHeading: false,
               classes: "govuk-label--s"
             },
-            errorMessage: errors | getErrorMessage("payments")
+            errorMessage: errors | getErrorMessage("response")
           }) }}
 
           {% set helpText %}
