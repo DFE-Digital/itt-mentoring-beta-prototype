@@ -14,8 +14,14 @@
 
 {% if claim.status == "payment_information_sent" %}
   {{ govukButton({
+    text: "Confirm claim paid",
+    href: actions.approveClaim
+  }) }}
+
+  {{ govukButton({
     text: "Reject claim",
-    href: actions.rejectClaim
+    href: actions.rejectClaim,
+    classes: "govuk-button--secondary"
   }) }}
 {% endif %}
 
