@@ -8,7 +8,7 @@
   {% set title = "You cannot upload a response from the ESFA" %}
 {% endif %}
 
-{% set caption = "Payments" %}
+{% set caption = "Clawbacks" %}
 
 {% block pageTitle %}
   {{ "Error: " if errors.length }}{{ title + " - " if title }}{{ caption + " - " if caption }}{{ serviceName }} - GOV.UK
@@ -40,18 +40,18 @@
           #}
 
           {{ govukFileUpload({
-            id: "payments",
-            name: "payments",
+            id: "response",
+            name: "response",
             label: {
               text: "Upload CSV file",
               isPageHeading: false,
               classes: "govuk-label--s"
             },
-            errorMessage: errors | getErrorMessage("payments")
+            errorMessage: errors | getErrorMessage("response")
           }) }}
 
           {% set helpText %}
-            <p class="govuk-body">Use this form to upload the CSV file sent by the ESFA.</p>
+            <p class="govuk-body">Use this form to upload the CSV file sent by the provider.</p>
 
             <p class="govuk-body">The CSV file must contain the following headers in the first row:</p>
 
@@ -75,7 +75,7 @@
                 school_establishment_type_group
               </li>
               <li>
-                claim_amount
+                clawback_amount
               </li>
               <li>
                 claim_submission_date
@@ -84,7 +84,7 @@
                 claim_status
               </li>
               <li>
-                claim_unpaid_reason
+                claim_unsuccessful_reason
               </li>
             </ul>
           {% endset %}
@@ -101,7 +101,7 @@
         </form>
 
       {% else %}
-        <p class="govuk-body">You cannot upload a response from the ESFA as there are no claims waiting for a response.</p>
+        <p class="govuk-body">You cannot upload a provider response as there are no claims waiting for a response.</p>
       {% endif %}
 
       <p class="govuk-body">

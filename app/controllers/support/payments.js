@@ -72,19 +72,7 @@ exports.list_claims_get = (req, res) => {
         items: statuses.map((status) => {
           return {
             text: claimHelper.getClaimStatusLabel(status),
-            href: `/support/claims/remove-status-filter/${status}`
-          }
-        })
-      })
-    }
-
-    if (schools?.length) {
-      selectedFilters.categories.push({
-        heading: { text: 'School' },
-        items: schools.map((school) => {
-          return {
-            text: schoolHelper.getSchoolName(school),
-            href: `/support/claims/payments/remove-school-filter/${school}`
+            href: `/support/claims/payments/remove-status-filter/${status}`
           }
         })
       })
@@ -101,11 +89,25 @@ exports.list_claims_get = (req, res) => {
         })
       })
     }
+
+    if (schools?.length) {
+      selectedFilters.categories.push({
+        heading: { text: 'School' },
+        items: schools.map((school) => {
+          return {
+            text: schoolHelper.getSchoolName(school),
+            href: `/support/claims/payments/remove-school-filter/${school}`
+          }
+        })
+      })
+    }
   }
+
+  const statusArray = ['payment_information_requested','payment_information_sent']
 
   // get filter items
   let filterStatusItems = statusHelper.getClaimStatusOptions(statuses)
-  filterStatusItems = filterStatusItems.filter(status => ['payment_information_requested','payment_information_sent'].includes(status.value))
+  filterStatusItems = filterStatusItems.filter(status => statusArray.includes(status.value))
 
   const filterSchoolItems = schoolHelper.getSchoolOptions(schools)
   const filterProviderItems = providerHelper.getProviderOptions(providers)
@@ -120,7 +122,7 @@ exports.list_claims_get = (req, res) => {
     })
   }
 
-  claims = claims.filter(claim => ['payment_information_requested','payment_information_sent'].includes(claim.status))
+  claims = claims.filter(claim => statusArray.includes(claim.status))
 
   const hasClaims = !!claims.length
 
@@ -161,7 +163,7 @@ exports.list_claims_get = (req, res) => {
     filterSchoolItems,
     filterProviderItems,
     actions: {
-      export: `/support/claims/payments/send`,
+      send: `/support/claims/payments/send`,
       response: `/support/claims/payments/response`,
       view: `/support/claims/payments`,
       filters: {
@@ -226,9 +228,11 @@ exports.show_claim_get = (req, res) => {
   res.render('../views/support/claims/payments/show', {
     claim,
     organisation,
+    showOrganisationLink: true,
     actions: {
       informationSent: `/support/claims/payments/${req.params.claimId}/status/payment_information_sent`,
-      paymentNotApproved: `/support/claims/payments/${req.params.claimId}/status/not_paid`,
+      approveClaim: `/support/claims/payments/${req.params.claimId}/status/paid`,
+      rejectClaim: `/support/claims/payments/${req.params.claimId}/status/not_paid`,
       back: `/support/claims/payments`,
       cancel: `/support/claims/payments`
     }
@@ -293,8 +297,11 @@ exports.send_claims_get = (req, res) => {
 
   const hasClaims = !!claims.length
 
+  const claimsCount = claims.length
+
   res.render('../views/support/claims/payments/send', {
     hasClaims,
+    claimsCount,
     actions: {
       save: `/support/claims/payments/send`,
       back: `/support/claims/payments`,
@@ -313,8 +320,11 @@ exports.send_claims_post = (req, res) => {;
 
     const hasClaims = !!claims.length
 
+    const claimsCount = claims.length
+
     res.render('../views/support/claims/payments/send', {
       hasClaims,
+      claimsCount,
       actions: {
         save: `/support/claims/payments/send`,
         back: `/support/claims/payments`,
@@ -333,11 +343,11 @@ exports.send_claims_post = (req, res) => {;
       payments
     })
 
-    // update claim status to 'pending_payment'
+    // update claim status to 'payment_in_progress'
     paymentModel.updateMany({
       userId: req.session.passport.user.id,
       currentStatus: 'submitted',
-      newStatus: 'payment_pending'
+      newStatus: 'payment_in_progress'
     })
 
     req.flash('success', 'Claims sent to ESFA')
@@ -352,7 +362,7 @@ exports.send_claims_post = (req, res) => {;
 exports.response_claims_get = (req, res) => {
   const claims = claimModel
     .findMany({ })
-    .filter(claim => claim.status === 'payment_pending')
+    .filter(claim => ['payment_in_progress','payment_information_sent'].includes(claim.status))
 
   const hasClaims = !!claims.length
 
@@ -404,7 +414,7 @@ exports.response_claims_post = (req, res) => {
   if (errors.length) {
     const claims = claimModel
       .findMany({ })
-      .filter(claim => claim.status === 'payment_pending')
+      .filter(claim => ['payment_in_progress','payment_information_sent'].includes(claim.status))
 
     const hasClaims = !!claims.length
 
@@ -444,7 +454,7 @@ exports.response_claims_post = (req, res) => {
     // delete the file now it's not needed
     fs.unlinkSync(req.file.path)
 
-    res.redirect('/support/claims/payments/review')
+    res.redirect('/support/claims/payments/response/review')
   }
 }
 
@@ -461,7 +471,7 @@ exports.review_claims_get = (req, res) => {
     claimsCount,
     pagination,
     actions: {
-      save: `/support/claims/payments/review`,
+      save: `/support/claims/payments/response/review`,
       back: `/support/claims/payments/response`,
       cancel: `/support/claims/payments`
     }

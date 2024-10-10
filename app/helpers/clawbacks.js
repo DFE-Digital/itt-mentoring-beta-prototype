@@ -1,3 +1,16 @@
+const fundingHelper = require('./funding')
+
+exports.calculateClawbackTotal = (organisation, hours = 0) => {
+  let fundingRate = 0
+  if (organisation.location?.districtAdministrativeCode) {
+    fundingRate = fundingHelper.getFundingRate(organisation.location.districtAdministrativeCode)
+  }
+
+  const totalAmount = fundingRate * hours
+
+  return totalAmount
+}
+
 exports.parseData = (array) => {
   const claims = []
 
@@ -10,10 +23,10 @@ exports.parseData = (array) => {
     claim.school_local_authority = item[3]
     claim.school_establishment_type = item[4]
     claim.school_establishment_type_group = item[5]
-    claim.claim_amount = item[6]
+    claim.clawback_amount = item[6]
     claim.claim_submission_date = item[7]
     claim.claim_status = item[8]
-    claim.sampling_reason = item[9]
+    claim.clawback_unsuccessful_reason = item[9]
 
     claims.push(claim)
   })

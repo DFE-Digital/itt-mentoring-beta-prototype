@@ -7,27 +7,33 @@
 
   {{ govukButton({
     text: "Reject claim",
-    href: actions.paymentNotApproved,
+    href: actions.rejectClaim,
     classes: "govuk-button--secondary"
   }) }}
 {% endif %}
 
 {% if claim.status == "payment_information_sent" %}
   {{ govukButton({
+    text: "Confirm claim paid",
+    href: actions.approveClaim
+  }) }}
+
+  {{ govukButton({
     text: "Reject claim",
-    href: actions.paymentNotApproved
+    href: actions.rejectClaim,
+    classes: "govuk-button--secondary"
   }) }}
 {% endif %}
 
 {% if claim.status === "sampling_in_progress" %}
   {{ govukButton({
     text: "Approve claim",
-    href: actions.samplingApproved
+    href: actions.approveClaim
   }) }}
 
   {{ govukButton({
-    text: "Request clawback",
-    href: actions.clawbackRequired,
+    text: "Reject claim",
+    href: actions.rejectClaim,
     classes: "govuk-button--secondary"
   }) }}
 {% endif %}
@@ -35,7 +41,27 @@
 {% if claim.status == "sampling_not_approved" %}
   {{ govukButton({
     text: "Request clawback",
-    href: actions.clawbackRequired
+    href: actions.requestClawback
+  }) }}
+{% endif %}
+
+{% if claim.status === "in_review" %}
+  {{ govukButton({
+    text: "Approve claim",
+    href: actions.approveClaim
+  }) }}
+
+  {{ govukButton({
+    text: "Request clawback",
+    href: actions.requestClawback,
+    classes: "govuk-button--secondary"
+  }) }}
+{% endif %}
+
+{% if claim.status === "clawback_in_progress" %}
+  {{ govukButton({
+    text: "Confirm clawback received",
+    href: actions.completeClawback
   }) }}
 {% endif %}
 </div>

@@ -58,10 +58,14 @@ exports.getClaimStatusLabel = (status) => {
   let label = status
 
   if (status?.length) {
-    label = claimStatuses.find(claimStatus =>
+    cs = claimStatuses.find(claimStatus =>
       claimStatus.code === status
       || claimStatus.id === status
-    ).name
+    )
+
+    if (cs) {
+      label = cs.name
+    }
   }
 
   return label
@@ -71,10 +75,14 @@ exports.getClaimStatusClasses = (status) => {
   let classes = 'govuk-tag--blue'
 
   if (status?.length) {
-    classes = claimStatuses.find(claimStatus =>
+    cs = claimStatuses.find(claimStatus =>
       claimStatus.code === status
       || claimStatus.id === status
-    ).classes
+    )
+
+    if (cs) {
+      classes = cs.classes
+    }
   }
 
   return classes
@@ -117,19 +125,25 @@ exports.parseData = (claims) => {
     item.school_name = claim.school.name
 
     if (claim.school?.location?.localAuthorityCode) {
-      item.local_authority_code = claim.school.location.localAuthorityCode
+      item.school_local_authority = claim.school.location.localAuthorityCode
     } else {
-      item.local_authority_code = 'UNKNOWN'
+      item.school_local_authority = 'UNKNOWN'
     }
 
     if (claim.school?.establishmentType) {
-      item.establishment_type_code = claim.school.establishmentType
+      item.school_establishment_type = claim.school.establishmentType
     } else {
-      item.establishment_type_code = 'UNKNOWN'
+      item.school_establishment_type = 'UNKNOWN'
+    }
+
+    if (claim.school?.establishmentGroup) {
+      item.school_establishment_type_group = claim.school.establishmentGroup
+    } else {
+      item.school_establishment_type_group = 'UNKNOWN'
     }
 
     item.claim_amount = claim.totalAmount
-    item.date_submitted = claim.submittedAt
+    item.claim_submission_date = claim.submittedAt
     item.claim_status = claim.status
 
     items.push(item)

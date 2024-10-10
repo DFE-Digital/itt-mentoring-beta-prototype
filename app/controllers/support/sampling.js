@@ -7,7 +7,7 @@ const Pagination = require('../../helpers/pagination')
 const claimHelper = require('../../helpers/claims')
 const filterHelper = require('../../helpers/filters')
 const providerHelper = require('../../helpers/providers')
-const samplingHelper = require('../../helpers/payments')
+const samplingHelper = require('../../helpers/sampling')
 const schoolHelper = require('../../helpers/schools')
 const statusHelper = require('../../helpers/statuses')
 
@@ -71,19 +71,7 @@ exports.list_claims_get = (req, res) => {
         items: statuses.map((status) => {
           return {
             text: claimHelper.getClaimStatusLabel(status),
-            href: `/support/claims/remove-status-filter/${status}`
-          }
-        })
-      })
-    }
-
-    if (schools?.length) {
-      selectedFilters.categories.push({
-        heading: { text: 'School' },
-        items: schools.map((school) => {
-          return {
-            text: schoolHelper.getSchoolName(school),
-            href: `/support/claims/sampling/remove-school-filter/${school}`
+            href: `/support/claims/sampling/remove-status-filter/${status}`
           }
         })
       })
@@ -100,11 +88,25 @@ exports.list_claims_get = (req, res) => {
         })
       })
     }
+
+    if (schools?.length) {
+      selectedFilters.categories.push({
+        heading: { text: 'School' },
+        items: schools.map((school) => {
+          return {
+            text: schoolHelper.getSchoolName(school),
+            href: `/support/claims/sampling/remove-school-filter/${school}`
+          }
+        })
+      })
+    }
   }
+
+  const statusArray = ['sampling_in_progress'] // 'sampling_not_approved'
 
   // get filter items
   let filterStatusItems = statusHelper.getClaimStatusOptions(statuses)
-  filterStatusItems = filterStatusItems.filter(status => ['sampling_in_progress','sampling_not_approved'].includes(status.value))
+  filterStatusItems = filterStatusItems.filter(status => statusArray.includes(status.value))
 
   const filterSchoolItems = schoolHelper.getSchoolOptions(schools)
   const filterProviderItems = providerHelper.getProviderOptions(providers)
@@ -119,7 +121,7 @@ exports.list_claims_get = (req, res) => {
     })
   }
 
-  claims = claims.filter(claim => ['sampling_in_progress','sampling_not_approved'].includes(claim.status))
+  claims = claims.filter(claim => statusArray.includes(claim.status))
 
   const hasClaims = !!claims.length
 
@@ -225,9 +227,11 @@ exports.show_claim_get = (req, res) => {
   res.render('../views/support/claims/sampling/show', {
     claim,
     organisation,
+    showOrganisationLink: true,
     actions: {
-      clawbackRequired: `/support/claims/sampling/${req.params.claimId}/status/clawback_requested`,
-      samplingApproved: `/support/claims/sampling/${req.params.claimId}/status/paid`,
+      approveClaim: `/support/claims/sampling/${req.params.claimId}/status/paid`,
+      rejectClaim: `/support/claims/sampling/${req.params.claimId}/status/sampling_not_approved`,
+      requestClawback: `/support/claims/sampling/${req.params.claimId}/status/clawback_requested`,
       back: `/support/claims/sampling`,
       cancel: `/support/claims/sampling`
     }
@@ -274,7 +278,7 @@ exports.update_claim_status_post = (req, res) => {
 
   req.flash('success', 'Claim updated')
 
-  if (req.params.claimStatus === 'clawback_requested') {
+  if (req.params.claimStatus === 'in_review') {
     res.redirect(`/support/claims/sampling/${req.params.claimId}`)
   } else {
     res.redirect(`/support/claims/sampling`)
@@ -394,6 +398,7 @@ exports.review_upload_claims_get = (req, res) => {
 
   const pageHeading = 'Are you sure you want to upload the sampling data?'
   const insetText = 'Each accredited provider included in the sample data will receive an email instructing them to assure their partner schools’ claim.'
+  const buttonLabel = 'Upload data'
 
   res.render('../views/support/claims/sampling/review', {
     claims,
@@ -401,6 +406,7 @@ exports.review_upload_claims_get = (req, res) => {
     pagination,
     pageHeading,
     insetText,
+    buttonLabel,
     actions: {
       save: `/support/claims/sampling/upload/review`,
       back: `/support/claims/sampling/upload`,
@@ -539,12 +545,14 @@ exports.review_response_claims_get = (req, res) => {
   claims = pagination.getData()
 
   const pageHeading = 'Are you sure you want to upload the provider’s response?'
+  const buttonLabel = 'Upload response'
 
   res.render('../views/support/claims/sampling/review', {
     claims,
     claimsCount,
     pagination,
     pageHeading,
+    buttonLabel,
     actions: {
       save: `/support/claims/sampling/response/review`,
       back: `/support/claims/sampling/response`,

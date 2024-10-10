@@ -1,0 +1,101 @@
+{% extends "layouts/support.njk" %}
+
+{% set primaryNavId = "claims" %}
+
+{% set title = "Check your answers" %}
+{% set caption = "Clawbacks - Claim " + claim.reference | upper  %}
+
+{% block pageTitle %}
+  {{ "Error: " if errors.length }}{{ title + " - " if title }}{{ caption + " - " if caption }}{{ serviceName }} - GOV.UK
+{% endblock %}
+
+{% block beforeContent %}
+{{ govukBackLink({
+  text: "Back",
+  href: actions.back
+}) }}
+{% endblock %}
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      {% include "_includes/page-heading.njk" %}
+
+      <form action="{{ actions.save }}" method="post" accept-charset="utf-8" novalidate>
+
+        {{ govukSummaryList({
+          rows: [
+            {
+              key: {
+                text: "Number of hours"
+              },
+              value: {
+                text: clawback.hours
+              },
+              actions: {
+                items: [
+                  {
+                    href: actions.change,
+                    text: "Change",
+                    visuallyHiddenText: "number of hours"
+                  }
+                ]
+              }
+            },
+            {
+              key: {
+                text: "Hourly rate"
+              },
+              value: {
+                text: "£" + clawback.fundingRate | numeral('0,0.00')
+              }
+            },
+            {
+              key: {
+                text: "Clawback amount"
+              },
+              value: {
+                text: "£" + clawback.totalAmount | numeral('0,0.00')
+              }
+            },
+            {
+              key: {
+                text: "Reason for clawback"
+              },
+              value: {
+                text: clawback.reason
+              },
+              actions: {
+                items: [
+                  {
+                    href: actions.change,
+                    text: "Change",
+                    visuallyHiddenText: "reason for clawback"
+                  }
+                ]
+              }
+            }
+          ]
+        }) }}
+
+        {{ govukWarningText({
+          text: "We will show clawback details to the school.",
+          iconFallbackText: "Warning"
+        }) }}
+
+        {{ govukButton({
+          text: "Update clawback request" if hasClawbackDetails else "Request clawback"
+        }) }}
+
+      </form>
+
+      <p class="govuk-body">
+        <a class="govuk-link" href="{{ actions.cancel }}">Cancel</a>
+      </p>
+
+    </div>
+  </div>
+
+{% endblock %}

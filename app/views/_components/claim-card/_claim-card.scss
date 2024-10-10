@@ -14,7 +14,8 @@
   @include govuk-responsive-margin(2, "bottom");
 
   .govuk-tag {
-    @include govuk-font($size: 16);
+    // @include govuk-font($size: 16);
+    max-width: none;
     // padding: 2px govuk-spacing(1);
     // white-space: nowrap;
     @include govuk-media-query($until: desktop) {

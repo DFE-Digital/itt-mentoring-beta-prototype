@@ -5,10 +5,10 @@
 {% if hasClaims %}
   {% set title = "Send claims to ESFA" %}
 {% else %}
-  {% set title = "There are no claims to send for payment" %}
+  {% set title = "There are no claims to send for clawback" %}
 {% endif %}
 
-{% set caption = "Payments" %}
+{% set caption = "Clawbacks" %}
 
 {% block pageTitle %}
   {{ "Error: " if errors.length }}{{ title + " - " if title }}{{ caption + " - " if caption }}{{ serviceName }} - GOV.UK
@@ -43,13 +43,13 @@
 
           <ul class="govuk-list govuk-list--bullet">
             <li>
-              create a CSV containing a list of all ‘Submitted’ claims
+              create a CSV containing a list of all claims marked as ‘Clawback requested’
             </li>
             <li>
               send an email to the ESFA containing a link to the generated CSV - this link expires after 7 days
             </li>
             <li>
-              update the claim status from ‘Submitted’ to ‘Payment in progress’
+              update the claim status from ‘Clawback requested’ to ‘Clawback in progress’
             </li>
           </ul>
 
@@ -64,7 +64,7 @@
 
         </form>
       {% else %}
-        <p class="govuk-body">You cannot send any claims to the ESFA because there are no claims pending payment.</p>
+        <p class="govuk-body">You cannot send any claims to the ESFA because there are no claims with a clawback requested.</p>
       {% endif %}
 
       <p class="govuk-body">

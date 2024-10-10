@@ -359,6 +359,7 @@ router.get('/support/organisations/:organisationId/claims', checkIsAuthenticated
 
 router.get('/support/claims/payments', checkIsAuthenticated, supportPaymentController.list_claims_get)
 
+router.get('/support/claims/payments/remove-status-filter/:status', checkIsAuthenticated, supportPaymentController.removeStatusFilter)
 router.get('/support/claims/payments/remove-school-filter/:school', checkIsAuthenticated, supportPaymentController.removeSchoolFilter)
 router.get('/support/claims/payments/remove-provider-filter/:provider', checkIsAuthenticated, supportPaymentController.removeProviderFilter)
 
@@ -373,8 +374,8 @@ router.get('/support/claims/payments/response', checkIsAuthenticated, supportPay
 // the upload.single('payments') middleware uses the form field file name
 router.post('/support/claims/payments/response', checkIsAuthenticated, upload.single('payments'), supportPaymentController.response_claims_post)
 
-router.get('/support/claims/payments/review', checkIsAuthenticated, supportPaymentController.review_claims_get)
-router.post('/support/claims/payments/review', checkIsAuthenticated, supportPaymentController.review_claims_post)
+router.get('/support/claims/payments/response/review', checkIsAuthenticated, supportPaymentController.review_claims_get)
+router.post('/support/claims/payments/response/review', checkIsAuthenticated, supportPaymentController.review_claims_post)
 
 router.get('/support/claims/payments/download', checkIsAuthenticated, supportPaymentController.download_claims_get)
 router.post('/support/claims/payments/download', checkIsAuthenticated, supportPaymentController.download_claims_post)
@@ -388,6 +389,7 @@ router.post('/support/claims/payments/:claimId/status/:claimStatus', checkIsAuth
 
 router.get('/support/claims/sampling', checkIsAuthenticated, supportSamplingController.list_claims_get)
 
+router.get('/support/claims/sampling/remove-status-filter/:status', checkIsAuthenticated, supportSamplingController.removeStatusFilter)
 router.get('/support/claims/sampling/remove-school-filter/:school', checkIsAuthenticated, supportSamplingController.removeSchoolFilter)
 router.get('/support/claims/sampling/remove-provider-filter/:provider', checkIsAuthenticated, supportSamplingController.removeProviderFilter)
 
@@ -396,13 +398,14 @@ router.get('/support/claims/sampling/remove-all-filters', checkIsAuthenticated, 
 router.get('/support/claims/sampling/remove-keyword-search', checkIsAuthenticated, supportSamplingController.removeKeywordSearch)
 
 router.get('/support/claims/sampling/upload', checkIsAuthenticated, supportSamplingController.upload_claims_get)
+// the upload.single('sample') middleware uses the form field file name
 router.post('/support/claims/sampling/upload', checkIsAuthenticated, upload.single('sample'), supportSamplingController.upload_claims_post)
 
 router.get('/support/claims/sampling/upload/review', checkIsAuthenticated, supportSamplingController.review_upload_claims_get)
 router.post('/support/claims/sampling/upload/review', checkIsAuthenticated, supportSamplingController.review_upload_claims_post)
 
 router.get('/support/claims/sampling/response', checkIsAuthenticated, supportSamplingController.response_claims_get)
-// the upload.single('sampling') middleware uses the form field file name
+// the upload.single('response') middleware uses the form field file name
 router.post('/support/claims/sampling/response', checkIsAuthenticated, upload.single('response'), supportSamplingController.response_claims_post)
 
 router.get('/support/claims/sampling/response/review', checkIsAuthenticated, supportSamplingController.review_response_claims_get)
@@ -414,10 +417,43 @@ router.post('/support/claims/sampling/download', checkIsAuthenticated, supportSa
 router.get('/support/claims/sampling/:claimId', checkIsAuthenticated, supportSamplingController.show_claim_get)
 
 router.get('/support/claims/sampling/:claimId/status/:claimStatus', checkIsAuthenticated, supportSamplingController.update_claim_status_get)
+router.post('/support/claims/sampling/:claimId/status/:claimStatus', checkIsAuthenticated, supportSamplingController.update_claim_status_post)
 
 /// ------------------------------------------------------------------------ ///
 
 router.get('/support/claims/clawbacks', checkIsAuthenticated, supportClawbackController.list_claims_get)
+
+router.get('/support/claims/clawbacks/remove-status-filter/:status', checkIsAuthenticated, supportClawbackController.removeStatusFilter)
+router.get('/support/claims/clawbacks/remove-school-filter/:school', checkIsAuthenticated, supportClawbackController.removeSchoolFilter)
+router.get('/support/claims/clawbacks/remove-provider-filter/:provider', checkIsAuthenticated, supportClawbackController.removeProviderFilter)
+
+router.get('/support/claims/clawbacks/remove-all-filters', checkIsAuthenticated, supportClawbackController.removeAllFilters)
+
+router.get('/support/claims/clawbacks/remove-keyword-search', checkIsAuthenticated, supportClawbackController.removeKeywordSearch)
+
+router.get('/support/claims/clawbacks/send', checkIsAuthenticated, supportClawbackController.send_claims_get)
+router.post('/support/claims/clawbacks/send', checkIsAuthenticated, supportClawbackController.send_claims_post)
+
+router.get('/support/claims/clawbacks/response', checkIsAuthenticated, supportClawbackController.response_claims_get)
+// the upload.single('response') middleware uses the form field file name
+router.post('/support/claims/clawbacks/response', checkIsAuthenticated, upload.single('response'), supportClawbackController.response_claims_post)
+
+router.get('/support/claims/clawbacks/response/review', checkIsAuthenticated, supportClawbackController.review_response_claims_get)
+router.post('/support/claims/clawbacks/response/review', checkIsAuthenticated, supportClawbackController.review_response_claims_post)
+
+router.get('/support/claims/clawbacks/download', checkIsAuthenticated, supportClawbackController.download_claims_get)
+router.post('/support/claims/clawbacks/download', checkIsAuthenticated, supportClawbackController.download_claims_post)
+
+router.get('/support/claims/clawbacks/:claimId', checkIsAuthenticated, supportClawbackController.show_claim_get)
+
+router.get('/support/claims/clawbacks/:claimId/request', checkIsAuthenticated, supportClawbackController.request_clawback_get)
+router.post('/support/claims/clawbacks/:claimId/request', checkIsAuthenticated, supportClawbackController.request_clawback_post)
+
+router.get('/support/claims/clawbacks/:claimId/request/check', checkIsAuthenticated, supportClawbackController.check_clawback_request_get)
+router.post('/support/claims/clawbacks/:claimId/request/check', checkIsAuthenticated, supportClawbackController.check_clawback_request_post)
+
+router.get('/support/claims/clawbacks/:claimId/status/:claimStatus', checkIsAuthenticated, supportClawbackController.update_claim_status_get)
+router.post('/support/claims/clawbacks/:claimId/status/:claimStatus', checkIsAuthenticated, supportClawbackController.update_claim_status_post)
 
 /// ------------------------------------------------------------------------ ///
 

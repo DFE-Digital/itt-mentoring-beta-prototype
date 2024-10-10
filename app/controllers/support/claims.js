@@ -290,10 +290,11 @@ exports.download_claims_get = async (req, res) => {
       { id: 'claim_reference', title: 'claim_reference' },
       { id: 'school_urn', title: 'school_urn' },
       { id: 'school_name', title: 'school_name' },
-      { id: 'local_authority_code', title: 'local_authority_code' },
-      { id: 'establishment_type_code', title: 'establishment_type_code' },
+      { id: 'school_local_authority', title: 'school_local_authority' },
+      { id: 'school_establishment_type', title: 'school_establishment_type' },
+      { id: 'school_establishment_type_group', title: 'school_establishment_type_group' },
       { id: 'claim_amount', title: 'claim_amount' },
-      { id: 'date_submitted', title: 'date_submitted' },
+      { id: 'claim_submission_date', title: 'claim_submission_date' },
       { id: 'claim_status', title: 'claim_status' }
     ]
   })
@@ -329,10 +330,11 @@ exports.show_claim_get = (req, res) => {
     organisation,
     claim,
     showOrganisationLink: true,
+    showClawbackChangeLinks: false,
     actions: {
       informationSent: `/support/claims/payments/${req.params.claimId}/status/payment_information_sent`,
-      paymentNotApproved: `/support/claims/payments/${req.params.claimId}/status/not_paid`,
-      clawbackRequired: `/support/claims/sampling/${req.params.claimId}/status/clawback_requested`,
+      rejectClaim: `/support/claims/payments/${req.params.claimId}/status/not_paid`,
+      requestReview: `/support/claims/sampling/${req.params.claimId}/status/clawback_requested`,
       samplingApproved: `/support/claims/sampling/${req.params.claimId}/status/paid`,
       back: `/support/claims`,
       organisations: `/support/organisations`

@@ -2,8 +2,8 @@
 
 {% set primaryNavId = "claims" %}
 
-{% set title = pageHeading %}
-{% set caption = "Sampling" %}
+{% set title = "Are you sure you want to upload the ESFA’s response?" %}
+{% set caption = "Clawbacks" %}
 
 {% block pageTitle %}
   {{ "Error: " if errors.length }}{{ title + " - " if title }}{{ caption + " - " if caption }}{{ serviceName }} - GOV.UK
@@ -34,7 +34,7 @@
         {% endif %}
 
         {{ govukButton({
-          text: buttonLabel
+          text: "Upload response"
         }) }}
 
       </form>

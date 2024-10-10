@@ -43,6 +43,10 @@
 
       {% include "_includes/claims/grant-funding.njk" %}
 
+      {% if claim.clawback %}
+        {% include "_includes/claims/clawback-details.njk" %}
+      {% endif %}
+
     </div>
   </div>
 

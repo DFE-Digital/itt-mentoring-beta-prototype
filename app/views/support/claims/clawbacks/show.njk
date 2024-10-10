@@ -1,8 +1,9 @@
-{% extends "layouts/main.njk" %}
+{% extends "layouts/support.njk" %}
 
 {% set primaryNavId = "claims" %}
 
-{% set title = "Claim " + claim.reference | upper %}
+{% set title = claim.organisationId | getSchoolName %}
+{% set caption = "Clawbacks - Claim " + claim.reference | upper %}
 
 {% block pageTitle %}
   {{ "Error: " if errors.length }}{{ title + " - " if title }}{{ caption + " - " if caption }}{{ serviceName }} - GOV.UK
@@ -17,6 +18,8 @@
 
 {% block content %}
 
+  {% include "_includes/notification-banner.njk" %}
+
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
 
@@ -30,14 +33,9 @@
 
       {% include "_includes/page-heading.njk" %}
 
-      {% if claim.status == "draft" %}
-        {{ govukButton({
-          text: "Submit claim",
-          href: actions.submit
-        }) }}
-      {% else %}
-        {% include "_includes/claims/meta-data.njk" %}
-      {% endif %}
+      {% include "../_actions.njk" %}
+
+      {% include "_includes/claims/meta-data.njk" %}
 
       {% include "_includes/claims/details.njk" %}
 
@@ -47,12 +45,6 @@
 
       {% if claim.clawback %}
         {% include "_includes/claims/clawback-details.njk" %}
-      {% endif %}
-
-      {% if claim.status == "draft" %}
-        <p class="govuk-body">
-          <a class="govuk-link app-link--destructive" href="{{ actions.delete }}">Remove claim</a>
-        </p>
       {% endif %}
 
     </div>
