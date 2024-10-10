@@ -86,7 +86,7 @@
         }) }}
 
         {{ govukButton({
-          text: "Request clawback"
+          text: "Update clawback request" if hasClawbackDetails else "Request clawback"
         }) }}
 
       </form>

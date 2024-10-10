@@ -393,9 +393,12 @@ exports.check_clawback_request_get = (req, res) => {
     req.session.data.clawback.fundingRate = fundingHelper.getFundingRate(organisation.location.districtAdministrativeCode)
   }
 
+  const hasClawbackDetails = !!(claim.clawback)
+
   res.render('../views/support/claims/clawbacks/check-your-answers', {
     claim,
     organisation,
+    hasClawbackDetails,
     clawback: req.session.data.clawback,
     actions: {
       save: `/support/claims/clawbacks/${req.params.claimId}/request/check`,
@@ -427,7 +430,7 @@ exports.check_clawback_request_post = (req, res) => {
   } else {
     req.flash('success', 'Clawback requested')
   }
-  res.redirect(`/support/claims/clawbacks`)
+  res.redirect(`/support/claims/clawbacks/${req.params.claimId}`)
 }
 
 /// ------------------------------------------------------------------------ ///
@@ -525,23 +528,23 @@ exports.response_claims_post = (req, res) => {
 
   if (!req.file) {
     const error = {}
-    error.fieldName = 'clawbacks'
-    error.href = '#clawbacks'
+    error.fieldName = 'response'
+    error.href = '#response'
     error.text = 'Select a CSV file to upload'
     errors.push(error)
   } else {
     if (req.file.mimetype !== 'text/csv') {
       const error = {}
-      error.fieldName = 'clawbacks'
-      error.href = '#clawbacks'
+      error.fieldName = 'response'
+      error.href = '#response'
       error.text = 'The selected file must be a CSV'
       errors.push(error)
       // delete the incorrect file
       fs.unlinkSync(req.file.path)
     } else if (!req.file.size) {
       const error = {}
-      error.fieldName = 'clawbacks'
-      error.href = '#clawbacks'
+      error.fieldName = 'response'
+      error.href = '#response'
       error.text = 'The selected file is empty'
       errors.push(error)
       // delete the incorrect file
