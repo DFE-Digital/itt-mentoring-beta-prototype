@@ -25,6 +25,19 @@
   }) }}
 {% endif %}
 
+{% if claim.status === "sampling_in_progress" %}
+  {{ govukButton({
+    text: "Approve claim",
+    href: actions.approveClaim
+  }) }}
+
+  {{ govukButton({
+    text: "Confirm provider rejected claim",
+    href: actions.providerRejectClaim,
+    classes: "govuk-button--secondary"
+  }) }}
+{% endif %}
+
 {% if claim.status === "sampling_provider_not_approved" %}
   {{ govukButton({
     text: "Approve claim",

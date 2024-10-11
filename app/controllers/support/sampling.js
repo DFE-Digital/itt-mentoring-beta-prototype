@@ -231,6 +231,7 @@ exports.show_claim_get = (req, res) => {
     actions: {
       approveClaim: `/support/claims/sampling/${req.params.claimId}/status/paid`,
       rejectClaim: `/support/claims/sampling/${req.params.claimId}/status/sampling_not_approved`,
+      providerRejectClaim: `/support/claims/sampling/${req.params.claimId}/status/sampling_provider_not_approved`,
       requestClawback: `/support/claims/sampling/${req.params.claimId}/status/clawback_requested`,
       back: `/support/claims/sampling`,
       cancel: `/support/claims/sampling`
@@ -278,7 +279,7 @@ exports.update_claim_status_post = (req, res) => {
 
   req.flash('success', 'Claim updated')
 
-  if (req.params.claimStatus === 'in_review') {
+  if (req.params.claimStatus === 'sampling_provider_not_approved') {
     res.redirect(`/support/claims/sampling/${req.params.claimId}`)
   } else {
     res.redirect(`/support/claims/sampling`)
