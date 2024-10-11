@@ -47,6 +47,12 @@ exports.findOne = (params) => {
 
   if (params.claimId) {
     claim = claims.find(claim => claim.id === params.claimId)
+
+    if (claim.notes) {
+      claim.notes.sort((a, b) => {
+        return new Date(b.createdAt) - new Date(a.createdAt)
+      })
+    }
   }
 
   return claim
@@ -115,6 +121,11 @@ exports.updateOne = (params) => {
       claimId: params.claimId,
     })
 
+    // add a notes array if it doesn't exist
+    if (!claim.notes) {
+      claim.notes = []
+    }
+
     if (params.claim.providerId) {
       claim.providerId = params.claim.providerId
     }
@@ -139,11 +150,18 @@ exports.updateOne = (params) => {
       }
     }
 
+    claim.updatedAt = new Date()
+
+    if (params.claim.note) {
+      const note = params.claim.note
+      note.createdAt = claim.updatedAt
+
+      claim.notes.push(note)
+    }
+
     if (params.userId) {
       claim.updatedBy = params.userId
     }
-
-    claim.updatedAt = new Date()
 
     const filePath = directoryPath + '/' + params.claimId + '.json'
 
