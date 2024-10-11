@@ -102,7 +102,7 @@ exports.list_claims_get = (req, res) => {
     }
   }
 
-  const statusArray = ['sampling_in_progress'] // 'sampling_not_approved'
+  const statusArray = ['sampling_in_progress','sampling_provider_not_approved']
 
   // get filter items
   let filterStatusItems = statusHelper.getClaimStatusOptions(statuses)
