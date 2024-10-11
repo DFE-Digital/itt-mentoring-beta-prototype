@@ -224,7 +224,7 @@ exports.show_claim_get = (req, res) => {
 
   const organisation = claim.school
 
-  const note = claim.notes.find(note => note.section === 'payments')
+  const note = claim.notes.find(note => note.section === 'sampling')
 
   res.render('../views/support/claims/sampling/show', {
     claim,
