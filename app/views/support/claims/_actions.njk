@@ -25,7 +25,7 @@
   }) }}
 {% endif %}
 
-{% if claim.status === "sampling_in_progress" %}
+{% if claim.status === "sampling_provider_not_approved" %}
   {{ govukButton({
     text: "Approve claim",
     href: actions.approveClaim
@@ -42,19 +42,6 @@
   {{ govukButton({
     text: "Request clawback",
     href: actions.requestClawback
-  }) }}
-{% endif %}
-
-{% if claim.status === "in_review" %}
-  {{ govukButton({
-    text: "Approve claim",
-    href: actions.approveClaim
-  }) }}
-
-  {{ govukButton({
-    text: "Request clawback",
-    href: actions.requestClawback,
-    classes: "govuk-button--secondary"
   }) }}
 {% endif %}
 
