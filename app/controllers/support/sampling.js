@@ -224,9 +224,12 @@ exports.show_claim_get = (req, res) => {
 
   const organisation = claim.school
 
+  const note = claim.notes.find(note => note.section === 'payments')
+
   res.render('../views/support/claims/sampling/show', {
     claim,
     organisation,
+    note,
     showOrganisationLink: true,
     actions: {
       approveClaim: `/support/claims/sampling/${req.params.claimId}/status/paid`,
@@ -571,7 +574,13 @@ exports.review_response_claims_post = (req, res) => {
       claimId: claim.claimId,
       userId: req.session.passport.user.id,
       claim: {
-        status: claim.claim_status
+        status: claim.claim_status,
+        note: {
+          text: claim.claim_not_assured_reason,
+          userId: req.session.passport.user.id,
+          section: 'sampling',
+          category: claim.claim_status
+        }
       }
     })
   })

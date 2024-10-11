@@ -225,9 +225,12 @@ exports.show_claim_get = (req, res) => {
 
   const organisation = claim.school
 
+  const note = claim.notes.find(note => note.section === 'payments')
+
   res.render('../views/support/claims/payments/show', {
     claim,
     organisation,
+    note,
     showOrganisationLink: true,
     actions: {
       informationSent: `/support/claims/payments/${req.params.claimId}/status/payment_information_sent`,
@@ -487,7 +490,13 @@ exports.review_claims_post = (req, res) => {
       claimId: payment.claimId,
       userId: req.session.passport.user.id,
       claim: {
-        status: payment.claim_status
+        status: payment.claim_status,
+        note: {
+          text: payment.claim_unpaid_reason,
+          userId: req.session.passport.user.id,
+          section: 'payments',
+          category: payment.claim_status
+        }
       }
     })
   })

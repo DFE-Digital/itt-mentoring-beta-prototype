@@ -229,9 +229,12 @@ exports.show_claim_get = (req, res) => {
 
   const organisation = claim.school
 
+  const note = claim.notes.find(note => note.section === 'clawbacks')
+
   res.render('../views/support/claims/clawbacks/show', {
     claim,
     organisation,
+    note,
     showOrganisationLink: true,
     showClawbackChangeLinks: true,
     actions: {
@@ -634,7 +637,13 @@ exports.review_response_claims_post = (req, res) => {
       claimId: clawback.claimId,
       userId: req.session.passport.user.id,
       claim: {
-        status: clawback.claim_status
+        status: clawback.claim_status,
+        note: {
+          text: clawback.claim_unsuccessful_reason,
+          userId: req.session.passport.user.id,
+          section: 'clawbacks',
+          category: clawback.claim_status
+        }
       }
     })
   })
