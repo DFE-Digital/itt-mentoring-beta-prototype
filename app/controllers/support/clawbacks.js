@@ -104,7 +104,7 @@ exports.list_claims_get = (req, res) => {
     }
   }
 
-  const statusArray = ['clawback_requested','clawback_in_progress','sampling_not_approved']
+  const statusArray = ['clawback_complete','clawback_requested','clawback_in_progress','sampling_not_approved']
 
   // get filter items
   let filterStatusItems = statusHelper.getClaimStatusOptions(statuses)
