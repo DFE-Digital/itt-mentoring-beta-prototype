@@ -1,5 +1,5 @@
 {% set filterOptionsHtml %}
-{# {{ govukCheckboxes({
+{{ govukCheckboxes({
   idPrefix: "filter-status",
   name: "filters[status]",
   fieldset: {
@@ -14,7 +14,7 @@
   items: filterStatusItems,
   values: filters.status,
   classes: "govuk-checkboxes--small"
-}) }} #}
+}) }}
 
 {{ appCheckboxFilter({
   idPrefix: "filter-provider",

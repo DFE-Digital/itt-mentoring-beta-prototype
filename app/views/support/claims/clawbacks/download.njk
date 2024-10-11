@@ -31,9 +31,14 @@
           Email <a href="mailto:ittmentor.funding@education.gov.uk" class="govuk-link">ittmentor.funding@education.gov.uk</a> to request a new download link
         </p>
       {% else %}
-        <p class="govuk-body">Select ‘Download file’ to download the {{ serviceName }} clawbacks file.</p>
+        <p class="govuk-body">
+          Download the {{ serviceName }} clawbacks <abbr title="comma-separated values">CSV</abbr> file.
+        </p>
+        <p class="govuk-body">
+          If you have any questions, email <a href="mailto:ittmentor.funding@education.gov.uk" class="govuk-link">ittmentor.funding@education.gov.uk</a>.
+        </p>
         {{ govukButton({
-          text: "Download file",
+          text: "Download CSV file",
           href: actions.download
         }) }}
       {% endif %}

@@ -9,7 +9,7 @@
   {% set title = "Are you sure you want to approve the claim?" %}
   {% set buttonLabel = "Approve claim" %}
 {% else %}
-  {% set title = "Are you sure you want to update the claim" %}
+  {% set title = "Are you sure you want to update the claim?" %}
   {% set buttonLabel = "Update claim" %}
 {% endif %}
 
@@ -41,10 +41,10 @@
           <p class="govuk-body">This will mark the claim as ‘Paid’.</p>
         {% endif %}
 
-        {{ govukWarningText({
+        {# {{ govukWarningText({
           text: "This action cannot be undone.",
           iconFallbackText: "Warning"
-        }) }}
+        }) }} #}
 
         {{ govukButton({
           text: buttonLabel

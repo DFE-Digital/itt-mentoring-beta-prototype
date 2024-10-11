@@ -381,23 +381,23 @@ exports.response_claims_post = (req, res) => {
 
   if (!req.file) {
     const error = {}
-    error.fieldName = 'payments'
-    error.href = '#payments'
+    error.fieldName = 'response'
+    error.href = '#response'
     error.text = 'Select a CSV file to upload'
     errors.push(error)
   } else {
     if (req.file.mimetype !== 'text/csv') {
       const error = {}
-      error.fieldName = 'payments'
-      error.href = '#payments'
+      error.fieldName = 'response'
+      error.href = '#response'
       error.text = 'The selected file must be a CSV'
       errors.push(error)
       // delete the incorrect file
       fs.unlinkSync(req.file.path)
     } else if (!req.file.size) {
       const error = {}
-      error.fieldName = 'payments'
-      error.href = '#payments'
+      error.fieldName = 'response'
+      error.href = '#response'
       error.text = 'The selected file is empty'
       errors.push(error)
       // delete the incorrect file
