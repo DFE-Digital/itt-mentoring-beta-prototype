@@ -123,12 +123,12 @@
                       </dd>
                       <dt class="govuk-visually-hidden">Total amount</dt>
                       <dd class="govuk-body-s  govuk-!-margin-bottom-1">
-                        £{{ claim.totalAmount | numeral('0,0.00') }}
+                        &pound;{{ claim.totalAmount | numeral('0,0.00') }}
                       </dd>
                       {% if claim.clawback %}
                         <dt class="govuk-body-s govuk-!-font-weight-bold govuk-!-margin-bottom-0">Clawback amount</dt>
                         <dd class="govuk-body-s govuk-!-margin-bottom-1">
-                          £{{ claim.clawback.totalAmount | numeral('0,0.00') }}
+                          &pound;{{ claim.clawback.totalAmount | numeral('0,0.00') }}
                         </dd>
                       {% endif %}
                     </dl>
