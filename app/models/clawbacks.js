@@ -48,7 +48,7 @@ exports.findMany = (params) => {
     clawback.clawback_amount = claim.clawback.totalAmount
     clawback.claim_submission_date = claim.submittedAt
     clawback.claim_status = claim.status
-    clawback.clawback_unsuccessful_reason = ''
+    // clawback.clawback_unsuccessful_reason = ''
 
     clawbacks.push(clawback)
   })
@@ -132,8 +132,9 @@ exports.writeFile = (params) => {
         { id: 'school_establishment_type_group', title: 'school_establishment_type_group' },
         { id: 'clawback_amount', title: 'clawback_amount' },
         { id: 'claim_submission_date', title: 'claim_submission_date' },
-        { id: 'claim_status', title: 'claim_status' },
-        { id: 'clawback_unsuccessful_reason', title: 'clawback_unsuccessful_reason' }
+        { id: 'claim_status', title: 'claim_status' }
+        // ,
+        // { id: 'clawback_unsuccessful_reason', title: 'clawback_unsuccessful_reason' }
       ]
     })
 
