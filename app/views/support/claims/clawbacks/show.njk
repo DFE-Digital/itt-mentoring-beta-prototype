@@ -53,7 +53,7 @@
 
       {% include "_includes/claims/grant-funding.njk" %}
 
-      {% if claim.clawback %}
+      {% if claim.status in ["clawback_complete","clawback_requested","clawback_in_progress"] %}
         {% include "_includes/claims/clawback-details.njk" %}
       {% endif %}
 
