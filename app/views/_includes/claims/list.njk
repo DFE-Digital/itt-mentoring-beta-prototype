@@ -39,7 +39,7 @@
           </td>
           <td class="govuk-table__cell">
             {% if claim.submittedAt %}
-              {{ claim.submittedAt | datetime('dd/MM/yyyy') }}
+              {{ claim.submittedAt | govukDate }}
             {% else %}
               -
             {% endif %}
