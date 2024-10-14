@@ -32,6 +32,10 @@
           </td>
           <td class="govuk-table__cell govuk-table__cell--numeric">
             &pound;{{ claim.totalAmount | numeral('0,0.00') }}
+            {% if claim.clawback.totalAmount %}
+              <span class="govuk-!-font-weight-bold">Clawback amount</span>
+              &pound;{{ claim.clawback.totalAmount | numeral('0,0.00') }}
+            {% endif %}
           </td>
           <td class="govuk-table__cell">
             {% if claim.submittedAt %}
