@@ -26,7 +26,7 @@ exports.parseData = (array) => {
     claim.clawback_amount = item[6]
     claim.claim_submission_date = item[7]
     claim.claim_status = item[8]
-    claim.clawback_unsuccessful_reason = item[9]
+    // claim.clawback_unsuccessful_reason = item[9]
 
     claims.push(claim)
   })

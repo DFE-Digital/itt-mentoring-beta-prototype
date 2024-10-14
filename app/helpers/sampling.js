@@ -13,7 +13,7 @@ exports.parseData = (array) => {
     claim.claim_amount = item[6]
     claim.claim_submission_date = item[7]
     claim.claim_status = item[8]
-    claim.sampling_reason = item[9]
+    claim.claim_not_assured_reason = item[9]
 
     claims.push(claim)
   })

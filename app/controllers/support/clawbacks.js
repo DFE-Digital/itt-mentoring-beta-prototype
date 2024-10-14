@@ -104,7 +104,7 @@ exports.list_claims_get = (req, res) => {
     }
   }
 
-  const statusArray = ['clawback_complete','clawback_requested','clawback_in_progress','sampling_not_approved']
+  const statusArray = ['clawback_requested','clawback_in_progress','sampling_not_approved']
 
   // get filter items
   let filterStatusItems = statusHelper.getClaimStatusOptions(statuses)
@@ -229,9 +229,12 @@ exports.show_claim_get = (req, res) => {
 
   const organisation = claim.school
 
+  const note = claim.notes.find(note => note.section === 'clawbacks')
+
   res.render('../views/support/claims/clawbacks/show', {
     claim,
     organisation,
+    note,
     showOrganisationLink: true,
     showClawbackChangeLinks: true,
     actions: {
@@ -638,6 +641,14 @@ exports.review_response_claims_post = (req, res) => {
       }
     })
   })
+
+  // ,
+  // note: {
+  //   text: clawback.claim_unsuccessful_reason,
+  //   userId: req.session.passport.user.id,
+  //   section: 'clawbacks',
+  //   category: clawback.claim_status
+  // }
 
   req.flash('success', 'ESFA response uploaded')
   res.redirect('/support/claims/clawbacks')
