@@ -243,7 +243,8 @@ exports.show_claim_get = (req, res) => {
       changeClawback: `/support/claims/clawbacks/${req.params.claimId}/request`,
       completeClawback: `/support/claims/clawbacks/${req.params.claimId}/status/clawback_complete`,
       back: `/support/claims/clawbacks`,
-      cancel: `/support/claims/clawbacks`
+      cancel: `/support/claims/clawbacks`,
+      organisations: `/support/organisations`
     }
   })
 }

@@ -237,7 +237,8 @@ exports.show_claim_get = (req, res) => {
       approveClaim: `/support/claims/payments/${req.params.claimId}/status/paid`,
       rejectClaim: `/support/claims/payments/${req.params.claimId}/status/not_paid`,
       back: `/support/claims/payments`,
-      cancel: `/support/claims/payments`
+      cancel: `/support/claims/payments`,
+      organisations: `/support/organisations`
     }
   })
 }

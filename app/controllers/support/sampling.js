@@ -237,7 +237,8 @@ exports.show_claim_get = (req, res) => {
       providerRejectClaim: `/support/claims/sampling/${req.params.claimId}/status/sampling_provider_not_approved`,
       requestClawback: `/support/claims/sampling/${req.params.claimId}/status/clawback_requested`,
       back: `/support/claims/sampling`,
-      cancel: `/support/claims/sampling`
+      cancel: `/support/claims/sampling`,
+      organisations: `/support/organisations`
     }
   })
 }
