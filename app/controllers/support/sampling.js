@@ -2,6 +2,7 @@ const fs = require('fs')
 const csv = require('csv-string')
 
 const claimModel = require('../../models/claims')
+const samplingModel = require('../../models/sampling')
 
 const Pagination = require('../../helpers/pagination')
 const claimHelper = require('../../helpers/claims')
@@ -424,18 +425,34 @@ exports.review_upload_claims_post = (req, res) => {
   const claims = req.session.data.claims
 
   claims.forEach(claim => {
+    claim.claim_status = 'sampling_in_progress'
+
     claimModel.updateOne({
       organisationId: claim.organisationId,
       claimId: claim.claimId,
       userId: req.session.passport.user.id,
       claim: {
-        status: 'sampling_in_progress'
+        status: claim.claim_status,
+        note: {
+          text: claim.sample_reason,
+          userId: req.session.passport.user.id,
+          section: 'sampling',
+          category: claim.claim_status
+        }
       }
     })
   })
 
   // group the claims by provider and parse the data into separate files
+  const providerSamples = samplingHelper.parseProviderSampleData(claims)
 
+  for (const [key, value] of Object.entries(providerSamples)) {
+    console.log(`${key}: ${value}`);
+    samplingModel.writeFile({
+      key,
+      sample: value
+    })
+  }
 
   // log the process and link to the sample files
 
