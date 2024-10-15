@@ -377,7 +377,7 @@ exports.upload_claims_post = (req, res) => {
     claims.shift()
 
     // put the data into the session for use later
-    claims = samplingHelper.parseData(claims)
+    claims = samplingHelper.parseSamplingData(claims)
 
     // decorate payment data with claim ID
     claims = claims.map(item => {
@@ -429,10 +429,19 @@ exports.review_upload_claims_post = (req, res) => {
       claimId: claim.claimId,
       userId: req.session.passport.user.id,
       claim: {
-        status: claim.claim_status
+        status: 'sampling_in_progress'
       }
     })
   })
+
+  // group the claims by provider and parse the data into separate files
+
+
+  // log the process and link to the sample files
+
+
+  // clear the claims data after use
+  delete req.session.data.claims
 
   req.flash('success', 'Sampling data uploaded')
   res.redirect('/support/claims/sampling')
@@ -525,7 +534,7 @@ exports.response_claims_post = (req, res) => {
     claims.shift()
 
     // put the data into the session for use later
-    claims = samplingHelper.parseData(claims)
+    claims = samplingHelper.parseProviderResponseData(claims)
 
     // decorate payment data with claim ID
     claims = claims.map(item => {
@@ -590,6 +599,9 @@ exports.review_response_claims_post = (req, res) => {
       }
     })
   })
+
+  // clear the claims data after use
+  delete req.session.data.claims
 
   req.flash('success', 'Provider response uploaded')
   res.redirect('/support/claims/sampling')
