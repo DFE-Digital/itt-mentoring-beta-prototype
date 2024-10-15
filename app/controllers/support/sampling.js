@@ -291,7 +291,7 @@ exports.update_claim_status_post = (req, res) => {
 }
 
 /// ------------------------------------------------------------------------ ///
-/// SEND CLAIMS FOR PAYMENT
+/// SEND CLAIMS FOR SAMPLING
 /// ------------------------------------------------------------------------ ///
 
 exports.upload_claims_get = (req, res) => {
@@ -402,7 +402,7 @@ exports.review_upload_claims_get = (req, res) => {
   claims = pagination.getData()
 
   const pageHeading = 'Are you sure you want to upload the sampling data?'
-  const insetText = 'Each accredited provider included in the sample data will receive an email instructing them to assure their partner schools’ claim.'
+  const warningText = 'Each accredited provider included in the sample data will receive an email instructing them to assure their partner schools’ claim.'
   const buttonLabel = 'Upload data'
 
   res.render('../views/support/claims/sampling/review', {
@@ -410,7 +410,7 @@ exports.review_upload_claims_get = (req, res) => {
     claimsCount,
     pagination,
     pageHeading,
-    insetText,
+    warningText,
     buttonLabel,
     actions: {
       save: `/support/claims/sampling/upload/review`,
@@ -439,7 +439,7 @@ exports.review_upload_claims_post = (req, res) => {
 }
 
 /// ------------------------------------------------------------------------ ///
-/// IMPORT CLAIM PAYMENT RESPONSE
+/// UPLOAD CLAIM SAMPLING PROVIDER RESPONSE
 /// ------------------------------------------------------------------------ ///
 
 exports.response_claims_get = (req, res) => {
@@ -570,6 +570,11 @@ exports.review_response_claims_post = (req, res) => {
   const claims = req.session.data.claims
 
   claims.forEach(claim => {
+    claim.claim_status = 'paid'
+    if (!claim.assured || ['false','no'].includes(claim.assured)) {
+      claim.claim_status = 'sampling_provider_not_approved'
+    }
+
     claimModel.updateOne({
       organisationId: claim.organisationId,
       claimId: claim.claimId,
