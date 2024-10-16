@@ -35,6 +35,45 @@
         {{ subtitle }}
       </h2>
 
+      <div class="app-timeline">
+
+      {%- for item in activity %}
+        <div class="app-timeline__item">
+
+          <div class="app-timeline__header">
+            <h3 class="app-timeline__title">
+              {{- item.title -}}
+            </h3>
+            {% if item.createdBy %}
+              <p class="app-timeline__byline">
+                {{ item.createdBy | getUserName }} on
+                <time datetime="{{ item.createdAt }}">
+                  {{- item.createdAt | govukDateTime }}
+                </time>
+              </p>
+            {% endif %}
+          </div>
+
+          {% if item.text or item.documents %}
+            <div class="app-timeline__description">
+              {{- item.text -}}
+              {% if item.documents %}
+                <ul class="app-timeline__documents">
+                  {% for document in item.documents %}
+                    <li class="app-timeline__document-item">
+                      <a href="{{ document.href }}" class="app-timeline__document-link">{{ document.title }}</a>
+                    </li>
+                  {% endfor %}
+                </ul>
+              {% endif %}
+            </div>
+          {% endif %}
+
+        </div>
+      {% endfor -%}
+
+    </div>
+
     </div>
   </div>
 
