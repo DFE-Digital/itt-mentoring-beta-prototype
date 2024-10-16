@@ -58,13 +58,22 @@
                 <div class="app-timeline__description">
                   {{- item.text -}}
                   {% if item.documents %}
+                    {% set numDocsToShow = 5 %}
                     <ul class="app-timeline__documents">
-                      {% for document in item.documents %}
+                      {% for i in range(0, numDocsToShow) %}
                         <li class="app-timeline__document-item">
-                          <a href="{{ document.href }}" class="app-timeline__document-link">{{ document.title }}</a>
+                          <a href="{{ item.documents[i].href }}" class="app-timeline__document-link">{{ item.documents[i].title }}</a>
                         </li>
                       {% endfor %}
                     </ul>
+                    {% if item.documents.length > numDocsToShow %}
+                      <p class="govuk-body govuk-!-margin-top-5 govuk-!-margin-bottom-2">
+                        Showing {{ numDocsToShow }} of {{ item.documents.length }} files
+                      </p>
+                      <p class="govuk-body govuk-!-margin-bottom-0">
+                        <a href="{{ actions.show }}/{{ item.id }}" class="govuk-link">View all files</a>
+                      </p>
+                    {% endif %}
                   {% endif %}
                 </div>
               {% endif %}
@@ -76,7 +85,7 @@
 
       {% else %}
 
-        {% include "../_no-results.njk" %}
+        <p class="govuk-body">There is no activity.</p>
 
       {% endif %}
 
