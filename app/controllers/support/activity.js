@@ -42,13 +42,13 @@ exports.show_activity_get = (req, res) => {
 exports.download_activity_get = (req, res) => {
   let directoryPath = path.join(__dirname, '../../uploads')
 
-  if (req.query.type === 'payments') {
-    directoryPath = path.join(__dirname, '../../data/dist/payments')
-  } else if (req.query.type === 'sampling') {
-    directoryPath = path.join(__dirname, '../../data/dist/sampling')
-  } else if (req.query.type === 'clawbacks') {
-    directoryPath = path.join(__dirname, '../../data/dist/clawbacks')
-  }
+  // if (req.query.type === 'payments') {
+  //   directoryPath = path.join(__dirname, '../../data/dist/payments')
+  // } else if (req.query.type === 'sampling') {
+  //   directoryPath = path.join(__dirname, '../../data/dist/sampling')
+  // } else if (req.query.type === 'clawbacks') {
+  //   directoryPath = path.join(__dirname, '../../data/dist/clawbacks')
+  // }
 
   const fileName = req.query.filename
   const filePath = directoryPath + '/' + fileName

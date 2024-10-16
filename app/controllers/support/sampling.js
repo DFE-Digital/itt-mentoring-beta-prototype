@@ -463,7 +463,7 @@ exports.review_upload_claims_post = (req, res) => {
     })
 
     document.filename = utilHelper.getFilename(filePath)
-    document.href = `/support/claims/activity/download?type=sampling&file=${document.filename}`
+    document.href = `/support/claims/activity/download?type=sampling&filename=${document.filename}`
 
     documents.push(document)
   }
