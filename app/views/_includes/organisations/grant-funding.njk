@@ -17,7 +17,7 @@
         text: "Hourly rate"
       },
       value: {
-        text: "£" + organisation.location.districtAdministrativeCode | getFundingRate | numeral('0,0.00')
+        text: organisation.location.districtAdministrativeCode | getFundingRate | currency
       }
     }
   ]

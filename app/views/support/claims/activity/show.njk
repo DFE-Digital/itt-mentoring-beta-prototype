@@ -1,0 +1,46 @@
+{% extends "layouts/support.njk" %}
+
+{% set primaryNavId = "claims" %}
+
+{% set caption = "Activity log" %}
+{% set title = activity.title %}
+
+{% block pageTitle %}
+{{ "Error: " if errors }}{{ subtitle + " - " if subtitle }}{{ title + " - " if title }}{{ caption + " - " if caption }}{{ serviceName }} - GOV.UK
+{% endblock %}
+
+{% block beforeContent %}
+{{ govukBackLink({
+  text: "Back",
+  href: actions.back
+}) }}
+{% endblock %}
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      {% include "_includes/page-heading.njk" %}
+
+      <p class="govuk-body">
+        {{ activity.createdBy | getUserName }} on
+        <time datetime="{{ activity.createdAt }}">
+          {{- activity.createdAt | govukDateTime }}
+        </time>
+      </p>
+
+      <h2 class="govuk-heading-m">Files</h2>
+
+      <ul class="govuk-list--bullet govuk-list--spaced">
+        {% for document in activity.documents %}
+          <li>
+            <a href="{{ document.href }}" class="govuk-link">{{ document.title }}</a>
+          </li>
+        {% endfor %}
+      </ul>
+
+    </div>
+  </div>
+
+{% endblock %}

@@ -65,7 +65,7 @@
                   {{ payment.school_name }}
                 </td>
                 <td class="govuk-table__cell govuk-table__cell--numeric">
-                  &pound;{{ payment.claim_amount | numeral('0,0.00') }}
+                  {{ payment.claim_amount | currency }}
                 </td>
                 <td class="govuk-table__cell">
                   {{ govukTag({

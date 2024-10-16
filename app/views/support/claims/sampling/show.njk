@@ -35,7 +35,7 @@
 
       {% if note and note.text.length %}
         {% set insetHtml %}
-          <h2 class="govuk-heading-s">Reason claim was not assured</h2>
+          <h2 class="govuk-heading-s">Reason claim {{- " was not assured" if note.category == "sampling_payment_not_approved" else " is being sampled" }}</h2>
           <p class="govuk-body">{{ note.text }}</p>
         {% endset %}
         {{ govukInsetText({

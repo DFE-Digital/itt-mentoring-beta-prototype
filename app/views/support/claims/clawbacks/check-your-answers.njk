@@ -49,7 +49,7 @@
                 text: "Hourly rate"
               },
               value: {
-                text: "£" + clawback.fundingRate | numeral('0,0.00')
+                text: clawback.fundingRate | currency
               }
             },
             {
@@ -57,7 +57,7 @@
                 text: "Clawback amount"
               },
               value: {
-                text: "£" + clawback.totalAmount | numeral('0,0.00')
+                text: clawback.totalAmount | currency
               }
             },
             {

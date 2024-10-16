@@ -119,11 +119,11 @@
                     <dl class="app-claim-card__list app-claim-card__list--secondary">
                       <dt class="govuk-visually-hidden">Submitted on</dt>
                       <dd class="govuk-body-s govuk-!-margin-bottom-1">
-                        {{ claim.submittedAt | datetime('dd/MM/yyyy') }}
+                        {{ claim.submittedAt | govukDate }}
                       </dd>
                       <dt class="govuk-visually-hidden">Total amount</dt>
                       <dd class="govuk-body-s  govuk-!-margin-bottom-1">
-                        &pound;{{ claim.totalAmount | numeral('0,0.00') }}
+                        {{ claim.totalAmount | currency }}
                       </dd>
                     </dl>
                   </div>

@@ -32,19 +32,19 @@ addFilter('numeral', (number, format) => {
   example: {{ params.number | numeral("0,00.0") }}
   outputs: 1,000.00
 ------------------------------------------------------------------ */
-addFilter('datetime', (timestamp, format) => {
-  let datetime = DateTime.fromJSDate(timestamp, {
-    locale: 'en-GB'
-  }).toFormat(format)
+// addFilter('datetime', (timestamp, format) => {
+//   let datetime = DateTime.fromJSDate(timestamp, {
+//     locale: 'en-GB'
+//   }).toFormat(format)
 
-  if (datetime === 'Invalid DateTime') {
-    datetime = DateTime.fromISO(timestamp, {
-      locale: 'en-GB'
-    }).toFormat(format)
-  }
+//   if (datetime === 'Invalid DateTime') {
+//     datetime = DateTime.fromISO(timestamp, {
+//       locale: 'en-GB'
+//     }).toFormat(format)
+//   }
 
-  return datetime
-})
+//   return datetime
+// })
 
 /* ------------------------------------------------------------------
 utility function to turn and array into a list

@@ -33,6 +33,13 @@
           }) }}
         {% endif %}
 
+        {% if warningText %}
+          {{ govukWarningText({
+            text: warningText,
+            iconFallbackText: "Warning"
+          }) }}
+        {% endif %}
+
         {{ govukButton({
           text: buttonLabel
         }) }}
