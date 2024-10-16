@@ -3,6 +3,7 @@ const csv = require('csv-string')
 
 const claimModel = require('../../models/claims')
 const paymentModel = require('../../models/payments')
+const activityLogModel = require('../../models/activity')
 
 const Pagination = require('../../helpers/pagination')
 const claimHelper = require('../../helpers/claims')
@@ -354,6 +355,17 @@ exports.send_claims_post = (req, res) => {;
       newStatus: 'payment_in_progress'
     })
 
+    // log the process
+    activityLogModel.insertOne({
+      title: 'Claims sent to ESFA for payment',
+      userId: req.session.passport.user.id,
+      documents: [{
+        title: 'Claims sent to ESFA',
+        filename: 'payments.csv',
+        href: '#'
+      }]
+    })
+
     req.flash('success', 'Claims sent to ESFA')
     res.redirect('/support/claims/payments')
   }
@@ -500,6 +512,17 @@ exports.review_claims_post = (req, res) => {
         }
       }
     })
+  })
+
+  // log the process
+  activityLogModel.insertOne({
+    title: 'ESFA payment response uploaded',
+    userId: req.session.passport.user.id,
+    documents: [{
+      title: 'ESFA payment response',
+      filename: 'payment-response.csv',
+      href: '#'
+    }]
   })
 
   req.flash('success', 'ESFA response uploaded')

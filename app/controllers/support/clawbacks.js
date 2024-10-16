@@ -3,6 +3,7 @@ const csv = require('csv-string')
 
 const claimModel = require('../../models/claims')
 const clawbackModel = require('../../models/clawbacks')
+const activityLogModel = require('../../models/activity')
 
 const Pagination = require('../../helpers/pagination')
 const claimHelper = require('../../helpers/claims')
@@ -501,6 +502,17 @@ exports.send_claims_post = (req, res) => {;
       newStatus: 'clawback_in_progress'
     })
 
+    // log the process
+    activityLogModel.insertOne({
+      title: 'Claims sent to ESFA for clawback',
+      userId: req.session.passport.user.id,
+      documents: [{
+        title: 'Claims sent to ESFA',
+        filename: 'clawbacks.csv',
+        href: '#'
+      }]
+    })
+
     req.flash('success', 'Claims sent to ESFA')
     res.redirect('/support/claims/clawbacks')
   }
@@ -641,6 +653,17 @@ exports.review_response_claims_post = (req, res) => {
         status: clawback.claim_status
       }
     })
+  })
+
+  // log the process
+  activityLogModel.insertOne({
+    title: 'ESFA clawback response uploaded',
+    userId: req.session.passport.user.id,
+    documents: [{
+      title: 'ESFA clawback response',
+      filename: 'clawbacks-response.csv',
+      href: '#'
+    }]
   })
 
   // ,

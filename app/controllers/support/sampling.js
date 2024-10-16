@@ -635,6 +635,17 @@ exports.review_response_claims_post = (req, res) => {
     })
   })
 
+  // log the process
+  activityLogModel.insertOne({
+    title: 'Provider sampling response uploaded',
+    userId: req.session.passport.user.id,
+    documents: [{
+      title: 'Provider sampling response',
+      filename: 'sampling-response.csv',
+      href: '#'
+    }]
+  })
+
   // clear the claims data after use
   delete req.session.data.claims
 
