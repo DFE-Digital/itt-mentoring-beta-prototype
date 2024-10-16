@@ -96,7 +96,8 @@
   background-image: url("#{$app-assets-path}images/icon-document.svg");
   background-repeat: no-repeat;
   background-size: 20px 16px;
-  background-position: 0 50%;
+  background-position: 0 5px;
+  display: block;
   padding-left: govuk-spacing(5);
 
   &:focus {
