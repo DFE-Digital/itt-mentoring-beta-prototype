@@ -3,6 +3,7 @@ const csv = require('csv-string')
 
 const claimModel = require('../../models/claims')
 const samplingModel = require('../../models/sampling')
+const activityLogModel = require('../../models/activity')
 
 const Pagination = require('../../helpers/pagination')
 const claimHelper = require('../../helpers/claims')
@@ -11,6 +12,7 @@ const providerHelper = require('../../helpers/providers')
 const samplingHelper = require('../../helpers/sampling')
 const schoolHelper = require('../../helpers/schools')
 const statusHelper = require('../../helpers/statuses')
+const utilHelper = require('../../helpers/utils')
 
 const claimDecorator = require('../../decorators/claims')
 const samplingDecorator = require('../../decorators/sampling')
@@ -446,16 +448,32 @@ exports.review_upload_claims_post = (req, res) => {
   // group the claims by provider and parse the data into separate files
   const providerSamples = samplingHelper.parseProviderSampleData(claims)
 
+  // setup an array to store documents
+  const documents = []
+
   for (const [key, value] of Object.entries(providerSamples)) {
-    console.log(`${key}: ${value}`);
-    samplingModel.writeFile({
+    const document = {}
+    document.title = value.name
+
+    // key is the provider slug, value is the data:
+    // provider name and slug and sample
+    const filePath = samplingModel.writeFile({
       key,
-      sample: value
+      sample: value.sample
     })
+
+    document.filename = utilHelper.getFilename(filePath)
+    document.href = filePath
+
+    documents.push(document)
   }
 
   // log the process and link to the sample files
-
+  activityLogModel.insertOne({
+    title: 'Sampling data uploaded',
+    userId: req.session.passport.user.id,
+    documents
+  })
 
   // clear the claims data after use
   delete req.session.data.claims
