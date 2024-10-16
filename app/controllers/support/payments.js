@@ -12,6 +12,7 @@ const paymentHelper = require('../../helpers/payments')
 const providerHelper = require('../../helpers/providers')
 const schoolHelper = require('../../helpers/schools')
 const statusHelper = require('../../helpers/statuses')
+const utilHelper = require('../../helpers/utils')
 
 const claimDecorator = require('../../decorators/claims')
 const paymentDecorator = require('../../decorators/payments')
@@ -344,9 +345,11 @@ exports.send_claims_post = (req, res) => {;
     })
 
     // create a CSV file
-    paymentModel.writeFile({
+    const filePath = paymentModel.writeFile({
       payments
     })
+
+    const filename = utilHelper.getFilename(filePath)
 
     // update claim status to 'payment_in_progress'
     paymentModel.updateMany({
@@ -361,8 +364,8 @@ exports.send_claims_post = (req, res) => {;
       userId: req.session.passport.user.id,
       documents: [{
         title: 'Claims sent to ESFA',
-        filename: 'payments.csv',
-        href: '#'
+        filename,
+        href: `/download?type=payments&filename=${filename}`
       }]
     })
 
@@ -466,9 +469,10 @@ exports.response_claims_post = (req, res) => {
     })
 
     req.session.data.payments = payments
+    req.session.data.filePath = req.file.path
 
     // delete the file now it's not needed
-    fs.unlinkSync(req.file.path)
+    // fs.unlinkSync(req.file.path)
 
     res.redirect('/support/claims/payments/response/review')
   }
@@ -514,16 +518,22 @@ exports.review_claims_post = (req, res) => {
     })
   })
 
+  const filename = utilHelper.getFilename(req.session.data.filePath)
+
   // log the process
   activityLogModel.insertOne({
     title: 'ESFA payment response uploaded',
     userId: req.session.passport.user.id,
     documents: [{
       title: 'ESFA payment response',
-      filename: 'payment-response.csv',
-      href: '#'
+      filename,
+      href: `/download?type=uploads&filename=${filename}`
     }]
   })
+
+  // clear data after use
+  delete req.session.data.payments
+  delete req.session.data.filePath
 
   req.flash('success', 'ESFA response uploaded')
   res.redirect('/support/claims/payments')

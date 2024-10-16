@@ -463,7 +463,7 @@ exports.review_upload_claims_post = (req, res) => {
     })
 
     document.filename = utilHelper.getFilename(filePath)
-    document.href = filePath
+    document.href = `/download?type=sampling&file=${document.filename}`
 
     documents.push(document)
   }
@@ -577,9 +577,10 @@ exports.response_claims_post = (req, res) => {
     })
 
     req.session.data.claims = claims
+    req.session.data.filePath = req.file.path
 
     // delete the file now it's not needed
-    fs.unlinkSync(req.file.path)
+    // fs.unlinkSync(req.file.path)
 
     res.redirect('/support/claims/sampling/response/review')
   }
@@ -635,19 +636,22 @@ exports.review_response_claims_post = (req, res) => {
     })
   })
 
+  const filename = utilHelper.getFilename(req.session.data.filePath)
+
   // log the process
   activityLogModel.insertOne({
     title: 'Provider sampling response uploaded',
     userId: req.session.passport.user.id,
     documents: [{
       title: 'Provider sampling response',
-      filename: 'sampling-response.csv',
-      href: '#'
+      filename,
+      href: `/download?type=uploads&filename=${filename}`
     }]
   })
 
-  // clear the claims data after use
+  // clear data after use
   delete req.session.data.claims
+  delete req.session.data.filePath
 
   req.flash('success', 'Provider response uploaded')
   res.redirect('/support/claims/sampling')
