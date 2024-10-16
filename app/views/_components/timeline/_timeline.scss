@@ -94,7 +94,7 @@
 }
 
 .app-timeline__document-link {
-  // background-image: url(#{$app-images-path}icon-document.svg);
+  background-image: url("#{$app-assets-path}images/icon-document.svg");
   background-repeat: no-repeat;
   background-size: 20px 16px;
   background-position: 0 50%;
