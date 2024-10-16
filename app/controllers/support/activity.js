@@ -4,6 +4,8 @@ const activityLogModel = require('../../models/activity')
 
 const Pagination = require('../../helpers/pagination')
 
+const settings = require('../../data/dist/settings')
+
 exports.list_activity_get = (req, res) => {
   let activity = activityLogModel.findMany()
 
@@ -11,8 +13,12 @@ exports.list_activity_get = (req, res) => {
     return new Date(b.createdAt) - new Date(a.createdAt)
   })
 
+  const pagination = new Pagination(activity, req.query.page, settings.pageSize)
+  activity = pagination.getData()
+
   res.render('../views/support/claims/activity/index', {
     activity,
+    pagination,
     actions: {
       show: `/support/claims/activity`
     }
