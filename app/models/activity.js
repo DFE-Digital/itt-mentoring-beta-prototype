@@ -20,7 +20,7 @@ exports.findOne = (params) => {
   const raw = fs.readFileSync(directoryPath + '/activity.json')
   const activityLog = JSON.parse(raw)
 
-  const activity = activityLog.find(activity => activity.id === params.id)
+  const activity = activityLog.find(activity => activity.id === params.activityId)
 
   return activity
 }
