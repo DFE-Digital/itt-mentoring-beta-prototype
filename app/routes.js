@@ -457,6 +457,8 @@ router.post('/support/claims/clawbacks/:claimId/status/:claimStatus', checkIsAut
 
 /// ------------------------------------------------------------------------ ///
 
+router.get('/support/claims/activity/download', checkIsAuthenticated, supportActivityController.download_activity_get)
+
 router.get('/support/claims/activity', checkIsAuthenticated, supportActivityController.list_activity_get)
 
 /// ------------------------------------------------------------------------ ///

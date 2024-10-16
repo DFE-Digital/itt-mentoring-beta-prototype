@@ -1,3 +1,5 @@
+const path = require('path')
+
 const activityLogModel = require('../../models/activity')
 
 const Pagination = require('../../helpers/pagination')
@@ -13,6 +15,31 @@ exports.list_activity_get = (req, res) => {
     activity,
     actions: {
       show: `/support/claims/activity`
+    }
+  })
+}
+
+exports.download_activity_get = (req, res) => {
+  let directoryPath = path.join(__dirname, '../../uploads')
+
+  if (req.query.type === 'payments') {
+    directoryPath = path.join(__dirname, '../../data/dist/payments')
+  } else if (req.query.type === 'sampling') {
+    directoryPath = path.join(__dirname, '../../data/dist/sampling')
+  } else if (req.query.type === 'clawbacks') {
+    directoryPath = path.join(__dirname, '../../data/dist/clawbacks')
+  }
+
+  const fileName = req.query.filename
+  const filePath = directoryPath + '/' + fileName
+
+  res.setHeader('Content-Type', 'text/csv')
+  res.setHeader('Content-Disposition', `attachment; filename=${fileName}`)
+
+  res.download(filePath, fileName, (err) => {
+    if (err) {
+      console.error('Error downloading the file:', err)
+      res.status(500).send('Error downloading the file')
     }
   })
 }
