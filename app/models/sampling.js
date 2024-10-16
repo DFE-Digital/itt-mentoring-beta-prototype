@@ -6,7 +6,6 @@ const directoryPath = path.join(__dirname, '../data/dist/sampling')
 
 exports.writeFile = (params) => {
   if (params.key && params.sample) {
-
     const suffix = new Date().toISOString()
     const fileName = `sampling-${params.key}-${suffix}`
     const filePath = directoryPath + '/' + fileName + '.csv'
