@@ -25,6 +25,20 @@ exports.list_activity_get = (req, res) => {
   })
 }
 
+exports.show_activity_get = (req, res) => {
+  const activity = activityLogModel.findOne({
+    activityId: req.params.activityId
+  })
+
+  res.render('../views/support/claims/activity/show', {
+    activity,
+    // pagination,
+    actions: {
+      back: `/support/claims/activity`
+    }
+  })
+}
+
 exports.download_activity_get = (req, res) => {
   let directoryPath = path.join(__dirname, '../../uploads')
 
