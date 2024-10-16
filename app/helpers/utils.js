@@ -43,6 +43,12 @@ exports.removeFilter = (value, data) => {
   }
 }
 
+exports.getFilename = (filePath) => {
+  // Use regex to extract the filename and extension
+  const match = filePath.match(/[^/\\]+$/)
+  return match ? match[0] : ''
+}
+
 
 exports.getSelectedOrganisationTypeItems = (selectedItems, baseHref = '/support/organisations') => {
   const items = []
