@@ -365,7 +365,7 @@ exports.send_claims_post = (req, res) => {;
       documents: [{
         title: 'Claims sent to ESFA',
         filename,
-        href: `/download?type=payments&filename=${filename}`
+        href: `/support/claims/activity/download?type=payments&filename=${filename}`
       }]
     })
 
@@ -527,7 +527,7 @@ exports.review_claims_post = (req, res) => {
     documents: [{
       title: 'ESFA payment response',
       filename,
-      href: `/download?type=uploads&filename=${filename}`
+      href: `/support/claims/activity/download?type=uploads&filename=${filename}`
     }]
   })
 
