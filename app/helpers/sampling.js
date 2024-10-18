@@ -19,41 +19,6 @@ exports.parseSamplingData = (array) => {
   return claims
 }
 
-// exports.parseProviderSampleData = (array) => {
-//   array.sort((a, b) => {
-//     a.providerName.localeCompare(b.providerName)
-//   })
-
-//   const providerSamples = {}
-
-//   array.forEach((item, i) => {
-//     const claim = claimModel.findOne({ reference: item.claim_reference })
-//     const school = organisationModel.findOne({ organisationId: claim.organisationId })
-
-//     if (!providerSamples[item.providerNameSlug]) {
-//      providerSamples[item.providerNameSlug] = []
-//     }
-
-//     claim.mentors.forEach((mentor, i) => {
-//       const sample = {}
-
-//       sample.claim_reference = claim.reference
-//       sample.school_urn = school.urn
-//       sample.school_name = school.name
-//       sample.school_postcode = school.address.postcode ? school.address.postcode : ''
-//       sample.mentor_full_name = mentor.name
-//       sample.mentor_hours_of_training = mentor.otherHours ? mentor.otherHours : mentor.hours
-//       sample.claim_assured = ''
-//       sample.claim_not_assured_reason = ''
-
-//       providerSamples[item.providerNameSlug].push(sample)
-//     })
-
-//   })
-
-//   return providerSamples
-// }
-
 exports.parseProviderSampleData = (array) => {
   array.sort((a, b) => {
     a.providerName.localeCompare(b.providerName)

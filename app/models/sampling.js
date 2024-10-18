@@ -1,5 +1,4 @@
 const path = require('path')
-
 const csvWriter = require('csv-writer').createObjectCsvWriter
 
 const directoryPath = path.join(__dirname, '../data/dist/downloads')

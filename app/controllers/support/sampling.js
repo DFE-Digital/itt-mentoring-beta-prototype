@@ -579,9 +579,6 @@ exports.response_claims_post = (req, res) => {
     req.session.data.claims = claims
     req.session.data.filePath = req.file.path
 
-    // delete the file now it's not needed
-    // fs.unlinkSync(req.file.path)
-
     res.redirect('/support/claims/sampling/response/review')
   }
 }
