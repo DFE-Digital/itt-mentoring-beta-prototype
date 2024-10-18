@@ -40,7 +40,7 @@ exports.show_activity_get = (req, res) => {
 }
 
 exports.download_activity_get = (req, res) => {
-  let directoryPath = path.join(__dirname, '../../uploads')
+  let directoryPath = path.join(__dirname, '../../data/dist/downloads')
 
   // if (req.query.type === 'payments') {
   //   directoryPath = path.join(__dirname, '../../data/dist/payments')
@@ -50,7 +50,7 @@ exports.download_activity_get = (req, res) => {
   //   directoryPath = path.join(__dirname, '../../data/dist/clawbacks')
   // }
 
-  const fileName = req.query.filename
+  const fileName = req.params.fileName
   const filePath = directoryPath + '/' + fileName
 
   res.setHeader('Content-Type', 'text/csv')
