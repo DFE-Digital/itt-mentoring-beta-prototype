@@ -512,7 +512,7 @@ exports.send_claims_post = (req, res) => {;
       documents: [{
         title: 'Claims sent to ESFA',
         filename,
-        href: `/support/claims/activity/download?type=clawbacks&filename=${filename}`
+        href: `/support/claims/activity/downloads/${filename}`
       }]
     })
 
@@ -668,7 +668,7 @@ exports.review_response_claims_post = (req, res) => {
     documents: [{
       title: 'ESFA clawback response',
       filename,
-      href: `/support/claims/activity/download?type=uploads&filename=${filename}`
+      href: `/support/claims/activity/downloads/${filename}`
     }]
   })
 

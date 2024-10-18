@@ -463,7 +463,7 @@ exports.review_upload_claims_post = (req, res) => {
     })
 
     document.filename = utilHelper.getFilename(filePath)
-    document.href = `/support/claims/activity/download?type=sampling&filename=${document.filename}`
+    document.href = `/support/claims/activity/downloads/${document.filename}`
 
     documents.push(document)
   }
@@ -645,7 +645,7 @@ exports.review_response_claims_post = (req, res) => {
     documents: [{
       title: 'Provider sampling response',
       filename,
-      href: `/support/claims/activity/download?type=uploads&filename=${filename}`
+      href: `/support/claims/activity/downloads/${filename}`
     }]
   })
 
