@@ -8,7 +8,7 @@ const csvWriter = require('csv-writer').createObjectCsvWriter
 const claimModel = require('./claims')
 const organisationModel = require('./organisations')
 
-const directoryPath = path.join(__dirname, '../uploads')
+const directoryPath = path.join(__dirname, '../data/dist/downloads')
 
 exports.findMany = (params) => {
   const payments = []

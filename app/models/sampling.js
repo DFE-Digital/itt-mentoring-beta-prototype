@@ -2,7 +2,7 @@ const path = require('path')
 
 const csvWriter = require('csv-writer').createObjectCsvWriter
 
-const directoryPath = path.join(__dirname, '../uploads')
+const directoryPath = path.join(__dirname, '../data/dist/downloads')
 
 exports.writeFile = (params) => {
   if (params.key && params.sample) {
