@@ -45,8 +45,11 @@ exports.findOne = (params) => {
   const claims = this.findMany(params)
   let claim = {}
 
-  if (params.claimId) {
-    claim = claims.find(claim => claim.id === params.claimId)
+  if (params.claimId || params.reference) {
+    claim = claims.find(claim =>
+      claim.id === params.claimId
+      || claim.reference === params.reference
+    )
 
     if (claim.notes) {
       claim.notes.sort((a, b) => {

@@ -3,6 +3,7 @@ const csv = require('csv-string')
 
 const claimModel = require('../../models/claims')
 const clawbackModel = require('../../models/clawbacks')
+const activityLogModel = require('../../models/activity')
 
 const Pagination = require('../../helpers/pagination')
 const claimHelper = require('../../helpers/claims')
@@ -12,6 +13,7 @@ const fundingHelper = require('../../helpers/funding')
 const providerHelper = require('../../helpers/providers')
 const schoolHelper = require('../../helpers/schools')
 const statusHelper = require('../../helpers/statuses')
+const utilHelper = require('../../helpers/utils')
 
 const claimDecorator = require('../../decorators/claims')
 const clawbackDecorator = require('../../decorators/clawbacks')
@@ -243,7 +245,8 @@ exports.show_claim_get = (req, res) => {
       changeClawback: `/support/claims/clawbacks/${req.params.claimId}/request`,
       completeClawback: `/support/claims/clawbacks/${req.params.claimId}/status/clawback_complete`,
       back: `/support/claims/clawbacks`,
-      cancel: `/support/claims/clawbacks`
+      cancel: `/support/claims/clawbacks`,
+      organisations: `/support/organisations`
     }
   })
 }
@@ -489,15 +492,28 @@ exports.send_claims_post = (req, res) => {;
     })
 
     // create a CSV file
-    clawbackModel.writeFile({
+    const filePath = clawbackModel.writeFile({
       clawbacks
     })
+
+    const filename = utilHelper.getFilename(filePath)
 
     // update claim status to 'clawback_in_progress'
     clawbackModel.updateMany({
       userId: req.session.passport.user.id,
       currentStatus: 'clawback_requested',
       newStatus: 'clawback_in_progress'
+    })
+
+    // log the process
+    activityLogModel.insertOne({
+      title: 'Claims sent to ESFA for clawback',
+      userId: req.session.passport.user.id,
+      documents: [{
+        title: 'Claims sent to ESFA',
+        filename,
+        href: `/support/claims/activity/downloads/${filename}`
+      }]
     })
 
     req.flash('success', 'Claims sent to ESFA')
@@ -600,9 +616,7 @@ exports.response_claims_post = (req, res) => {
     })
 
     req.session.data.clawbacks = clawbacks
-
-    // delete the file now it's not needed
-    fs.unlinkSync(req.file.path)
+    req.session.data.filePath = req.file.path
 
     res.redirect('/support/claims/clawbacks/response/review')
   }
@@ -640,6 +654,19 @@ exports.review_response_claims_post = (req, res) => {
         status: clawback.claim_status
       }
     })
+  })
+
+  const filename = utilHelper.getFilename(req.session.data.filePath)
+
+  // log the process
+  activityLogModel.insertOne({
+    title: 'ESFA clawback response uploaded',
+    userId: req.session.passport.user.id,
+    documents: [{
+      title: 'ESFA clawback response',
+      filename,
+      href: `/support/claims/activity/downloads/${filename}`
+    }]
   })
 
   // ,

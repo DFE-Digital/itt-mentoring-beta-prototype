@@ -3,6 +3,7 @@ const csv = require('csv-string')
 
 const claimModel = require('../../models/claims')
 const paymentModel = require('../../models/payments')
+const activityLogModel = require('../../models/activity')
 
 const Pagination = require('../../helpers/pagination')
 const claimHelper = require('../../helpers/claims')
@@ -11,6 +12,7 @@ const paymentHelper = require('../../helpers/payments')
 const providerHelper = require('../../helpers/providers')
 const schoolHelper = require('../../helpers/schools')
 const statusHelper = require('../../helpers/statuses')
+const utilHelper = require('../../helpers/utils')
 
 const claimDecorator = require('../../decorators/claims')
 const paymentDecorator = require('../../decorators/payments')
@@ -237,7 +239,8 @@ exports.show_claim_get = (req, res) => {
       approveClaim: `/support/claims/payments/${req.params.claimId}/status/paid`,
       rejectClaim: `/support/claims/payments/${req.params.claimId}/status/not_paid`,
       back: `/support/claims/payments`,
-      cancel: `/support/claims/payments`
+      cancel: `/support/claims/payments`,
+      organisations: `/support/organisations`
     }
   })
 }
@@ -342,15 +345,28 @@ exports.send_claims_post = (req, res) => {;
     })
 
     // create a CSV file
-    paymentModel.writeFile({
+    const filePath = paymentModel.writeFile({
       payments
     })
+
+    const filename = utilHelper.getFilename(filePath)
 
     // update claim status to 'payment_in_progress'
     paymentModel.updateMany({
       userId: req.session.passport.user.id,
       currentStatus: 'submitted',
       newStatus: 'payment_in_progress'
+    })
+
+    // log the process
+    activityLogModel.insertOne({
+      title: 'Claims sent to ESFA for payment',
+      userId: req.session.passport.user.id,
+      documents: [{
+        title: 'Claims sent to ESFA',
+        filename,
+        href: `/support/claims/activity/downloads/${filename}`
+      }]
     })
 
     req.flash('success', 'Claims sent to ESFA')
@@ -453,9 +469,7 @@ exports.response_claims_post = (req, res) => {
     })
 
     req.session.data.payments = payments
-
-    // delete the file now it's not needed
-    fs.unlinkSync(req.file.path)
+    req.session.data.filePath = req.file.path
 
     res.redirect('/support/claims/payments/response/review')
   }
@@ -500,6 +514,23 @@ exports.review_claims_post = (req, res) => {
       }
     })
   })
+
+  const filename = utilHelper.getFilename(req.session.data.filePath)
+
+  // log the process
+  activityLogModel.insertOne({
+    title: 'ESFA payment response uploaded',
+    userId: req.session.passport.user.id,
+    documents: [{
+      title: 'ESFA payment response',
+      filename,
+      href: `/support/claims/activity/downloads/${filename}`
+    }]
+  })
+
+  // clear data after use
+  delete req.session.data.payments
+  delete req.session.data.filePath
 
   req.flash('success', 'ESFA response uploaded')
   res.redirect('/support/claims/payments')

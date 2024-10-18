@@ -18,7 +18,7 @@
         text: "Last inspection date"
       },
       value: {
-        text: organisation.ofsted.lastInspectionDate | datetime('dd LLLL yyyy') if organisation.ofsted.lastInspectionDate else "Unknown",
+        text: organisation.ofsted.lastInspectionDate | govukDate if organisation.ofsted.lastInspectionDate else "Unknown",
         classes: "govuk-hint" if not organisation.ofsted.lastInspectionDate
       }
     }

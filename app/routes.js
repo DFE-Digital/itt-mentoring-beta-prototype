@@ -54,7 +54,7 @@ const multer = require('multer')
 // create a separate storage variable for each type of file
 const storage = multer.diskStorage({
   destination: (req, file, callback) => {
-    callback(null, path.join(__dirname, 'uploads'))
+    callback(null, path.join(__dirname, 'data/dist/downloads'))
   },
   filename:  (req, file, callback) => {
     const uniqueSuffix = new Date()
@@ -456,6 +456,10 @@ router.get('/support/claims/clawbacks/:claimId/status/:claimStatus', checkIsAuth
 router.post('/support/claims/clawbacks/:claimId/status/:claimStatus', checkIsAuthenticated, supportClawbackController.update_claim_status_post)
 
 /// ------------------------------------------------------------------------ ///
+
+router.get('/support/claims/activity/downloads/:fileName', checkIsAuthenticated, supportActivityController.download_activity_get)
+
+router.get('/support/claims/activity/:activityId', checkIsAuthenticated, supportActivityController.show_activity_get)
 
 router.get('/support/claims/activity', checkIsAuthenticated, supportActivityController.list_activity_get)
 

@@ -2,6 +2,8 @@ const fs = require('fs')
 const csv = require('csv-string')
 
 const claimModel = require('../../models/claims')
+const samplingModel = require('../../models/sampling')
+const activityLogModel = require('../../models/activity')
 
 const Pagination = require('../../helpers/pagination')
 const claimHelper = require('../../helpers/claims')
@@ -10,6 +12,7 @@ const providerHelper = require('../../helpers/providers')
 const samplingHelper = require('../../helpers/sampling')
 const schoolHelper = require('../../helpers/schools')
 const statusHelper = require('../../helpers/statuses')
+const utilHelper = require('../../helpers/utils')
 
 const claimDecorator = require('../../decorators/claims')
 const samplingDecorator = require('../../decorators/sampling')
@@ -237,7 +240,8 @@ exports.show_claim_get = (req, res) => {
       providerRejectClaim: `/support/claims/sampling/${req.params.claimId}/status/sampling_provider_not_approved`,
       requestClawback: `/support/claims/sampling/${req.params.claimId}/status/clawback_requested`,
       back: `/support/claims/sampling`,
-      cancel: `/support/claims/sampling`
+      cancel: `/support/claims/sampling`,
+      organisations: `/support/organisations`
     }
   })
 }
@@ -290,7 +294,7 @@ exports.update_claim_status_post = (req, res) => {
 }
 
 /// ------------------------------------------------------------------------ ///
-/// SEND CLAIMS FOR PAYMENT
+/// SEND CLAIMS FOR SAMPLING
 /// ------------------------------------------------------------------------ ///
 
 exports.upload_claims_get = (req, res) => {
@@ -376,7 +380,7 @@ exports.upload_claims_post = (req, res) => {
     claims.shift()
 
     // put the data into the session for use later
-    claims = samplingHelper.parseData(claims)
+    claims = samplingHelper.parseSamplingData(claims)
 
     // decorate payment data with claim ID
     claims = claims.map(item => {
@@ -401,7 +405,7 @@ exports.review_upload_claims_get = (req, res) => {
   claims = pagination.getData()
 
   const pageHeading = 'Are you sure you want to upload the sampling data?'
-  const insetText = 'Each accredited provider included in the sample data will receive an email instructing them to assure their partner schools’ claim.'
+  const warningText = 'Each accredited provider included in the sample data will receive an email instructing them to assure their partner schools’ claim.'
   const buttonLabel = 'Upload data'
 
   res.render('../views/support/claims/sampling/review', {
@@ -409,7 +413,7 @@ exports.review_upload_claims_get = (req, res) => {
     claimsCount,
     pagination,
     pageHeading,
-    insetText,
+    warningText,
     buttonLabel,
     actions: {
       save: `/support/claims/sampling/upload/review`,
@@ -423,22 +427,63 @@ exports.review_upload_claims_post = (req, res) => {
   const claims = req.session.data.claims
 
   claims.forEach(claim => {
+    claim.claim_status = 'sampling_in_progress'
+
     claimModel.updateOne({
       organisationId: claim.organisationId,
       claimId: claim.claimId,
       userId: req.session.passport.user.id,
       claim: {
-        status: claim.claim_status
+        status: claim.claim_status,
+        note: {
+          text: claim.sample_reason,
+          userId: req.session.passport.user.id,
+          section: 'sampling',
+          category: claim.claim_status
+        }
       }
     })
   })
+
+  // group the claims by provider and parse the data into separate files
+  const providerSamples = samplingHelper.parseProviderSampleData(claims)
+
+  // setup an array to store documents
+  const documents = []
+
+  for (const [key, value] of Object.entries(providerSamples)) {
+    const document = {}
+    document.title = value.name
+
+    // key is the provider slug, value is the data:
+    // provider name and slug and sample
+    const filePath = samplingModel.writeFile({
+      key,
+      sample: value.sample
+    })
+
+    document.filename = utilHelper.getFilename(filePath)
+    document.href = `/support/claims/activity/downloads/${document.filename}`
+
+    documents.push(document)
+  }
+
+  // log the process and link to the sample files
+  activityLogModel.insertOne({
+    title: 'Sampling data uploaded',
+    userId: req.session.passport.user.id,
+    documents
+  })
+
+  // clear the claims data after use
+  delete req.session.data.claims
 
   req.flash('success', 'Sampling data uploaded')
   res.redirect('/support/claims/sampling')
 }
 
 /// ------------------------------------------------------------------------ ///
-/// IMPORT CLAIM PAYMENT RESPONSE
+/// UPLOAD CLAIM SAMPLING PROVIDER RESPONSE
 /// ------------------------------------------------------------------------ ///
 
 exports.response_claims_get = (req, res) => {
@@ -524,7 +569,7 @@ exports.response_claims_post = (req, res) => {
     claims.shift()
 
     // put the data into the session for use later
-    claims = samplingHelper.parseData(claims)
+    claims = samplingHelper.parseProviderResponseData(claims)
 
     // decorate payment data with claim ID
     claims = claims.map(item => {
@@ -532,9 +577,7 @@ exports.response_claims_post = (req, res) => {
     })
 
     req.session.data.claims = claims
-
-    // delete the file now it's not needed
-    fs.unlinkSync(req.file.path)
+    req.session.data.filePath = req.file.path
 
     res.redirect('/support/claims/sampling/response/review')
   }
@@ -569,6 +612,11 @@ exports.review_response_claims_post = (req, res) => {
   const claims = req.session.data.claims
 
   claims.forEach(claim => {
+    claim.claim_status = 'paid'
+    if (!claim.assured || ['false','no'].includes(claim.assured)) {
+      claim.claim_status = 'sampling_provider_not_approved'
+    }
+
     claimModel.updateOne({
       organisationId: claim.organisationId,
       claimId: claim.claimId,
@@ -584,6 +632,23 @@ exports.review_response_claims_post = (req, res) => {
       }
     })
   })
+
+  const filename = utilHelper.getFilename(req.session.data.filePath)
+
+  // log the process
+  activityLogModel.insertOne({
+    title: 'Provider sampling response uploaded',
+    userId: req.session.passport.user.id,
+    documents: [{
+      title: 'Provider sampling response',
+      filename,
+      href: `/support/claims/activity/downloads/${filename}`
+    }]
+  })
+
+  // clear data after use
+  delete req.session.data.claims
+  delete req.session.data.filePath
 
   req.flash('success', 'Provider response uploaded')
   res.redirect('/support/claims/sampling')

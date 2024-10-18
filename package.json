@@ -12,6 +12,7 @@
     "start": "govuk-prototype-kit start"
   },
   "dependencies": {
+    "@x-govuk/govuk-prototype-filters": "^1.4.3",
     "connect-flash": "^0.1.1",
     "csv-string": "^4.1.1",
     "csv-writer": "^1.6.0",
