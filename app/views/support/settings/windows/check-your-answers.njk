@@ -22,7 +22,7 @@
 {% endblock %}
 
 {% block content %}
-
+{{data|dump|safe}}
   {% include "_includes/error-summary.njk" %}
 
   <div class="govuk-grid-row">
@@ -32,7 +32,61 @@
 
       <form action="{{ actions.save }}" method="post" accept-charset="utf-8" novalidate>
 
-
+        {{ govukSummaryList({
+          rows: [
+            {
+              key: {
+                text: "Date window opens"
+              },
+              value: {
+                text: window.opensAt | govukDate
+              },
+              actions: {
+                items: [
+                  {
+                    href: actions.change,
+                    text: "Change",
+                    visuallyHiddenText: "date window opens"
+                  }
+                ]
+              }
+            },
+            {
+              key: {
+                text: "Date window closes"
+              },
+              value: {
+                text: window.closesAt | govukDate
+              },
+              actions: {
+                items: [
+                  {
+                    href: actions.change,
+                    text: "Change",
+                    visuallyHiddenText: "date window closes"
+                  }
+                ]
+              }
+            },
+            {
+              key: {
+                text: "Academic year"
+              },
+              value: {
+                text: window.academicYear
+              },
+              actions: {
+                items: [
+                  {
+                    href: actions.change,
+                    text: "Change",
+                    visuallyHiddenText: "academic year"
+                  }
+                ]
+              }
+            }
+          ]
+        }) }}
 
         {{ govukButton({
           text: "Save claim window"

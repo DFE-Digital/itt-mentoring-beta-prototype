@@ -27,6 +27,103 @@
 
       <form action="{{ actions.save }}" method="post" accept-charset="utf-8" novalidate>
 
+        {{ govukDateInput({
+          id: "date-window-opens",
+          fieldset: {
+            legend: {
+              text: "Date window opens",
+              isPageHeading: false,
+              classes: "govuk-fieldset__legend--s"
+            }
+          },
+          hint: {
+            text: "For example, 1 8 2023"
+          },
+          items: [
+            {
+              name: "window[opensDate]",
+              label: "Day",
+              value: window.opensDate[0],
+              classes: "govuk-input--width-2" + (" govuk-input--error" if errors | getErrorMessage("date-window-opens"))
+            },
+            {
+              name: "window[opensDate]",
+              label: "Month",
+              value: window.opensDate[1],
+              classes: "govuk-input--width-2" + (" govuk-input--error" if errors | getErrorMessage("date-window-opens"))
+            },
+            {
+              name: "window[opensDate]",
+              label: "Year",
+              value: window.opensDate[2],
+              classes: "govuk-input--width-4" + (" govuk-input--error" if errors | getErrorMessage("date-window-opens"))
+            }
+          ],
+          errorMessage: errors | getErrorMessage("date-window-opens")
+        }) }}
+
+        {{ govukDateInput({
+          id: "date-window-closes",
+          fieldset: {
+            legend: {
+              text: "Date window closes",
+              isPageHeading: false,
+              classes: "govuk-fieldset__legend--s"
+            }
+          },
+          hint: {
+            text: "For example, 1 9 2024"
+          },
+          items: [
+            {
+              name: "window[closesDate]",
+              label: "Day",
+              value: window.closesDate[0],
+              classes: "govuk-input--width-2" + (" govuk-input--error" if errors | getErrorMessage("date-window-closes"))
+            },
+            {
+              name: "window[closesDate]",
+              label: "Month",
+              value: window.closesDate[1],
+              classes: "govuk-input--width-2" + (" govuk-input--error" if errors | getErrorMessage("date-window-closes"))
+            },
+            {
+              name: "window[closesDate]",
+              label: "Year",
+              value: window.closesDate[2],
+              classes: "govuk-input--width-4" + (" govuk-input--error" if errors | getErrorMessage("date-window-closes"))
+            }
+          ],
+          errorMessage: errors | getErrorMessage("date-window-closes")
+        }) }}
+
+        {{ govukRadios({
+          name: "window[academicYear]",
+          fieldset: {
+            legend: {
+              text: "Academic year",
+              isPageHeading: false,
+              classes: "govuk-fieldset__legend--s"
+            }
+          },
+          value: window.academicYear,
+          items: [
+            {
+              value: "2025_2026",
+              text: "2025 to 2026"
+            },
+            {
+              value: "2024_2025",
+              text: "2024 to 2025"
+            },
+            {
+              value: "2023_2024",
+              text: "2023 to 2024"
+            }
+          ],
+          errorMessage: errors | getErrorMessage("academic-year")
+        }) }}
+
         {{ govukButton({
           text: "Continue"
         }) }}
