@@ -555,13 +555,18 @@ router.post('/support/settings/windows/new', checkIsAuthenticated, supportSettin
 router.get('/support/settings/windows/new/check', checkIsAuthenticated, supportSettingController.new_claim_window_check_get)
 router.post('/support/settings/windows/new/check', checkIsAuthenticated, supportSettingController.new_claim_window_check_post)
 
-router.get('/support/settings/windows/:windowId', checkIsAuthenticated, supportSettingController.edit_claim_window_get)
-router.post('/support/settings/windows/:windowId', checkIsAuthenticated, supportSettingController.edit_claim_window_post)
+router.get('/support/settings/windows/:windowId/edit', checkIsAuthenticated, supportSettingController.edit_claim_window_get)
+router.post('/support/settings/windows/:windowId/edit', checkIsAuthenticated, supportSettingController.edit_claim_window_post)
 
-router.get('/support/settings/windows/:windowId/check', checkIsAuthenticated, supportSettingController.edit_claim_window_check_get)
-router.post('/support/settings/windows/:windowId/check', checkIsAuthenticated, supportSettingController.edit_claim_window_check_post)
+router.get('/support/settings/windows/:windowId/edit/check', checkIsAuthenticated, supportSettingController.edit_claim_window_check_get)
+router.post('/support/settings/windows/:windowId/edit/check', checkIsAuthenticated, supportSettingController.edit_claim_window_check_post)
 
-router.get('/support/settings/windows', checkIsAuthenticated, supportSettingController.show_claim_windows_get)
+router.get('/support/settings/windows/:windowId/delete', checkIsAuthenticated, supportSettingController.delete_claim_window_get)
+router.post('/support/settings/windows/:windowId/delete', checkIsAuthenticated, supportSettingController.delete_claim_window_post)
+
+router.get('/support/settings/windows/:windowId', checkIsAuthenticated, supportSettingController.show_claim_window_get)
+
+router.get('/support/settings/windows', checkIsAuthenticated, supportSettingController.list_claim_windows_get)
 
 router.get('/support/settings', checkIsAuthenticated, supportSettingController.show_settings_get)
 
