@@ -99,7 +99,19 @@ exports.updateOne = (params) => {
 }
 
 exports.deleteOne = (params) => {
+  const raw = fs.readFileSync(directoryPath + '/claim-windows.json')
+  const windows = JSON.parse(raw)
 
+  if (params.windowId) {
+    const index = windows.findIndex((item) => item.id === params.windowId)
+
+    // if the item is found, update the object
+    if (index !== -1) {
+      windows.splice(index, 1)
+    } else {
+      console.log("Item with the specified ID not found")
+    }
+  }
 
   // ==================================================
   // write the claim windows back to disk
