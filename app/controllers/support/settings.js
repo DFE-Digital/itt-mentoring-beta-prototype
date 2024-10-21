@@ -242,8 +242,12 @@ exports.edit_claim_window_post = (req, res) => {
 }
 
 exports.edit_claim_window_check_get = (req, res) => {
+  const currentWindow = claimWindowModel.findOne({
+    windowId: req.params.windowId
+  })
 
   res.render('../views/support/settings/windows/check-your-answers', {
+    currentWindow,
     window: req.session.data.window,
     actions: {
       save: `/support/settings/windows/${req.params.windowId}/edit/check`,

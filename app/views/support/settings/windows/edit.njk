@@ -3,7 +3,12 @@
 {% set primaryNavId = "settings" %}
 
 {% set title = "Window details" %}
-{% set caption = "Add claim window" %}
+
+{% if currentWindow %}
+  {% set caption = "Claim window - " + currentWindow.opensAt | govukDate + " to " + currentWindow.closesAt | govukDate %}
+{% else %}
+  {% set caption = "Add claim window" %}
+{% endif %}
 
 {% block pageTitle %}
   {{ "Error: " if errors.length }}{{ title + " - " if title }}{{ caption + " - " if caption }}{{ serviceName }} - GOV.UK

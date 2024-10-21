@@ -4,8 +4,8 @@
 
 {% set title = "Check your answers" %}
 
-{% if referrer == "change" %}
-  {% set caption = "XYZ" %}
+{% if currentWindow %}
+  {% set caption = "Claim window - " + currentWindow.opensAt | govukDate + " to " + currentWindow.closesAt | govukDate %}
 {% else %}
   {% set caption = "Add claim window" %}
 {% endif %}
@@ -22,7 +22,7 @@
 {% endblock %}
 
 {% block content %}
-{{data|dump|safe}}
+
   {% include "_includes/error-summary.njk" %}
 
   <div class="govuk-grid-row">
@@ -73,7 +73,7 @@
                 text: "Academic year"
               },
               value: {
-                text: window.academicYear
+                text: window.academicYear | replace("_", " to ")
               },
               actions: {
                 items: [
