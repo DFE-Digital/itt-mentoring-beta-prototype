@@ -1,7 +1,7 @@
 const settingModel = require('../models/prototype-settings')
 
 exports.settings_form_get = (req, res) => {
-  const settings = require('../data/dist/settings.json')
+  const settings = require('../data/dist/prototype-settings.json')
 
   res.render('../views/settings/index', {
     settings,
@@ -29,7 +29,7 @@ exports.settings_form_post = (req, res) => {
       errors
     })
   } else {
-    req.flash('success', 'Settings updated')
+    req.flash('success', 'Prototype settings updated')
     res.redirect('/prototype-settings')
   }
 }
