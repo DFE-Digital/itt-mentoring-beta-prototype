@@ -8,7 +8,7 @@ const userModel = require('../../models/users')
 const Pagination = require('../../helpers/pagination')
 const utilsHelper = require('../../helpers/utils')
 
-const settings = require('../../data/dist/settings')
+const settings = require('../../data/dist/prototype-settings')
 
 exports.list_organisations_get = (req, res) => {
   // Clean out data from add organisation flow if present

@@ -4,7 +4,7 @@ const activityLogModel = require('../../models/activity')
 
 const Pagination = require('../../helpers/pagination')
 
-const settings = require('../../data/dist/settings')
+const settings = require('../../data/dist/prototype-settings')
 
 exports.list_activity_get = (req, res) => {
   let activity = activityLogModel.findMany()

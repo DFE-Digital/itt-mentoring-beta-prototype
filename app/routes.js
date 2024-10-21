@@ -6,7 +6,7 @@
 const govukPrototypeKit = require('govuk-prototype-kit')
 const router = govukPrototypeKit.requests.setupRouter()
 
-const settings = require('./data/dist/settings')
+const settings = require('./data/dist/prototype-settings')
 
 /// ------------------------------------------------------------------------ ///
 /// Flash messaging
@@ -85,7 +85,7 @@ const errorController = require('./controllers/errors')
 const feedbackController = require('./controllers/feedback')
 const mentorController = require('./controllers/mentors')
 const organisationController = require('./controllers/organisations')
-const settingController = require('./controllers/settings')
+const prototypeSettingController = require('./controllers/prototype-settings')
 const userController = require('./controllers/users')
 
 const supportOrganisationController = require('./controllers/support/organisations')
@@ -99,6 +99,7 @@ const supportPaymentController = require('./controllers/support/payments')
 const supportSamplingController = require('./controllers/support/sampling')
 const supportClawbackController = require('./controllers/support/clawbacks')
 const supportActivityController = require('./controllers/support/activity')
+const supportSettingController = require('./controllers/support/settings')
 
 // Authentication middleware
 const checkIsAuthenticated = (req, res, next) => {
@@ -545,14 +546,20 @@ router.get('/support/organisations/:organisationId', checkIsAuthenticated, suppo
 router.get('/support/organisations', checkIsAuthenticated, supportOrganisationController.list_organisations_get)
 
 /// ------------------------------------------------------------------------ ///
+/// SERVICE SETTINGS
+/// ------------------------------------------------------------------------ ///
+
+router.get('/support/settings', checkIsAuthenticated, supportSettingController.show_settings_get)
+
+/// ------------------------------------------------------------------------ ///
 /// GENERAL ROUTES
 /// ------------------------------------------------------------------------ ///
 
-router.get('/settings', settingController.settings_form_get)
-router.post('/settings', settingController.settings_form_post)
+router.get('/prototype-settings', prototypeSettingController.settings_form_get)
+router.post('/prototype-settings', prototypeSettingController.settings_form_post)
 
-router.get('/settings/reset-data', settingController.reset_data_get)
-router.post('/settings/reset-data', settingController.reset_data_post)
+router.get('/prototype-settings/reset-data', prototypeSettingController.reset_data_get)
+router.post('/prototype-settings/reset-data', prototypeSettingController.reset_data_post)
 
 router.get('/feedback', feedbackController.feedback_form_get)
 router.post('/feedback', feedbackController.feedback_form_post)

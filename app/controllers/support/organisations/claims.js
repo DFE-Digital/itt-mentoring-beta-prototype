@@ -9,7 +9,7 @@ const mentorHelper = require('../../../helpers/mentors')
 
 const claimDecorator = require('../../../decorators/claims')
 
-const settings = require('../../../data/dist/settings')
+const settings = require('../../../data/dist/prototype-settings')
 
 /// ------------------------------------------------------------------------ ///
 /// LIST CLAIM

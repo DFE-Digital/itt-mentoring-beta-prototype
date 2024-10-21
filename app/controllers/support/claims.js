@@ -12,7 +12,7 @@ const statusHelper = require('../../helpers/statuses')
 
 const claimDecorator = require('../../decorators/claims')
 
-const settings = require('../../data/dist/settings')
+const settings = require('../../data/dist/prototype-settings')
 
 /// ------------------------------------------------------------------------ ///
 /// LIST CLAIMS

@@ -7,7 +7,7 @@ const arrayHelper = require('../../../helpers/arrays')
 const dateHelper = require('../../../helpers/dates')
 const validationHelper = require('../../../helpers/validators')
 
-const settings = require('../../../data/dist/settings')
+const settings = require('../../../data/dist/prototype-settings')
 
 /// ------------------------------------------------------------------------ ///
 /// LIST MENTOR
