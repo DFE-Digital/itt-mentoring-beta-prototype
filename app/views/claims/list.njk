@@ -52,31 +52,20 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
 
-      <h2 class="govuk-heading-m">
-        <span class="govuk-caption-m">Academic year</span>
-        2025 to 2026
-      </h2>
+      {% for year in years %}
+        <h2 class="govuk-heading-m">
+          <span class="govuk-caption-m">Academic year</span>
+          {{ year.name }}
+        </h2>
 
-      {% include "_includes/claims/list.njk" %}
-
-      <h2 class="govuk-heading-m">
-        <span class="govuk-caption-m">Academic year</span>
-        2024 to 2025
-      </h2>
-
-      <p class="govuk-body">There are no claims for  {{ organisation.name if organisation.name else "your organisation" }} in academic year 2024 to 2025.</p>
-
-      <h2 class="govuk-heading-m">
-        <span class="govuk-caption-m">Academic year</span>
-        2023 to 2024
-      </h2>
-
-      {% if claims.length %}
-        {% include "_includes/claims/list.njk" %}
-        {% include "_includes/pagination.njk" %}
-      {% else %}
-        <p class="govuk-body">There are no claims for {{ organisation.name if organisation.name else "your organisation" }} in academic year 2023 to 2024.</p>
-      {% endif %}
+        {% if year.claims.length %}
+          {% set claims = year.claims %}
+          {% include "_includes/claims/list.njk" %}
+          {# {% include "_includes/pagination.njk" %} #}
+        {% else %}
+          <p class="govuk-body">There are no claims for {{ organisation.name if organisation.name else "your organisation" }} in academic year {{ year.name }}.</p>
+        {% endif %}
+      {% endfor %}
 
     </div>
   </div>

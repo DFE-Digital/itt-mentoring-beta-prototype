@@ -4,6 +4,7 @@ const organisationModel = require('../models/organisations')
 const providerModel = require('../models/providers')
 
 const Pagination = require('../helpers/pagination')
+const academicYearHelper = require('../helpers/academic-years')
 const claimHelper = require('../helpers/claims')
 const mentorHelper = require('../helpers/mentors')
 
@@ -16,15 +17,23 @@ const settings = require('../data/dist/prototype-settings')
 /// ------------------------------------------------------------------------ ///
 
 exports.claim_list = (req, res) => {
-  const organisation = organisationModel.findOne({ organisationId: req.params.organisationId })
-  let claims = claimModel.findMany({ organisationId: req.params.organisationId })
-  const mentors = mentorModel.findMany({ organisationId: req.params.organisationId })
-
   delete req.session.data.claim
   delete req.session.data.mentor
   delete req.session.data.mentorChoices
   delete req.session.data.position
   delete req.session.data.provider
+
+  const organisation = organisationModel.findOne({ organisationId: req.params.organisationId })
+  const mentors = mentorModel.findMany({ organisationId: req.params.organisationId })
+
+  const academicYears = academicYearHelper.getAcademicYears()
+
+  // sort academic years newest to oldest
+  academicYears.sort((a, b) => {
+    return b.code.localeCompare(a.code)
+  })
+
+  let claims = claimModel.findMany({ organisationId: req.params.organisationId })
 
   claims.sort((a, b) => {
     return new Date(b.submittedAt) - new Date(a.submittedAt)
@@ -32,14 +41,33 @@ exports.claim_list = (req, res) => {
       || new Date(b.createdAt) - new Date(a.createdAt)
   })
 
-  const pagination = new Pagination(claims, req.query.page, settings.pageSize)
-  claims = pagination.getData()
+  // decorate the claim with useful stuff
+  if (claims.length) {
+    claims = claims.map(claim => {
+      return claim = claimDecorator.decorate(claim)
+    })
+  }
+
+  const groupedClaims = []
+
+  // group the claims by academic years
+  academicYears.forEach((academicYear, i) => {
+    const group = {}
+    group.id = academicYear.id
+    group.code = academicYear.code
+    group.name = academicYear.name
+    group.claims = claims.filter(claim => claim.academicYear === academicYear.code)
+    groupedClaims.push(group)
+  })
+
+  // const pagination = new Pagination(claims, req.query.page, settings.pageSize)
+  // claims = pagination.getData()
 
   res.render('../views/claims/list', {
     organisation,
-    claims,
+    years: groupedClaims,
     mentors,
-    pagination,
+    // pagination,
     actions: {
       new: `/organisations/${req.params.organisationId}/claims/new`,
       view: `/organisations/${req.params.organisationId}/claims`,
