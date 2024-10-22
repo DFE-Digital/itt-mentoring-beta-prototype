@@ -1,5 +1,6 @@
 const claimWindowModel = require('../../models/claim-windows')
 
+const academicYearHelper = require('../../helpers/academic-years')
 const arrayHelper = require('../../helpers/arrays')
 const dateHelper = require('../../helpers/dates')
 const validationHelper = require('../../helpers/validators')
@@ -54,9 +55,11 @@ exports.show_claim_window_get = (req, res) => {
 /// ------------------------------------------------------------------------ ///
 
 exports.new_claim_window_get = (req, res) => {
+  const academicYearOptions = academicYearHelper.getAcademicYearOptions()
 
   res.render('../views/support/settings/windows/edit', {
     window: req.session.data.window,
+    academicYearOptions,
     actions: {
       save: '/support/settings/windows/new',
       back: '/support/settings/windows',
@@ -66,6 +69,8 @@ exports.new_claim_window_get = (req, res) => {
 }
 
 exports.new_claim_window_post = (req, res) => {
+  const academicYearOptions = academicYearHelper.getAcademicYearOptions(req.session.data.window.academicYear)
+
   req.session.data.window.opensAt = arrayHelper.removeEmpty(req.session.data.window.opensDate)
 
   if (req.session.data.window.opensAt) {
@@ -107,6 +112,7 @@ exports.new_claim_window_post = (req, res) => {
   if (errors.length) {
     res.render('../views/support/settings/windows/edit', {
       window: req.session.data.window,
+      academicYearOptions,
       actions: {
         save: '/support/settings/windows/new',
         back: '/support/settings/windows/new',
@@ -165,9 +171,12 @@ exports.edit_claim_window_get = (req, res) => {
   window.opensDate = dateHelper.dateToArray(new Date(window.opensAt))
   window.closesDate = dateHelper.dateToArray(new Date(window.closesAt))
 
+  const academicYearOptions = academicYearHelper.getAcademicYearOptions(window.academicYear)
+
   res.render('../views/support/settings/windows/edit', {
     currentWindow,
     window,
+    academicYearOptions,
     actions: {
       save: `/support/settings/windows/${req.params.windowId}/edit`,
       back: '/support/settings/windows',
@@ -180,6 +189,8 @@ exports.edit_claim_window_post = (req, res) => {
   const currentWindow = claimWindowModel.findOne({
     windowId: req.params.windowId
   })
+
+  const academicYearOptions = academicYearHelper.getAcademicYearOptions(req.session.data.window.academicYear)
 
   req.session.data.window.opensAt = arrayHelper.removeEmpty(req.session.data.window.opensDate)
 
@@ -227,6 +238,7 @@ exports.edit_claim_window_post = (req, res) => {
     res.render('../views/support/settings/windows/edit', {
       currentWindow,
       window: req.session.data.window,
+      academicYearOptions,
       actions: {
         save: `/support/settings/windows/${req.params.windowId}/edit`,
         back: '/support/settings/windows',
@@ -281,8 +293,12 @@ exports.delete_claim_window_get = (req, res) => {
     windowId: req.params.windowId
   })
 
+  // if hasClaims we don't want to allow users to delete the window
+  let hasClaims = false
+
   res.render('../views/support/settings/windows/delete', {
     window,
+    hasClaims,
     actions: {
       save: `/support/settings/windows/${req.params.windowId}/delete`,
       back: `/support/settings/windows/${req.params.windowId}`,
