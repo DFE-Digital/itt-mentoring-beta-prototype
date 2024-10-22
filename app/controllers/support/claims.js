@@ -128,7 +128,7 @@ exports.list_claims_get = (req, res) => {
   // Get list of all claims
   let claims = claimModel.findMany({})
 
-  // add details of school to each claim
+  // decorate the claim with useful stuff
   if (claims.length) {
     claims = claims.map(claim => {
       return claim = claimDecorator.decorate(claim)
