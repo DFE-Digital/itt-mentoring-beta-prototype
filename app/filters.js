@@ -6,6 +6,7 @@ const marked = require('marked')
 const { gfmHeadingId } = require('marked-gfm-heading-id')
 const numeral = require('numeral')
 
+const academicYearHelper = require('./helpers/academic-years')
 const claimHelper = require('./helpers/claims')
 const fundingHelper = require('./helpers/funding')
 const giasHelper = require('./helpers/gias')
@@ -188,3 +189,8 @@ Funding utility functions
 addFilter('getFundingRate', fundingHelper.getFundingRate)
 
 addFilter('getFundingAreaLabel', fundingHelper.getFundingAreaLabel)
+
+/* ------------------------------------------------------------------
+Academic year utility functions
+------------------------------------------------------------------ */
+addFilter('getAcademicYearLabel', academicYearHelper.getAcademicYearLabel)
