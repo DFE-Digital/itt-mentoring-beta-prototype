@@ -162,6 +162,13 @@
 <script type="module" >
   import { CheckboxFilter } from '/public/javascripts/components/checkbox-filter.js'
 
+  const checkboxFilterStatus = new CheckboxFilter({
+    container: $('#filter-status'),
+    textBox: {
+      label: 'Search for status'
+    }
+  })
+
   const checkboxFilterSchool = new CheckboxFilter({
     container: $('#filter-school'),
     textBox: {
@@ -176,6 +183,7 @@
     }
   })
 
+  checkboxFilterStatus.init()
   checkboxFilterSchool.init()
   checkboxFilterProvider.init()
 </script>
