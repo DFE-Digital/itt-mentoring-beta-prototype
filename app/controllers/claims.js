@@ -29,7 +29,7 @@ exports.claim_list = (req, res) => {
 
   const currentClaimWindow = claimWindowHelper.getCurrentClaimWindow()
 
-  const academicYears = academicYearHelper.getAcademicYears()
+  let academicYears = academicYearHelper.getAcademicYears()
 
   // sort academic years newest to oldest
   academicYears.sort((a, b) => {
@@ -51,7 +51,7 @@ exports.claim_list = (req, res) => {
     })
   }
 
-  const groupedClaims = []
+  let groupedClaims = []
 
   // group the claims by academic years
   academicYears.forEach((academicYear, i) => {
@@ -62,6 +62,13 @@ exports.claim_list = (req, res) => {
     group.claims = claims.filter(claim => claim.academicYear === academicYear.code)
     groupedClaims.push(group)
   })
+
+  // don't show academic years for schools that couldn't claim as
+  // they weren't part of private beta
+  if (!organisation.privateBetaSchool) {
+    academicYears = academicYears.filter(year => year.code !== '2023_2024')
+    groupedClaims = groupedClaims.filter(group => group.code !== '2023_2024')
+  }
 
   // const pagination = new Pagination(claims, req.query.page, settings.pageSize)
   // claims = pagination.getData()
