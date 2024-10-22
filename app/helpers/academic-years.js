@@ -17,6 +17,10 @@ exports.getAcademicYear = (date) => {
   }
 }
 
+exports.getAcademicYears = () => {
+  return academicYears.filter((academicYear) => academicYear.active === true)
+}
+
 exports.getAcademicYearOptions = (selectedItem) => {
   const items = []
 
