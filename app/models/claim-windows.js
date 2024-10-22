@@ -28,11 +28,14 @@ exports.insertOne = (params) => {
 
   if (params.window) {
     const window = {}
+    const opensAt = new Date(params.window.opensAt)
+    // opensAt.setUTCHours(0, 0, 0, 0)
+    const closesAt = new Date(params.window.closesAt)
+    closesAt.setUTCHours(23, 59, 59, 999)
 
     window.id = uuid()
-
-    window.opensAt = params.window.opensAt
-    window.closesAt = params.window.closesAt
+    window.opensAt = opensAt
+    window.closesAt = closesAt
     window.academicYear = params.window.academicYear
 
     window.createdAt = new Date()
@@ -62,12 +65,13 @@ exports.updateOne = (params) => {
   if (params.window) {
     const index = windows.findIndex((item) => item.id === params.windowId)
     const window = {}
-    // let window = this.findOne({
-    //   windowId: params.windowId
-    // })
+    const opensAt = new Date(params.window.opensAt)
+    // opensAt.setUTCHours(0, 0, 0, 0)
+    const closesAt = new Date(params.window.closesAt)
+    closesAt.setUTCHours(23, 59, 59, 999)
 
-    window.opensAt = params.window.opensAt
-    window.closesAt = params.window.closesAt
+    window.opensAt = opensAt
+    window.closesAt = closesAt
     window.academicYear = params.window.academicYear
 
     window.updateAt = new Date()
@@ -80,9 +84,6 @@ exports.updateOne = (params) => {
       console.log("Item with the specified ID not found")
     }
   }
-
-  console.log(windows);
-
 
   // ==================================================
   // write the claim windows back to disk
