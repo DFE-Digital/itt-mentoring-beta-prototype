@@ -3,7 +3,7 @@
 {% set primaryNavId = "organisations" %}
 
 {% set title = "Are you sure you want to remove " + organisation.conditionsAgreedBy | getUserName + "’s agreement to the grant conditions?" %}
-{% set caption = "Grant conditions - " + organisation.name %}
+{% set caption = "Remove agreement - " + organisation.name %}
 
 {% block pageTitle %}
   {{ "Error: " if errors.length }}{{ title + " - " if title }}{{ caption + " - " if caption }}{{ serviceName }} - GOV.UK

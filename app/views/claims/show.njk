@@ -3,6 +3,7 @@
 {% set primaryNavId = "claims" %}
 
 {% set title = "Claim " + claim.reference | upper %}
+{% set caption = "Claim" %}
 
 {% block pageTitle %}
   {{ "Error: " if errors.length }}{{ title + " - " if title }}{{ caption + " - " if caption }}{{ serviceName }} - GOV.UK
