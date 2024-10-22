@@ -3,14 +3,15 @@ const mentorModel = require('../models/mentors')
 const organisationModel = require('../models/organisations')
 const providerModel = require('../models/providers')
 
-const Pagination = require('../helpers/pagination')
+// const Pagination = require('../helpers/pagination')
 const academicYearHelper = require('../helpers/academic-years')
+const claimWindowHelper = require('../helpers/claim-windows')
 const claimHelper = require('../helpers/claims')
 const mentorHelper = require('../helpers/mentors')
 
 const claimDecorator = require('../decorators/claims')
 
-const settings = require('../data/dist/prototype-settings')
+// const settings = require('../data/dist/prototype-settings')
 
 /// ------------------------------------------------------------------------ ///
 /// LIST CLAIM
@@ -25,6 +26,8 @@ exports.claim_list = (req, res) => {
 
   const organisation = organisationModel.findOne({ organisationId: req.params.organisationId })
   const mentors = mentorModel.findMany({ organisationId: req.params.organisationId })
+
+  const currentClaimWindow = claimWindowHelper.getCurrentClaimWindow()
 
   const academicYears = academicYearHelper.getAcademicYears()
 
@@ -68,6 +71,7 @@ exports.claim_list = (req, res) => {
     years: groupedClaims,
     mentors,
     // pagination,
+    currentClaimWindow,
     actions: {
       new: `/organisations/${req.params.organisationId}/claims/new`,
       view: `/organisations/${req.params.organisationId}/claims`,
