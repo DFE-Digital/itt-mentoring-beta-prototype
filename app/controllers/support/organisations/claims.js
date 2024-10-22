@@ -3,27 +3,39 @@ const mentorModel = require('../../../models/mentors')
 const organisationModel = require('../../../models/organisations')
 const providerModel = require('../../../models/providers')
 
-const Pagination = require('../../../helpers/pagination')
+// const Pagination = require('../../../helpers/pagination')
+const academicYearHelper = require('../../../helpers/academic-years')
+const claimWindowHelper = require('../../../helpers/claim-windows')
 const claimHelper = require('../../../helpers/claims')
 const mentorHelper = require('../../../helpers/mentors')
 
 const claimDecorator = require('../../../decorators/claims')
 
-const settings = require('../../../data/dist/prototype-settings')
+// const settings = require('../../../data/dist/prototype-settings')
 
 /// ------------------------------------------------------------------------ ///
 /// LIST CLAIM
 /// ------------------------------------------------------------------------ ///
 
 exports.claim_list = (req, res) => {
-  const organisation = organisationModel.findOne({ organisationId: req.params.organisationId })
-  let claims = claimModel.findMany({ organisationId: req.params.organisationId })
-  const mentors = mentorModel.findMany({ organisationId: req.params.organisationId })
-
   delete req.session.data.claim
   delete req.session.data.mentor
   delete req.session.data.mentorChoices
   delete req.session.data.position
+
+  const organisation = organisationModel.findOne({ organisationId: req.params.organisationId })
+  const mentors = mentorModel.findMany({ organisationId: req.params.organisationId })
+
+  const currentClaimWindow = claimWindowHelper.getCurrentClaimWindow()
+
+  let academicYears = academicYearHelper.getAcademicYears()
+
+  // sort academic years newest to oldest
+  academicYears.sort((a, b) => {
+    return b.code.localeCompare(a.code)
+  })
+
+  let claims = claimModel.findMany({ organisationId: req.params.organisationId })
 
   claims.sort((a, b) => {
     return new Date(b.submittedAt) - new Date(a.submittedAt)
@@ -31,14 +43,41 @@ exports.claim_list = (req, res) => {
       || new Date(b.createdAt) - new Date(a.createdAt)
   })
 
-  const pagination = new Pagination(claims, req.query.page, settings.pageSize)
-  claims = pagination.getData()
+  // decorate the claim with useful stuff
+  if (claims.length) {
+    claims = claims.map(claim => {
+      return claim = claimDecorator.decorate(claim)
+    })
+  }
+
+  let groupedClaims = []
+
+  // group the claims by academic years
+  academicYears.forEach((academicYear, i) => {
+    const group = {}
+    group.id = academicYear.id
+    group.code = academicYear.code
+    group.name = academicYear.name
+    group.claims = claims.filter(claim => claim.academicYear === academicYear.code)
+    groupedClaims.push(group)
+  })
+
+  // don't show academic years for schools that couldn't claim as
+  // they weren't part of private beta
+  if (!organisation.privateBetaSchool) {
+    academicYears = academicYears.filter(year => year.code !== '2023_2024')
+    groupedClaims = groupedClaims.filter(group => group.code !== '2023_2024')
+  }
+
+  // const pagination = new Pagination(claims, req.query.page, settings.pageSize)
+  // claims = pagination.getData()
 
   res.render('../views/support/organisations/claims/list', {
     organisation,
-    claims,
+    years: groupedClaims,
     mentors,
-    pagination,
+    // pagination,
+    currentClaimWindow,
     actions: {
       new: `/support/organisations/${req.params.organisationId}/claims/new`,
       view: `/support/organisations/${req.params.organisationId}/claims`,
