@@ -21,6 +21,17 @@ exports.getAcademicYears = () => {
   return academicYears.filter((academicYear) => academicYear.active === true)
 }
 
+exports.getCurrentAcademicYear = () => {
+  const academicYears = this.getAcademicYears()
+
+  // sort academic years newest to oldest
+  academicYears.sort((a, b) => {
+    return b.code.localeCompare(a.code)
+  })
+
+  return academicYears[0]
+}
+
 exports.getAcademicYearOptions = (selectedItem) => {
   const items = []
 
