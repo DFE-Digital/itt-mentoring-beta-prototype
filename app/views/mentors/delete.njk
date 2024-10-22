@@ -3,11 +3,12 @@
 {% set primaryNavId = "mentors" %}
 
 {% if hasClaims %}
-  {% set title = "You cannot remove this mentor" %}
+  {% set title = "You cannot remove " + mentor.firstName + " " + mentor.lastName + " as a mentor" %}
 {% else %}
-  {% set title = "Are you sure you want to remove this mentor?" %}
+  {% set title = "Are you sure you want to remove " + mentor.firstName + " " + mentor.lastName + " as a mentor?" %}
 {% endif %}
-{% set caption = mentor.firstName + " " + mentor.lastName %}
+
+{% set caption = "Remove mentor" %}
 
 {% block pageTitle %}
   {{ "Error: " if errors.length }}{{ title + " - " if title }}{{ caption + " - " if caption }}{{ serviceName }} - GOV.UK
@@ -33,9 +34,9 @@
 
         {% if hasClaims %}
 
-          <p class="govuk-body">You cannot remove this mentor because they are included in an active claim.</p>
+          <p class="govuk-body">You cannot remove {{ mentor.firstName + " " + mentor.lastName }} as a mentor because they are included in an active claim.</p>
 
-          <p class="govuk-body">You will be able to remove the mentor once we have processed the claim.</p>
+          <p class="govuk-body">You will be able to remove them once we have processed the claim.</p>
 
         {% else %}
 
