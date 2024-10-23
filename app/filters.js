@@ -194,3 +194,5 @@ addFilter('getFundingAreaLabel', fundingHelper.getFundingAreaLabel)
 Academic year utility functions
 ------------------------------------------------------------------ */
 addFilter('getAcademicYearLabel', academicYearHelper.getAcademicYearLabel)
+
+addFilter('isCurrentAcademicYear', academicYearHelper.isCurrentAcademicYear)

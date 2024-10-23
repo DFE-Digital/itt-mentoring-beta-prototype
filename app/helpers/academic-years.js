@@ -66,3 +66,20 @@ exports.getAcademicYearLabel = (code) => {
 
   return label
 }
+
+exports.isCurrentAcademicYear = (code) => {
+  const currentDate = new Date()
+
+  for (let window of claimWindows) {
+    const opensAt = new Date(window.opensAt);
+    const closesAt = new Date(window.closesAt);
+
+    // Check if current date is between opensAt and closesAt and
+    // if academicYear matches target academic year
+    if (currentDate >= opensAt && currentDate <= closesAt && window.academicYear === code) {
+      return true
+    }
+  }
+
+  return false
+}
