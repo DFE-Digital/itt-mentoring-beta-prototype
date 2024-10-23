@@ -7,6 +7,7 @@ const { gfmHeadingId } = require('marked-gfm-heading-id')
 const numeral = require('numeral')
 
 const academicYearHelper = require('./helpers/academic-years')
+const claimWindowHelper = require('./helpers/claim-windows')
 const claimHelper = require('./helpers/claims')
 const fundingHelper = require('./helpers/funding')
 const giasHelper = require('./helpers/gias')
@@ -196,3 +197,8 @@ Academic year utility functions
 addFilter('getAcademicYearLabel', academicYearHelper.getAcademicYearLabel)
 
 addFilter('isCurrentAcademicYear', academicYearHelper.isCurrentAcademicYear)
+
+/* ------------------------------------------------------------------
+Claim window utility functions
+------------------------------------------------------------------ */
+addFilter('isClaimWindowOpen', claimWindowHelper.isClaimWindowOpen)
