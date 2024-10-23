@@ -4,7 +4,7 @@ const organisationModel = require('../models/organisations')
 const Pagination = require('../helpers/pagination')
 const validationHelper = require('../helpers/validators')
 
-const settings = require('../data/dist/settings')
+const settings = require('../data/dist/prototype-settings')
 
 /// ------------------------------------------------------------------------ ///
 /// SHOW USER

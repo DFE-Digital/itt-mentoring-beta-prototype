@@ -1,12 +1,12 @@
-const settingModel = require('../models/settings')
+const settingModel = require('../models/prototype-settings')
 
 exports.settings_form_get = (req, res) => {
-  const settings = require('../data/dist/settings.json')
+  const settings = require('../data/dist/prototype-settings.json')
 
-  res.render('../views/settings/index', {
+  res.render('../views/prototype-settings/index', {
     settings,
     actions: {
-      save: `/settings`,
+      save: `/prototype-settings`,
       home: '/organisations'
     }
   })
@@ -20,24 +20,24 @@ exports.settings_form_post = (req, res) => {
   })
 
   if (errors.length) {
-    res.render('../views/settings/index', {
+    res.render('../views/prototype-settings/index', {
       wordCount,
       actions: {
-        save: `/settings`,
+        save: `/prototype-settings`,
         home: '/organisations'
       },
       errors
     })
   } else {
-    req.flash('success', 'Settings updated')
-    res.redirect('/settings')
+    req.flash('success', 'Prototype settings updated')
+    res.redirect('/prototype-settings')
   }
 }
 
 exports.reset_data_get = (req, res) => {
-  res.render('../views/settings/data', {
+  res.render('../views/prototype-settings/data', {
     actions: {
-      save: `/settings/reset-data`,
+      save: `/prototype-settings/reset-data`,
       home: '/organisations'
     }
   })

@@ -17,7 +17,7 @@ const utilHelper = require('../../helpers/utils')
 const claimDecorator = require('../../decorators/claims')
 const paymentDecorator = require('../../decorators/payments')
 
-const settings = require('../../data/dist/settings')
+const settings = require('../../data/dist/prototype-settings')
 
 /// ------------------------------------------------------------------------ ///
 /// LIST CLAIMS

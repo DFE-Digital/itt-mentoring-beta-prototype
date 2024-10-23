@@ -5,7 +5,7 @@ const { rimrafSync } = require('rimraf')
 const directoryPath = path.join(__dirname, '../data/dist/')
 
 exports.update = (params) => {
-  let settings = require('../data/dist/settings')
+  let settings = require('../data/dist/prototype-settings')
 
   if (params.settings.useLogin) {
     settings.useLogin = params.settings.useLogin

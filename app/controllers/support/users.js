@@ -3,7 +3,7 @@ const userModel = require('../../models/support-users')
 const Pagination = require('../../helpers/pagination')
 const validationHelper = require('../../helpers/validators')
 
-const settings = require('../../data/dist/settings')
+const settings = require('../../data/dist/prototype-settings')
 
 /// ------------------------------------------------------------------------ ///
 /// LIST USERS

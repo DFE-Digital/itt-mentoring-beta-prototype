@@ -131,3 +131,10 @@ exports.isValidTRN = (trn) => {
   }
   return valid
 }
+
+exports.isValidDate = (value) => {
+  const date = new Date(value)
+  console.log(value,date);
+
+  return date instanceof Date && !isNaN(date)
+}

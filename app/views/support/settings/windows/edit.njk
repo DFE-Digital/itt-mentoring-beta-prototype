@@ -1,0 +1,132 @@
+{% extends "layouts/support.njk" %}
+
+{% set primaryNavId = "settings" %}
+
+{% set title = "Window details" %}
+
+{% if currentWindow %}
+  {% set caption = "Claim window - " + currentWindow.opensAt | govukDate + " to " + currentWindow.closesAt | govukDate %}
+{% else %}
+  {% set caption = "Add claim window" %}
+{% endif %}
+
+{% block pageTitle %}
+  {{ "Error: " if errors.length }}{{ title + " - " if title }}{{ caption + " - " if caption }}{{ serviceName }} - GOV.UK
+{% endblock %}
+
+{% block beforeContent %}
+{{ govukBackLink({
+  text: "Back",
+  href: actions.back
+}) }}
+{% endblock %}
+
+{% block content %}
+
+  {% include "_includes/error-summary.njk" %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      {% include "_includes/page-heading.njk" %}
+
+      <form action="{{ actions.save }}" method="post" accept-charset="utf-8" novalidate>
+
+        {{ govukDateInput({
+          id: "date-window-opens",
+          fieldset: {
+            legend: {
+              text: "Date window opens",
+              isPageHeading: false,
+              classes: "govuk-fieldset__legend--s"
+            }
+          },
+          hint: {
+            text: "For example, 1 8 2023"
+          },
+          items: [
+            {
+              name: "window[opensDate]",
+              label: "Day",
+              value: window.opensDate[0],
+              classes: "govuk-input--width-2" + (" govuk-input--error" if errors | getErrorMessage("date-window-opens"))
+            },
+            {
+              name: "window[opensDate]",
+              label: "Month",
+              value: window.opensDate[1],
+              classes: "govuk-input--width-2" + (" govuk-input--error" if errors | getErrorMessage("date-window-opens"))
+            },
+            {
+              name: "window[opensDate]",
+              label: "Year",
+              value: window.opensDate[2],
+              classes: "govuk-input--width-4" + (" govuk-input--error" if errors | getErrorMessage("date-window-opens"))
+            }
+          ],
+          errorMessage: errors | getErrorMessage("date-window-opens")
+        }) }}
+
+        {{ govukDateInput({
+          id: "date-window-closes",
+          fieldset: {
+            legend: {
+              text: "Date window closes",
+              isPageHeading: false,
+              classes: "govuk-fieldset__legend--s"
+            }
+          },
+          hint: {
+            text: "For example, 1 9 2024"
+          },
+          items: [
+            {
+              name: "window[closesDate]",
+              label: "Day",
+              value: window.closesDate[0],
+              classes: "govuk-input--width-2" + (" govuk-input--error" if errors | getErrorMessage("date-window-closes"))
+            },
+            {
+              name: "window[closesDate]",
+              label: "Month",
+              value: window.closesDate[1],
+              classes: "govuk-input--width-2" + (" govuk-input--error" if errors | getErrorMessage("date-window-closes"))
+            },
+            {
+              name: "window[closesDate]",
+              label: "Year",
+              value: window.closesDate[2],
+              classes: "govuk-input--width-4" + (" govuk-input--error" if errors | getErrorMessage("date-window-closes"))
+            }
+          ],
+          errorMessage: errors | getErrorMessage("date-window-closes")
+        }) }}
+
+        {{ govukRadios({
+          name: "window[academicYear]",
+          fieldset: {
+            legend: {
+              text: "Academic year",
+              isPageHeading: false,
+              classes: "govuk-fieldset__legend--s"
+            }
+          },
+          value: window.academicYear,
+          items: academicYearOptions,
+          errorMessage: errors | getErrorMessage("academic-year")
+        }) }}
+
+        {{ govukButton({
+          text: "Continue"
+        }) }}
+
+      </form>
+
+      <p class="govuk-body">
+        <a class="govuk-link" href="{{ actions.cancel }}">Cancel</a>
+      </p>
+
+    </div>
+  </div>
+
+{% endblock %}

@@ -6,7 +6,7 @@
 const govukPrototypeKit = require('govuk-prototype-kit')
 const router = govukPrototypeKit.requests.setupRouter()
 
-const settings = require('./data/dist/settings')
+const settings = require('./data/dist/prototype-settings')
 
 /// ------------------------------------------------------------------------ ///
 /// Flash messaging
@@ -85,7 +85,7 @@ const errorController = require('./controllers/errors')
 const feedbackController = require('./controllers/feedback')
 const mentorController = require('./controllers/mentors')
 const organisationController = require('./controllers/organisations')
-const settingController = require('./controllers/settings')
+const prototypeSettingController = require('./controllers/prototype-settings')
 const userController = require('./controllers/users')
 
 const supportOrganisationController = require('./controllers/support/organisations')
@@ -99,6 +99,7 @@ const supportPaymentController = require('./controllers/support/payments')
 const supportSamplingController = require('./controllers/support/sampling')
 const supportClawbackController = require('./controllers/support/clawbacks')
 const supportActivityController = require('./controllers/support/activity')
+const supportSettingController = require('./controllers/support/settings')
 
 // Authentication middleware
 const checkIsAuthenticated = (req, res, next) => {
@@ -467,6 +468,7 @@ router.get('/support/claims/activity', checkIsAuthenticated, supportActivityCont
 
 router.get('/support/claims/download', checkIsAuthenticated, supportClaimController.download_claims_get)
 
+router.get('/support/claims/remove-academic-year-filter/:academicYear', checkIsAuthenticated, supportClaimController.removeAcademicYearFilter)
 router.get('/support/claims/remove-status-filter/:status', checkIsAuthenticated, supportClaimController.removeStatusFilter)
 router.get('/support/claims/remove-school-filter/:school', checkIsAuthenticated, supportClaimController.removeSchoolFilter)
 router.get('/support/claims/remove-provider-filter/:provider', checkIsAuthenticated, supportClaimController.removeProviderFilter)
@@ -545,14 +547,39 @@ router.get('/support/organisations/:organisationId', checkIsAuthenticated, suppo
 router.get('/support/organisations', checkIsAuthenticated, supportOrganisationController.list_organisations_get)
 
 /// ------------------------------------------------------------------------ ///
+/// SERVICE SETTINGS
+/// ------------------------------------------------------------------------ ///
+
+router.get('/support/settings/windows/new', checkIsAuthenticated, supportSettingController.new_claim_window_get)
+router.post('/support/settings/windows/new', checkIsAuthenticated, supportSettingController.new_claim_window_post)
+
+router.get('/support/settings/windows/new/check', checkIsAuthenticated, supportSettingController.new_claim_window_check_get)
+router.post('/support/settings/windows/new/check', checkIsAuthenticated, supportSettingController.new_claim_window_check_post)
+
+router.get('/support/settings/windows/:windowId/edit', checkIsAuthenticated, supportSettingController.edit_claim_window_get)
+router.post('/support/settings/windows/:windowId/edit', checkIsAuthenticated, supportSettingController.edit_claim_window_post)
+
+router.get('/support/settings/windows/:windowId/edit/check', checkIsAuthenticated, supportSettingController.edit_claim_window_check_get)
+router.post('/support/settings/windows/:windowId/edit/check', checkIsAuthenticated, supportSettingController.edit_claim_window_check_post)
+
+router.get('/support/settings/windows/:windowId/delete', checkIsAuthenticated, supportSettingController.delete_claim_window_get)
+router.post('/support/settings/windows/:windowId/delete', checkIsAuthenticated, supportSettingController.delete_claim_window_post)
+
+router.get('/support/settings/windows/:windowId', checkIsAuthenticated, supportSettingController.show_claim_window_get)
+
+router.get('/support/settings/windows', checkIsAuthenticated, supportSettingController.list_claim_windows_get)
+
+router.get('/support/settings', checkIsAuthenticated, supportSettingController.show_settings_get)
+
+/// ------------------------------------------------------------------------ ///
 /// GENERAL ROUTES
 /// ------------------------------------------------------------------------ ///
 
-router.get('/settings', settingController.settings_form_get)
-router.post('/settings', settingController.settings_form_post)
+router.get('/prototype-settings', prototypeSettingController.settings_form_get)
+router.post('/prototype-settings', prototypeSettingController.settings_form_post)
 
-router.get('/settings/reset-data', settingController.reset_data_get)
-router.post('/settings/reset-data', settingController.reset_data_post)
+router.get('/prototype-settings/reset-data', prototypeSettingController.reset_data_get)
+router.post('/prototype-settings/reset-data', prototypeSettingController.reset_data_post)
 
 router.get('/feedback', feedbackController.feedback_form_get)
 router.post('/feedback', feedbackController.feedback_form_post)
