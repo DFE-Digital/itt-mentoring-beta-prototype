@@ -71,8 +71,8 @@ exports.isCurrentAcademicYear = (code) => {
   const currentDate = new Date()
 
   for (let window of claimWindows) {
-    const opensAt = new Date(window.opensAt);
-    const closesAt = new Date(window.closesAt);
+    const opensAt = new Date(window.opensAt)
+    const closesAt = new Date(window.closesAt)
 
     // Check if current date is between opensAt and closesAt and
     // if academicYear matches target academic year
