@@ -26,21 +26,29 @@
             Before you can start a claim you will need to <a href="{{ actions.mentors }}" class="govuk-link">add a mentor</a>.
           </p>
         {% else %}
-          <p class="govuk-body">
-            Claims can only be made for the school year {{ currentClaimWindow.academicYear | getAcademicYearLabel }}.
-          </p>
-          <p class="govuk-body">
-            Final closing date for claims: <strong>{{ currentClaimWindow.closesAt | govukDateTime }}</strong>
-          </p>
+          {% if now | isClaimWindowOpen %}
+            <p class="govuk-body">
+              Claims can only be made for the school year {{ currentClaimWindow.academicYear | getAcademicYearLabel }}.
+            </p>
+            <p class="govuk-body">
+              Final closing date for claims: <strong>{{ currentClaimWindow.closesAt | govukDateTime }}</strong>
+            </p>
+          {% else %}
+            <p class="govuk-body">
+              You can no longer submit claims for the school year {{ currentClaimWindow.academicYear | getAcademicYearLabel }}
+            </p>
+            <p class="govuk-body">
+              You can still <a href="{{ actions.mentors }}" class="govuk-link">add a mentor</a>.
+            </p>
+          {% endif %}
         {% endif %}
-
       {% endset %}
 
       {{ govukInsetText({
         html: insetHtml
       }) }}
 
-      {% if mentors.length %}
+      {% if now | isClaimWindowOpen and mentors.length %}
         {{ govukButton({
           text: "Add claim",
           href: actions.new
