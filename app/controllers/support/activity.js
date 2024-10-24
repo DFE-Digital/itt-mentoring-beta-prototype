@@ -13,6 +13,14 @@ exports.list_activity_get = (req, res) => {
     return new Date(b.createdAt) - new Date(a.createdAt)
   })
 
+  activity.forEach(acitvityItem => {
+    if (acitvityItem.documents.length) {
+      acitvityItem.documents.sort((a, b) => {
+        return a.title.localeCompare(b.title)
+      })
+    }
+  })
+
   const pagination = new Pagination(activity, req.query.page, settings.pageSize)
   activity = pagination.getData()
 
@@ -30,9 +38,20 @@ exports.show_activity_get = (req, res) => {
     activityId: req.params.activityId
   })
 
+  if (activity.documents.length) {
+    activity.documents.sort((a, b) => {
+      return a.title.localeCompare(b.title)
+    })
+  }
+
+  let documents = activity.documents
+  const pagination = new Pagination(documents, req.query.page, settings.pageSize)
+  documents = pagination.getData()
+
   res.render('../views/support/claims/activity/show', {
     activity,
-    // pagination,
+    documents,
+    pagination,
     actions: {
       back: `/support/claims/activity`
     }
