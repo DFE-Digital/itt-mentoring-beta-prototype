@@ -33,7 +33,7 @@ exports.mentor_list = (req, res) => {
     actions: {
       new: `/support/organisations/${req.params.organisationId}/mentors/new`,
       view: `/support/organisations/${req.params.organisationId}/mentors`,
-      back: `/support/organisations`
+      back: '/support/organisations'
     }
   })
 }

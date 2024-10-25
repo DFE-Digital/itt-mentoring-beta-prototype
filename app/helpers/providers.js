@@ -22,7 +22,6 @@ exports.getProviderOptions = (selectedItem) => {
   return items
 }
 
-
 exports.getProviderName = (query) => {
   const provider = providerModel.findOne({ query })
 

@@ -1,4 +1,4 @@
-function Pagination(data, pageNumber = 1, pageSize = 50) {
+function Pagination (data, pageNumber = 1, pageSize = 50) {
   this.data = data
   this.pageNumber = parseInt(pageNumber)
   this.pageSize = parseInt(pageSize)
@@ -6,12 +6,12 @@ function Pagination(data, pageNumber = 1, pageSize = 50) {
   this.pageCount = Math.ceil(this.totalCount / this.pageSize)
 
   // Make sure the previous page exists
-  if(this.pageNumber > 1) {
+  if (this.pageNumber > 1) {
     this.previousPage = this.getPageItem(this.pageNumber - 1)
   }
 
   // Make sure the next page exists
-  if(this.pageNumber < this.pageCount) {
+  if (this.pageNumber < this.pageCount) {
     this.nextPage = this.getPageItem(this.pageNumber + 1)
   }
 
@@ -20,13 +20,13 @@ function Pagination(data, pageNumber = 1, pageSize = 50) {
   this.pageItems = this.getPageItems()
 }
 
-Pagination.prototype.getFirstResultNumber = function() {
+Pagination.prototype.getFirstResultNumber = function () {
   let firstResultNumber
   firstResultNumber = ((this.pageNumber * this.pageSize) - this.pageSize) + 1
   return firstResultNumber
 }
 
-Pagination.prototype.getLastResultNumber = function() {
+Pagination.prototype.getLastResultNumber = function () {
   let lastResultNumber
 
   // Take first result number e.g. 1 or 51
@@ -35,19 +35,19 @@ Pagination.prototype.getLastResultNumber = function() {
   lastResultNumber = (this.firstResultNumber + this.pageSize) - 1
 
   // Adjust if it’s the last page in case the last result number is more than the totalCount
-  if(lastResultNumber > this.totalCount) {
+  if (lastResultNumber > this.totalCount) {
     lastResultNumber = this.totalCount
   }
 
   return lastResultNumber
 }
 
-Pagination.prototype.getData = function() {
-  let pageNumber = this.pageNumber - 1 // because pages logically start with 1, but technically with 0
+Pagination.prototype.getData = function () {
+  const pageNumber = this.pageNumber - 1 // because pages logically start with 1, but technically with 0
   return this.data.slice(pageNumber * this.pageSize, (pageNumber + 1) * this.pageSize)
 }
 
-Pagination.prototype.getPageItem = function(itemNumber) {
+Pagination.prototype.getPageItem = function (itemNumber) {
   return {
     number: itemNumber,
     href: '?page=' + itemNumber + '&limit=' + this.pageSize,
@@ -55,8 +55,8 @@ Pagination.prototype.getPageItem = function(itemNumber) {
   }
 }
 
-Pagination.prototype.getPageItems = function() {
-  let pageItems = []
+Pagination.prototype.getPageItems = function () {
+  const pageItems = []
 
   // Add every page in
   for (let i = 1; i <= this.pageCount; i++) {
@@ -69,12 +69,11 @@ Pagination.prototype.getPageItems = function() {
   const totalNumberOfPages = this.pageCount
   const ellipsis = { ellipsis: true }
   if (pageItems.length > 7) {
-
     let startPosition
     let removeCount
 
     // Current page within first 4 pages
-    if(currentPageNumber <= threshold) {
+    if (currentPageNumber <= threshold) {
       // Input => 1 2 3 [4] 5 6 7 8 9 10
       // Output => 1 2 3 [4] 5 ... 10
 
@@ -87,7 +86,7 @@ Pagination.prototype.getPageItems = function() {
       pageItems.splice(startPosition, removeCount, ellipsis)
 
     // Current page within final 4 pages
-    } else if(currentPageNumber > (this.pageCount - threshold)) {
+    } else if (currentPageNumber > (this.pageCount - threshold)) {
       // Input => 1 2 3 4 5 6 7 8 [9] 10
       // Output => 1 ... 5 6 7 [9] 10
 

@@ -51,9 +51,9 @@ exports.list_claims_get = (req, res) => {
     providers = filterHelper.getCheckboxValues(provider, req.session.data.filters.provider)
   }
 
-  const hasFilters = !!((statuses?.length > 0)
-    || (schools?.length > 0)
-    || (providers?.length > 0))
+  const hasFilters = !!((statuses?.length > 0) ||
+    (schools?.length > 0) ||
+    (providers?.length > 0))
 
   let selectedFilters = null
 
@@ -280,7 +280,7 @@ exports.download_claims_get = async (req, res) => {
   const records = claimHelper.parseData(claims)
 
   const directoryPath = path.join(__dirname, '../../data/dist/downloads/')
-  const fileName = "claims-" + new Date().toISOString()
+  const fileName = 'claims-' + new Date().toISOString()
   const filePath = directoryPath + '/' + fileName + '.csv'
 
   // create the CSV headers
@@ -303,9 +303,9 @@ exports.download_claims_get = async (req, res) => {
   csv.writeRecords(records)
     .then(() => {
       console.log('CSV file written successfully')
-      res.setHeader('Content-Type', 'text/csv');
-      res.setHeader('Content-Disposition', 'attachment; filename=' + fileName + '.csv');
-      res.sendFile(filePath);
+      res.setHeader('Content-Type', 'text/csv')
+      res.setHeader('Content-Disposition', 'attachment; filename=' + fileName + '.csv')
+      res.sendFile(filePath)
     })
     .catch((error) => {
       console.error('Error writing CSV file:', error)
@@ -336,8 +336,8 @@ exports.show_claim_get = (req, res) => {
       rejectClaim: `/support/claims/payments/${req.params.claimId}/status/not_paid`,
       requestReview: `/support/claims/sampling/${req.params.claimId}/status/clawback_requested`,
       samplingApproved: `/support/claims/sampling/${req.params.claimId}/status/paid`,
-      back: `/support/claims`,
-      organisations: `/support/organisations`
+      back: '/support/claims',
+      organisations: '/support/organisations'
     }
   })
 }

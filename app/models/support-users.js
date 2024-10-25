@@ -18,7 +18,6 @@ exports.findMany = (params) => {
     users.push(data)
   })
 
-
   users = users.filter(user => {
     return !user.organisations.length
   })
@@ -136,6 +135,6 @@ exports.deleteOne = (params) => {
     const filePath = directoryPath + '/' + params.userId + '.json'
     // remove the user altogether since they're no longer associated with an
     // organisation
-      fs.unlinkSync(filePath)
+    fs.unlinkSync(filePath)
   }
 }

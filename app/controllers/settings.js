@@ -6,7 +6,7 @@ exports.settings_form_get = (req, res) => {
   res.render('../views/settings/index', {
     settings,
     actions: {
-      save: `/settings`,
+      save: '/settings',
       home: '/organisations'
     }
   })
@@ -23,7 +23,7 @@ exports.settings_form_post = (req, res) => {
     res.render('../views/settings/index', {
       wordCount,
       actions: {
-        save: `/settings`,
+        save: '/settings',
         home: '/organisations'
       },
       errors
@@ -37,7 +37,7 @@ exports.settings_form_post = (req, res) => {
 exports.reset_data_get = (req, res) => {
   res.render('../views/settings/data', {
     actions: {
-      save: `/settings/reset-data`,
+      save: '/settings/reset-data',
       home: '/organisations'
     }
   })

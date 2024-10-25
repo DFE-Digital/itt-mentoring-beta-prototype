@@ -33,8 +33,8 @@ passport.deserializeUser((user, done) => {
 passport.use(new LocalStrategy(
   (username, password, done) => {
     const user = authenticationModel.findOne({
-      username: username,
-      password: password,
+      username,
+      password,
       active: true
     })
     if (user) { return done(null, user) }
@@ -56,7 +56,7 @@ const storage = multer.diskStorage({
   destination: (req, file, callback) => {
     callback(null, path.join(__dirname, 'data/dist/downloads'))
   },
-  filename:  (req, file, callback) => {
+  filename: (req, file, callback) => {
     const uniqueSuffix = new Date()
     callback(null, file.fieldname + '-' + uniqueSuffix.toISOString() + '.csv')
   }
@@ -129,7 +129,7 @@ router.all('*', (req, res, next) => {
   res.locals.query = req.query
   res.locals.flash = req.flash('success') // pass through 'success' messages only
 
-  for (let settingName of Object.keys(settings)) {
+  for (const settingName of Object.keys(settings)) {
     res.locals[settingName] = settings[settingName]
   }
 

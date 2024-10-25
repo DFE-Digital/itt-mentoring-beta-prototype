@@ -4,7 +4,7 @@ exports.findMany = (params) => {
   if (params.trn) {
     teachers = teachers.filter(teacher =>
       teacher.trn.toString() === params.trn
-     )
+    )
   }
 
   if (params.dob) {
@@ -14,7 +14,7 @@ exports.findMany = (params) => {
   if (params.nino) {
     teachers = teachers.filter(teacher =>
       teacher.nationalInsuranceNumber.toUpperCase() === params.nino.toUpperCase()
-     )
+    )
   }
 
   return teachers
@@ -27,8 +27,8 @@ exports.findOne = (params) => {
 
   if (params.trn && params.dob) {
     teacher = teachers.find(teacher =>
-      teacher.trn.toString() === params.trn
-      && teacher.dateOfBirth === params.dob
+      teacher.trn.toString() === params.trn &&
+      teacher.dateOfBirth === params.dob
     )
   }
 

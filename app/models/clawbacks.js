@@ -57,13 +57,13 @@ exports.findMany = (params) => {
 }
 
 exports.updateOne = (params) => {
-  console.log(params);
+  console.log(params)
 
   let claim = {}
 
   if (params.claimId) {
     claim = claimModel.findOne({
-      claimId: params.claimId,
+      claimId: params.claimId
     })
 
     if (params.claim.status) {
@@ -117,7 +117,7 @@ exports.updateMany = (params) => {
 
 exports.writeFile = (params) => {
   if (params.clawbacks) {
-    const fileName = "clawbacks-" + new Date().toISOString()
+    const fileName = 'clawbacks-' + new Date().toISOString()
     const filePath = directoryPath + '/' + fileName + '.csv'
 
     // create the CSV headers

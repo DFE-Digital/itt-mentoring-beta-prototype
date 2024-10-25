@@ -28,7 +28,7 @@ exports.list_activity_get = (req, res) => {
     activity,
     pagination,
     actions: {
-      show: `/support/claims/activity`
+      show: '/support/claims/activity'
     }
   })
 }
@@ -53,13 +53,13 @@ exports.show_activity_get = (req, res) => {
     documents,
     pagination,
     actions: {
-      back: `/support/claims/activity`
+      back: '/support/claims/activity'
     }
   })
 }
 
 exports.download_activity_get = (req, res) => {
-  let directoryPath = path.join(__dirname, '../../data/dist/downloads')
+  const directoryPath = path.join(__dirname, '../../data/dist/downloads')
 
   // if (req.query.type === 'payments') {
   //   directoryPath = path.join(__dirname, '../../data/dist/payments')

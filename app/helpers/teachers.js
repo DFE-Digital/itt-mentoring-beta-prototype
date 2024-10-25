@@ -1,7 +1,7 @@
 const teacherModel = require('../models/teachers')
 
 exports.getTeacherName = (trn) => {
-  const teacher = teacherModel.findOne({ trn: trn })
+  const teacher = teacherModel.findOne({ trn })
 
   let label = trn
 

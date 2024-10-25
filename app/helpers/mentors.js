@@ -25,9 +25,8 @@ exports.getMentorOptions = (params) => {
   return items
 }
 
-
 exports.getMentorName = (trn) => {
-  const mentor = mentorModel.findOne({ trn: trn })
+  const mentor = mentorModel.findOne({ trn })
 
   let label = trn
 
