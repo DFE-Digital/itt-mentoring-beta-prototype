@@ -9,7 +9,9 @@
     "postinstall": "npm run generate-data",
     "dev": "govuk-prototype-kit dev",
     "serve": "govuk-prototype-kit serve",
-    "start": "govuk-prototype-kit start"
+    "start": "govuk-prototype-kit start",
+    "lint:scripts": "standard",
+    "lint:scripts:fix": "standard --fix"
   },
   "dependencies": {
     "@x-govuk/govuk-prototype-filters": "^1.4.3",
@@ -29,5 +31,14 @@
     "passport-local": "^1.0.0",
     "rimraf": "^6.0.1",
     "uuid": "^10.0.0"
+  },
+  "devDependencies": {
+    "standard": "^17.1.2"
+  },
+  "standard": {
+    "ignore": [
+      "app/assets/javascripts/**/*.js",
+      "app/views/_components/**/*.js"
+    ]
   }
 }
