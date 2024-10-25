@@ -57,8 +57,6 @@ exports.findMany = (params) => {
 }
 
 exports.updateOne = (params) => {
-  console.log(params)
-
   let claim = {}
 
   if (params.claimId) {
