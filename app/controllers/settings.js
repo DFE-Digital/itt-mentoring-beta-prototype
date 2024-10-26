@@ -2,7 +2,6 @@ const settingModel = require('../models/settings')
 
 exports.settings_form_get = (req, res) => {
   const settings = require('../data/dist/settings.json')
-
   res.render('../views/settings/index', {
     settings,
     actions: {
@@ -15,13 +14,9 @@ exports.settings_form_get = (req, res) => {
 exports.settings_form_post = (req, res) => {
   const errors = []
 
-  settingModel.update({
-    settings: req.session.data.settings
-  })
-
   if (errors.length) {
     res.render('../views/settings/index', {
-      wordCount,
+      settings: req.session.data.settings,
       actions: {
         save: '/settings',
         home: '/organisations'
@@ -29,6 +24,10 @@ exports.settings_form_post = (req, res) => {
       errors
     })
   } else {
+    settingModel.update({
+      settings: req.session.data.settings
+    })
+
     req.flash('success', 'Settings updated')
     res.redirect('/settings')
   }
