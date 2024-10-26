@@ -48,8 +48,10 @@ exports.findOne = (params) => {
   if (params.organisationId) {
     const filePath = directoryPath + '/' + params.organisationId + '.json'
 
-    const raw = fs.readFileSync(filePath)
-    organisation = JSON.parse(raw)
+    if (fs.existsSync(filePath)) {
+      const raw = fs.readFileSync(filePath)
+      organisation = JSON.parse(raw)
+    }
   }
 
   return organisation
