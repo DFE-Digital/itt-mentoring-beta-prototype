@@ -125,7 +125,7 @@ exports.show_organisation_get = (req, res) => {
   res.render('../views/support/organisations/show', {
     organisation,
     actions: {
-      back: `/support/organisations`,
+      back: '/support/organisations',
       change: `/support/organisations/${req.params.organisationId}`,
       delete: `/support/organisations/${req.params.organisationId}/delete`,
       deleteConditionsAgreement: `/support/organisations/${req.params.organisationId}/remove-agreement-grant-conditions`
@@ -151,7 +151,6 @@ exports.remove_organisation_agreement_get = (req, res) => {
 }
 
 exports.remove_organisation_agreement_post = (req, res) => {
-
   organisationModel.updateOne({
     organisationId: req.params.organisationId,
     userId: req.session.passport.user.id,
@@ -199,9 +198,9 @@ exports.new_post = (req, res) => {
 
   if (!req.session.data.type) {
     const error = {}
-    error.fieldName = "type"
-    error.href = "#type"
-    error.text = "Select an organisation type"
+    error.fieldName = 'type'
+    error.href = '#type'
+    error.text = 'Select an organisation type'
     errors.push(error)
   }
 
@@ -333,15 +332,15 @@ exports.new_choose_provider_get = (req, res) => {
   })
 
   // sort items alphabetically
-  providerItems.sort((a,b) => {
+  providerItems.sort((a, b) => {
     return a.text.localeCompare(b.text)
   })
 
   // only get the first 15 items
-  providerItems = providerItems.slice(0,15)
+  providerItems = providerItems.slice(0, 15)
 
-  let save = '/support/organisations/new/provider/choose'
-  let back = '/support/organisations/new/provider'
+  const save = '/support/organisations/new/provider/choose'
+  const back = '/support/organisations/new/provider'
 
   // if (req.query.referrer === 'check') {
   //   save += '?referrer=check'
@@ -381,15 +380,15 @@ exports.new_choose_provider_post = (req, res) => {
   })
 
   // sort items alphabetically
-  providerItems.sort((a,b) => {
+  providerItems.sort((a, b) => {
     return a.text.localeCompare(b.text)
   })
 
   // only get the first 15 items
-  providerItems = providerItems.slice(0,15)
+  providerItems = providerItems.slice(0, 15)
 
-  let save = '/support/organisations/new/provider/choose'
-  let back = '/support/organisations/new/provider'
+  const save = '/support/organisations/new/provider/choose'
+  const back = '/support/organisations/new/provider'
 
   // if (req.query.referrer === 'check') {
   //   save += '?referrer=check'
@@ -544,15 +543,15 @@ exports.new_choose_school_get = (req, res) => {
   })
 
   // sort items alphabetically
-  schoolItems.sort((a,b) => {
+  schoolItems.sort((a, b) => {
     return a.text.localeCompare(b.text)
   })
 
   // only get the first 15 items
-  schoolItems = schoolItems.slice(0,15)
+  schoolItems = schoolItems.slice(0, 15)
 
-  let save = '/support/organisations/new/school/choose'
-  let back = '/support/organisations/new/school'
+  const save = '/support/organisations/new/school/choose'
+  const back = '/support/organisations/new/school'
 
   // if (req.query.referrer === 'check') {
   //   save += '?referrer=check'
@@ -592,15 +591,15 @@ exports.new_choose_school_post = (req, res) => {
   })
 
   // sort items alphabetically
-  schoolItems.sort((a,b) => {
+  schoolItems.sort((a, b) => {
     return a.text.localeCompare(b.text)
   })
 
   // only get the first 15 items
-  schoolItems = schoolItems.slice(0,15)
+  schoolItems = schoolItems.slice(0, 15)
 
-  let save = '/support/organisations/new/school/choose'
-  let back = '/support/organisations/new/school'
+  const save = '/support/organisations/new/school/choose'
+  const back = '/support/organisations/new/school'
 
   // if (req.query.referrer === 'check') {
   //   save += '?referrer=check'
@@ -677,7 +676,7 @@ exports.new_check_post = (req, res) => {
   delete req.session.data.type
 
   req.flash('success', 'Organisation added')
-  res.redirect(`/support/organisations`)
+  res.redirect('/support/organisations')
 }
 
 /// ------------------------------------------------------------------------ ///
@@ -718,5 +717,5 @@ exports.delete_organisation_post = (req, res) => {
   delete req.session.data.keywords
 
   req.flash('success', 'Organisation removed')
-  res.redirect(`/support/organisations`)
+  res.redirect('/support/organisations')
 }

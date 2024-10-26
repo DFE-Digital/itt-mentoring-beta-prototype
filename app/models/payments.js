@@ -72,7 +72,7 @@ exports.updateMany = (params) => {
 
 exports.writeFile = (params) => {
   if (params.payments) {
-    const fileName = "payments-" + new Date().toISOString()
+    const fileName = 'payments-' + new Date().toISOString()
     const filePath = directoryPath + '/' + fileName + '.csv'
 
     // create the CSV headers

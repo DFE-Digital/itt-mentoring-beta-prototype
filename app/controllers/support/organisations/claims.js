@@ -26,9 +26,9 @@ exports.claim_list = (req, res) => {
   delete req.session.data.position
 
   claims.sort((a, b) => {
-    return new Date(b.submittedAt) - new Date(a.submittedAt)
-      || new Date(b.updatedAt) - new Date(a.updatedAt)
-      || new Date(b.createdAt) - new Date(a.createdAt)
+    return new Date(b.submittedAt) - new Date(a.submittedAt) ||
+      new Date(b.updatedAt) - new Date(a.updatedAt) ||
+      new Date(b.createdAt) - new Date(a.createdAt)
   })
 
   const pagination = new Pagination(claims, req.query.page, settings.pageSize)
@@ -43,7 +43,7 @@ exports.claim_list = (req, res) => {
       new: `/support/organisations/${req.params.organisationId}/claims/new`,
       view: `/support/organisations/${req.params.organisationId}/claims`,
       mentors: `/support/organisations/${req.params.organisationId}/mentors`,
-      back: `/support/organisations`
+      back: '/support/organisations'
     }
   })
 }
@@ -315,9 +315,9 @@ exports.new_claim_hours_post = (req, res) => {
       error.text = 'Enter the number of hours'
       errors.push(error)
     } else if (
-      isNaN(req.session.data.mentor.otherHours)
-      || req.session.data.mentor.otherHours < 1
-      || req.session.data.mentor.otherHours > mentorRemainingHours
+      isNaN(req.session.data.mentor.otherHours) ||
+      req.session.data.mentor.otherHours < 1 ||
+      req.session.data.mentor.otherHours > mentorRemainingHours
     ) {
       const error = {}
       error.fieldName = 'otherHours'
@@ -353,25 +353,25 @@ exports.new_claim_hours_post = (req, res) => {
     // if (req.query.referrer === 'check') {
 
     // } else {
-      // put the submitted the mentor information into the mentors array in the claim
-      req.session.data.claim.mentors.push(req.session.data.mentor)
+    // put the submitted the mentor information into the mentors array in the claim
+    req.session.data.claim.mentors.push(req.session.data.mentor)
 
-      // delete the mentor object as no longer needed
-      delete req.session.data.mentor
+    // delete the mentor object as no longer needed
+    delete req.session.data.mentor
 
-      // if we've iterated through all the mentors, go to the check page
-      if (req.session.data.position === (req.session.data.mentorChoices.length - 1)) {
-        // delete the position info as no longer needed
-        delete req.session.data.position
+    // if we've iterated through all the mentors, go to the check page
+    if (req.session.data.position === (req.session.data.mentorChoices.length - 1)) {
+      // delete the position info as no longer needed
+      delete req.session.data.position
 
-        res.redirect(`/support/organisations/${req.params.organisationId}/claims/new/check`)
-      } else {
-        // increment the position to track where we are in the flow
-        req.session.data.position += 1
+      res.redirect(`/support/organisations/${req.params.organisationId}/claims/new/check`)
+    } else {
+      // increment the position to track where we are in the flow
+      req.session.data.position += 1
 
-        // redirct the user back to the hours page to add info for the next mentor
-        res.redirect(`/support/organisations/${req.params.organisationId}/claims/new/hours`)
-      }
+      // redirct the user back to the hours page to add info for the next mentor
+      res.redirect(`/support/organisations/${req.params.organisationId}/claims/new/hours`)
+    }
     // }
   }
 }

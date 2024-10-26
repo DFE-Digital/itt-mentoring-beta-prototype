@@ -32,13 +32,15 @@
 
       <h2 class="govuk-heading-m">Files</h2>
 
-      <ul class="govuk-list--bullet govuk-list--spaced">
-        {% for document in activity.documents %}
+      <ul class="govuk-list--bullet govuk-list--spaced govuk-!-margin-bottom-5">
+        {% for document in documents %}
           <li>
             <a href="{{ document.href }}" class="govuk-link">{{ document.title }}</a>
           </li>
         {% endfor %}
       </ul>
+
+      {% include "_includes/pagination.njk" %}
 
     </div>
   </div>

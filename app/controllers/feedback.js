@@ -4,7 +4,7 @@ exports.feedback_form_get = (req, res) => {
   res.render('../views/feedback/index', {
     wordCount: 200,
     actions: {
-      save: `/feedback`,
+      save: '/feedback',
       home: '/organisations'
     }
   })
@@ -36,8 +36,8 @@ exports.feedback_form_post = (req, res) => {
     errors.push(error)
   }
 
-  if (req.session.data.feedback?.email
-    && !validationHelper.isValidEmail(req.session.data.feedback.email)) {
+  if (req.session.data.feedback?.email &&
+    !validationHelper.isValidEmail(req.session.data.feedback.email)) {
     const error = {}
     error.fieldName = 'email'
     error.href = '#feedback-email'
@@ -49,7 +49,7 @@ exports.feedback_form_post = (req, res) => {
     res.render('../views/feedback/index', {
       wordCount,
       actions: {
-        save: `/feedback`,
+        save: '/feedback',
         home: '/organisations'
       },
       errors

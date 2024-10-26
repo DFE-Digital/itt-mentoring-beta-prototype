@@ -1,29 +1,29 @@
 exports.findMany = (params) => {
-  let schools = require('../data/dist/schools/schools.json')
+  const schools = require('../data/dist/schools/schools.json')
 
   if (params.query?.length) {
     const query = params.query.toLowerCase()
     return schools.filter(school =>
-      school.name.toLowerCase().includes(query)
-      || school.urn?.toString().includes(query)
-      || school.address?.postcode?.toLowerCase().includes(query)
-     )
+      school.name.toLowerCase().includes(query) ||
+      school.urn?.toString().includes(query) ||
+      school.address?.postcode?.toLowerCase().includes(query)
+    )
   }
 
   return schools
 }
 
 exports.findOne = (params) => {
-  let schools = require('../data/dist/schools/schools.json')
+  const schools = require('../data/dist/schools/schools.json')
 
   if (params.query?.length) {
     const query = params.query.toLowerCase()
     return schools.find(school =>
-      school.name.toLowerCase().includes(query)
-      || school.urn?.toString().includes(query)
-      || school.address?.postcode?.toLowerCase().includes(query)
-      || school.id === query
-     )
+      school.name.toLowerCase().includes(query) ||
+      school.urn?.toString().includes(query) ||
+      school.address?.postcode?.toLowerCase().includes(query) ||
+      school.id === query
+    )
   } else {
     return null
   }
