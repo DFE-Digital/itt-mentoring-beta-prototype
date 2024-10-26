@@ -21,8 +21,7 @@ function Pagination (data, pageNumber = 1, pageSize = 50) {
 }
 
 Pagination.prototype.getFirstResultNumber = function () {
-  let firstResultNumber
-  firstResultNumber = ((this.pageNumber * this.pageSize) - this.pageSize) + 1
+  const firstResultNumber = ((this.pageNumber * this.pageSize) - this.pageSize) + 1
   return firstResultNumber
 }
 

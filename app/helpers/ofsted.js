@@ -23,7 +23,7 @@ exports.getOfstedRatingOptions = () => { // selectedItem
 
 exports.getOfstedRatingLabel = (code) => {
   const options = require('../data/dist/ofsted/ratings')
-  const option = options.find(option => option.code === code)
+  const option = options.find(option => option.code === parseInt(code))
 
   let label = code
 
