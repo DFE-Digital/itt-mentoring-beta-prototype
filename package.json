@@ -10,6 +10,8 @@
     "dev": "govuk-prototype-kit dev",
     "serve": "govuk-prototype-kit serve",
     "start": "govuk-prototype-kit start",
+    "lint:markdown": "markdownlint 'app/content/**/*.md' --disable MD013",
+    "lint:markdown:fix": "markdownlint 'app/content/**/*.md' --disable MD013 --fix",
     "lint:scripts": "standard",
     "lint:scripts:fix": "standard --fix",
     "lint:styles": "stylelint 'app/assets/sass/**/*.scss' 'app/views/_components/**/*.scss'"
@@ -34,6 +36,7 @@
     "uuid": "^10.0.0"
   },
   "devDependencies": {
+    "markdownlint-cli": "^0.42.0",
     "standard": "^17.1.2",
     "stylelint": "^16.10.0",
     "stylelint-config-recommended-scss": "^14.1.0",
