@@ -2,6 +2,8 @@ const path = require('path')
 const fs = require('fs')
 const { v4: uuid } = require('uuid')
 
+const claimDecorator = require('../decorators/claims')
+
 const directoryPath = path.join(__dirname, '../data/dist/claims/')
 
 exports.findMany = (params) => {
@@ -23,6 +25,13 @@ exports.findMany = (params) => {
     claims.push(data)
   })
 
+  // decorate the claim with useful stuff
+  if (claims.length) {
+    claims = claims.map(claim => {
+      return claim = claimDecorator.decorate(claim)
+    })
+  }
+
   // School
   if (params.organisationId) {
     claims = claims.filter(claim => claim.organisationId === params.organisationId)
@@ -36,6 +45,11 @@ exports.findMany = (params) => {
   // Claim status
   if (params.status) {
     claims = claims.filter(claim => claim.status === params.status)
+  }
+
+  // Claim academic year
+  if (params.academicYear) {
+    claims = claims.filter(claim => claim.academicYear === params.academicYear)
   }
 
   return claims

@@ -295,12 +295,14 @@ exports.new_choose_provider_post = (req, res) => {
 }
 
 exports.new_claim_mentors_get = (req, res) => {
+  const academicYear = academicYearHelper.getCurrentAcademicYear().code
   const mentorsCount = mentorModel.findMany({ organisationId: req.params.organisationId }).length
   let mentorOptions = mentorHelper.getMentorOptions({ organisationId: req.params.organisationId })
 
   mentorOptions = mentorOptions.filter(mentor => {
     const mentorHours = claimHelper.getProviderMentorTotalHours({
       providerId: req.session.data.claim.providerId,
+      academicYear,
       trn: mentor.value
     })
 
@@ -326,12 +328,14 @@ exports.new_claim_mentors_get = (req, res) => {
 }
 
 exports.new_claim_mentors_post = (req, res) => {
+  const academicYear = academicYearHelper.getCurrentAcademicYear().code
   const mentorsCount = mentorModel.findMany({ organisationId: req.params.organisationId }).length
   let mentorOptions = mentorHelper.getMentorOptions({ organisationId: req.params.organisationId })
 
   mentorOptions = mentorOptions.filter(mentor => {
     const mentorHours = claimHelper.getProviderMentorTotalHours({
       providerId: req.session.data.claim.providerId,
+      academicYear,
       trn: mentor.value
     })
 
@@ -378,6 +382,8 @@ exports.new_claim_mentors_post = (req, res) => {
 }
 
 exports.new_claim_hours_get = (req, res) => {
+  const academicYear = academicYearHelper.getCurrentAcademicYear().code
+
   let back = `/organisations/${req.params.organisationId}/claims/new/mentors`
   let save = `/organisations/${req.params.organisationId}/claims/new/hours`
   if (req.query.referrer === 'check') {
@@ -390,6 +396,7 @@ exports.new_claim_hours_get = (req, res) => {
 
   const mentorHours = claimHelper.getProviderMentorTotalHours({
     providerId: req.session.data.claim.providerId,
+    academicYear,
     trn: mentorTrn
   })
 
@@ -415,6 +422,8 @@ exports.new_claim_hours_get = (req, res) => {
 }
 
 exports.new_claim_hours_post = (req, res) => {
+  const academicYear = academicYearHelper.getCurrentAcademicYear().code
+
   let back = `/organisations/${req.params.organisationId}/claims/new/mentors`
   let save = `/organisations/${req.params.organisationId}/claims/new/hours`
   if (req.query.referrer === 'check') {
@@ -427,6 +436,7 @@ exports.new_claim_hours_post = (req, res) => {
 
   const mentorHours = claimHelper.getProviderMentorTotalHours({
     providerId: req.session.data.claim.providerId,
+    academicYear,
     trn: mentorTrn
   })
 
