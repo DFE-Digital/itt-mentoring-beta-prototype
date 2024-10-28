@@ -39,9 +39,9 @@ exports.claim_list = (req, res) => {
   let claims = claimModel.findMany({ organisationId: req.params.organisationId })
 
   claims.sort((a, b) => {
-    return new Date(b.submittedAt) - new Date(a.submittedAt)
-      || new Date(b.updatedAt) - new Date(a.updatedAt)
-      || new Date(b.createdAt) - new Date(a.createdAt)
+    return new Date(b.submittedAt) - new Date(a.submittedAt) ||
+      new Date(b.updatedAt) - new Date(a.updatedAt) ||
+      new Date(b.createdAt) - new Date(a.createdAt)
   })
 
   // decorate the claim with useful stuff
@@ -198,15 +198,15 @@ exports.new_choose_provider_get = (req, res) => {
   })
 
   // sort items alphabetically
-  providerItems.sort((a,b) => {
+  providerItems.sort((a, b) => {
     return a.text.localeCompare(b.text)
   })
 
   // only get the first 15 items
-  providerItems = providerItems.slice(0,15)
+  providerItems = providerItems.slice(0, 15)
 
-  let save = `/organisations/${req.params.organisationId}/claims/new/choose`
-  let back = `/organisations/${req.params.organisationId}/claims/new/`
+  const save = `/organisations/${req.params.organisationId}/claims/new/choose`
+  const back = `/organisations/${req.params.organisationId}/claims/new/`
 
   // if (req.query.referrer === 'check') {
   //   save += '?referrer=check'
@@ -246,15 +246,15 @@ exports.new_choose_provider_post = (req, res) => {
   })
 
   // sort items alphabetically
-  providerItems.sort((a,b) => {
+  providerItems.sort((a, b) => {
     return a.text.localeCompare(b.text)
   })
 
   // only get the first 15 items
-  providerItems = providerItems.slice(0,15)
+  providerItems = providerItems.slice(0, 15)
 
-  let save = `/organisations/${req.params.organisationId}/claims/new/choose`
-  let back = `/organisations/${req.params.organisationId}/claims/new/`
+  const save = `/organisations/${req.params.organisationId}/claims/new/choose`
+  const back = `/organisations/${req.params.organisationId}/claims/new/`
 
   // if (req.query.referrer === 'check') {
   //   save += '?referrer=check'
@@ -463,9 +463,9 @@ exports.new_claim_hours_post = (req, res) => {
       error.text = 'Enter the number of hours'
       errors.push(error)
     } else if (
-      isNaN(req.session.data.mentor.otherHours)
-      || req.session.data.mentor.otherHours < 1
-      || req.session.data.mentor.otherHours > mentorRemainingHours
+      isNaN(req.session.data.mentor.otherHours) ||
+      req.session.data.mentor.otherHours < 1 ||
+      req.session.data.mentor.otherHours > mentorRemainingHours
     ) {
       const error = {}
       error.fieldName = 'otherHours'
@@ -499,28 +499,26 @@ exports.new_claim_hours_post = (req, res) => {
   } else {
     // if (req.query.referrer === 'check') {
 
-
-
     // } else {
-      // put the submitted the mentor information into the mentors array in the claim
-      req.session.data.claim.mentors.push(req.session.data.mentor)
+    // put the submitted the mentor information into the mentors array in the claim
+    req.session.data.claim.mentors.push(req.session.data.mentor)
 
-      // delete the mentor object as no longer needed
-      delete req.session.data.mentor
+    // delete the mentor object as no longer needed
+    delete req.session.data.mentor
 
-      // if we've iterated through all the mentors, go to the check page
-      if (req.session.data.position === (req.session.data.mentorChoices.length - 1)) {
-        // delete the position info as no longer needed
-        delete req.session.data.position
+    // if we've iterated through all the mentors, go to the check page
+    if (req.session.data.position === (req.session.data.mentorChoices.length - 1)) {
+      // delete the position info as no longer needed
+      delete req.session.data.position
 
-        res.redirect(`/organisations/${req.params.organisationId}/claims/new/check`)
-      } else {
-        // increment the position to track where we are in the flow
-        req.session.data.position += 1
+      res.redirect(`/organisations/${req.params.organisationId}/claims/new/check`)
+    } else {
+      // increment the position to track where we are in the flow
+      req.session.data.position += 1
 
-        // redirct the user back to the hours page to add info for the next mentor
-        res.redirect(`/organisations/${req.params.organisationId}/claims/new/hours`)
-      }
+      // redirct the user back to the hours page to add info for the next mentor
+      res.redirect(`/organisations/${req.params.organisationId}/claims/new/hours`)
+    }
     // }
   }
 }

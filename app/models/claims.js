@@ -61,8 +61,8 @@ exports.findOne = (params) => {
 
   if (params.claimId || params.reference) {
     claim = claims.find(claim =>
-      claim.id === params.claimId
-      || claim.reference === params.reference
+      claim.id === params.claimId ||
+      claim.reference === params.reference
     )
 
     if (claim.notes) {
@@ -76,7 +76,7 @@ exports.findOne = (params) => {
 }
 
 exports.insertOne = (params) => {
-  let claim = {}
+  const claim = {}
 
   if (params.organisationId) {
     claim.id = uuid()
@@ -135,7 +135,7 @@ exports.updateOne = (params) => {
   if (params.organisationId && params.claimId) {
     claim = this.findOne({
       organisationId: params.organisationId,
-      claimId: params.claimId,
+      claimId: params.claimId
     })
 
     // add a notes array if it doesn't exist

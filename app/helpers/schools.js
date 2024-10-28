@@ -25,7 +25,6 @@ exports.getSchoolOptions = (selectedItem) => {
   return items
 }
 
-
 exports.getSchoolName = (id) => {
   const school = organisationModel.findOne({ organisationId: id })
 

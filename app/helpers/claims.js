@@ -7,7 +7,7 @@ const claimStatuses = require('../data/dist/statuses/claim-statuses')
 exports.generateClaimID = () => {
   // Generate a random number, convert it to base 36, and extract digits 2 to 10
   // The substring starts at index 2 to skip the "0." part of the decimal result from Math.random()
-  let claimID = Math.random().toString(36).substring(2, 10)
+  const claimID = Math.random().toString(36).substring(2, 10)
 
   // Ensure the ID is 8 characters long
   if (claimID.length < 8) {
@@ -59,8 +59,8 @@ exports.getClaimStatusLabel = (status) => {
 
   if (status?.length) {
     cs = claimStatuses.find(claimStatus =>
-      claimStatus.code === status
-      || claimStatus.id === status
+      claimStatus.code === status ||
+      claimStatus.id === status
     )
 
     if (cs) {
@@ -76,8 +76,8 @@ exports.getClaimStatusClasses = (status) => {
 
   if (status?.length) {
     cs = claimStatuses.find(claimStatus =>
-      claimStatus.code === status
-      || claimStatus.id === status
+      claimStatus.code === status ||
+      claimStatus.id === status
     )
 
     if (cs) {

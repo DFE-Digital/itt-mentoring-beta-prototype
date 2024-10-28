@@ -265,7 +265,7 @@ exports.create_password_post = (req, res) => {
     error.href = '#confirmPassword'
     error.text = 'Enter a password confirmation'
     errors.push(error)
-  } else if (!(req.session.data.confirmPassword == req.session.data.password)) {
+  } else if (!(req.session.data.confirmPassword === req.session.data.password)) {
     const error = {}
     error.fieldName = 'confirmPassword'
     error.href = '#confirmPassword'

@@ -5,6 +5,11 @@ const { v4: uuid } = require('uuid')
 const directoryPath = path.join(__dirname, '../data/dist/users/')
 
 exports.findMany = (params) => {
+  // to prevent errors, check if directoryPath exists and if not, create
+  if (!fs.existsSync(directoryPath)) {
+    fs.mkdirSync(directoryPath)
+  }
+
   let users = []
 
   let documents = fs.readdirSync(directoryPath, 'utf8')
@@ -17,7 +22,6 @@ exports.findMany = (params) => {
     const data = JSON.parse(raw)
     users.push(data)
   })
-
 
   users = users.filter(user => {
     return !user.organisations.length
@@ -136,6 +140,6 @@ exports.deleteOne = (params) => {
     const filePath = directoryPath + '/' + params.userId + '.json'
     // remove the user altogether since they're no longer associated with an
     // organisation
-      fs.unlinkSync(filePath)
+    fs.unlinkSync(filePath)
   }
 }

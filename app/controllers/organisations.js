@@ -101,12 +101,15 @@ exports.show_organisation_get = (req, res) => {
 exports.provider_suggestions_json = (req, res) => {
   req.headers['Access-Control-Allow-Origin'] = true
 
-  let providers
-  providers = providerModel.findMany(req.query)
+  let providers = []
 
-  providers.sort((a, b) => {
-    return a.name.localeCompare(b.name)
-  })
+  if (req.query) {
+    providers = providerModel.findMany(req.query)
+
+    providers.sort((a, b) => {
+      return a.name.localeCompare(b.name)
+    })
+  }
 
   // TODO: slice data to only return max n records
 
@@ -116,12 +119,15 @@ exports.provider_suggestions_json = (req, res) => {
 exports.school_suggestions_json = (req, res) => {
   req.headers['Access-Control-Allow-Origin'] = true
 
-  let schools
-  schools = schoolModel.findMany(req.query)
+  let schools = []
 
-  schools.sort((a, b) => {
-    return a.name.localeCompare(b.name)
-  })
+  if (req.query) {
+    schools = schoolModel.findMany(req.query)
+
+    schools.sort((a, b) => {
+      return a.name.localeCompare(b.name)
+    })
+  }
 
   // TODO: slice data to only return max n records
 
