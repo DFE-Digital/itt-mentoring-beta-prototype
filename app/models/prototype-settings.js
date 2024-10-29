@@ -23,7 +23,7 @@ exports.update = (params) => {
     settings.pageSize = params.settings.pageSize
   }
 
-  const filePath = directoryPath + '/settings.json'
+  const filePath = directoryPath + '/prototype-settings.json'
 
   // create a JSON sting for the submitted data
   const fileData = JSON.stringify(settings)
