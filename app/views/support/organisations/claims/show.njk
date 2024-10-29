@@ -32,6 +32,12 @@
 
       {% include "_includes/page-heading.njk" %}
 
+      {% if claim.status == "draft" %}
+        <p class="govuk-body">
+          <a class="govuk-link" href="{{ actions.delete }}">Remove claim</a>
+        </p>
+      {% endif %}
+
       {% include "_includes/claims/meta-data.njk" %}
 
       {% include "_includes/claims/details.njk" %}
@@ -39,12 +45,6 @@
       {% include "_includes/claims/hours-of-training.njk" %}
 
       {% include "_includes/claims/grant-funding.njk" %}
-
-      {% if claim.status == "draft" %}
-        <p class="govuk-body">
-          <a class="govuk-link app-link--destructive" href="{{ actions.delete }}">Remove claim</a>
-        </p>
-      {% endif %}
 
     </div>
   </div>

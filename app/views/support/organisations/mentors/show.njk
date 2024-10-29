@@ -21,11 +21,12 @@
 
       {% include "_includes/page-heading.njk" %}
 
+      <p class="govuk-body">
+        <a class="govuk-link" href="{{ actions.delete }}">Remove mentor</a>
+      </p>
+
       {% include "_includes/mentors/details.njk" %}
 
-      <p class="govuk-body">
-        <a class="govuk-link app-link--destructive" href="{{ actions.delete }}">Remove mentor</a>
-      </p>
 
     </div>
   </div>

@@ -31,11 +31,19 @@
       {% include "_includes/page-heading.njk" %}
 
       {% if claim.academicYear | isCurrentAcademicYear and claim.status == "draft" %}
-        {{ govukButton({
-          text: "Submit claim",
-          href: actions.submit
-        }) }}
+        <div class="govuk-button-group">
+          {{ govukButton({
+            text: "Submit claim",
+            href: actions.submit
+          }) }}
+          <a class="govuk-link" href="{{ actions.delete }}">Remove claim</a>
+        </div>
       {% else %}
+        {% if claim.status == "draft" %}
+          <p class="govuk-body">
+            <a class="govuk-link" href="{{ actions.delete }}">Remove claim</a>
+          </p>
+        {% endif %}
         {% include "_includes/claims/meta-data.njk" %}
       {% endif %}
 
@@ -47,12 +55,6 @@
 
       {% if claim.status in ["clawback_complete","clawback_requested","clawback_in_progress"] %}
         {% include "_includes/claims/clawback-details.njk" %}
-      {% endif %}
-
-      {% if claim.status == "draft" %}
-        <p class="govuk-body">
-          <a class="govuk-link app-link--destructive" href="{{ actions.delete }}">Remove claim</a>
-        </p>
       {% endif %}
 
     </div>

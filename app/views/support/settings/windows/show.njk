@@ -21,6 +21,10 @@
 
       {% include "_includes/page-heading.njk" %}
 
+      <p class="govuk-body">
+        <a class="govuk-link" href="{{ actions.delete }}">Remove claim window</a>
+      </p>
+
       {{ govukSummaryList({
         rows: [
           {
@@ -76,10 +80,6 @@
           }
         ]
       }) }}
-
-      <p class="govuk-body">
-        <a class="govuk-link app-link--destructive" href="{{ actions.delete }}">Remove claim window</a>
-      </p>
 
     </div>
   </div>
