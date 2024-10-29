@@ -184,8 +184,8 @@ exports.new_claim_post = (req, res) => {
 }
 
 exports.new_claim_mentors_get = (req, res) => {
+  const academicYear = academicYearHelper.getCurrentAcademicYear().code
   const organisation = organisationModel.findOne({ organisationId: req.params.organisationId })
-  // const mentorOptions = mentorHelper.getMentorOptions({ organisationId: req.params.organisationId })
 
   const mentorsCount = mentorModel.findMany({ organisationId: req.params.organisationId }).length
   let mentorOptions = mentorHelper.getMentorOptions({ organisationId: req.params.organisationId })
@@ -193,6 +193,7 @@ exports.new_claim_mentors_get = (req, res) => {
   mentorOptions = mentorOptions.filter(mentor => {
     const mentorHours = claimHelper.getProviderMentorTotalHours({
       providerId: req.session.data.claim.providerId,
+      academicYear,
       trn: mentor.value
     })
 
@@ -219,14 +220,15 @@ exports.new_claim_mentors_get = (req, res) => {
 }
 
 exports.new_claim_mentors_post = (req, res) => {
+  const academicYear = academicYearHelper.getCurrentAcademicYear().code
   const organisation = organisationModel.findOne({ organisationId: req.params.organisationId })
-  // const mentorOptions = mentorHelper.getMentorOptions({ organisationId: req.params.organisationId })
 
   let mentorOptions = mentorHelper.getMentorOptions({ organisationId: req.params.organisationId })
 
   mentorOptions = mentorOptions.filter(mentor => {
     const mentorHours = claimHelper.getProviderMentorTotalHours({
       providerId: req.session.data.claim.providerId,
+      academicYear,
       trn: mentor.value
     })
 
@@ -274,6 +276,7 @@ exports.new_claim_mentors_post = (req, res) => {
 }
 
 exports.new_claim_hours_get = (req, res) => {
+  const academicYear = academicYearHelper.getCurrentAcademicYear().code
   const organisation = organisationModel.findOne({ organisationId: req.params.organisationId })
 
   let back = `/support/organisations/${req.params.organisationId}/claims/new/mentors`
@@ -288,6 +291,7 @@ exports.new_claim_hours_get = (req, res) => {
 
   const mentorHours = claimHelper.getProviderMentorTotalHours({
     providerId: req.session.data.claim.providerId,
+    academicYear,
     trn: mentorTrn
   })
 
@@ -314,6 +318,7 @@ exports.new_claim_hours_get = (req, res) => {
 }
 
 exports.new_claim_hours_post = (req, res) => {
+  const academicYear = academicYearHelper.getCurrentAcademicYear().code
   const organisation = organisationModel.findOne({ organisationId: req.params.organisationId })
 
   let back = `/support/organisations/${req.params.organisationId}/claims/new/mentors`
@@ -328,6 +333,7 @@ exports.new_claim_hours_post = (req, res) => {
 
   const mentorHours = claimHelper.getProviderMentorTotalHours({
     providerId: req.session.data.claim.providerId,
+    academicYear,
     trn: mentorTrn
   })
 
@@ -416,6 +422,7 @@ exports.new_claim_hours_post = (req, res) => {
 }
 
 exports.new_claim_check_get = (req, res) => {
+  const academicYear = academicYearHelper.getCurrentAcademicYear().code
   const organisation = organisationModel.findOne({ organisationId: req.params.organisationId })
 
   const position = req.session.data.claim.mentors.length - 1
@@ -432,6 +439,7 @@ exports.new_claim_check_get = (req, res) => {
   res.render('../views/support/organisations/claims/check-your-answers', {
     organisation,
     claim: req.session.data.claim,
+    academicYear,
     actions: {
       save: `/support/organisations/${req.params.organisationId}/claims/new/check`,
       back: `/support/organisations/${req.params.organisationId}/claims/new/hours?position=${position}`,
