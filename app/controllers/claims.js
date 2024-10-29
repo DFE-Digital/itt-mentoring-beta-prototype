@@ -3,28 +3,40 @@ const mentorModel = require('../models/mentors')
 const organisationModel = require('../models/organisations')
 const providerModel = require('../models/providers')
 
-const Pagination = require('../helpers/pagination')
+// const Pagination = require('../helpers/pagination')
+const academicYearHelper = require('../helpers/academic-years')
+const claimWindowHelper = require('../helpers/claim-windows')
 const claimHelper = require('../helpers/claims')
 const mentorHelper = require('../helpers/mentors')
 
 const claimDecorator = require('../decorators/claims')
 
-const settings = require('../data/dist/settings')
+// const settings = require('../data/dist/prototype-settings')
 
 /// ------------------------------------------------------------------------ ///
 /// LIST CLAIM
 /// ------------------------------------------------------------------------ ///
 
 exports.claim_list = (req, res) => {
-  const organisation = organisationModel.findOne({ organisationId: req.params.organisationId })
-  let claims = claimModel.findMany({ organisationId: req.params.organisationId })
-  const mentors = mentorModel.findMany({ organisationId: req.params.organisationId })
-
   delete req.session.data.claim
   delete req.session.data.mentor
   delete req.session.data.mentorChoices
   delete req.session.data.position
   delete req.session.data.provider
+
+  const organisation = organisationModel.findOne({ organisationId: req.params.organisationId })
+  const mentors = mentorModel.findMany({ organisationId: req.params.organisationId })
+
+  const currentClaimWindow = claimWindowHelper.getCurrentClaimWindow()
+
+  let academicYears = academicYearHelper.getAcademicYears()
+
+  // sort academic years newest to oldest
+  academicYears.sort((a, b) => {
+    return b.code.localeCompare(a.code)
+  })
+
+  let claims = claimModel.findMany({ organisationId: req.params.organisationId })
 
   claims.sort((a, b) => {
     return new Date(b.submittedAt) - new Date(a.submittedAt) ||
@@ -32,14 +44,41 @@ exports.claim_list = (req, res) => {
       new Date(b.createdAt) - new Date(a.createdAt)
   })
 
-  const pagination = new Pagination(claims, req.query.page, settings.pageSize)
-  claims = pagination.getData()
+  // decorate the claim with useful stuff
+  if (claims.length) {
+    claims = claims.map(claim => {
+      return claim = claimDecorator.decorate(claim)
+    })
+  }
+
+  let groupedClaims = []
+
+  // group the claims by academic years
+  academicYears.forEach((academicYear, i) => {
+    const group = {}
+    group.id = academicYear.id
+    group.code = academicYear.code
+    group.name = academicYear.name
+    group.claims = claims.filter(claim => claim.academicYear === academicYear.code)
+    groupedClaims.push(group)
+  })
+
+  // don't show academic years for schools that couldn't claim as
+  // they weren't part of private beta
+  if (!organisation.privateBetaSchool) {
+    academicYears = academicYears.filter(year => year.code !== '2023_2024')
+    groupedClaims = groupedClaims.filter(group => group.code !== '2023_2024')
+  }
+
+  // const pagination = new Pagination(claims, req.query.page, settings.pageSize)
+  // claims = pagination.getData()
 
   res.render('../views/claims/list', {
     organisation,
-    claims,
+    years: groupedClaims,
     mentors,
-    pagination,
+    // pagination,
+    currentClaimWindow,
     actions: {
       new: `/organisations/${req.params.organisationId}/claims/new`,
       view: `/organisations/${req.params.organisationId}/claims`,
@@ -256,12 +295,14 @@ exports.new_choose_provider_post = (req, res) => {
 }
 
 exports.new_claim_mentors_get = (req, res) => {
+  const academicYear = academicYearHelper.getCurrentAcademicYear().code
   const mentorsCount = mentorModel.findMany({ organisationId: req.params.organisationId }).length
   let mentorOptions = mentorHelper.getMentorOptions({ organisationId: req.params.organisationId })
 
   mentorOptions = mentorOptions.filter(mentor => {
     const mentorHours = claimHelper.getProviderMentorTotalHours({
       providerId: req.session.data.claim.providerId,
+      academicYear,
       trn: mentor.value
     })
 
@@ -287,12 +328,14 @@ exports.new_claim_mentors_get = (req, res) => {
 }
 
 exports.new_claim_mentors_post = (req, res) => {
+  const academicYear = academicYearHelper.getCurrentAcademicYear().code
   const mentorsCount = mentorModel.findMany({ organisationId: req.params.organisationId }).length
   let mentorOptions = mentorHelper.getMentorOptions({ organisationId: req.params.organisationId })
 
   mentorOptions = mentorOptions.filter(mentor => {
     const mentorHours = claimHelper.getProviderMentorTotalHours({
       providerId: req.session.data.claim.providerId,
+      academicYear,
       trn: mentor.value
     })
 
@@ -339,6 +382,8 @@ exports.new_claim_mentors_post = (req, res) => {
 }
 
 exports.new_claim_hours_get = (req, res) => {
+  const academicYear = academicYearHelper.getCurrentAcademicYear().code
+
   let back = `/organisations/${req.params.organisationId}/claims/new/mentors`
   let save = `/organisations/${req.params.organisationId}/claims/new/hours`
   if (req.query.referrer === 'check') {
@@ -351,6 +396,7 @@ exports.new_claim_hours_get = (req, res) => {
 
   const mentorHours = claimHelper.getProviderMentorTotalHours({
     providerId: req.session.data.claim.providerId,
+    academicYear,
     trn: mentorTrn
   })
 
@@ -376,6 +422,8 @@ exports.new_claim_hours_get = (req, res) => {
 }
 
 exports.new_claim_hours_post = (req, res) => {
+  const academicYear = academicYearHelper.getCurrentAcademicYear().code
+
   let back = `/organisations/${req.params.organisationId}/claims/new/mentors`
   let save = `/organisations/${req.params.organisationId}/claims/new/hours`
   if (req.query.referrer === 'check') {
@@ -388,6 +436,7 @@ exports.new_claim_hours_post = (req, res) => {
 
   const mentorHours = claimHelper.getProviderMentorTotalHours({
     providerId: req.session.data.claim.providerId,
+    academicYear,
     trn: mentorTrn
   })
 
@@ -475,6 +524,7 @@ exports.new_claim_hours_post = (req, res) => {
 }
 
 exports.new_claim_check_get = (req, res) => {
+  const academicYear = academicYearHelper.getCurrentAcademicYear().code
   const organisation = organisationModel.findOne({ organisationId: req.params.organisationId })
   const position = req.session.data.claim.mentors.length - 1
 
@@ -490,6 +540,7 @@ exports.new_claim_check_get = (req, res) => {
   res.render('../views/claims/check-your-answers', {
     organisation,
     claim: req.session.data.claim,
+    academicYear,
     actions: {
       save: `/organisations/${req.params.organisationId}/claims/new/check`,
       back: `/organisations/${req.params.organisationId}/claims/new/hours?position=${position}`,

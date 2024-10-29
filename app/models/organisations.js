@@ -63,6 +63,10 @@ exports.insertOne = (params) => {
   if (params.organisation) {
     organisation = params.organisation
 
+    // hard code the private beta flag to false since all new schools will
+    // in public beta
+    organisation.privateBetaSchool = false
+
     organisation.createdAt = new Date()
 
     const filePath = directoryPath + '/' + organisation.id + '.json'

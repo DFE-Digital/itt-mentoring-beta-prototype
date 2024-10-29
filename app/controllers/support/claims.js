@@ -4,6 +4,7 @@ const csvWriter = require('csv-writer').createObjectCsvWriter
 const claimModel = require('../../models/claims')
 
 const Pagination = require('../../helpers/pagination')
+const academicYearHelper = require('../../helpers/academic-years')
 const claimHelper = require('../../helpers/claims')
 const filterHelper = require('../../helpers/filters')
 const providerHelper = require('../../helpers/providers')
@@ -12,7 +13,7 @@ const statusHelper = require('../../helpers/statuses')
 
 const claimDecorator = require('../../decorators/claims')
 
-const settings = require('../../data/dist/settings')
+const settings = require('../../data/dist/prototype-settings')
 
 /// ------------------------------------------------------------------------ ///
 /// LIST CLAIMS
@@ -32,9 +33,15 @@ exports.list_claims_get = (req, res) => {
   const hasSearch = !!((keywords))
 
   // Filters
+  const academicYear = null
   const status = null
   const school = null
   const provider = null
+
+  let academicYears
+  if (req.session.data.filters?.academicYear) {
+    academicYears = filterHelper.getCheckboxValues(academicYear, req.session.data.filters.academicYear)
+  }
 
   let statuses
   if (req.session.data.filters?.status) {
@@ -51,15 +58,28 @@ exports.list_claims_get = (req, res) => {
     providers = filterHelper.getCheckboxValues(provider, req.session.data.filters.provider)
   }
 
-  const hasFilters = !!((statuses?.length > 0) ||
-    (schools?.length > 0) ||
-    (providers?.length > 0))
+  const hasFilters = !!((academicYears?.length > 0)
+    || (statuses?.length > 0)
+    || (schools?.length > 0)
+    || (providers?.length > 0))
 
   let selectedFilters = null
 
   if (hasFilters) {
     selectedFilters = {
       categories: []
+    }
+
+    if (academicYears?.length) {
+      selectedFilters.categories.push({
+        heading: { text: 'Academic year' },
+        items: academicYears.map((academicYear) => {
+          return {
+            text: academicYearHelper.getAcademicYearLabel(academicYear),
+            href: `/support/claims/remove-academic-year-filter/${academicYear}`
+          }
+        })
+      })
     }
 
     if (statuses?.length) {
@@ -100,6 +120,7 @@ exports.list_claims_get = (req, res) => {
   }
 
   // get filter items
+  const filterAcademicYearItems = academicYearHelper.getAcademicYearOptions(academicYears)
   const filterStatusItems = statusHelper.getClaimStatusOptions(statuses)
   const filterSchoolItems = schoolHelper.getSchoolOptions(schools)
   const filterProviderItems = providerHelper.getProviderOptions(providers)
@@ -107,7 +128,7 @@ exports.list_claims_get = (req, res) => {
   // Get list of all claims
   let claims = claimModel.findMany({})
 
-  // add details of school to each claim
+  // decorate the claim with useful stuff
   if (claims.length) {
     claims = claims.map(claim => {
       return claim = claimDecorator.decorate(claim)
@@ -119,6 +140,12 @@ exports.list_claims_get = (req, res) => {
   // claims = claims.filter(claim => {
   //   return claim.status !== 'draft'
   // })
+
+  if (academicYears?.length) {
+    claims = claims.filter(claim => {
+      return academicYears.includes(claim.academicYear)
+    })
+  }
 
   if (statuses?.length) {
     claims = claims.filter(claim => {
@@ -163,6 +190,7 @@ exports.list_claims_get = (req, res) => {
     hasFilters,
     hasSearch,
     keywords,
+    filterAcademicYearItems,
     filterStatusItems,
     filterSchoolItems,
     filterProviderItems,
@@ -180,6 +208,14 @@ exports.list_claims_get = (req, res) => {
       download: '/support/claims/download'
     }
   })
+}
+
+exports.removeAcademicYearFilter = (req, res) => {
+  req.session.data.filters.academicYear = filterHelper.removeFilter(
+    req.params.academicYear,
+    req.session.data.filters.academicYear
+  )
+  res.redirect('/support/claims')
 }
 
 exports.removeStatusFilter = (req, res) => {
@@ -225,9 +261,15 @@ exports.download_claims_get = async (req, res) => {
   const keywords = req.session.data.keywords
 
   // Filters
+  const academicYear = null
   const status = null
   const school = null
   const provider = null
+
+  let academicYears
+  if (req.session.data.filters?.status) {
+    academicYears = filterHelper.getCheckboxValues(academicYear, req.session.data.filters.academicYear)
+  }
 
   let statuses
   if (req.session.data.filters?.status) {
@@ -251,6 +293,12 @@ exports.download_claims_get = async (req, res) => {
   if (claims.length) {
     claims = claims.map(claim => {
       return claim = claimDecorator.decorate(claim)
+    })
+  }
+
+  if (academicYears?.length) {
+    claims = claims.filter(claim => {
+      return academicYears.includes(claim.academicYear)
     })
   }
 
@@ -280,7 +328,7 @@ exports.download_claims_get = async (req, res) => {
   const records = claimHelper.parseData(claims)
 
   const directoryPath = path.join(__dirname, '../../data/dist/downloads/')
-  const fileName = 'claims-' + new Date().toISOString()
+  const fileName = "claims-" + new Date().toISOString()
   const filePath = directoryPath + '/' + fileName + '.csv'
 
   // create the CSV headers
@@ -303,9 +351,9 @@ exports.download_claims_get = async (req, res) => {
   csv.writeRecords(records)
     .then(() => {
       console.log('CSV file written successfully')
-      res.setHeader('Content-Type', 'text/csv')
-      res.setHeader('Content-Disposition', 'attachment; filename=' + fileName + '.csv')
-      res.sendFile(filePath)
+      res.setHeader('Content-Type', 'text/csv');
+      res.setHeader('Content-Disposition', 'attachment; filename=' + fileName + '.csv');
+      res.sendFile(filePath);
     })
     .catch((error) => {
       console.error('Error writing CSV file:', error)
@@ -336,8 +384,8 @@ exports.show_claim_get = (req, res) => {
       rejectClaim: `/support/claims/payments/${req.params.claimId}/status/not_paid`,
       requestReview: `/support/claims/sampling/${req.params.claimId}/status/clawback_requested`,
       samplingApproved: `/support/claims/sampling/${req.params.claimId}/status/paid`,
-      back: '/support/claims',
-      organisations: '/support/organisations'
+      back: `/support/claims`,
+      organisations: `/support/organisations`
     }
   })
 }

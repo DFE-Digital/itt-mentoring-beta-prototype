@@ -26,21 +26,29 @@
             Before you can start a claim you will need to <a href="{{ actions.mentors }}" class="govuk-link">add a mentor</a>.
           </p>
         {% else %}
-          <p class="govuk-body">
-            Claims can only be made for the school year September 2023 to July 2024.
-          </p>
-          <p class="govuk-body">
-            Final closing date for claims: <strong>{{ '2024-07-19T23:59:59' | govukDateTime }}</strong>
-          </p>
+          {% if now | isClaimWindowOpen %}
+            <p class="govuk-body">
+              Claims can only be made for the school year {{ currentClaimWindow.academicYear | getAcademicYearLabel }}.
+            </p>
+            <p class="govuk-body">
+              Final closing date for claims: <strong>{{ currentClaimWindow.closesAt | govukDateTime }}</strong>
+            </p>
+          {% else %}
+            <p class="govuk-body">
+              You can no longer submit claims for the school year {{ currentClaimWindow.academicYear | getAcademicYearLabel }}
+            </p>
+            <p class="govuk-body">
+              You can still <a href="{{ actions.mentors }}" class="govuk-link">add a mentor</a>.
+            </p>
+          {% endif %}
         {% endif %}
-
       {% endset %}
 
       {{ govukInsetText({
         html: insetHtml
       }) }}
 
-      {% if mentors.length %}
+      {% if now | isClaimWindowOpen and mentors.length %}
         {{ govukButton({
           text: "Add claim",
           href: actions.new
@@ -52,12 +60,20 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
 
-      {% if claims.length %}
-        {% include "_includes/claims/list.njk" %}
-        {% include "_includes/pagination.njk" %}
-      {% else %}
-        <p class="govuk-body">There are no claims for {{ organisation.name if organisation.name else "your organisation" }}.</p>
-      {% endif %}
+      {% for year in years %}
+        <h2 class="govuk-heading-m">
+          <span class="govuk-caption-m">Academic year</span>
+          {{ year.name }} {{ "- current" if loop.first }}
+        </h2>
+
+        {% if year.claims.length %}
+          {% set claims = year.claims %}
+          {% include "_includes/claims/list.njk" %}
+          {# {% include "_includes/pagination.njk" %} #}
+        {% else %}
+          <p class="govuk-body">There {{ "are" if loop.first else "were" }} no claims for {{ organisation.name if organisation.name else "your organisation" }} in academic year {{ year.name }}.</p>
+        {% endif %}
+      {% endfor %}
 
     </div>
   </div>

@@ -1,4 +1,4 @@
-const settings = require('../data/dist/settings')
+const settings = require('../data/dist/prototype-settings')
 
 exports.sign_in_get = (req, res) => {
   if (req.session.passport) {

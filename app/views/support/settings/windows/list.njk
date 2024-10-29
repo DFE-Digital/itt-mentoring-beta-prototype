@@ -1,0 +1,70 @@
+{% extends "layouts/support.njk" %}
+
+{% set primaryNavId = "settings" %}
+
+{% set title = "Claim windows" %}
+{% set caption = "Service settings" %}
+
+{% block beforeContent %}
+{{ govukBackLink({
+  text: "Back",
+  href: actions.back
+}) }}
+{% endblock %}
+
+{% block content %}
+
+  {% include "_includes/notification-banner.njk" %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      {% include "_includes/page-heading.njk" %}
+
+      {{ govukButton({
+        text: "Add claim window",
+        href: actions.new
+      }) }}
+
+      {% if windows.length %}
+        <div class="app-table--overflow">
+          <table class="govuk-table">
+            <thead class="govuk-table__head">
+              <tr class="govuk-table__row">
+                <th scope="col" class="govuk-table__header">Claim window</th>
+                <th scope="col" class="govuk-table__header">Academic year</th>
+                <th scope="col" class="govuk-table__header">Status</th>
+              </tr>
+            </thead>
+            <tbody class="govuk-table__body">
+              {% for window in windows %}
+                <tr class="govuk-table__row">
+                  <td class="govuk-table__cell">
+                    <a class="govuk-link" href="{{ actions.view }}/{{ window.id }}">
+                      {{ window.opensAt | govukDate }} to {{ window.closesAt | govukDate }}
+                    </a>
+                  </td>
+                  <td class="govuk-table__cell">
+                    {{ window.academicYear | getAcademicYearLabel }}
+                  </td>
+                  <td class="govuk-table__cell">
+                    {{ govukTag({
+                      text: "Current" if loop.first else "Past",
+                      classes: "govuk-tag--green" if loop.first else "govuk-tag--grey"
+                    }) }}
+                  </td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+
+        {% include "_includes/pagination.njk" %}
+      {% else %}
+        <p class="govuk-body">There are no claim windows set up.</p>
+      {% endif %}
+
+    </div>
+  </div>
+
+{% endblock %}

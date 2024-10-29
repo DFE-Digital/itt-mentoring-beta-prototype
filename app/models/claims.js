@@ -2,6 +2,8 @@ const path = require('path')
 const fs = require('fs')
 const { v4: uuid } = require('uuid')
 
+const academicYearHelper = require('../helpers/academic-years')
+
 const directoryPath = path.join(__dirname, '../data/dist/claims/')
 
 exports.findMany = (params) => {
@@ -36,6 +38,11 @@ exports.findMany = (params) => {
   // Claim status
   if (params.status) {
     claims = claims.filter(claim => claim.status === params.status)
+  }
+
+  // Claim academic year
+  if (params.academicYear) {
+    claims = claims.filter(claim => claim.academicYear === params.academicYear)
   }
 
   return claims
@@ -103,6 +110,12 @@ exports.insertOne = (params) => {
 
     claim.createdAt = new Date()
 
+    if (claim.submittedAt) {
+      claim.academicYear = academicYearHelper.getAcademicYear(claim.submittedAt)
+    } else {
+      claim.academicYear = academicYearHelper.getAcademicYear(claim.createdAt)
+    }
+
     const filePath = directoryPath + '/' + claim.id + '.json'
 
     // create a JSON sting for the submitted data
@@ -164,6 +177,12 @@ exports.updateOne = (params) => {
 
     if (params.userId) {
       claim.updatedBy = params.userId
+    }
+
+    if (claim.submittedAt) {
+      claim.academicYear = academicYearHelper.getAcademicYear(claim.submittedAt)
+    } else {
+      claim.academicYear = academicYearHelper.getAcademicYear(claim.createdAt)
     }
 
     const filePath = directoryPath + '/' + params.claimId + '.json'

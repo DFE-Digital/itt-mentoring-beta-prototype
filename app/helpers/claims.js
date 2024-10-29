@@ -92,7 +92,10 @@ exports.getProviderMentorTotalHours = (params) => {
   let totalHours = 0
 
   if (params.providerId && params.trn) {
-    const claims = claimModel.findMany({ providerId: params.providerId })
+    const claims = claimModel.findMany({
+      providerId: params.providerId,
+      academicYear: params.academicYear
+    })
 
     const mentorClaims = claims.filter(claim => {
       return claim.mentors.find(mentor => parseInt(mentor.trn) === parseInt(params.trn))
