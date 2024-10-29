@@ -2,7 +2,7 @@ const path = require('path')
 const fs = require('fs')
 const { v4: uuid } = require('uuid')
 
-const claimDecorator = require('../decorators/claims')
+const academicYearHelper = require('../helpers/academic-years')
 
 const directoryPath = path.join(__dirname, '../data/dist/claims/')
 
@@ -24,13 +24,6 @@ exports.findMany = (params) => {
     const data = JSON.parse(raw)
     claims.push(data)
   })
-
-  // decorate the claim with useful stuff
-  if (claims.length) {
-    claims = claims.map(claim => {
-      return claim = claimDecorator.decorate(claim)
-    })
-  }
 
   // School
   if (params.organisationId) {
@@ -117,6 +110,12 @@ exports.insertOne = (params) => {
 
     claim.createdAt = new Date()
 
+    if (claim.submittedAt) {
+      claim.academicYear = academicYearHelper.getAcademicYear(claim.submittedAt)
+    } else {
+      claim.academicYear = academicYearHelper.getAcademicYear(claim.createdAt)
+    }
+
     const filePath = directoryPath + '/' + claim.id + '.json'
 
     // create a JSON sting for the submitted data
@@ -178,6 +177,12 @@ exports.updateOne = (params) => {
 
     if (params.userId) {
       claim.updatedBy = params.userId
+    }
+
+    if (claim.submittedAt) {
+      claim.academicYear = academicYearHelper.getAcademicYear(claim.submittedAt)
+    } else {
+      claim.academicYear = academicYearHelper.getAcademicYear(claim.createdAt)
     }
 
     const filePath = directoryPath + '/' + params.claimId + '.json'
