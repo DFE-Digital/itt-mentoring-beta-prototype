@@ -3,7 +3,6 @@
 {% from "_components/checkbox-filter/macro.njk" import appCheckboxFilter %}
 {% from "_components/footer/macro.njk" import appFooter %}
 {% from "_components/organisation-actions/macro.njk" import appOrganisationActions %}
-{% from "_components/primary-navigation/macro.njk" import appPrimaryNavigation %}
 {% from "_components/search/macro.njk" import appSearch %}
 {% from "_components/secondary-navigation/macro.njk" import appSecondaryNavigation %}
 {% from "_components/timeline/macro.njk" import appTimeline %}
@@ -44,8 +43,8 @@
   }) }}
 
   {% if not hidePrimaryNavigation %}
-    {{ appPrimaryNavigation({
-      items: [
+    {{ govukServiceNavigation({
+      navigation: [
         {
           href: "/support/organisations",
           text: "Organisations",
