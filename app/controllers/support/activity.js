@@ -4,13 +4,21 @@ const activityLogModel = require('../../models/activity')
 
 const Pagination = require('../../helpers/pagination')
 
-const settings = require('../../data/dist/settings')
+const settings = require('../../data/dist/prototype-settings')
 
 exports.list_activity_get = (req, res) => {
   let activity = activityLogModel.findMany()
 
   activity.sort((a, b) => {
     return new Date(b.createdAt) - new Date(a.createdAt)
+  })
+
+  activity.forEach(acitvityItem => {
+    if (acitvityItem.documents.length) {
+      acitvityItem.documents.sort((a, b) => {
+        return a.title.localeCompare(b.title)
+      })
+    }
   })
 
   const pagination = new Pagination(activity, req.query.page, settings.pageSize)
@@ -20,7 +28,7 @@ exports.list_activity_get = (req, res) => {
     activity,
     pagination,
     actions: {
-      show: `/support/claims/activity`
+      show: '/support/claims/activity'
     }
   })
 }
@@ -30,17 +38,28 @@ exports.show_activity_get = (req, res) => {
     activityId: req.params.activityId
   })
 
+  if (activity.documents.length) {
+    activity.documents.sort((a, b) => {
+      return a.title.localeCompare(b.title)
+    })
+  }
+
+  let documents = activity.documents
+  const pagination = new Pagination(documents, req.query.page, settings.pageSize)
+  documents = pagination.getData()
+
   res.render('../views/support/claims/activity/show', {
     activity,
-    // pagination,
+    documents,
+    pagination,
     actions: {
-      back: `/support/claims/activity`
+      back: '/support/claims/activity'
     }
   })
 }
 
 exports.download_activity_get = (req, res) => {
-  let directoryPath = path.join(__dirname, '../../data/dist/downloads')
+  const directoryPath = path.join(__dirname, '../../data/dist/downloads')
 
   // if (req.query.type === 'payments') {
   //   directoryPath = path.join(__dirname, '../../data/dist/payments')

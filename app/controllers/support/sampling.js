@@ -17,7 +17,7 @@ const utilHelper = require('../../helpers/utils')
 const claimDecorator = require('../../decorators/claims')
 const samplingDecorator = require('../../decorators/sampling')
 
-const settings = require('../../data/dist/settings')
+const settings = require('../../data/dist/prototype-settings')
 
 /// ------------------------------------------------------------------------ ///
 /// LIST CLAIMS
@@ -57,9 +57,9 @@ exports.list_claims_get = (req, res) => {
     providers = filterHelper.getCheckboxValues(provider, req.session.data.filters.provider)
   }
 
-  const hasFilters = !!((statuses?.length > 0)
-  || (schools?.length > 0)
-    || (providers?.length > 0))
+  const hasFilters = !!((statuses?.length > 0) ||
+  (schools?.length > 0) ||
+    (providers?.length > 0))
 
   let selectedFilters = null
 
@@ -105,7 +105,7 @@ exports.list_claims_get = (req, res) => {
     }
   }
 
-  const statusArray = ['sampling_in_progress','sampling_provider_not_approved']
+  const statusArray = ['sampling_in_progress', 'sampling_provider_not_approved']
 
   // get filter items
   let filterStatusItems = statusHelper.getClaimStatusOptions(statuses)
@@ -165,9 +165,9 @@ exports.list_claims_get = (req, res) => {
     filterSchoolItems,
     filterProviderItems,
     actions: {
-      upload: `/support/claims/sampling/upload`,
-      response: `/support/claims/sampling/response`,
-      view: `/support/claims/sampling`,
+      upload: '/support/claims/sampling/upload',
+      response: '/support/claims/sampling/response',
+      view: '/support/claims/sampling',
       filters: {
         apply: '/support/claims/sampling',
         remove: '/support/claims/sampling/remove-all-filters'
@@ -239,9 +239,9 @@ exports.show_claim_get = (req, res) => {
       rejectClaim: `/support/claims/sampling/${req.params.claimId}/status/sampling_not_approved`,
       providerRejectClaim: `/support/claims/sampling/${req.params.claimId}/status/sampling_provider_not_approved`,
       requestClawback: `/support/claims/sampling/${req.params.claimId}/status/clawback_requested`,
-      back: `/support/claims/sampling`,
-      cancel: `/support/claims/sampling`,
-      organisations: `/support/organisations`
+      back: '/support/claims/sampling',
+      cancel: '/support/claims/sampling',
+      organisations: '/support/organisations'
     }
   })
 }
@@ -289,7 +289,7 @@ exports.update_claim_status_post = (req, res) => {
   if (req.params.claimStatus === 'sampling_provider_not_approved') {
     res.redirect(`/support/claims/sampling/${req.params.claimId}`)
   } else {
-    res.redirect(`/support/claims/sampling`)
+    res.redirect('/support/claims/sampling')
   }
 }
 
@@ -307,9 +307,9 @@ exports.upload_claims_get = (req, res) => {
   res.render('../views/support/claims/sampling/upload', {
     hasClaims,
     actions: {
-      save: `/support/claims/sampling/upload`,
-      back: `/support/claims/sampling`,
-      cancel: `/support/claims/sampling`
+      save: '/support/claims/sampling/upload',
+      back: '/support/claims/sampling',
+      cancel: '/support/claims/sampling'
     }
   })
 }
@@ -359,9 +359,9 @@ exports.upload_claims_post = (req, res) => {
     res.render('../views/support/claims/sampling/upload', {
       hasClaims,
       actions: {
-        save: `/support/claims/sampling/upload`,
-        back: `/support/claims/sampling`,
-        cancel: `/support/claims/sampling`
+        save: '/support/claims/sampling/upload',
+        back: '/support/claims/sampling',
+        cancel: '/support/claims/sampling'
       },
       errors
     })
@@ -416,9 +416,9 @@ exports.review_upload_claims_get = (req, res) => {
     warningText,
     buttonLabel,
     actions: {
-      save: `/support/claims/sampling/upload/review`,
-      back: `/support/claims/sampling/upload`,
-      cancel: `/support/claims/sampling`
+      save: '/support/claims/sampling/upload/review',
+      back: '/support/claims/sampling/upload',
+      cancel: '/support/claims/sampling'
     }
   })
 }
@@ -496,9 +496,9 @@ exports.response_claims_get = (req, res) => {
   res.render('../views/support/claims/sampling/response', {
     hasClaims,
     actions: {
-      save: `/support/claims/sampling/response`,
-      back: `/support/claims/sampling`,
-      cancel: `/support/claims/sampling`
+      save: '/support/claims/sampling/response',
+      back: '/support/claims/sampling',
+      cancel: '/support/claims/sampling'
     }
   })
 }
@@ -548,9 +548,9 @@ exports.response_claims_post = (req, res) => {
     res.render('../views/support/claims/sampling/response', {
       hasClaims,
       actions: {
-        save: `/support/claims/sampling/response`,
-        back: `/support/claims/sampling`,
-        cancel: `/support/claims/sampling`
+        save: '/support/claims/sampling/response',
+        back: '/support/claims/sampling',
+        cancel: '/support/claims/sampling'
       },
       errors
     })
@@ -601,9 +601,9 @@ exports.review_response_claims_get = (req, res) => {
     pageHeading,
     buttonLabel,
     actions: {
-      save: `/support/claims/sampling/response/review`,
-      back: `/support/claims/sampling/response`,
-      cancel: `/support/claims/sampling`
+      save: '/support/claims/sampling/response/review',
+      back: '/support/claims/sampling/response',
+      cancel: '/support/claims/sampling'
     }
   })
 }
@@ -613,7 +613,7 @@ exports.review_response_claims_post = (req, res) => {
 
   claims.forEach(claim => {
     claim.claim_status = 'paid'
-    if (!claim.assured || ['false','no'].includes(claim.assured)) {
+    if (!claim.assured || ['false', 'no'].includes(claim.assured)) {
       claim.claim_status = 'sampling_provider_not_approved'
     }
 
@@ -663,13 +663,12 @@ exports.download_claims_get = (req, res) => {
   res.render('../views/support/claims/sampling/download', {
     hasError,
     actions: {
-      download: `/support/claims/sampling/download`
+      download: '/support/claims/sampling/download'
     }
   })
 }
 
 exports.download_claims_post = (req, res) => {
-
   req.flash('success', 'Claims downloaded')
-  res.redirect(`/support/claims/sampling/download`)
+  res.redirect('/support/claims/sampling/download')
 }

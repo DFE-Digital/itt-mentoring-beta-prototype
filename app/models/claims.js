@@ -2,6 +2,8 @@ const path = require('path')
 const fs = require('fs')
 const { v4: uuid } = require('uuid')
 
+const academicYearHelper = require('../helpers/academic-years')
+
 const directoryPath = path.join(__dirname, '../data/dist/claims/')
 
 exports.findMany = (params) => {
@@ -38,6 +40,11 @@ exports.findMany = (params) => {
     claims = claims.filter(claim => claim.status === params.status)
   }
 
+  // Claim academic year
+  if (params.academicYear) {
+    claims = claims.filter(claim => claim.academicYear === params.academicYear)
+  }
+
   return claims
 }
 
@@ -47,8 +54,8 @@ exports.findOne = (params) => {
 
   if (params.claimId || params.reference) {
     claim = claims.find(claim =>
-      claim.id === params.claimId
-      || claim.reference === params.reference
+      claim.id === params.claimId ||
+      claim.reference === params.reference
     )
 
     if (claim.notes) {
@@ -62,7 +69,7 @@ exports.findOne = (params) => {
 }
 
 exports.insertOne = (params) => {
-  let claim = {}
+  const claim = {}
 
   if (params.organisationId) {
     claim.id = uuid()
@@ -103,6 +110,12 @@ exports.insertOne = (params) => {
 
     claim.createdAt = new Date()
 
+    if (claim.submittedAt) {
+      claim.academicYear = academicYearHelper.getAcademicYear(claim.submittedAt)
+    } else {
+      claim.academicYear = academicYearHelper.getAcademicYear(claim.createdAt)
+    }
+
     const filePath = directoryPath + '/' + claim.id + '.json'
 
     // create a JSON sting for the submitted data
@@ -121,7 +134,7 @@ exports.updateOne = (params) => {
   if (params.organisationId && params.claimId) {
     claim = this.findOne({
       organisationId: params.organisationId,
-      claimId: params.claimId,
+      claimId: params.claimId
     })
 
     // add a notes array if it doesn't exist
@@ -164,6 +177,12 @@ exports.updateOne = (params) => {
 
     if (params.userId) {
       claim.updatedBy = params.userId
+    }
+
+    if (claim.submittedAt) {
+      claim.academicYear = academicYearHelper.getAcademicYear(claim.submittedAt)
+    } else {
+      claim.academicYear = academicYearHelper.getAcademicYear(claim.createdAt)
     }
 
     const filePath = directoryPath + '/' + params.claimId + '.json'

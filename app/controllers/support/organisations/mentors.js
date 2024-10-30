@@ -8,7 +8,7 @@ const arrayHelper = require('../../../helpers/arrays')
 const dateHelper = require('../../../helpers/dates')
 const validationHelper = require('../../../helpers/validators')
 
-const settings = require('../../../data/dist/settings')
+const settings = require('../../../data/dist/prototype-settings')
 
 /// ------------------------------------------------------------------------ ///
 /// LIST MENTOR
@@ -34,7 +34,7 @@ exports.mentor_list = (req, res) => {
     actions: {
       new: `/support/organisations/${req.params.organisationId}/mentors/new`,
       view: `/support/organisations/${req.params.organisationId}/mentors`,
-      back: `/support/organisations`
+      back: '/support/organisations'
     }
   })
 }

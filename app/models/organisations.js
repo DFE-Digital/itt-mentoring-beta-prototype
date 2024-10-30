@@ -31,12 +31,12 @@ exports.findMany = (params) => {
   if (params.keywords?.length || params.query?.length) {
     const keywords = params.keywords?.toLowerCase() || params.query?.toLowerCase()
     organisations = organisations.filter(organisation =>
-      organisation.name.toLowerCase().includes(keywords)
-      || organisation.code?.toLowerCase().includes(keywords)
-      || organisation.ukprn?.toString().includes(keywords)
-      || organisation.urn?.toString().includes(keywords)
-      || organisation.address?.postcode?.toLowerCase().includes(keywords)
-     )
+      organisation.name.toLowerCase().includes(keywords) ||
+      organisation.code?.toLowerCase().includes(keywords) ||
+      organisation.ukprn?.toString().includes(keywords) ||
+      organisation.urn?.toString().includes(keywords) ||
+      organisation.address?.postcode?.toLowerCase().includes(keywords)
+    )
   }
 
   return organisations
@@ -48,8 +48,10 @@ exports.findOne = (params) => {
   if (params.organisationId) {
     const filePath = directoryPath + '/' + params.organisationId + '.json'
 
-    const raw = fs.readFileSync(filePath)
-    organisation = JSON.parse(raw)
+    if (fs.existsSync(filePath)) {
+      const raw = fs.readFileSync(filePath)
+      organisation = JSON.parse(raw)
+    }
   }
 
   return organisation
@@ -60,6 +62,10 @@ exports.insertOne = (params) => {
 
   if (params.organisation) {
     organisation = params.organisation
+
+    // hard code the private beta flag to false since all new schools will
+    // in public beta
+    organisation.privateBetaSchool = false
 
     organisation.createdAt = new Date()
 

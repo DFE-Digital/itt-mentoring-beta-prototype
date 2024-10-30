@@ -51,7 +51,6 @@ exports.parseProviderSampleData = (array) => {
 
       providerSamples[item.providerNameSlug].sample.push(sample)
     })
-
   })
 
   return providerSamples

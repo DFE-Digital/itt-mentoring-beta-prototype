@@ -17,7 +17,7 @@ const utilHelper = require('../../helpers/utils')
 const claimDecorator = require('../../decorators/claims')
 const paymentDecorator = require('../../decorators/payments')
 
-const settings = require('../../data/dist/settings')
+const settings = require('../../data/dist/prototype-settings')
 
 /// ------------------------------------------------------------------------ ///
 /// LIST CLAIMS
@@ -57,9 +57,9 @@ exports.list_claims_get = (req, res) => {
     providers = filterHelper.getCheckboxValues(provider, req.session.data.filters.provider)
   }
 
-  const hasFilters = !!((statuses?.length > 0)
-  || (schools?.length > 0)
-    || (providers?.length > 0))
+  const hasFilters = !!((statuses?.length > 0) ||
+  (schools?.length > 0) ||
+    (providers?.length > 0))
 
   let selectedFilters = null
 
@@ -105,7 +105,7 @@ exports.list_claims_get = (req, res) => {
     }
   }
 
-  const statusArray = ['payment_information_requested','payment_information_sent']
+  const statusArray = ['payment_information_requested', 'payment_information_sent']
 
   // get filter items
   let filterStatusItems = statusHelper.getClaimStatusOptions(statuses)
@@ -165,9 +165,9 @@ exports.list_claims_get = (req, res) => {
     filterSchoolItems,
     filterProviderItems,
     actions: {
-      send: `/support/claims/payments/send`,
-      response: `/support/claims/payments/response`,
-      view: `/support/claims/payments`,
+      send: '/support/claims/payments/send',
+      response: '/support/claims/payments/response',
+      view: '/support/claims/payments',
       filters: {
         apply: '/support/claims/payments',
         remove: '/support/claims/payments/remove-all-filters'
@@ -238,9 +238,9 @@ exports.show_claim_get = (req, res) => {
       informationSent: `/support/claims/payments/${req.params.claimId}/status/payment_information_sent`,
       approveClaim: `/support/claims/payments/${req.params.claimId}/status/paid`,
       rejectClaim: `/support/claims/payments/${req.params.claimId}/status/not_paid`,
-      back: `/support/claims/payments`,
-      cancel: `/support/claims/payments`,
-      organisations: `/support/organisations`
+      back: '/support/claims/payments',
+      cancel: '/support/claims/payments',
+      organisations: '/support/organisations'
     }
   })
 }
@@ -288,7 +288,7 @@ exports.update_claim_status_post = (req, res) => {
   if (req.params.claimStatus === 'payment_information_sent') {
     res.redirect(`/support/claims/payments/${req.params.claimId}`)
   } else {
-    res.redirect(`/support/claims/payments`)
+    res.redirect('/support/claims/payments')
   }
 }
 
@@ -309,14 +309,15 @@ exports.send_claims_get = (req, res) => {
     hasClaims,
     claimsCount,
     actions: {
-      save: `/support/claims/payments/send`,
-      back: `/support/claims/payments`,
-      cancel: `/support/claims/payments`
+      save: '/support/claims/payments/send',
+      back: '/support/claims/payments',
+      cancel: '/support/claims/payments'
     }
   })
 }
 
-exports.send_claims_post = (req, res) => {;
+exports.send_claims_post = (req, res) => {
+  ;
   const errors = []
 
   if (errors.length) {
@@ -332,9 +333,9 @@ exports.send_claims_post = (req, res) => {;
       hasClaims,
       claimsCount,
       actions: {
-        save: `/support/claims/payments/send`,
-        back: `/support/claims/payments`,
-        cancel: `/support/claims/payments`
+        save: '/support/claims/payments/send',
+        back: '/support/claims/payments',
+        cancel: '/support/claims/payments'
       },
       errors
     })
@@ -381,16 +382,16 @@ exports.send_claims_post = (req, res) => {;
 exports.response_claims_get = (req, res) => {
   const claims = claimModel
     .findMany({ })
-    .filter(claim => ['payment_in_progress','payment_information_sent'].includes(claim.status))
+    .filter(claim => ['payment_in_progress', 'payment_information_sent'].includes(claim.status))
 
   const hasClaims = !!claims.length
 
   res.render('../views/support/claims/payments/response', {
     hasClaims,
     actions: {
-      save: `/support/claims/payments/response`,
-      back: `/support/claims/payments`,
-      cancel: `/support/claims/payments`
+      save: '/support/claims/payments/response',
+      back: '/support/claims/payments',
+      cancel: '/support/claims/payments'
     }
   })
 }
@@ -433,16 +434,16 @@ exports.response_claims_post = (req, res) => {
   if (errors.length) {
     const claims = claimModel
       .findMany({ })
-      .filter(claim => ['payment_in_progress','payment_information_sent'].includes(claim.status))
+      .filter(claim => ['payment_in_progress', 'payment_information_sent'].includes(claim.status))
 
     const hasClaims = !!claims.length
 
     res.render('../views/support/claims/payments/response', {
       hasClaims,
       actions: {
-        save: `/support/claims/payments/response`,
-        back: `/support/claims/payments`,
-        cancel: `/support/claims/payments`
+        save: '/support/claims/payments/response',
+        back: '/support/claims/payments',
+        cancel: '/support/claims/payments'
       },
       errors
     })
@@ -488,9 +489,9 @@ exports.review_claims_get = (req, res) => {
     claimsCount,
     pagination,
     actions: {
-      save: `/support/claims/payments/response/review`,
-      back: `/support/claims/payments/response`,
-      cancel: `/support/claims/payments`
+      save: '/support/claims/payments/response/review',
+      back: '/support/claims/payments/response',
+      cancel: '/support/claims/payments'
     }
   })
 }
@@ -545,13 +546,12 @@ exports.download_claims_get = (req, res) => {
   res.render('../views/support/claims/payments/download', {
     hasError,
     actions: {
-      download: `/support/claims/payments/download`
+      download: '/support/claims/payments/download'
     }
   })
 }
 
 exports.download_claims_post = (req, res) => {
-
   req.flash('success', 'Claims downloaded')
-  res.redirect(`/support/claims/payments/download`)
+  res.redirect('/support/claims/payments/download')
 }

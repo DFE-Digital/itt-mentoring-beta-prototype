@@ -4,7 +4,7 @@ const organisationModel = require('../models/organisations')
 const Pagination = require('../helpers/pagination')
 const validationHelper = require('../helpers/validators')
 
-const settings = require('../data/dist/settings')
+const settings = require('../data/dist/prototype-settings')
 
 /// ------------------------------------------------------------------------ ///
 /// SHOW USER
@@ -171,6 +171,7 @@ exports.new_user_check_post = (req, res) => {
 exports.edit_user_get = (req, res) => {
   const currentUser = userModel.findOne({ organisationId: req.params.organisationId, userId: req.params.userId })
 
+  let user
   if (req.session.data.user) {
     user = req.session.data.user
   } else {

@@ -9,7 +9,12 @@
     "postinstall": "npm run generate-data",
     "dev": "govuk-prototype-kit dev",
     "serve": "govuk-prototype-kit serve",
-    "start": "govuk-prototype-kit start"
+    "start": "govuk-prototype-kit start",
+    "lint:markdown": "markdownlint 'app/content/**/*.md' --disable MD013",
+    "lint:markdown:fix": "markdownlint 'app/content/**/*.md' --disable MD013 --fix",
+    "lint:scripts": "standard",
+    "lint:scripts:fix": "standard --fix",
+    "lint:styles": "stylelint 'app/assets/sass/**/*.scss' 'app/views/_components/**/*.scss'"
   },
   "dependencies": {
     "@x-govuk/govuk-prototype-filters": "^1.4.3",
@@ -28,6 +33,20 @@
     "passport": "^0.7.0",
     "passport-local": "^1.0.0",
     "rimraf": "^6.0.1",
-    "uuid": "^10.0.0"
+    "uuid": "^11.0.2"
+  },
+  "devDependencies": {
+    "markdownlint-cli": "^0.42.0",
+    "standard": "^17.1.2",
+    "stylelint": "^16.10.0",
+    "stylelint-config-recommended-scss": "^14.1.0",
+    "stylelint-config-standard": "^36.0.1",
+    "stylelint-order": "^6.0.4"
+  },
+  "standard": {
+    "ignore": [
+      "app/assets/javascripts/**/*.js",
+      "app/views/_components/**/*.js"
+    ]
   }
 }

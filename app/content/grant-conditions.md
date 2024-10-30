@@ -24,6 +24,8 @@ contents:
       href: "#annex-a--defintion-of-areas"
 ---
 
+<!-- markdownlint-disable MD033 -->
+
 ## 1. Introduction
 
 As detailed in the [initial teacher training reform guidance](https://www.gov.uk/government/publications/initial-teacher-training-reform-funding-guidance) in the 2024/25 academic year (between 1 September 2024 and 31 August 2025), mentors working in schools that offer initial teacher training (ITT) placements will need to complete up to 20 hours of initial mentor training with an accredited training provider.
@@ -205,3 +207,5 @@ Accredited ITT providers must also retain evidence of the general mentor trainin
 ### Rest of England
 
 “the Rest of England” covers the localities beyond the areas above.
+
+<!-- markdownlint-enable MD033 -->

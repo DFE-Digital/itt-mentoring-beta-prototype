@@ -90,6 +90,10 @@
               <div class="govuk-grid-row">
                 <div class="govuk-grid-column-two-thirds">
                   <dl class="app-claim-card__list">
+                    <dt class="govuk-visually-hidden">Academic year</dt>
+                    <dd class="govuk-body-s  govuk-!-margin-bottom-1">
+                      {{ claim.academicYear | getAcademicYearLabel }}
+                    </dd>
                     <dt class="govuk-visually-hidden">Accredited provider</dt>
                     <dd class="govuk-body-s  govuk-!-margin-bottom-1">
                       {{ claim.providerId | getProviderName }}
@@ -162,6 +166,13 @@
 <script type="module" >
   import { CheckboxFilter } from '/public/javascripts/components/checkbox-filter.js'
 
+  const checkboxFilterStatus = new CheckboxFilter({
+    container: $('#filter-status'),
+    textBox: {
+      label: 'Search for status'
+    }
+  })
+
   const checkboxFilterSchool = new CheckboxFilter({
     container: $('#filter-school'),
     textBox: {
@@ -176,6 +187,7 @@
     }
   })
 
+  checkboxFilterStatus.init()
   checkboxFilterSchool.init()
   checkboxFilterProvider.init()
 </script>

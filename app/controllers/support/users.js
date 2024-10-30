@@ -3,7 +3,7 @@ const userModel = require('../../models/support-users')
 const Pagination = require('../../helpers/pagination')
 const validationHelper = require('../../helpers/validators')
 
-const settings = require('../../data/dist/settings')
+const settings = require('../../data/dist/prototype-settings')
 
 /// ------------------------------------------------------------------------ ///
 /// LIST USERS
@@ -25,9 +25,9 @@ exports.user_list = (req, res) => {
     users,
     pagination,
     actions: {
-      new: `/support/users/new`,
-      view: `/support/users`,
-      back: `/support`
+      new: '/support/users/new',
+      view: '/support/users',
+      back: '/support'
     }
   })
 }
@@ -47,8 +47,8 @@ exports.user_details = (req, res) => {
     actions: {
       change: `/support/users/${req.params.userId}/edit?referrer=change`,
       delete: `/support/users/${req.params.userId}/delete`,
-      back: `/support/users`,
-      cancel: `/support/users`
+      back: '/support/users',
+      cancel: '/support/users'
     }
   })
 }
@@ -58,17 +58,17 @@ exports.user_details = (req, res) => {
 /// ------------------------------------------------------------------------ ///
 
 exports.new_user_get = (req, res) => {
-  let back = `/support/users`
+  let back = '/support/users'
   if (req.query.referrer === 'check') {
-    back = `/support/users/new/check`
+    back = '/support/users/new/check'
   }
 
   res.render('../views/support/users/edit', {
     user: req.session.data.user,
     actions: {
-      save: `/support/users/new`,
+      save: '/support/users/new',
       back,
-      cancel: `/support/users`
+      cancel: '/support/users'
     }
   })
 }
@@ -95,8 +95,8 @@ exports.new_user_post = (req, res) => {
   const user = userModel.findOne({ email: req.session.data.user.email })
 
   const isValidEmail = !!(
-    validationHelper.isValidEmail(req.session.data.user.email)
-    && validationHelper.isValidEducationEmail(req.session.data.user.email)
+    validationHelper.isValidEmail(req.session.data.user.email) &&
+    validationHelper.isValidEducationEmail(req.session.data.user.email)
   )
 
   if (!req.session.data.user.email.length) {
@@ -123,14 +123,14 @@ exports.new_user_post = (req, res) => {
     res.render('../views/support/users/edit', {
       user: req.session.data.user,
       actions: {
-        save: `/support/users/new`,
-        back: `/support/users`,
-        cancel: `/support/users`
+        save: '/support/users/new',
+        back: '/support/users',
+        cancel: '/support/users'
       },
       errors
     })
   } else {
-    res.redirect(`/support/users/new/check`)
+    res.redirect('/support/users/new/check')
   }
 }
 
@@ -138,10 +138,10 @@ exports.new_user_check_get = (req, res) => {
   res.render('../views/support/users/check-your-answers', {
     user: req.session.data.user,
     actions: {
-      save: `/support/users/new/check`,
-      back: `/support/users/new`,
-      change: `/support/users/new?referrer=check`,
-      cancel: `/support/users`
+      save: '/support/users/new/check',
+      back: '/support/users/new',
+      change: '/support/users/new?referrer=check',
+      cancel: '/support/users'
     }
   })
 }
@@ -205,8 +205,8 @@ exports.edit_user_post = (req, res) => {
   const user = userModel.findOne({ email: req.session.data.user.email })
 
   const isValidEmail = !!(
-    validationHelper.isValidEmail(req.session.data.user.email)
-    && validationHelper.isValidEducationEmail(req.session.data.user.email)
+    validationHelper.isValidEmail(req.session.data.user.email) &&
+    validationHelper.isValidEducationEmail(req.session.data.user.email)
   )
 
   if (!req.session.data.user.email.length) {
@@ -294,7 +294,7 @@ exports.delete_user_post = (req, res) => {
   userModel.deleteOne({
     userId: req.params.userId
   })
-
+  
   req.flash('success', 'Support user removed')
   res.redirect(`/support/users`)
 }

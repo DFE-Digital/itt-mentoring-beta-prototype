@@ -1,20 +1,57 @@
 {% set filterOptionsHtml %}
-{{ govukCheckboxes({
-  idPrefix: "filter-status",
-  name: "filters[status]",
-  fieldset: {
-    legend: {
-      html: 'Status<span class="govuk-visually-hidden"> filter</span>',
-      classes: "govuk-fieldset__legend--s"
-    }
-  },
-  formGroup: {
-    classes: "app-filter__group"
-  },
-  items: filterStatusItems,
-  values: filters.status,
-  classes: "govuk-checkboxes--small"
-}) }}
+
+{% if filterAcademicYearItems %}
+  {{ govukCheckboxes({
+    idPrefix: "filter-academic-year",
+    name: "filters[academicYear]",
+    fieldset: {
+      legend: {
+        html: 'Academic year<span class="govuk-visually-hidden"> filter</span>',
+        classes: "govuk-fieldset__legend--s"
+      }
+    },
+    formGroup: {
+      classes: "app-filter__group"
+    },
+    items: filterAcademicYearItems,
+    values: filters.academicYear,
+    classes: "govuk-checkboxes--small"
+  }) }}
+{% endif %}
+
+{% if filterStatusItems.length > 5 %}
+  {{ appCheckboxFilter({
+    idPrefix: "filter-status",
+    name: "filters[status]",
+    fieldset: {
+      legend: {
+        html: 'Status<span class="govuk-visually-hidden"> filter</span>',
+        classes: "govuk-fieldset__legend--s"
+      }
+    },
+    items: filterStatusItems,
+    values: filters.status,
+    showSelectedTags: false,
+    classes: "govuk-!-margin-bottom-7"
+  }) }}
+{% else %}
+  {{ govukCheckboxes({
+    idPrefix: "filter-status",
+    name: "filters[status]",
+    fieldset: {
+      legend: {
+        html: 'Status<span class="govuk-visually-hidden"> filter</span>',
+        classes: "govuk-fieldset__legend--s"
+      }
+    },
+    formGroup: {
+      classes: "app-filter__group"
+    },
+    items: filterStatusItems,
+    values: filters.status,
+    classes: "govuk-checkboxes--small"
+  }) }}
+{% endif %}
 
 {{ appCheckboxFilter({
   idPrefix: "filter-provider",

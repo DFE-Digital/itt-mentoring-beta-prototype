@@ -31,7 +31,7 @@
 
       {% include "_includes/page-heading.njk" %}
 
-      {% if claim.status == "draft" %}
+      {% if claim.academicYear | isCurrentAcademicYear and claim.status == "draft" %}
         {{ govukButton({
           text: "Submit claim",
           href: actions.submit

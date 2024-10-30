@@ -5,7 +5,7 @@ const { rimrafSync } = require('rimraf')
 const directoryPath = path.join(__dirname, '../data/dist/')
 
 exports.update = (params) => {
-  let settings = require('../data/dist/settings')
+  let settings = require('../data/dist/prototype-settings')
 
   if (params.settings.useLogin) {
     settings.useLogin = params.settings.useLogin
@@ -23,7 +23,7 @@ exports.update = (params) => {
     settings.pageSize = params.settings.pageSize
   }
 
-  const filePath = directoryPath + '/settings.json'
+  const filePath = directoryPath + '/prototype-settings.json'
 
   // create a JSON sting for the submitted data
   const fileData = JSON.stringify(settings)

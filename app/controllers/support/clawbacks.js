@@ -18,7 +18,7 @@ const utilHelper = require('../../helpers/utils')
 const claimDecorator = require('../../decorators/claims')
 const clawbackDecorator = require('../../decorators/clawbacks')
 
-const settings = require('../../data/dist/settings')
+const settings = require('../../data/dist/prototype-settings')
 
 /// ------------------------------------------------------------------------ ///
 /// LIST CLAIMS
@@ -58,9 +58,9 @@ exports.list_claims_get = (req, res) => {
     providers = filterHelper.getCheckboxValues(provider, req.session.data.filters.provider)
   }
 
-  const hasFilters = !!((statuses?.length > 0)
-  || (schools?.length > 0)
-    || (providers?.length > 0))
+  const hasFilters = !!((statuses?.length > 0) ||
+  (schools?.length > 0) ||
+    (providers?.length > 0))
 
   let selectedFilters = null
 
@@ -106,7 +106,7 @@ exports.list_claims_get = (req, res) => {
     }
   }
 
-  const statusArray = ['clawback_requested','clawback_in_progress','sampling_not_approved']
+  const statusArray = ['clawback_requested', 'clawback_in_progress', 'sampling_not_approved']
 
   // get filter items
   let filterStatusItems = statusHelper.getClaimStatusOptions(statuses)
@@ -166,9 +166,9 @@ exports.list_claims_get = (req, res) => {
     filterSchoolItems,
     filterProviderItems,
     actions: {
-      send: `/support/claims/clawbacks/send`,
-      response: `/support/claims/clawbacks/response`,
-      view: `/support/claims/clawbacks`,
+      send: '/support/claims/clawbacks/send',
+      response: '/support/claims/clawbacks/response',
+      view: '/support/claims/clawbacks',
       filters: {
         apply: '/support/claims/clawbacks',
         remove: '/support/claims/clawbacks/remove-all-filters'
@@ -244,9 +244,9 @@ exports.show_claim_get = (req, res) => {
       approveClaim: `/support/claims/clawbacks/${req.params.claimId}/status/paid`,
       changeClawback: `/support/claims/clawbacks/${req.params.claimId}/request`,
       completeClawback: `/support/claims/clawbacks/${req.params.claimId}/status/clawback_complete`,
-      back: `/support/claims/clawbacks`,
-      cancel: `/support/claims/clawbacks`,
-      organisations: `/support/organisations`
+      back: '/support/claims/clawbacks',
+      cancel: '/support/claims/clawbacks',
+      organisations: '/support/organisations'
     }
   })
 }
@@ -294,7 +294,7 @@ exports.update_claim_status_post = (req, res) => {
   if (req.params.claimStatus === 'in_review') {
     res.redirect(`/support/claims/clawbacks/${req.params.claimId}`)
   } else {
-    res.redirect(`/support/claims/clawbacks`)
+    res.redirect('/support/claims/clawbacks')
   }
 }
 
@@ -456,14 +456,15 @@ exports.send_claims_get = (req, res) => {
     hasClaims,
     claimsCount,
     actions: {
-      save: `/support/claims/clawbacks/send`,
-      back: `/support/claims/clawbacks`,
-      cancel: `/support/claims/clawbacks`
+      save: '/support/claims/clawbacks/send',
+      back: '/support/claims/clawbacks',
+      cancel: '/support/claims/clawbacks'
     }
   })
 }
 
-exports.send_claims_post = (req, res) => {;
+exports.send_claims_post = (req, res) => {
+  ;
   const errors = []
 
   if (errors.length) {
@@ -479,9 +480,9 @@ exports.send_claims_post = (req, res) => {;
       hasClaims,
       claimsCount,
       actions: {
-        save: `/support/claims/clawbacks/send`,
-        back: `/support/claims/clawbacks`,
-        cancel: `/support/claims/clawbacks`
+        save: '/support/claims/clawbacks/send',
+        back: '/support/claims/clawbacks',
+        cancel: '/support/claims/clawbacks'
       },
       errors
     })
@@ -535,9 +536,9 @@ exports.response_claims_get = (req, res) => {
   res.render('../views/support/claims/clawbacks/response', {
     hasClaims,
     actions: {
-      save: `/support/claims/clawbacks/response`,
-      back: `/support/claims/clawbacks`,
-      cancel: `/support/claims/clawbacks`
+      save: '/support/claims/clawbacks/response',
+      back: '/support/claims/clawbacks',
+      cancel: '/support/claims/clawbacks'
     }
   })
 }
@@ -587,9 +588,9 @@ exports.response_claims_post = (req, res) => {
     res.render('../views/support/claims/clawbacks/response', {
       hasClaims,
       actions: {
-        save: `/support/claims/clawbacks/response`,
-        back: `/support/claims/clawbacks`,
-        cancel: `/support/claims/clawbacks`
+        save: '/support/claims/clawbacks/response',
+        back: '/support/claims/clawbacks',
+        cancel: '/support/claims/clawbacks'
       },
       errors
     })
@@ -635,9 +636,9 @@ exports.review_response_claims_get = (req, res) => {
     claimsCount,
     pagination,
     actions: {
-      save: `/support/claims/clawbacks/response/review`,
-      back: `/support/claims/clawbacks/response`,
-      cancel: `/support/claims/clawbacks`
+      save: '/support/claims/clawbacks/response/review',
+      back: '/support/claims/clawbacks/response',
+      cancel: '/support/claims/clawbacks'
     }
   })
 }
@@ -690,13 +691,12 @@ exports.download_claims_get = (req, res) => {
   res.render('../views/support/claims/clawbacks/download', {
     hasError,
     actions: {
-      download: `/support/claims/clawbacks/download`
+      download: '/support/claims/clawbacks/download'
     }
   })
 }
 
 exports.download_claims_post = (req, res) => {
-
   req.flash('success', 'Claims downloaded')
-  res.redirect(`/support/claims/clawbacks/download`)
+  res.redirect('/support/claims/clawbacks/download')
 }
