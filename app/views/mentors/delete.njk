@@ -3,9 +3,9 @@
 {% set primaryNavId = "mentors" %}
 
 {% if hasClaims %}
-  {% set title = "You cannot remove " + mentor.firstName + " " + mentor.lastName + " as a mentor" %}
+  {% set title = "You cannot remove " + mentor.firstName + " " + mentor.lastName %}
 {% else %}
-  {% set title = "Are you sure you want to remove " + mentor.firstName + " " + mentor.lastName + " as a mentor?" %}
+  {% set title = "Are you sure you want to remove " + mentor.firstName + " " + mentor.lastName + "?" %}
 {% endif %}
 
 {% set caption = "Remove mentor" %}
