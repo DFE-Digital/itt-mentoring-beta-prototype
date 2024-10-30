@@ -3,7 +3,7 @@
 {% set primaryNavId = "users" %}
 
 {% set title = "Are you sure you want to remove " + user.firstName + " " + user.lastName + "?" %}
-{% set caption = "Remove user" %}
+{% set caption = "Remove support user" %}
 
 {% block pageTitle %}
   {{ "Error: " if errors.length }}{{ title + " - " if title }}{{ caption + " - " if caption }}{{ serviceName }} - GOV.UK
