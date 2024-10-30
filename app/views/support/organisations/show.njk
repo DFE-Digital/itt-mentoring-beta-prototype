@@ -4,6 +4,7 @@
 {% set secondaryNavId = "details" %}
 
 {% set title = organisation.name %}
+{% set caption = "Organisation" %}
 
 {% block beforeContent %}
 {{ govukBackLink({
@@ -20,6 +21,7 @@
     <div class="govuk-grid-column-two-thirds">
 
       {% include "_includes/page-heading.njk" %}
+
     </div>
   </div>
 
