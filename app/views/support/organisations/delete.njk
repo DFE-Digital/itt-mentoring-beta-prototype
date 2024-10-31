@@ -6,10 +6,10 @@
 {% if hasClaims or hasMentors or hasUsers %}
   {% set title = "You cannot remove this organisation" %}
 {% else %}
-  {% set title = "Are you sure you want to remove this organisation?" %}
+  {% set title = "Are you sure you want to remove" + organisation.name + "?" %}
 {% endif %}
 
-{% set caption = organisation.name %}
+{% set caption = "Remove organisation" %}
 
 {% block pageTitle %}
   {{ "Error: " if errors.length }}{{ title + " - " if title }}{{ caption + " - " if caption }}{{ serviceName }} - GOV.UK

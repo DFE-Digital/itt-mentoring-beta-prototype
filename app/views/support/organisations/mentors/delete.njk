@@ -3,8 +3,8 @@
 {% set primaryNavId = "organisations" %}
 {% set secondaryNavId = "mentors" %}
 
-{% set title = "Are you sure you want to remove this mentor?" %}
-{% set caption = mentor.firstName + " " + mentor.lastName + " - " + organisation.name %}
+{% set title = "Are you sure you want to remove " + mentor.firstName + " " + mentor.lastName + "?" %}
+{% set caption = "Remove mentor - " + organisation.name %}
 
 {% block pageTitle %}
   {{ "Error: " if errors.length }}{{ title + " - " if title }}{{ caption + " - " if caption }}{{ serviceName }} - GOV.UK
@@ -28,15 +28,20 @@
 
       <form action="{{ actions.save }}" method="post" accept-charset="utf-8" novalidate>
 
-        {# {{ govukWarningText({
-          text: "The mentor will be sent an email to tell them you removed them from " + organisation.name + ".",
-          iconFallbackText: "Warning"
-        }) }} #}
+        {% if hasClaims %}
 
-        {{ govukButton({
-          text: "Remove mentor",
-          classes: "govuk-button--warning"
-        }) }}
+          <p class="govuk-body">You cannot remove {{ mentor.firstName + " " + mentor.lastName }} as a mentor because they are included in an active claim.</p>
+
+          <p class="govuk-body">You will be able to remove them once we have processed the claim.</p>
+
+        {% else %}
+
+          {{ govukButton({
+            text: "Remove mentor",
+            classes: "govuk-button--warning"
+          }) }}
+
+        {% endif %}
 
       </form>
 

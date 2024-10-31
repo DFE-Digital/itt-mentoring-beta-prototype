@@ -153,8 +153,8 @@ exports.new_user_check_post = (req, res) => {
 
   delete req.session.data.user
 
-  req.flash('success', 'User added')
-  res.redirect('/support/users')
+  req.flash('success', 'Support user added')
+  res.redirect(`/support/users`)
 }
 
 /// ------------------------------------------------------------------------ ///
@@ -269,7 +269,7 @@ exports.edit_user_check_post = (req, res) => {
 
   delete req.session.data.user
 
-  req.flash('success', 'User updated')
+  req.flash('success', 'Support user updated')
   res.redirect(`/support/users/${req.params.userId}`)
 }
 
@@ -294,7 +294,7 @@ exports.delete_user_post = (req, res) => {
   userModel.deleteOne({
     userId: req.params.userId
   })
-
-  req.flash('success', 'User removed')
-  res.redirect('/support/users')
+  
+  req.flash('success', 'Support user removed')
+  res.redirect(`/support/users`)
 }

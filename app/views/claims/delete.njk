@@ -2,8 +2,8 @@
 
 {% set primaryNavId = "claims" %}
 
-{% set title = "Are you sure you want to remove this claim?" %}
-{% set caption = "Claim - " + claim.reference | upper %}
+{% set title = "Are you sure you want to remove claim " + (claim.reference | upper) + "?" %}
+{% set caption = "Remove claim" %}
 
 {% block pageTitle %}
   {{ "Error: " if errors.length }}{{ title + " - " if title }}{{ caption + " - " if caption }}{{ serviceName }} - GOV.UK
