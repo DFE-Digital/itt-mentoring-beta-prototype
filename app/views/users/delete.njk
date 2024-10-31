@@ -2,8 +2,8 @@
 
 {% set primaryNavId = "users" %}
 
-{% set title = "Are you sure you want to remove this user?" %}
-{% set caption = user.firstName + " " + user.lastName %}
+{% set title = "Are you sure you want to remove " + user.firstName + " " + user.lastName + "?" %}
+{% set caption = "Remove user" %}
 
 {% block pageTitle %}
   {{ "Error: " if errors.length }}{{ title + " - " if title }}{{ caption + " - " if caption }}{{ serviceName }} - GOV.UK
@@ -28,7 +28,7 @@
       <form action="{{ actions.save }}" method="post" accept-charset="utf-8" novalidate>
 
         {{ govukWarningText({
-          text: "The user will be sent an email to tell them you removed them from " + organisation.name + ".",
+          text: "We will send " + user.firstName + " " + user.lastName + " an email to tell them you removed them from " + organisation.name + ".",
           iconFallbackText: "Warning"
         }) }}
 
