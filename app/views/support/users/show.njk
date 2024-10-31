@@ -21,13 +21,13 @@
 
       {% include "_includes/page-heading.njk" %}
 
-      {% include "_includes/users/details.njk" %}
-
       {% if not (user.id == signedInUser.id) %}
         <p class="govuk-body">
-          <a class="govuk-link app-link--destructive" href="{{ actions.delete }}">Remove support user</a>
+          <a class="govuk-link" href="{{ actions.delete }}">Remove support user</a>
         </p>
       {% endif %}
+
+      {% include "_includes/users/details.njk" %}
 
     </div>
   </div>
