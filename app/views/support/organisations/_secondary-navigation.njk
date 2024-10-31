@@ -1,5 +1,5 @@
 {{ appSecondaryNavigation({
-  label: "Sub navigation",
+  label: "Organisation navigation",
   items: [
     {
       href: baseUrl,
@@ -16,16 +16,6 @@
       text: "Mentors",
       active: secondaryNavId == "mentors"
     } if organisation.type == "school",
-    {
-      href: "#",
-      text: "Providers",
-      active: secondaryNavId == "providers"
-    } if organisation.type == "school" and 1==0,
-    {
-      href: "#",
-      text: "Schools",
-      active: secondaryNavId == "schools"
-    } if organisation.type != "school" and 1==0,
     {
       href: baseUrl + "/claims",
       text: "Claims",
