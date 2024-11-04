@@ -2,9 +2,9 @@
 
 {% set primaryNavId = "settings" %}
 
-{% set title = "Are you sure you want to remove this claim window?" %}
+{% set title = "Are you sure you want to remove " + window.opensAt | govukDate + " to " + window.closesAt | govukDate + " claim window?" %}
 
-{% set caption = "Claim window - " + window.opensAt | govukDate + " to " + window.closesAt | govukDate %}
+{% set caption = "Remove claim window" %}
 
 {% block pageTitle %}
   {{ "Error: " if errors.length }}{{ title + " - " if title }}{{ caption + " - " if caption }}{{ serviceName }} - GOV.UK
@@ -27,8 +27,6 @@
       {% include "_includes/page-heading.njk" %}
 
       <form action="{{ actions.save }}" method="post" accept-charset="utf-8" novalidate>
-
-
 
         {{ govukButton({
           text: "Remove claim window",

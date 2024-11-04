@@ -210,6 +210,22 @@ exports.edit_claim_window_post = (req, res) => {
 
   const errors = []
 
+  if (req.session.data.window.opensAt === undefined) {
+    const error = {}
+    error.fieldName = 'date-window-opens'
+    error.href = '#date-window-opens'
+    error.text = 'Enter date the window opens'
+    errors.push(error)
+  }
+
+  if (req.session.data.window.closesAt === undefined) {
+    const error = {}
+    error.fieldName = 'date-window-closes'
+    error.href = '#date-window-closes'
+    error.text = 'Enter date the window closes'
+    errors.push(error)
+  }
+
   // if (!validationHelper.isValidDate(req.session.data.window.opensAt)) {
   //   const error = {}
   //   error.fieldName = 'date-window-opens'
