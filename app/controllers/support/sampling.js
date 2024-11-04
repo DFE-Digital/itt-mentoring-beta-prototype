@@ -616,7 +616,7 @@ exports.review_response_claims_post = (req, res) => {
 
   claims.forEach(claim => {
     const unapprovedMentors = claim.mentors.filter(mentor =>
-      mentor.claim_assured === false || mentor.claim_assured.toLowerCase() === 'no'
+      mentor.claim_assured === false ||  ['false','no'].includes(mentor.claim_assured.toLowerCase())
     )
 
     const hasUnapprovedMentor = unapprovedMentors.length > 0
