@@ -622,8 +622,8 @@ exports.review_response_claims_post = (req, res) => {
     const hasUnapprovedMentor = unapprovedMentors.length > 0
 
     const unapprovedReasons = hasUnapprovedMentor
-      ? unapprovedMentors.map(mentor => mentor.claim_not_assured_reason).join('; ')
-      : null
+    ? unapprovedMentors.map(mentor => `${mentor.mentor_full_name}: ${mentor.claim_not_assured_reason}`).join('; ')
+    : null
 
     const claimStatus = hasUnapprovedMentor ? 'sampling_provider_not_approved' : 'paid'
 
