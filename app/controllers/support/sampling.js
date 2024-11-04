@@ -609,30 +609,41 @@ exports.review_response_claims_get = (req, res) => {
 }
 
 exports.review_response_claims_post = (req, res) => {
-  const claims = req.session.data.claims
+  const responses = req.session.data.claims
+
+  // uploaded claims are one line per mentor, we need to group by claim
+  const claims = samplingHelper.groupClaimsByClaimId(responses)
 
   claims.forEach(claim => {
-    claim.claim_status = 'paid'
-    if (!claim.assured || ['false', 'no'].includes(claim.assured)) {
-      claim.claim_status = 'sampling_provider_not_approved'
-    }
+    const unapprovedMentors = claim.mentors.filter(mentor =>
+      mentor.claim_assured === false || mentor.claim_assured === 'no'
+    )
+
+    const hasUnapprovedMentor = unapprovedMentors.length > 0
+
+    const unapprovedReasons = hasUnapprovedMentor
+      ? unapprovedMentors.map(mentor => mentor.claim_not_assured_reason).join('; ')
+      : null
+
+    const claimStatus = hasUnapprovedMentor ? 'sampling_provider_not_approved' : 'paid'
 
     claimModel.updateOne({
       organisationId: claim.organisationId,
       claimId: claim.claimId,
       userId: req.session.passport.user.id,
       claim: {
-        status: claim.claim_status,
+        status: claimStatus,
         note: {
-          text: claim.claim_not_assured_reason,
+          text: unapprovedReasons,
           userId: req.session.passport.user.id,
           section: 'sampling',
-          category: claim.claim_status
+          category: claimStatus
         }
       }
     })
   })
 
+  // TODO: split the file by provider and log each provider data against their name
   const filename = utilHelper.getFilename(req.session.data.filePath)
 
   // log the process

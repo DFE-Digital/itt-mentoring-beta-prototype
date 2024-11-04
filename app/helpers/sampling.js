@@ -76,3 +76,48 @@ exports.parseProviderResponseData = (array) => {
 
   return claims
 }
+
+
+exports.groupClaimsByClaimId = (data) => {
+  const groupedClaims = data.reduce((acc, item) => {
+    const {
+      claimId,
+      claim_reference,
+      school_urn,
+      school_name,
+      school_postcode,
+      organisationId,
+      providerName,
+      providerNameSlug,
+      mentor_full_name,
+      mentor_hours_of_training,
+      claim_assured,
+      claim_not_assured_reason,
+    } = item;
+
+    if (!acc[claimId]) {
+      acc[claimId] = {
+        claimId,
+        claim_reference,
+        school_urn,
+        school_name,
+        school_postcode,
+        organisationId,
+        providerName,
+        providerNameSlug,
+        mentors: [],
+      };
+    }
+
+    acc[claimId].mentors.push({
+      mentor_full_name,
+      mentor_hours_of_training,
+      claim_assured,
+      claim_not_assured_reason,
+    });
+
+    return acc;
+  }, {});
+
+  return Object.values(groupedClaims);
+}
