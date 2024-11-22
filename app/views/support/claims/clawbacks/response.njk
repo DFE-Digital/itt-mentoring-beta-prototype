@@ -51,7 +51,7 @@
           }) }}
 
           {% set helpText %}
-            <p class="govuk-body">Use this form to upload the CSV file sent by the provider.</p>
+            <p class="govuk-body">Use this form to upload the CSV file sent by the ESFA.</p>
 
             <p class="govuk-body">The CSV file must contain the following headers in the first row:</p>
 
@@ -83,9 +83,6 @@
               <li>
                 claim_status
               </li>
-              {# <li>
-                claim_unsuccessful_reason
-              </li> #}
             </ul>
           {% endset %}
 
@@ -101,7 +98,7 @@
         </form>
 
       {% else %}
-        <p class="govuk-body">You cannot upload a provider response as there are no claims waiting for a response.</p>
+        <p class="govuk-body">You cannot upload a response from the ESFA as there are no claims waiting for a response.</p>
       {% endif %}
 
       <p class="govuk-body">
