@@ -29,6 +29,8 @@ exports.claim_list = (req, res) => {
 
   const currentClaimWindow = claimWindowHelper.getCurrentClaimWindow()
 
+  const now = new Date()
+
   let academicYears = academicYearHelper.getAcademicYears()
 
   // sort academic years newest to oldest
@@ -79,6 +81,7 @@ exports.claim_list = (req, res) => {
     mentors,
     // pagination,
     currentClaimWindow,
+    now,
     actions: {
       new: `/organisations/${req.params.organisationId}/claims/new`,
       view: `/organisations/${req.params.organisationId}/claims`,
