@@ -1,3 +1,5 @@
+const { DateTime } = require('luxon')
+
 const claimWindows = require('../data/dist/settings/claim-windows')
 
 exports.getClaimWindows = () => {
@@ -15,14 +17,21 @@ exports.getCurrentClaimWindow = () => {
   return claimWindows[0]
 }
 
+/**
+ * Checks whether the provided date (JS Date) falls within any claim window.
+ * Using Luxon for consistent and predictable date parsing & comparison.
+ */
 exports.isClaimWindowOpen = (currentDate) => {
-  if (!(currentDate instanceof Date) || isNaN(currentDate)) {
-    throw new Error('Invalid date provided to isClaimWindowOpen')
-  }
+  // Convert currentDate (a JS Date) into a Luxon DateTime
+  const current = DateTime.fromJSDate(currentDate)
 
+  // Return true if any window is "open" for the given date.
   return claimWindows.some(window => {
-    const opensAt = new Date(window.opensAt)
-    const closesAt = new Date(window.closesAt)
-    return currentDate >= opensAt && currentDate <= closesAt
+    // Parse the window’s opensAt and closesAt as Luxon DateTime
+    const opensAt = DateTime.fromISO(window.opensAt)
+    const closesAt = DateTime.fromISO(window.closesAt)
+
+    // Compare using Luxon DateTime objects
+    return current >= opensAt && current <= closesAt
   })
 }
