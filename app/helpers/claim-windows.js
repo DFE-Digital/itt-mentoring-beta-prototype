@@ -15,9 +15,7 @@ exports.getCurrentClaimWindow = () => {
   return claimWindows[0]
 }
 
-exports.isClaimWindowOpen = () => {
-  const currentDate = new Date()
-
+exports.isClaimWindowOpen = (currentDate) => {
   // iterate through each item in the claim windows array
   for (let window of claimWindows) {
     const opensAt = new Date(window.opensAt)
