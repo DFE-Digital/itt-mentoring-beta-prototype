@@ -16,16 +16,13 @@ exports.getCurrentClaimWindow = () => {
 }
 
 exports.isClaimWindowOpen = (currentDate) => {
-  // iterate through each item in the claim windows array
-  for (let window of claimWindows) {
-    const opensAt = new Date(window.opensAt)
-    const closesAt = new Date(window.closesAt)
-
-    // check if current date is between opensAt and closesAt
-    if (currentDate >= opensAt && currentDate <= closesAt) {
-      return true
-    }
+  if (!(currentDate instanceof Date) || isNaN(currentDate)) {
+    throw new Error('Invalid date provided to isClaimWindowOpen')
   }
 
-  return false
+  return claimWindows.some(window => {
+    const opensAt = new Date(window.opensAt)
+    const closesAt = new Date(window.closesAt)
+    return currentDate >= opensAt && currentDate <= closesAt
+  })
 }
