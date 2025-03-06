@@ -47,9 +47,7 @@
       {{ govukInsetText({
         html: insetHtml
       }) }}
-<p>{{now}}</p>
-<p>{{now | isClaimWindowOpen}}</p>
-<p>{{mentors.length}}</p>
+
       {% if now | isClaimWindowOpen and mentors.length %}
         {{ govukButton({
           text: "Add claim",
