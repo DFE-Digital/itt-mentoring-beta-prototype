@@ -1,3 +1,5 @@
+const { DateTime } = require('luxon')
+
 const claimModel = require('../models/claims')
 const mentorModel = require('../models/mentors')
 const organisationModel = require('../models/organisations')
@@ -28,6 +30,8 @@ exports.claim_list = (req, res) => {
   const mentors = mentorModel.findMany({ organisationId: req.params.organisationId })
 
   const currentClaimWindow = claimWindowHelper.getCurrentClaimWindow()
+
+  const now = new Date()
 
   let academicYears = academicYearHelper.getAcademicYears()
 
@@ -79,6 +83,7 @@ exports.claim_list = (req, res) => {
     mentors,
     // pagination,
     currentClaimWindow,
+    now,
     actions: {
       new: `/organisations/${req.params.organisationId}/claims/new`,
       view: `/organisations/${req.params.organisationId}/claims`,
