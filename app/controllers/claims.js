@@ -1,3 +1,5 @@
+const { DateTime } = require('luxon')
+
 const claimModel = require('../models/claims')
 const mentorModel = require('../models/mentors')
 const organisationModel = require('../models/organisations')
@@ -29,7 +31,7 @@ exports.claim_list = (req, res) => {
 
   const currentClaimWindow = claimWindowHelper.getCurrentClaimWindow()
 
-  const now = new Date()
+  const now = DateTime.now()
 
   let academicYears = academicYearHelper.getAcademicYears()
 
