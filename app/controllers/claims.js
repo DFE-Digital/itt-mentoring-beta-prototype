@@ -31,7 +31,7 @@ exports.claim_list = (req, res) => {
 
   const currentClaimWindow = claimWindowHelper.getCurrentClaimWindow()
 
-  const now = DateTime.now()
+  const now = new Date()
 
   let academicYears = academicYearHelper.getAcademicYears()
 
